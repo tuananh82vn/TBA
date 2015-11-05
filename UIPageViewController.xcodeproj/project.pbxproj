@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0F677C34110A19DE0606A6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E33AF7EC9D660BEF0C529EF /* Pods.framework */; };
 		669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669D24AB1BC793DA0087C306 /* BaseViewController.swift */; };
 		66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D324231B9D21BB001BBD9B /* View1Controller.swift */; };
 		66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D324251B9D22B5001BBD9B /* View2Controller.swift */; };
@@ -16,7 +17,16 @@
 		78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F481AC5FC48001A93F1 /* Images.xcassets */; };
 		78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */; };
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
-		848324972BEFF08AC7312934 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00C13345D696CCE5ADD7A0D /* Pods.framework */; };
+		C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C341BEB1664007463FD /* Spring.framework */; };
+		C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */; };
+		C72C0C391BEB2416007463FD /* TelerikAppFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */; };
+		C72C0C3B1BEB242A007463FD /* TelerikUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3A1BEB242A007463FD /* TelerikUI.framework */; };
+		C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3C1BEB2496007463FD /* EventKit.framework */; };
+		C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3E1BEB249C007463FD /* EventKitUI.framework */; };
+		C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */; };
+		C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC21BEB0462009BCE1E /* Timer.swift */; };
+		C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */; };
+		C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,8 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1041D00CF10D6D2B2A52B414 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		17A2C4F2E1DA577E649DDFF2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		08DFF4EEA92681AC9F285E84 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		1D0E3974D9AD1167389C65B1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		669D24AB1BC793DA0087C306 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		66D324231B9D21BB001BBD9B /* View1Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View1Controller.swift; sourceTree = "<group>"; };
 		66D324251B9D22B5001BBD9B /* View2Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View2Controller.swift; sourceTree = "<group>"; };
@@ -45,7 +55,18 @@
 		78E75F511AC5FC48001A93F1 /* UIPageViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIPageViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E75F561AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewControllerTests.swift; sourceTree = "<group>"; };
-		A00C13345D696CCE5ADD7A0D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C72C0C341BEB1664007463FD /* Spring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spring.framework; path = "Pods/../build/Debug-iphoneos/Spring.framework"; sourceTree = "<group>"; };
+		C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActionSheetPicker_3_0.framework; path = "Pods/../build/Debug-iphoneos/ActionSheetPicker_3_0.framework"; sourceTree = "<group>"; };
+		C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelerikAppFeedback.framework; sourceTree = "<group>"; };
+		C72C0C3A1BEB242A007463FD /* TelerikUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelerikUI.framework; sourceTree = "<group>"; };
+		C72C0C3C1BEB2496007463FD /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		C72C0C3E1BEB249C007463FD /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		C72C0C401BEB24C7007463FD /* UIPageViewController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIPageViewController-Bridging-Header.h"; sourceTree = "<group>"; };
+		C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		C7ABFCC21BEB0462009BCE1E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDebtorController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +74,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				848324972BEFF08AC7312934 /* Pods.framework in Frameworks */,
+				C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */,
+				C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */,
+				C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */,
+				C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */,
+				C72C0C3B1BEB242A007463FD /* TelerikUI.framework in Frameworks */,
+				C72C0C391BEB2416007463FD /* TelerikAppFeedback.framework in Frameworks */,
+				0E0F677C34110A19DE0606A6 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +100,8 @@
 				78E75F3E1AC5FC48001A93F1 /* UIPageViewController */,
 				78E75F541AC5FC48001A93F1 /* UIPageViewControllerTests */,
 				78E75F3D1AC5FC48001A93F1 /* Products */,
-				B41AAFED5E33718640D977F9 /* Pods */,
 				A2F449B641C43B271AAD8CE4 /* Frameworks */,
+				D395C2BF3BCC47731FD3F417 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,14 +117,12 @@
 		78E75F3E1AC5FC48001A93F1 /* UIPageViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C7ABFCBE1BEB00E7009BCE1E /* ViewController */,
 				78E75F411AC5FC48001A93F1 /* AppDelegate.swift */,
-				78E75F431AC5FC48001A93F1 /* ViewController.swift */,
-				66D324231B9D21BB001BBD9B /* View1Controller.swift */,
-				66D324251B9D22B5001BBD9B /* View2Controller.swift */,
 				78E75F451AC5FC48001A93F1 /* Main.storyboard */,
 				78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */,
+				C7ABFCC11BEB0451009BCE1E /* Utility */,
 				78E75F3F1AC5FC48001A93F1 /* Supporting Files */,
-				669D24AB1BC793DA0087C306 /* BaseViewController.swift */,
 			);
 			path = UIPageViewController;
 			sourceTree = "<group>";
@@ -105,6 +130,7 @@
 		78E75F3F1AC5FC48001A93F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C72C0C401BEB24C7007463FD /* UIPageViewController-Bridging-Header.h */,
 				78E75F481AC5FC48001A93F1 /* Images.xcassets */,
 				78E75F401AC5FC48001A93F1 /* Info.plist */,
 			);
@@ -131,16 +157,44 @@
 		A2F449B641C43B271AAD8CE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A00C13345D696CCE5ADD7A0D /* Pods.framework */,
+				C72C0C3E1BEB249C007463FD /* EventKitUI.framework */,
+				C72C0C3C1BEB2496007463FD /* EventKit.framework */,
+				C72C0C3A1BEB242A007463FD /* TelerikUI.framework */,
+				C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */,
+				C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */,
+				C72C0C341BEB1664007463FD /* Spring.framework */,
+				8E33AF7EC9D660BEF0C529EF /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B41AAFED5E33718640D977F9 /* Pods */ = {
+		C7ABFCBE1BEB00E7009BCE1E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				17A2C4F2E1DA577E649DDFF2 /* Pods.debug.xcconfig */,
-				1041D00CF10D6D2B2A52B414 /* Pods.release.xcconfig */,
+				669D24AB1BC793DA0087C306 /* BaseViewController.swift */,
+				66D324251B9D22B5001BBD9B /* View2Controller.swift */,
+				66D324231B9D21BB001BBD9B /* View1Controller.swift */,
+				78E75F431AC5FC48001A93F1 /* ViewController.swift */,
+				C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */,
+				C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		C7ABFCC11BEB0451009BCE1E /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */,
+				C7ABFCC21BEB0462009BCE1E /* Timer.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		D395C2BF3BCC47731FD3F417 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1D0E3974D9AD1167389C65B1 /* Pods.debug.xcconfig */,
+				08DFF4EEA92681AC9F285E84 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -193,7 +247,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Vea Software";
 				TargetAttributes = {
@@ -300,10 +354,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */,
+				C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */,
+				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
+				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
 				78E75F421AC5FC48001A93F1 /* AppDelegate.swift in Sources */,
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,
+				C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,25 +482,40 @@
 		};
 		78E75F5C1AC5FC48001A93F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17A2C4F2E1DA577E649DDFF2 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 1D0E3974D9AD1167389C65B1 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = UIPageViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UIPageViewController/UIPageViewController-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		78E75F5D1AC5FC48001A93F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1041D00CF10D6D2B2A52B414 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 08DFF4EEA92681AC9F285E84 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = UIPageViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UIPageViewController/UIPageViewController-Bridging-Header.h";
 			};
 			name = Release;
 		};
