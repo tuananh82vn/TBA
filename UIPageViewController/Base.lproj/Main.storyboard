@@ -674,7 +674,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78T-BE-MhP">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78T-BE-MhP">
                                 <rect key="frame" x="269" y="550" width="62" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -697,6 +697,8 @@
                                 </variation>
                                 <connections>
                                     <action selector="ContinueClicked:" destination="ibL-3r-LcV" eventType="touchUpInside" id="Cm0-R2-If0"/>
+                                    <action selector="bt_ContinueClicked:" destination="8Rk-Qz-YVl" eventType="touchUpInside" id="14U-Ml-ypA"/>
+                                    <segue destination="68A-6Z-KOR" kind="show" id="0TJ-uX-bAj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -723,15 +725,15 @@
                                 <exclude reference="78T-BE-MhP"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="PDV-He-OxJ"/>
+                                <exclude reference="W2b-yo-7Wa"/>
+                                <exclude reference="rCW-pT-bQ2"/>
+                                <exclude reference="vgX-Kj-F5q"/>
                                 <exclude reference="28D-2W-bbT"/>
                                 <exclude reference="p47-XA-Wh1"/>
                                 <exclude reference="zIa-XB-V0u"/>
                                 <exclude reference="Ewo-Hi-UsB"/>
                                 <exclude reference="pap-R8-CKX"/>
-                                <exclude reference="PDV-He-OxJ"/>
-                                <exclude reference="W2b-yo-7Wa"/>
-                                <exclude reference="rCW-pT-bQ2"/>
-                                <exclude reference="vgX-Kj-F5q"/>
                                 <exclude reference="5bh-fQ-6Do"/>
                                 <exclude reference="h2n-0a-Y2G"/>
                             </mask>
@@ -744,15 +746,15 @@
                                 <include reference="78T-BE-MhP"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="PDV-He-OxJ"/>
+                                <include reference="W2b-yo-7Wa"/>
+                                <include reference="rCW-pT-bQ2"/>
+                                <include reference="vgX-Kj-F5q"/>
                                 <include reference="28D-2W-bbT"/>
                                 <include reference="p47-XA-Wh1"/>
                                 <include reference="zIa-XB-V0u"/>
                                 <include reference="Ewo-Hi-UsB"/>
                                 <include reference="pap-R8-CKX"/>
-                                <include reference="PDV-He-OxJ"/>
-                                <include reference="W2b-yo-7Wa"/>
-                                <include reference="rCW-pT-bQ2"/>
-                                <include reference="vgX-Kj-F5q"/>
                                 <include reference="5bh-fQ-6Do"/>
                                 <include reference="h2n-0a-Y2G"/>
                             </mask>
@@ -765,6 +767,285 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7s-dd-znr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3718.5" y="-394"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="y13-sJ-rz1">
+            <objects>
+                <viewController id="68A-6Z-KOR" customClass="HomeViewController" customModule="UIPageViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FM4-Rf-Kcj"/>
+                        <viewControllerLayoutGuide type="bottom" id="0vX-Bd-Nfs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7r6-n8-iN0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="jXv-4b-fRL" kind="presentation" identifier="GoToMakePayment" modalPresentationStyle="overCurrentContext" id="vwA-sR-2Cu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tt5-Ex-cLr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4446" y="-394"/>
+        </scene>
+        <!--Make a Payment-->
+        <scene sceneID="bq7-Rf-QEl">
+            <objects>
+                <viewController storyboardIdentifier="MakePaymentViewController" id="rsL-AF-9jV" customClass="MakePaymentViewController" customModule="UIPageViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="P81-tg-iuD"/>
+                        <viewControllerLayoutGuide type="bottom" id="LJ3-HE-R4y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1UH-g0-2Bo">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuU-1d-fWH">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H1M-FT-nKn" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S1R-2Q-iZG" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0or-DL-uir" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credit Card Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVq-Vx-ejn">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expire Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1U-gA-Aib">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fI8-3l-9OU">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k8U-EO-g0E" customClass="DesignableButton" customModule="Spring">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="w8L-gQ-DZc" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pVq-Vx-ejn" firstAttribute="leading" secondItem="H1M-FT-nKn" secondAttribute="leading" id="0UO-2Y-nE2"/>
+                            <constraint firstItem="w8L-gQ-DZc" firstAttribute="trailing" secondItem="H1M-FT-nKn" secondAttribute="trailing" id="4TL-mK-uIH"/>
+                            <constraint firstItem="fI8-3l-9OU" firstAttribute="leading" secondItem="0or-DL-uir" secondAttribute="leading" id="5iW-ss-e8p"/>
+                            <constraint firstItem="0or-DL-uir" firstAttribute="trailing" secondItem="1UH-g0-2Bo" secondAttribute="trailingMargin" id="7LU-dU-Wf1"/>
+                            <constraint firstItem="S1R-2Q-iZG" firstAttribute="trailing" secondItem="H1M-FT-nKn" secondAttribute="trailing" id="9td-d1-B65"/>
+                            <constraint firstItem="pVq-Vx-ejn" firstAttribute="top" secondItem="w8L-gQ-DZc" secondAttribute="bottom" constant="8" symbolic="YES" id="AjC-S7-Vwl"/>
+                            <constraint firstItem="fI8-3l-9OU" firstAttribute="top" secondItem="S1R-2Q-iZG" secondAttribute="bottom" constant="8" symbolic="YES" id="B8z-uB-6gG"/>
+                            <constraint firstItem="i1U-gA-Aib" firstAttribute="leading" secondItem="H1M-FT-nKn" secondAttribute="leading" id="CQT-CC-G1o"/>
+                            <constraint firstItem="i1U-gA-Aib" firstAttribute="leading" secondItem="S1R-2Q-iZG" secondAttribute="leading" id="DHN-zY-v6e"/>
+                            <constraint firstItem="TuU-1d-fWH" firstAttribute="top" secondItem="P81-tg-iuD" secondAttribute="bottom" constant="8" symbolic="YES" id="F7l-2v-hJq"/>
+                            <constraint firstAttribute="bottom" secondItem="k8U-EO-g0E" secondAttribute="bottom" constant="20" symbolic="YES" id="JOc-pE-XHM"/>
+                            <constraint firstItem="w8L-gQ-DZc" firstAttribute="top" secondItem="TuU-1d-fWH" secondAttribute="bottom" constant="8" symbolic="YES" id="Sao-M7-vIP"/>
+                            <constraint firstItem="S1R-2Q-iZG" firstAttribute="top" secondItem="i1U-gA-Aib" secondAttribute="bottom" constant="8" symbolic="YES" id="ZKk-2Y-Fdg"/>
+                            <constraint firstItem="i1U-gA-Aib" firstAttribute="leading" secondItem="1UH-g0-2Bo" secondAttribute="leadingMargin" id="aBi-8I-9ms"/>
+                            <constraint firstItem="fI8-3l-9OU" firstAttribute="leading" secondItem="S1R-2Q-iZG" secondAttribute="leading" id="dwB-8q-T87"/>
+                            <constraint firstItem="0or-DL-uir" firstAttribute="top" secondItem="fI8-3l-9OU" secondAttribute="bottom" constant="8" symbolic="YES" id="f2n-WD-YdM"/>
+                            <constraint firstItem="0or-DL-uir" firstAttribute="leading" secondItem="k8U-EO-g0E" secondAttribute="leading" id="f3W-Jf-41d"/>
+                            <constraint firstItem="H1M-FT-nKn" firstAttribute="top" secondItem="pVq-Vx-ejn" secondAttribute="bottom" constant="8" symbolic="YES" id="faF-SR-OTp"/>
+                            <constraint firstItem="k8U-EO-g0E" firstAttribute="trailing" secondItem="0or-DL-uir" secondAttribute="trailing" id="g2D-dN-7Rw"/>
+                            <constraint firstItem="i1U-gA-Aib" firstAttribute="top" secondItem="H1M-FT-nKn" secondAttribute="bottom" constant="8" symbolic="YES" id="imi-Ae-uT4"/>
+                            <constraint firstItem="w8L-gQ-DZc" firstAttribute="leading" secondItem="pVq-Vx-ejn" secondAttribute="leading" id="k62-Wo-2ym"/>
+                            <constraint firstItem="TuU-1d-fWH" firstAttribute="leading" secondItem="w8L-gQ-DZc" secondAttribute="leading" id="nwU-8m-RPa"/>
+                            <constraint firstItem="0or-DL-uir" firstAttribute="trailing" secondItem="S1R-2Q-iZG" secondAttribute="trailing" id="vrT-Jz-A10"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="TuU-1d-fWH"/>
+                                <exclude reference="H1M-FT-nKn"/>
+                                <exclude reference="S1R-2Q-iZG"/>
+                                <exclude reference="0or-DL-uir"/>
+                                <exclude reference="pVq-Vx-ejn"/>
+                                <exclude reference="i1U-gA-Aib"/>
+                                <exclude reference="fI8-3l-9OU"/>
+                                <exclude reference="k8U-EO-g0E"/>
+                                <exclude reference="w8L-gQ-DZc"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="F7l-2v-hJq"/>
+                                <exclude reference="nwU-8m-RPa"/>
+                                <exclude reference="4TL-mK-uIH"/>
+                                <exclude reference="Sao-M7-vIP"/>
+                                <exclude reference="k62-Wo-2ym"/>
+                                <exclude reference="0UO-2Y-nE2"/>
+                                <exclude reference="AjC-S7-Vwl"/>
+                                <exclude reference="faF-SR-OTp"/>
+                                <exclude reference="CQT-CC-G1o"/>
+                                <exclude reference="DHN-zY-v6e"/>
+                                <exclude reference="aBi-8I-9ms"/>
+                                <exclude reference="imi-Ae-uT4"/>
+                                <exclude reference="9td-d1-B65"/>
+                                <exclude reference="ZKk-2Y-Fdg"/>
+                                <exclude reference="5iW-ss-e8p"/>
+                                <exclude reference="B8z-uB-6gG"/>
+                                <exclude reference="dwB-8q-T87"/>
+                                <exclude reference="7LU-dU-Wf1"/>
+                                <exclude reference="f2n-WD-YdM"/>
+                                <exclude reference="f3W-Jf-41d"/>
+                                <exclude reference="vrT-Jz-A10"/>
+                                <exclude reference="JOc-pE-XHM"/>
+                                <exclude reference="g2D-dN-7Rw"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="TuU-1d-fWH"/>
+                                <include reference="H1M-FT-nKn"/>
+                                <include reference="S1R-2Q-iZG"/>
+                                <include reference="0or-DL-uir"/>
+                                <include reference="pVq-Vx-ejn"/>
+                                <include reference="i1U-gA-Aib"/>
+                                <include reference="fI8-3l-9OU"/>
+                                <include reference="k8U-EO-g0E"/>
+                                <include reference="w8L-gQ-DZc"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="F7l-2v-hJq"/>
+                                <include reference="nwU-8m-RPa"/>
+                                <include reference="4TL-mK-uIH"/>
+                                <include reference="Sao-M7-vIP"/>
+                                <include reference="k62-Wo-2ym"/>
+                                <include reference="0UO-2Y-nE2"/>
+                                <include reference="AjC-S7-Vwl"/>
+                                <include reference="faF-SR-OTp"/>
+                                <include reference="CQT-CC-G1o"/>
+                                <include reference="DHN-zY-v6e"/>
+                                <include reference="aBi-8I-9ms"/>
+                                <include reference="imi-Ae-uT4"/>
+                                <include reference="9td-d1-B65"/>
+                                <include reference="ZKk-2Y-Fdg"/>
+                                <include reference="5iW-ss-e8p"/>
+                                <include reference="B8z-uB-6gG"/>
+                                <include reference="dwB-8q-T87"/>
+                                <include reference="7LU-dU-Wf1"/>
+                                <include reference="f2n-WD-YdM"/>
+                                <include reference="f3W-Jf-41d"/>
+                                <include reference="vrT-Jz-A10"/>
+                                <include reference="JOc-pE-XHM"/>
+                                <include reference="g2D-dN-7Rw"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Make a Payment" id="Mh2-yJ-dpR">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="izj-Bo-beZ">
+                            <color key="tintColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="CloseButtonClick:" destination="rsL-AF-9jV" id="oMZ-0F-gJW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JcD-VR-RBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5922" y="-394"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fIC-Sy-2Im">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jXv-4b-fRL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="khY-0v-0TS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rsL-AF-9jV" kind="relationship" relationship="rootViewController" id="4hT-3b-dTW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A6d-qe-AGh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5125.5" y="-394"/>
         </scene>
     </scenes>
     <resources>
