@@ -45,6 +45,8 @@ class SelectDebtorController: UIViewController {
 
     @IBAction func bt_ContinueClicked(sender: AnyObject) {
         
+        self.performSegueWithIdentifier("GoToBlank", sender: nil)
+
     }
     /*
     // MARK: - Navigation

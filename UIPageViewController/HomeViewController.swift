@@ -1,47 +1,47 @@
-//
-//  ViewController.swift
-//  test
-//
-//  Created by andy synotive on 15/09/2015.
-//  Copyright © 2015 andy synotive. All rights reserved.
-//
-
 import UIKit
 
-class HomeViewController: UIViewController , TKSideDrawerDelegate {
+class HomeViewController: UIViewController, TKSideDrawerDelegate {
     
     
-    var sideDrawerView: TKSideDrawerView? = nil
-
-
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        sideDrawerView = TKSideDrawerView(frame: self.view.bounds)
-        self.view.addSubview(sideDrawerView!)
-
+//        var nav = self.navigationController?.navigationBar
+//        
+//        nav?.barStyle = UIBarStyle.Black
+//        
+//        nav?.tintColor = UIColor.yellowColor()
+//
+//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+//        
+//        imageView.contentMode = .ScaleAspectFit
+//        // 4
+//        let image = UIImage(named: "lock")
+//        
+//        imageView.image = image
+//        // 5
+//        navigationItem.titleView = imageView
         
-        // tao nav bar
-        let navBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 64))
+//        let navItem = UINavigationItem(title: "Home")
+//        
+//        let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+//        navigationBar.autoresizingMask = UIViewAutoresizing.FlexibleWidth
+//        
+//        let showSideDrawerButton = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self, action: "showSideDrawer")
+//        let logoutButton = UIBarButtonItem(image: UIImage(named: "lock"), style: UIBarButtonItemStyle.Plain, target: self, action: "logout")
+//        
+//        navItem.rightBarButtonItem = logoutButton
+//        navItem.leftBarButtonItem = showSideDrawerButton
+//        nav!.items = [navItem]
         
-        let navItem = UINavigationItem(title: "Getting Started")
-
-        let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
-        navigationBar.autoresizingMask = UIViewAutoresizing.FlexibleWidth
+        //self.view.addSubview(navBar)
         
-        let showSideDrawerButton = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self, action: "showSideDrawer")
+        // tao menu
         
-        navItem.leftBarButtonItem = showSideDrawerButton
-        navBar.items = [navItem]
-        
-        sideDrawerView!.mainView.addSubview(navBar)
-        
-
-        // create menu
-        
-        let sectionPrimary = sideDrawerView!.sideDrawer.addSectionWithTitle("Main")
+        let sectionPrimary = self.sideDrawer.addSectionWithTitle("Main")
         sectionPrimary.addItemWithTitle("Make a payment", image: UIImage(named: "dollar")!)
         sectionPrimary.addItemWithTitle("Payment Tracker", image: UIImage(named: "payment")!)
         sectionPrimary.addItemWithTitle("Instalment Info",image: UIImage(named: "info")!)
@@ -49,22 +49,51 @@ class HomeViewController: UIViewController , TKSideDrawerDelegate {
         sectionPrimary.addItemWithTitle("Schedule Callback",image: UIImage(named: "callback")!)
         sectionPrimary.addItemWithTitle("Inbox",image: UIImage(named: "Inbox")!)
         
-        let sectionLabels = sideDrawerView!.sideDrawer.addSectionWithTitle("Setting")
+        let sectionLabels = self.sideDrawer.addSectionWithTitle("Setting")
         sectionLabels.addItemWithTitle("Update credit card detail")
         sectionLabels.addItemWithTitle("Update bank account")
         sectionLabels.addItemWithTitle("Update personal information")
         sectionLabels.addItemWithTitle("Feedback")
         
-        sideDrawerView!.sideDrawer.delegate = self
- 
+        
+        self.sideDrawer.style.headerHeight = 64
+        self.sideDrawer.fill = TKSolidFill(color: UIColor(rgba: "#00757D"))
+        //self.sideDrawer.fill = TKSolidFill(color: UIColor(red: 28 / 255.0, green: 171/255.0, blue: 241/255.0, alpha:0.5))
+        self.sideDrawer.style.shadowMode = TKSideDrawerShadowMode.Hostview
+        self.sideDrawer.style.shadowOffset = CGSizeMake(-2, -0.5)
+        self.sideDrawer.style.shadowRadius = 5
+        self.sideDrawer.style.blurType = TKSideDrawerBlurType.None
+        
+        self.sideDrawer.transition = TKSideDrawerTransitionType.Push
+
+        
+        self.sideDrawer.delegate = self
+        
+        //----------------------------------------------------//
+
+        
+    }
+    
+    @IBAction func menuClicked(sender: AnyObject) {
+        self.sideDrawer.show()
+
     }
     
     
-    func showSideDrawer() {
-        self.sideDrawerView!.sideDrawer.transition = TKSideDrawerTransitionType.Push
-        self.sideDrawerView!.sideDrawer.fill = TKSolidFill(color: UIColor(rgba: "#00757D"))
-        self.sideDrawerView!.sideDrawer.show()
+    func sideDrawer(sideDrawer: TKSideDrawer!, updateVisualsForItemAtIndexPath indexPath: NSIndexPath!) {
+        let section = sideDrawer.sections[indexPath.section] as! TKSideDrawerSection
+        let item = section.items[indexPath.item] as! TKSideDrawerItem
+        item.style.contentInsets = UIEdgeInsetsMake(0, -5, 0, 0)
+        item.style.separatorColor = TKSolidFill(color: UIColor(white: 1, alpha: 0.5))
+        item.style.textColor = UIColor.whiteColor()
     }
+    
+    func sideDrawer(sideDrawer: TKSideDrawer!, updateVisualsForSection sectionIndex: Int) {
+        let section = sideDrawer.sections[sectionIndex] as! TKSideDrawerSection
+        section.style.textColor = UIColor.whiteColor()
+        section.style.contentInsets = UIEdgeInsetsMake(0, -15, 0, 0)
+    }
+    
     
     func sideDrawer(sideDrawer: TKSideDrawer!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
         NSLog("Selected item in section: %ld at index: %ld ", indexPath.section, indexPath.row)
@@ -72,25 +101,15 @@ class HomeViewController: UIViewController , TKSideDrawerDelegate {
         {
             if(indexPath.row == 0 ){
                 
-                self.performSegueWithIdentifier("GoToMakePayment", sender: nil)
-//                let paymentViewController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
-//                //
-//                self.navigationController!.pushViewController(paymentViewController, animated: true)
+                let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
+
+                self.navigationController!.pushViewController(makepaymentController, animated: true)
+                
+            }
+            if(indexPath.row == 1 ){
+                
             }
         }
-    }
-    
-    func sideDrawer(sideDrawer: TKSideDrawer!, updateVisualsForItemAtIndexPath indexPath: NSIndexPath!) {
-        let section = sideDrawer.sections[indexPath.section] as! TKSideDrawerSection
-        section.style.textColor = UIColor.whiteColor()
-        
-        let item = section.items[indexPath.item] as! TKSideDrawerItem
-        item.style.contentInsets = UIEdgeInsetsMake(0, -5, 0, 0)
-        item.style.separatorColor = TKSolidFill(color: UIColor(white: 1, alpha: 0.5))
-        item.style.textColor = UIColor.whiteColor()
-        item.style.imagePosition = TKSideDrawerItemImagePosition.Left
-        
-        
     }
     
     override func didReceiveMemoryWarning() {

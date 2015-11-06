@@ -23,9 +23,10 @@
 		C72C0C3B1BEB242A007463FD /* TelerikUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3A1BEB242A007463FD /* TelerikUI.framework */; };
 		C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3C1BEB2496007463FD /* EventKit.framework */; };
 		C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3E1BEB249C007463FD /* EventKitUI.framework */; };
-		C72C0C441BEC1AD8007463FD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C431BEC1AD8007463FD /* HomeViewController.swift */; };
 		C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C451BEC220D007463FD /* UIColorExtension.swift */; };
 		C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C471BEC55AD007463FD /* RBResizer.swift */; };
+		C7813B641BEC7FD300876860 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7813B631BEC7FD300876860 /* HomeViewController.swift */; };
+		C7813B681BEC950600876860 /* BlankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7813B671BEC950600876860 /* BlankViewController.swift */; };
 		C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */; };
 		C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC21BEB0462009BCE1E /* Timer.swift */; };
 		C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */; };
@@ -67,9 +68,10 @@
 		C72C0C3C1BEB2496007463FD /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		C72C0C3E1BEB249C007463FD /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		C72C0C401BEB24C7007463FD /* UIPageViewController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIPageViewController-Bridging-Header.h"; sourceTree = "<group>"; };
-		C72C0C431BEC1AD8007463FD /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C72C0C451BEC220D007463FD /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		C72C0C471BEC55AD007463FD /* RBResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBResizer.swift; sourceTree = "<group>"; };
+		C7813B631BEC7FD300876860 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		C7813B671BEC950600876860 /* BlankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankViewController.swift; sourceTree = "<group>"; };
 		C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C7ABFCC21BEB0462009BCE1E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -179,13 +181,14 @@
 		C7ABFCBE1BEB00E7009BCE1E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				C72C0C431BEC1AD8007463FD /* HomeViewController.swift */,
 				669D24AB1BC793DA0087C306 /* BaseViewController.swift */,
+				78E75F431AC5FC48001A93F1 /* ViewController.swift */,
 				66D324251B9D22B5001BBD9B /* View2Controller.swift */,
 				66D324231B9D21BB001BBD9B /* View1Controller.swift */,
-				78E75F431AC5FC48001A93F1 /* ViewController.swift */,
 				C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */,
 				C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */,
+				C7813B671BEC950600876860 /* BlankViewController.swift */,
+				C7813B631BEC7FD300876860 /* HomeViewController.swift */,
 				C7E6357C1BEC5E1D002D8438 /* MakePaymentViewController.swift */,
 			);
 			name = ViewController;
@@ -365,12 +368,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7813B641BEC7FD300876860 /* HomeViewController.swift in Sources */,
 				66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */,
 				C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */,
+				C7813B681BEC950600876860 /* BlankViewController.swift in Sources */,
 				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
-				C72C0C441BEC1AD8007463FD /* HomeViewController.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
 				78E75F421AC5FC48001A93F1 /* AppDelegate.swift in Sources */,
 				C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */,
