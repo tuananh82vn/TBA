@@ -106,8 +106,23 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
                 self.navigationController!.pushViewController(makepaymentController, animated: true)
                 
             }
+            
             if(indexPath.row == 1 ){
                 
+             //   let paymentTracker = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTrackerViewController") as! PaymentTrackerViewController
+                
+                let paymentTracker = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTracker2ViewController") as! PaymentTracker2ViewController
+
+                
+                self.navigationController!.pushViewController(paymentTracker, animated: true)
+                
+            }
+            
+            if(indexPath.row == 2 ){
+                
+                let instalmentInfoController = self.storyboard!.instantiateViewControllerWithIdentifier("InstalmentInfoViewController") as! InstalmentInfoViewController
+                
+                self.navigationController!.pushViewController(instalmentInfoController, animated: true)
             }
         }
     }
