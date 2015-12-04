@@ -14,6 +14,9 @@ class CustomTelrikViewCell: TKListViewCell {
     let img_Status = UIImageView()
     let lb_Amount = UILabel()
     let lb_DueDate = UILabel()
+    let lb_PaidDetail = UILabel()
+    let lb_DeptCode = UILabel()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,12 +34,23 @@ class CustomTelrikViewCell: TKListViewCell {
         self.lb_Remaining.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.lb_Remaining.font = UIFont(name:"HelveticaNeue", size:13)
         self.lb_Remaining.textAlignment = NSTextAlignment.Right
+        
+        self.lb_PaidDetail.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        self.lb_PaidDetail.font = UIFont(name:"HelveticaNeue", size:13)
+        self.lb_PaidDetail.textAlignment = NSTextAlignment.Left
+        
+        self.lb_DeptCode.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        self.lb_DeptCode.font = UIFont(name:"HelveticaNeue", size:13)
+        self.lb_DeptCode.textAlignment = NSTextAlignment.Left
 
         
         self.contentView.addSubview(lb_DueDate)
         self.contentView.addSubview(img_Status)
         self.contentView.addSubview(lb_Amount)
         self.contentView.addSubview(lb_Remaining)
+        self.contentView.addSubview(lb_PaidDetail)
+        self.contentView.addSubview(lb_DeptCode)
+
         
         (self.backgroundView as! TKView).backgroundColor = UIColor.whiteColor()
     }
@@ -57,6 +71,10 @@ class CustomTelrikViewCell: TKListViewCell {
         
         self.lb_Remaining.frame = CGRectMake(260, 10, 100, 20)
         
+        self.lb_PaidDetail.frame = CGRectMake(0, 40, 150, 20)
+        
+        self.lb_DeptCode.frame = CGRectMake(0, 60, 150, 20)
+
     }
 
 

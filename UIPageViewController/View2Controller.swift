@@ -34,8 +34,55 @@ class View2Controller: BaseViewController {
     }
     
     @IBAction func GetNetCodeClicked(sender: AnyObject) {
+        doVerify()
     }
+    
     @IBAction func ContinueClicked(sender: AnyObject) {
+    }
+    
+    func doVerify(){
+        
+        self.view.showLoading();
+        
+        WebApiService.checkInternet({(internet:Bool) -> Void in
+                
+                if (internet)
+                {
+                    WebApiService.postVerify(LocalStore.accessWeb_URL_API()!){ objectReturn in
+                        
+                        
+                        if let temp = objectReturn {
+                            
+                            if(temp.IsSuccess)
+                            {
+                                let customIcon = UIImage(named: "no-internet")
+                                let alertview = JSSAlertView().show(self, title: "Warning", text: "Connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
+                                alertview.setTextTheme(.Light)
+                            }
+                        }
+                        else
+                        {
+                            self.view.hideLoading();
+                            
+                            let customIcon = UIImage(named: "no-internet")
+                            let alertview = JSSAlertView().show(self, title: "Warning", text: "No connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
+                            alertview.setTextTheme(.Light)
+                            
+                            
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    
+                    self.view.hideLoading();
+                    
+                    let customIcon = UIImage(named: "no-internet")
+                    let alertview = JSSAlertView().show(self, title: "Warning", text: "No connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
+                    alertview.setTextTheme(.Light)
+                }
+        })
     }
 
     /*

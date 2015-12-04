@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import Spring
 
 class BaseViewController: UIViewController {
 
     
     var rootViewController = ViewController()
     
+    var domain = "http://wsandypham:3335"
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        LocalStore.setWeb_URL_API(domain)
+        
         // Do any additional setup after loading the view.
     }
 

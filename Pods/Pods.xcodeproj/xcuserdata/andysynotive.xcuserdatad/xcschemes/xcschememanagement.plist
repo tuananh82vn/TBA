@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,12 +27,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>83C9B5352E8869BFD84CBE2BCF04115A</key>
+		<key>1A8B9571267E0D8B6693395BD1B5BB3D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A87EF2B87B854BBCA6D1397DECD089C6</key>
+		<key>278B8DBE00D292CD94CE53F118953C76</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

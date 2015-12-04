@@ -124,6 +124,13 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
                 
                 self.navigationController!.pushViewController(instalmentInfoController, animated: true)
             }
+            
+            if(indexPath.row == 4 ){
+                
+                let requestCallBackController = self.storyboard!.instantiateViewControllerWithIdentifier("RequestCallbackViewController") as! RequestCallbackViewController
+                
+                self.navigationController!.pushViewController(requestCallBackController, animated: true)
+            }
         }
     }
     

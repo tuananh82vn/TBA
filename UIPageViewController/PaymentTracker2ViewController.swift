@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKListViewDataSource, TKListViewStaggeredLayoutDelegate{
+class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKListViewDataSource, TKListViewStaggeredLayoutDelegate {
 
     
     @IBOutlet weak var subMainView: UIView!
@@ -23,7 +23,7 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
     
     var sizes = [Int]()
 
-    var selectedRow : Int = 0
+    var selectedRow : Int = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
 
     func initData(){
     
-        listView.frame = self.view.bounds
+        listView.frame = self.subMainView.bounds
         listView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
         listView.delegate = self
         listView.dataSource = self
@@ -57,6 +57,7 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         self.subMainView.addSubview(listView)
         
         self.staggeredLayoutSelected()
+
 
         
     }
@@ -93,6 +94,9 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         record1.DueDate = "12/20/2015"
         record1.Remaining = "$ 1000.00"
         record1.PaymentStatusId = 2
+        record1.PaidDetail = "Paid $50 on 21/10/2015"
+        record1.DeptCode = "Dept Code : 1234567890"
+
         paymentTrackerRecord.append(record1)
         
         let record2 = PaymentTrackerRecordModel()
@@ -124,6 +128,41 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         record5.PaymentStatusId = 1
         paymentTrackerRecord.append(record5)
         
+        let record6 = PaymentTrackerRecordModel()
+        record6.Amount = "$ 100.00"
+        record6.DueDate = "12/20/2015"
+        record6.Remaining = "$ 1000.00"
+        record6.PaymentStatusId = 1
+        paymentTrackerRecord.append(record6)
+        
+        let record7 = PaymentTrackerRecordModel()
+        record7.Amount = "$ 100.00"
+        record7.DueDate = "12/20/2015"
+        record7.Remaining = "$ 1000.00"
+        record7.PaymentStatusId = 1
+        paymentTrackerRecord.append(record7)
+        
+        let record8 = PaymentTrackerRecordModel()
+        record8.Amount = "$ 100.00"
+        record8.DueDate = "12/20/2015"
+        record8.Remaining = "$ 1000.00"
+        record8.PaymentStatusId = 2
+        paymentTrackerRecord.append(record8)
+        
+        let record9 = PaymentTrackerRecordModel()
+        record9.Amount = "$ 100.00"
+        record9.DueDate = "12/20/2015"
+        record9.Remaining = "$ 1000.00"
+        record9.PaymentStatusId = 1
+        paymentTrackerRecord.append(record9)
+        
+        let record10 = PaymentTrackerRecordModel()
+        record10.Amount = "$ 100.00"
+        record10.DueDate = "12/20/2015"
+        record10.Remaining = "$ 1000.00"
+        record10.PaymentStatusId = 2
+        paymentTrackerRecord.append(record10)
+        
     }
     
     func staggeredLayoutSelected() {
@@ -131,10 +170,12 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         layout.delegate = self
         layout.itemSize = CGSizeMake(360, 40)
         layout.spanCount = 1
-//        layout.itemSpacing = 1
-//        layout.lineSpacing = 1
+        layout.itemSpacing = 1
+        layout.lineSpacing = 1
         layout.scrollDirection = self.scrollDirection
         layout.alignLastLine = true
+        layout.invalidateLayout()
+
         listView.layout = layout
     }
     
@@ -152,6 +193,13 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         return self.paymentTrackerRecord.count
     }
     
+//    func listView(listView: TKListView, layout: TKListViewLinearLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+////        if indexPath.row == 1 {
+////            return CGSizeMake(360, 80)
+////        }
+//        return CGSizeMake(360, 40)
+//    }
+    
 
     func listView(listView: TKListView, cellForItemAtIndexPath indexPath: NSIndexPath) -> TKListViewCell? {
         
@@ -162,6 +210,11 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         cell1.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
         
         cell1.lb_Remaining.text = self.paymentTrackerRecord[indexPath.row].Remaining
+        
+        cell1.lb_PaidDetail.text = self.paymentTrackerRecord[indexPath.row].PaidDetail
+
+        cell1.lb_DeptCode.text = self.paymentTrackerRecord[indexPath.row].DeptCode
+
         
         if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 0 ){
             cell1.img_Status.image = UIImage(named: "circle_blue")
@@ -203,18 +256,26 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
     }
     
     func staggeredLayout(layout: TKListViewStaggeredLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
-//        if layout.scrollDirection == TKListViewScrollDirection.Vertical {
-//            return CGSizeMake(0, 80);
-//        }
-        
-        return CGSizeMake(0, 40);
-
+                if indexPath.row == self.selectedRow {
+                    return CGSizeMake(360, 90)
+                }
+                return CGSizeMake(360, 40)
     }
     
     
     func listView(listView: TKListView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Did select item at row\(indexPath.row)")
-
+//        print("Did select item at row\(indexPath.row)")
+        if(self.selectedRow == indexPath.row)
+        {
+            self.selectedRow = -1
+        }
+        else {
+            self.selectedRow = indexPath.row
+        }
+        
+        
+        
+        listView.layout.invalidateLayout()
     }
     
 
