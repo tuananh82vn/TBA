@@ -35,6 +35,8 @@
 		C783D0671C111BA100AE7265 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0661C111BA100AE7265 /* JSSAlertView.swift */; };
 		C783D0691C11233B00AE7265 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783D0681C11233B00AE7265 /* Alamofire.framework */; };
 		C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */; };
+		C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A681791C1139FC00348EB0 /* DebtorInfo.swift */; };
+		C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A681901C11538200348EB0 /* PinSetupViewController.swift */; };
 		C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */; };
 		C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC21BEB0462009BCE1E /* Timer.swift */; };
 		C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */; };
@@ -96,6 +98,8 @@
 		C783D0661C111BA100AE7265 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSSAlertView.swift; sourceTree = "<group>"; };
 		C783D0681C11233B00AE7265 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentInfoViewController.swift; sourceTree = "<group>"; };
+		C7A681791C1139FC00348EB0 /* DebtorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebtorInfo.swift; sourceTree = "<group>"; };
+		C7A681901C11538200348EB0 /* PinSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinSetupViewController.swift; sourceTree = "<group>"; };
 		C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C7ABFCC21BEB0462009BCE1E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 				78E75F431AC5FC48001A93F1 /* ViewController.swift */,
 				66D324251B9D22B5001BBD9B /* View2Controller.swift */,
 				66D324231B9D21BB001BBD9B /* View1Controller.swift */,
+				C7A681901C11538200348EB0 /* PinSetupViewController.swift */,
 				C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */,
 				C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */,
 				C7813B671BEC950600876860 /* BlankViewController.swift */,
@@ -282,6 +287,7 @@
 			children = (
 				C783D0611C111A7C00AE7265 /* Error.swift */,
 				C7E6B0191BF068F400D60EC1 /* PaymentTrackerRecordModel.swift */,
+				C7A681791C1139FC00348EB0 /* DebtorInfo.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
+				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
 				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
@@ -470,6 +477,7 @@
 				C7E6B0241BF15AAA00D60EC1 /* CustomTelrikViewCell.swift in Sources */,
 				C7E6357D1BEC5E1D002D8438 /* MakePaymentViewController.swift in Sources */,
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,
+				C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */,
 				C783D05E1C1009E200AE7265 /* LocalStore.swift in Sources */,
 				C783D0671C111BA100AE7265 /* JSSAlertView.swift in Sources */,
 				C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */,

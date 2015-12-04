@@ -11,6 +11,7 @@ import UIKit
 class View2Controller: BaseViewController {
 
     
+    @IBOutlet weak var tf_DebtCode: UITextField!
     var pageIndex : Int = 1
     
     @IBOutlet weak var bt_GetNetCode: UIButton!
@@ -26,6 +27,17 @@ class View2Controller: BaseViewController {
             self.bt_GetNetCode.alpha = 1
         })
         
+        
+        self.tf_DebtCode.text = "706132600"
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,13 +46,13 @@ class View2Controller: BaseViewController {
     }
     
     @IBAction func GetNetCodeClicked(sender: AnyObject) {
-        doVerify()
+        doGetNetCode()
     }
     
     @IBAction func ContinueClicked(sender: AnyObject) {
     }
     
-    func doVerify(){
+    func doGetNetCode(){
         
         self.view.showLoading();
         
@@ -55,9 +67,21 @@ class View2Controller: BaseViewController {
                             
                             if(temp.IsSuccess)
                             {
-                                let customIcon = UIImage(named: "no-internet")
-                                let alertview = JSSAlertView().show(self, title: "Warning", text: "Connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
-                                alertview.setTextTheme(.Light)
+                                WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
+
+                                    if let temp1 = objectReturn
+                                    {
+                                        if(temp1.IsSuccess)
+                                        {
+                                            self.view.hideLoading();
+                                            
+                                            let customIcon = UIImage(named: "no-internet")
+                                            let alertview = JSSAlertView().show(self, title: "Warning", text: "Net code send", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
+                                            alertview.setTextTheme(.Light)
+                                        }
+                                    }
+                                }
+                                
                             }
                         }
                         else

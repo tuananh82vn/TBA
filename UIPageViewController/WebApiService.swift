@@ -6,18 +6,15 @@ struct WebApiService {
 
     
     private enum ResourcePath: CustomStringConvertible {
-        case Login
+        case GetNetCode
         case Verify
-        case GetDirectory
-        case GetFile
+
         
         
         var description: String {
             switch self {
-                case .Login: return "/Api/Login"
+                case .GetNetCode: return "/Api/GetNetCode"
                 case .Verify: return "/Api/Verify"
-                case .GetDirectory: return "/Api/GetDirectory"
-                case .GetFile: return "/Api/GetFile/?filePath="
 
             }
         }
@@ -28,9 +25,9 @@ struct WebApiService {
         let urlString = domain + ResourcePath.Verify.description
         
         
-        let JsonReturn = JsonReturnModel()
+        var JsonReturn = JsonReturnModel()
         
-        Alamofire.request(.POST, urlString, parameters: nil , encoding: .JSON).responseJSON {
+        Alamofire.request(.POST, urlString, parameters: nil, encoding: .JSON).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -60,6 +57,7 @@ struct WebApiService {
             }
             
         }
+
         
     }
 
@@ -88,73 +86,52 @@ struct WebApiService {
     
     }
     
-//    static func checkInternet(flag:Bool, completionHandler:(internet:Bool) -> Void)
-//    {
-//        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-//        
-//        let url = NSURL(string: "http://www.google.com/")
-//        let request = NSMutableURLRequest(URL: url!)
-//        
-//        request.HTTPMethod = "HEAD"
-//        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData
-//        request.timeoutInterval = 10.0
-//        
-//        NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue(), completionHandler:
-//            {(response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
-//                
-//                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-//                
-//                let rsp = response as! NSHTTPURLResponse?
-//                
-//                completionHandler(internet:rsp?.statusCode == 200)
-//        })
-//    }
-    
-    static func loginWithUsername(Username: String, password: String) {
+    static func getNetCode(ReferenceNumber: String,  response : (objectReturn : JsonReturnModel?) -> ()) {
         
-        let baseURL = LocalStore.accessRCS_URL_API()!
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetNetCode.description
         
-        let urlString = baseURL + ResourcePath.Login.description
-        
+        let JsonReturn = JsonReturnModel()
         
         let parameters = [
             "Item": [
-                "Username": Username,
-                "Password": password
+                "ReferenceNumber": ReferenceNumber
             ]
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON { response in
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
             
-            if let json = response.result.value {
+            if let jsonReturn1 = json.result.value {
                 
-                let jsonObject = JSON(json)
+                let jsonObject = JSON(jsonReturn1)
                 
-                let IsSuccess = jsonObject["IsSuccess"].bool
                 
-                if(IsSuccess?.boolValue == true)
-                {
-                    if let Item = jsonObject["Item"].dictionaryObject {
-                        
-                        //let Return = JSONParser.parseLoginModel(Item as NSDictionary)
-                        
-                        //returnMethod (objectReturn : Return)
-                    }
-                }
-                else
-                {
-                    //returnMethod (objectReturn : nil)
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
                 }
                 
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
             }
             else
             {
-                //returnMethod (objectReturn : nil)
+                response (objectReturn : nil)
             }
             
         }
-        
+
     }
 
+    
+    
 }
