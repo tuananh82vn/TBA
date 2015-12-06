@@ -8,8 +8,9 @@
 
 import UIKit
 
-class PinSetupViewController: UIViewController, UITextFieldDelegate {
+class PinSetupViewController: BaseViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var view1: UIView!
     @IBOutlet weak var tf_Pin0: UITextField!
     @IBOutlet weak var lable1: UILabel!
     @IBOutlet weak var tf_Pin4: UITextField!
@@ -64,7 +65,7 @@ class PinSetupViewController: UIViewController, UITextFieldDelegate {
             
             position = 1
             
-            lable1.text = "Re-enter the PIN you will use to access this app";
+            lable1.text = "Re-enter the PIN";
             
             if(FinishFirstPin)
             {
@@ -72,6 +73,7 @@ class PinSetupViewController: UIViewController, UITextFieldDelegate {
                 InputSecondPin = true
                 
             }
+            
         }
         
         if(InputSecondPin && FinishSecondPin){
@@ -86,11 +88,8 @@ class PinSetupViewController: UIViewController, UITextFieldDelegate {
             }
             else
             {
-                NSLog("Pin not match - input again")
                 
-                let customIcon = UIImage(named: "no-internet")
-                let alertview = JSSAlertView().show(self, title: "Warning", text: "Pin not match - input again", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
-                alertview.setTextTheme(.Light)
+                SweetAlert().showAlert("Error", subTitle: "Pin not match - try again", style: AlertStyle.Error)
                 
                 reset()
             }

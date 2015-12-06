@@ -673,7 +673,7 @@
         <!--Pin Setup View Controller-->
         <scene sceneID="2xl-7m-e8c">
             <objects>
-                <viewController id="rFd-Rm-HRz" customClass="PinSetupViewController" customModule="UIPageViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PinSetupViewController" id="rFd-Rm-HRz" customClass="PinSetupViewController" customModule="UIPageViewController" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gAo-n8-dsR"/>
                         <viewControllerLayoutGuide type="bottom" id="Uc4-4O-zy9"/>
@@ -1097,6 +1097,7 @@
                         <outlet property="tf_Pin2" destination="r3F-na-ayy" id="8vj-qT-4Ni"/>
                         <outlet property="tf_Pin3" destination="jd5-ef-5Fv" id="5DX-tK-rpY"/>
                         <outlet property="tf_Pin4" destination="qk3-c4-H8o" id="IIi-0a-Oxs"/>
+                        <outlet property="view1" destination="rkc-iu-QZW" id="1KZ-ni-cfq"/>
                         <segue destination="73m-Ox-oll" kind="show" identifier="GoToLogin" id="5cq-cx-gzt"/>
                     </connections>
                 </viewController>

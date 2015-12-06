@@ -18,6 +18,7 @@ class View2Controller: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 //        UIPageControl.appearance().currentPage = 1
 //        UIPageControl.appearance().updateCurrentPageDisplay()
 //        println(UIPageControl.appearance().currentPage)
@@ -32,6 +33,8 @@ class View2Controller: BaseViewController {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        
+
     }
     
     //Calls this function when the tap is recognized.
@@ -46,6 +49,8 @@ class View2Controller: BaseViewController {
     }
     
     @IBAction func GetNetCodeClicked(sender: AnyObject) {
+        
+
         doGetNetCode()
     }
     
@@ -75,9 +80,11 @@ class View2Controller: BaseViewController {
                                         {
                                             self.view.hideLoading();
                                             
-                                            let customIcon = UIImage(named: "no-internet")
-                                            let alertview = JSSAlertView().show(self, title: "Warning", text: "Net code send", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
-                                            alertview.setTextTheme(.Light)
+                                            JSSAlertView().success(
+                                                self,
+                                                title: "Success",
+                                                text: "Netcode sent."
+                                            )
                                         }
                                     }
                                 }
@@ -88,7 +95,7 @@ class View2Controller: BaseViewController {
                         {
                             self.view.hideLoading();
                             
-                            let customIcon = UIImage(named: "no-internet")
+                            let customIcon = UIImage(named: "nointernet")
                             let alertview = JSSAlertView().show(self, title: "Warning", text: "No connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
                             alertview.setTextTheme(.Light)
                             
@@ -102,7 +109,7 @@ class View2Controller: BaseViewController {
                     
                     self.view.hideLoading();
                     
-                    let customIcon = UIImage(named: "no-internet")
+                    let customIcon = UIImage(named: "nointernet")
                     let alertview = JSSAlertView().show(self, title: "Warning", text: "No connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
                     alertview.setTextTheme(.Light)
                 }
