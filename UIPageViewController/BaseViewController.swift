@@ -22,6 +22,7 @@ class BaseViewController: UIViewController {
         
         LocalStore.setWeb_URL_API(domain)
         
+
         // Do any additional setup after loading the view.
     }
 

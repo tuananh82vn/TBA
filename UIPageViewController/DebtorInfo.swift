@@ -12,11 +12,24 @@ import Foundation
 class DebtorInfo {
     
     var ReferenceNumber : String
-//    var TotalOutstanding : Float
+    var AccountCode : String
+    var DebtorCode : String
+    var TotalOutstanding : Float
+    var NextPaymentInstallmentAmount : String
+    var MerchantId : String
+    
+    var IsSuccess : Bool
+    var Errors : [Error]
     
     init() {
         ReferenceNumber = ""
-//        TotalOutstanding = 0
+        AccountCode = ""
+        DebtorCode = ""
+        TotalOutstanding = 0
+        NextPaymentInstallmentAmount = ""
+        MerchantId = ""
+        IsSuccess = false
+        Errors = [Error]()
     }
     
 //    public virtual Decimal TotalOutstanding { get; set; }

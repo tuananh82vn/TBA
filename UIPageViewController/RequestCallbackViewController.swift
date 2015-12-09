@@ -44,6 +44,7 @@ class RequestCallbackViewController: TKDataFormViewController {
 
         dataSource["timefrom"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["timefrom"].hintText = "From"
+        
         dataSource["timeto"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["timeto"].hintText = "To"
         
@@ -56,6 +57,7 @@ class RequestCallbackViewController: TKDataFormViewController {
         self.dataForm.dataSource = dataSource
         self.dataForm.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height - 66)
         self.dataForm.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
+        dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
 
         btn.frame = CGRect(x: 0, y: self.dataForm.frame.size.height, width: self.view.bounds.size.width, height: 66)
         btn.setTitle("Request", forState: .Normal)
@@ -73,7 +75,7 @@ class RequestCallbackViewController: TKDataFormViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        btn.frame = CGRect(x: 0, y: self.dataForm.frame.size.height, width: self.view.bounds.size.width, height: 66)
+//        btn.frame = CGRect(x: 0, y: self.dataForm.frame.size.height, width: self.view.bounds.size.width, height: 66)
     }
     
     func request() {
@@ -105,7 +107,7 @@ class RequestCallbackViewController: TKDataFormViewController {
         editor.style.separatorLeadingSpace = 40
         editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
         
-        if ["date", "timefrom", "timeto", "name", "phone"].contains(property.name) {
+        if ["date","name", "phone"].contains(property.name) {
             editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
             let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
             editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)

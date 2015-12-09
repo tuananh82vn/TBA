@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKListViewDataSource, TKListViewStaggeredLayoutDelegate {
+class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKListViewDataSource, TKListViewLinearLayoutDelegate {
 
     
     @IBOutlet weak var subMainView: UIView!
@@ -255,7 +255,7 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         self.selectedRow = indexPath.row
     }
     
-    func staggeredLayout(layout: TKListViewStaggeredLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
+    func listView(listView: TKListView, layout: TKListViewLinearLayout, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
                 if indexPath.row == self.selectedRow {
                     return CGSizeMake(360, 90)
                 }

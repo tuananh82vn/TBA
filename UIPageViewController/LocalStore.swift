@@ -3,28 +3,72 @@ import UIKit
 
 struct LocalStore {
 
-    private static let DebtCode = "DebtCode"
+    private static let RefNumber = "RefNumber"
     
     private static let Web_URL_API = "Web_URL_API"
 
     private static let RCS_URL_API = "RCS_URL_API"
     
+    private static let Pin = "Pin"
+    
+    private static let IsPinSetup = "IsPinSetup"
+    
+    private static let TotalOutstanding = "TotalOutstanding"
+    
+    private static let NextPaymentInstallmentAmount = "NextPaymentInstallmentAmount"
+    
+    
     private static let userDefaults = NSUserDefaults.standardUserDefaults()
+    
+    
+    //----------------------------------------------------------------------------//
+    static func setNextPaymentInstallmentAmount(token: String) {
+        userDefaults.setObject(token, forKey: NextPaymentInstallmentAmount)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteNextPaymentInstallmentAmount() {
+        userDefaults.removeObjectForKey(NextPaymentInstallmentAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func accessNextPaymentInstallmentAmount() -> String? {
+        return userDefaults.stringForKey(NextPaymentInstallmentAmount)
+    }
+    
+    //----------------------------------------------------------------------------//
 
-    
-    static func setDebtCode(token: String) {
-        userDefaults.setObject(token, forKey: DebtCode)
+    static func setTotalOutstanding(token: String) {
+        userDefaults.setObject(token, forKey: TotalOutstanding)
         userDefaults.synchronize()
     }
     
-    private static func deleteDebtCode() {
-        userDefaults.removeObjectForKey(DebtCode)
+    private static func deleteTotalOutstanding() {
+        userDefaults.removeObjectForKey(TotalOutstanding)
         userDefaults.synchronize()
     }
     
-    static func accessDebtCode() -> String? {
-        return userDefaults.stringForKey(DebtCode)
+    static func accessTotalOutstanding() -> String? {
+        return userDefaults.stringForKey(TotalOutstanding)
     }
+    
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setRefNumber(token: String) {
+        userDefaults.setObject(token, forKey: RefNumber)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteRefNumber() {
+        userDefaults.removeObjectForKey(RefNumber)
+        userDefaults.synchronize()
+    }
+    
+    static func accessRefNumber() -> String? {
+        return userDefaults.stringForKey(RefNumber)
+    }
+    
     
     //----------------------------------------------------------------------------//
     
@@ -60,7 +104,35 @@ struct LocalStore {
     
     //----------------------------------------------------------------------------//
 
+    static func setPin(token: String) {
+        userDefaults.setObject(token, forKey: Pin)
+        userDefaults.synchronize()
+    }
     
+    private static func deletePin() {
+        userDefaults.removeObjectForKey(Pin)
+        userDefaults.synchronize()
+    }
+    
+    static func accessPin() -> String? {
+        return userDefaults.stringForKey(Pin)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setIsPinSetup(token: String) {
+        userDefaults.setObject(token, forKey: IsPinSetup)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteIsPinSetup() {
+        userDefaults.removeObjectForKey(IsPinSetup)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsPinSetup() -> String? {
+        return userDefaults.stringForKey(IsPinSetup)
+    }
 
 
     // MARK: Helper

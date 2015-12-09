@@ -32,16 +32,18 @@
 		C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D05F1C100A1A00AE7265 /* SwiftyJSON.swift */; };
 		C783D0621C111A7C00AE7265 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0611C111A7C00AE7265 /* Error.swift */; };
 		C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0631C111AB200AE7265 /* JSONParser.swift */; };
-		C783D0671C111BA100AE7265 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0661C111BA100AE7265 /* JSSAlertView.swift */; };
 		C783D0691C11233B00AE7265 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783D0681C11233B00AE7265 /* Alamofire.framework */; };
 		C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */; };
 		C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A681791C1139FC00348EB0 /* DebtorInfo.swift */; };
 		C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A681901C11538200348EB0 /* PinSetupViewController.swift */; };
-		C7A681931C14F46500348EB0 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A681921C14F46500348EB0 /* SweetAlert.swift */; };
 		C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */; };
 		C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC21BEB0462009BCE1E /* Timer.swift */; };
 		C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */; };
 		C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */; };
+		C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351BE1C155A2600315A47 /* DeviceDetect.swift */; };
+		C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C01C165AB400315A47 /* TelerikAlert.swift */; };
+		C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C21C1660A500315A47 /* CardInfo.swift */; };
+		C7E351C51C167A6400315A47 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C41C167A6400315A47 /* String.swift */; };
 		C7E6357D1BEC5E1D002D8438 /* MakePaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6357C1BEC5E1D002D8438 /* MakePaymentViewController.swift */; };
 		C7E6B0081BF0548E00D60EC1 /* PaymentTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0071BF0548E00D60EC1 /* PaymentTrackerViewController.swift */; };
 		C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0161BF0662E00D60EC1 /* PaymentTrackerViewCell.swift */; };
@@ -51,6 +53,7 @@
 		C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0211BF07A1C00D60EC1 /* LoremIpsumGenerator.swift */; };
 		C7E6B0241BF15AAA00D60EC1 /* CustomTelrikViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0231BF15AA900D60EC1 /* CustomTelrikViewCell.swift */; };
 		C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0251BF1933A00D60EC1 /* RequestCallbackViewController.swift */; };
+		C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,16 +99,18 @@
 		C783D05F1C100A1A00AE7265 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C783D0611C111A7C00AE7265 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		C783D0631C111AB200AE7265 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
-		C783D0661C111BA100AE7265 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSSAlertView.swift; sourceTree = "<group>"; };
 		C783D0681C11233B00AE7265 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentInfoViewController.swift; sourceTree = "<group>"; };
 		C7A681791C1139FC00348EB0 /* DebtorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebtorInfo.swift; sourceTree = "<group>"; };
 		C7A681901C11538200348EB0 /* PinSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinSetupViewController.swift; sourceTree = "<group>"; };
-		C7A681921C14F46500348EB0 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
 		C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C7ABFCC21BEB0462009BCE1E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDebtorController.swift; sourceTree = "<group>"; };
+		C7E351BE1C155A2600315A47 /* DeviceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetect.swift; sourceTree = "<group>"; };
+		C7E351C01C165AB400315A47 /* TelerikAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelerikAlert.swift; sourceTree = "<group>"; };
+		C7E351C21C1660A500315A47 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
+		C7E351C41C167A6400315A47 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		C7E6357C1BEC5E1D002D8438 /* MakePaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakePaymentViewController.swift; sourceTree = "<group>"; };
 		C7E6B0071BF0548E00D60EC1 /* PaymentTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTrackerViewController.swift; sourceTree = "<group>"; };
 		C7E6B0161BF0662E00D60EC1 /* PaymentTrackerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTrackerViewCell.swift; sourceTree = "<group>"; };
@@ -115,6 +120,7 @@
 		C7E6B0211BF07A1C00D60EC1 /* LoremIpsumGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremIpsumGenerator.swift; sourceTree = "<group>"; };
 		C7E6B0231BF15AA900D60EC1 /* CustomTelrikViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTelrikViewCell.swift; sourceTree = "<group>"; };
 		C7E6B0251BF1933A00D60EC1 /* RequestCallbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCallbackViewController.swift; sourceTree = "<group>"; };
+		C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinLoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,8 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				78E75F451AC5FC48001A93F1 /* Main.storyboard */,
-				78E75F411AC5FC48001A93F1 /* AppDelegate.swift */,
 				78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */,
+				78E75F411AC5FC48001A93F1 /* AppDelegate.swift */,
 				C7E6B0181BF068DD00D60EC1 /* Model */,
 				C7ABFCBE1BEB00E7009BCE1E /* ViewController */,
 				C7E6B0151BF065A800D60EC1 /* Cell */,
@@ -234,8 +240,7 @@
 		C783D0651C111B8000AE7265 /* UIControl */ = {
 			isa = PBXGroup;
 			children = (
-				C7A681921C14F46500348EB0 /* SweetAlert.swift */,
-				C783D0661C111BA100AE7265 /* JSSAlertView.swift */,
+				C7E351C01C165AB400315A47 /* TelerikAlert.swift */,
 			);
 			name = UIControl;
 			sourceTree = "<group>";
@@ -245,9 +250,10 @@
 			children = (
 				669D24AB1BC793DA0087C306 /* BaseViewController.swift */,
 				78E75F431AC5FC48001A93F1 /* ViewController.swift */,
-				66D324251B9D22B5001BBD9B /* View2Controller.swift */,
 				66D324231B9D21BB001BBD9B /* View1Controller.swift */,
+				66D324251B9D22B5001BBD9B /* View2Controller.swift */,
 				C7A681901C11538200348EB0 /* PinSetupViewController.swift */,
+				C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */,
 				C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */,
 				C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */,
 				C7813B671BEC950600876860 /* BlankViewController.swift */,
@@ -272,6 +278,8 @@
 				C72C0C451BEC220D007463FD /* UIColorExtension.swift */,
 				C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */,
 				C7ABFCC21BEB0462009BCE1E /* Timer.swift */,
+				C7E351BE1C155A2600315A47 /* DeviceDetect.swift */,
+				C7E351C41C167A6400315A47 /* String.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 		C7E6B0181BF068DD00D60EC1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C7E351C21C1660A500315A47 /* CardInfo.swift */,
 				C783D0611C111A7C00AE7265 /* Error.swift */,
 				C7E6B0191BF068F400D60EC1 /* PaymentTrackerRecordModel.swift */,
 				C7A681791C1139FC00348EB0 /* DebtorInfo.swift */,
@@ -465,12 +474,14 @@
 				C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */,
 				C7813B681BEC950600876860 /* BlankViewController.swift in Sources */,
 				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
+				C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
-				C7A681931C14F46500348EB0 /* SweetAlert.swift in Sources */,
+				C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
+				C7E351C51C167A6400315A47 /* String.swift in Sources */,
 				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
 				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
@@ -483,12 +494,13 @@
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,
 				C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */,
 				C783D05E1C1009E200AE7265 /* LocalStore.swift in Sources */,
-				C783D0671C111BA100AE7265 /* JSSAlertView.swift in Sources */,
 				C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */,
 				C7E6B0081BF0548E00D60EC1 /* PaymentTrackerViewController.swift in Sources */,
+				C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */,
 				C7E6B0201BF079EA00D60EC1 /* PaymentTracker2ViewController.swift in Sources */,
 				C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */,
 				C7E6B01E1BF06A3F00D60EC1 /* Serializable.swift in Sources */,
+				C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */,
 				C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

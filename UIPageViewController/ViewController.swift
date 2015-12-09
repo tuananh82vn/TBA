@@ -11,14 +11,25 @@ import UIKit
 class ViewController: UIViewController, UIPageViewControllerDataSource {
 
     var pageViewController: UIPageViewController!
-   // var currentPage = 0
-   // var curentIndex = 0
+
     var viewControler = ["View1Controller","View2Controller"]
+    
+    //var viewControler2 = ["View1Controller","PinLoginViewController"]
+    
+    var IsPinSetup : Bool = false
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-       
+        
+        if let temp = LocalStore.accessIsPinSetup() {
+            
+            if(temp == "true"){
+                self.IsPinSetup = true
+                self.viewControler = ["PinLoginViewController"]
+            }
+        }
+        
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         
         self.pageViewController.dataSource = self
@@ -41,7 +52,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     func viewControllerAtIndex(index : Int ) -> UIViewController {
-        
+
             let contentViewController =  self.storyboard?.instantiateViewControllerWithIdentifier(self.viewControler[index]) as! BaseViewController
         
             contentViewController.rootViewController = self
@@ -115,20 +126,20 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
     }
     
-    func goToPreviousContentViewController(){
-        
-        let currentViewController = self.pageViewController.viewControllers![0] 
-        let vcRestorationID = currentViewController.restorationIdentifier
-        var index =  viewControler.indexOf((vcRestorationID!))
-        
-        index!--
-        
-        let nextViewController = self.viewControllerAtIndex(index!)
-        
-        let viewControllers = NSArray(object: nextViewController)
-        
-        self.pageViewController.setViewControllers(viewControllers as? [UIViewController] , direction: .Reverse, animated: true, completion: nil)
-    }
+//    func goToPreviousContentViewController(){
+//        
+//        let currentViewController = self.pageViewController.viewControllers![0] 
+//        let vcRestorationID = currentViewController.restorationIdentifier
+//        var index =  viewControler.indexOf((vcRestorationID!))
+//        
+//        index!--
+//        
+//        let nextViewController = self.viewControllerAtIndex(index!)
+//        
+//        let viewControllers = NSArray(object: nextViewController)
+//        
+//        self.pageViewController.setViewControllers(viewControllers as? [UIViewController] , direction: .Reverse, animated: true, completion: nil)
+//    }
     
 
 }

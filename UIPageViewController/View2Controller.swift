@@ -11,9 +11,11 @@ import UIKit
 class View2Controller: BaseViewController {
 
     
+    @IBOutlet weak var tf_Netcode: UITextField!
     @IBOutlet weak var tf_DebtCode: UITextField!
     var pageIndex : Int = 1
     
+    @IBOutlet weak var bt_Continue: UIButton!
     @IBOutlet weak var bt_GetNetCode: UIButton!
     
     override func viewDidLoad() {
@@ -23,17 +25,27 @@ class View2Controller: BaseViewController {
 //        UIPageControl.appearance().updateCurrentPageDisplay()
 //        println(UIPageControl.appearance().currentPage)
         
-        // Do any additional setup after loading the view.
+        
+//        if (LocalStore.accessRefNumber()?.length > 0){
+//            self.tf_DebtCode.text = LocalStore.accessRefNumber()
+//        }
+        
+        self.tf_DebtCode.text = "706132600"
+        
+        // Show button get net code
         UIView.animateWithDuration(2.0, animations: { () -> Void in
             self.bt_GetNetCode.alpha = 1
         })
         
-        
-        self.tf_DebtCode.text = "706132600"
-        
+        //Handle auto hide keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
+        // Hide button cotinue.
+        UIView.animateWithDuration(2.0, animations: { () -> Void in
+            self.bt_Continue.alpha = 0
+            self.bt_Continue.enabled = false
+        })
 
     }
     
@@ -49,12 +61,66 @@ class View2Controller: BaseViewController {
     }
     
     @IBAction func GetNetCodeClicked(sender: AnyObject) {
-        
 
         doGetNetCode()
     }
     
     @IBAction func ContinueClicked(sender: AnyObject) {
+
+ 
+        self.view.showLoading();
+        
+        WebApiService.verifyNetCode(self.tf_DebtCode.text!, Netcode: self.tf_Netcode.text!) { objectReturn in
+
+            if let temp1 = objectReturn
+            {
+                self.view.hideLoading();
+
+                if(temp1.IsSuccess)
+                {
+                    LocalStore.setRefNumber(self.tf_DebtCode.text!)
+                    
+                    self.performSegueWithIdentifier("GoToSetupPin", sender: nil)
+                }
+                else
+                {
+                    
+                    TelerikAlert.ShowAlert(self.view, title: "Error", message: "Invalid Netcode", style: "Error")
+
+                    self.bt_GetNetCode.enabled = true
+                    //
+                    self.bt_GetNetCode.backgroundColor = UIColor.init(hex: "#30a742")
+                }
+                
+            }
+        }
+ 
+        //Get Debtor Information
+//        self.view.showLoading();
+//        
+//        WebApiService.GetDebtorInfo(self.tf_DebtCode.text!) { objectReturn in
+//            
+//            if let temp1 = objectReturn
+//            {
+//                self.view.hideLoading();
+//                
+//                if(temp1.IsSuccess)
+//                {
+//                    
+//                    LocalStore.setRefNumber(temp1.ReferenceNumber)
+//                    LocalStore.setNextPaymentInstallmentAmount(temp1.NextPaymentInstallmentAmount)
+//                    LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
+//
+//                    self.performSegueWithIdentifier("GoToBlank", sender: nil)
+//                    
+//                }
+//                else
+//                {
+//                    
+//                }
+//                
+//            }
+//        }
     }
     
     func doGetNetCode(){
@@ -62,68 +128,51 @@ class View2Controller: BaseViewController {
         self.view.showLoading();
         
         WebApiService.checkInternet({(internet:Bool) -> Void in
-                
+            
                 if (internet)
                 {
-                    WebApiService.postVerify(LocalStore.accessWeb_URL_API()!){ objectReturn in
-                        
-                        
-                        if let temp = objectReturn {
-                            
-                            if(temp.IsSuccess)
-                            {
-                                WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
 
-                                    if let temp1 = objectReturn
-                                    {
-                                        if(temp1.IsSuccess)
-                                        {
-                                            self.view.hideLoading();
+                     WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
+
+                     if let temp1 = objectReturn
+                     {
+                        self.view.hideLoading();
+
+                        
+                        if(temp1.IsSuccess)
+                        {
+                                TelerikAlert.ShowAlert(self.view, title: "Success", message: temp1.Errors[0].ErrorMessage, style: "Positive")
                                             
-                                            JSSAlertView().success(
-                                                self,
-                                                title: "Success",
-                                                text: "Netcode sent."
-                                            )
-                                        }
-                                    }
-                                }
-                                
-                            }
+                                //disable button get net code
+                                self.bt_GetNetCode.backgroundColor = UIColor.grayColor()
+                                self.bt_GetNetCode.enabled = false
+                                            
+                                //Enable button continue
+                                self.bt_Continue.enabled = true
+                                self.bt_Continue.alpha = 1
+                                            
+                            
+                               self.tf_Netcode.becomeFirstResponder()
+
                         }
                         else
                         {
-                            self.view.hideLoading();
-                            
-                            let customIcon = UIImage(named: "nointernet")
-                            let alertview = JSSAlertView().show(self, title: "Warning", text: "No connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
-                            alertview.setTextTheme(.Light)
-                            
-                            
+                                TelerikAlert.ShowAlert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, style: "Error")
                         }
-                        
+                    }
                     }
                 }
                 else
                 {
                     
                     self.view.hideLoading();
-                    
-                    let customIcon = UIImage(named: "nointernet")
-                    let alertview = JSSAlertView().show(self, title: "Warning", text: "No connections are available ", buttonText: "Try later", color: UIColorFromHex(0xe74c3c, alpha: 1), iconImage: customIcon)
-                    alertview.setTextTheme(.Light)
+
+                    TelerikAlert.ShowAlert(self.view, title: "Warning", message: "No connections are available.", style: "Warning")
+
                 }
         })
     }
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -2,6 +2,12 @@ import UIKit
 
 class HomeViewController: UIViewController, TKSideDrawerDelegate {
     
+    @IBOutlet weak var deferButton: UIButton!
+    @IBOutlet weak var callbackButton: UIButton!
+    @IBOutlet weak var inboxButton: UIButton!
+    @IBOutlet weak var instalmentButton: UIButton!
+    @IBOutlet weak var paymentButton: UIButton!
+    @IBOutlet weak var trackerButton: UIButton!
     
     override func viewDidLoad() {
         
@@ -71,6 +77,34 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         
         //----------------------------------------------------//
 
+        let modelName = UIDevice.currentDevice().modelName
+
+        setupButton(modelName);
+        
+    }
+    
+    func setupButton(iphone : String){
+        if(iphone == "iPhone 6s Plus" || iphone == "iPhone 6 Plus" ){
+            
+        self.paymentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
+        self.paymentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+
+        self.trackerButton.titleEdgeInsets = UIEdgeInsetsMake(40, 5 , 0, 0)
+        self.trackerButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+        
+        self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 10 , 0, 0)
+        self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+        
+        self.deferButton.titleEdgeInsets = UIEdgeInsetsMake(40, 5 , 0, 0)
+        self.deferButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+        
+        self.callbackButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
+        self.callbackButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+        
+        self.inboxButton.titleEdgeInsets = UIEdgeInsetsMake(40, 30 , 0, 0)
+        self.inboxButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+            
+        }
         
     }
     
@@ -134,6 +168,26 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         }
     }
     
+    @IBAction func btInbox_Clicked(sender: AnyObject) {
+    }
+    
+    @IBAction func btCallback_Clicked(sender: AnyObject) {
+    }
+
+    @IBAction func btDefer_Clicked(sender: AnyObject) {
+    }
+    
+    @IBAction func btInstalment_Clicked(sender: AnyObject) {
+    }
+    
+    @IBAction func btTracker_Clicked(sender: AnyObject) {
+    }
+    
+    @IBAction func btPayment_Clicked(sender: AnyObject) {
+        let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
+        
+        self.navigationController!.pushViewController(makepaymentController, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
