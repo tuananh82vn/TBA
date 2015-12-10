@@ -45,8 +45,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         
         //self.view.addSubview(navBar)
         
-        // tao menu
-        
+        // create menu
         let sectionPrimary = self.sideDrawer.addSectionWithTitle("Main")
         sectionPrimary.addItemWithTitle("Make a payment", image: UIImage(named: "dollar")!)
         sectionPrimary.addItemWithTitle("Payment Tracker", image: UIImage(named: "payment")!)
@@ -84,6 +83,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     }
     
     func setupButton(iphone : String){
+        
         if(iphone == "iPhone 6s Plus" || iphone == "iPhone 6 Plus" ){
             
         self.paymentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
@@ -143,11 +143,9 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
             
             if(indexPath.row == 1 ){
                 
-             //   let paymentTracker = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTrackerViewController") as! PaymentTrackerViewController
                 
                 let paymentTracker = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTracker2ViewController") as! PaymentTracker2ViewController
 
-                
                 self.navigationController!.pushViewController(paymentTracker, animated: true)
                 
             }
@@ -184,9 +182,11 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     }
     
     @IBAction func btPayment_Clicked(sender: AnyObject) {
+        
         let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
         
         self.navigationController!.pushViewController(makepaymentController, animated: true)
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -72,7 +72,7 @@
 		669D24AB1BC793DA0087C306 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		66D324231B9D21BB001BBD9B /* View1Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View1Controller.swift; sourceTree = "<group>"; };
 		66D324251B9D22B5001BBD9B /* View2Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View2Controller.swift; sourceTree = "<group>"; };
-		78E75F3C1AC5FC48001A93F1 /* UIPageViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIPageViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78E75F3C1AC5FC48001A93F1 /* Recoveries Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recoveries Connect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E75F401AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F411AC5FC48001A93F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78E75F431AC5FC48001A93F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 		78E75F3D1AC5FC48001A93F1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				78E75F3C1AC5FC48001A93F1 /* UIPageViewController.app */,
+				78E75F3C1AC5FC48001A93F1 /* Recoveries Connect.app */,
 				78E75F511AC5FC48001A93F1 /* UIPageViewControllerTests.xctest */,
 			);
 			name = Products;
@@ -333,7 +333,7 @@
 			);
 			name = UIPageViewController;
 			productName = UIPageViewController;
-			productReference = 78E75F3C1AC5FC48001A93F1 /* UIPageViewController.app */;
+			productReference = 78E75F3C1AC5FC48001A93F1 /* Recoveries Connect.app */;
 			productType = "com.apple.product-type.application";
 		};
 		78E75F501AC5FC48001A93F1 /* UIPageViewControllerTests */ = {
@@ -635,7 +635,8 @@
 				INFOPLIST_FILE = UIPageViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.synotive.recoveriescorp;
+				PRODUCT_NAME = "Recoveries Connect";
 				SWIFT_OBJC_BRIDGING_HEADER = "UIPageViewController/UIPageViewController-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -656,7 +657,8 @@
 				INFOPLIST_FILE = UIPageViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.synotive.recoveriescorp;
+				PRODUCT_NAME = "Recoveries Connect";
 				SWIFT_OBJC_BRIDGING_HEADER = "UIPageViewController/UIPageViewController-Bridging-Header.h";
 			};
 			name = Release;

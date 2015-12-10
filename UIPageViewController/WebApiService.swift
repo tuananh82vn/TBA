@@ -246,7 +246,7 @@ struct WebApiService {
     }
     
     
-    static func MakeCreditCardPayment(cardObject : CardInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func MakeCreditCardPayment(cardObject : CardInfo, PaymentType : Int ,response : (objectReturn : JsonReturnModel?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.MakeCreditCardPayment.description
         
@@ -265,10 +265,12 @@ struct WebApiService {
             "Item": [
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
                 "Amount": cardObject.Amount,
+                "NameOnCard" : cardObject.NameOnCard,
                 "CreditCardNumber": cardObject.CardNumber,
                 "CreditCardExpiryYear": year.description,
                 "CreditCardExpiryMonth": month.description,
-                "CreditCardCVV": cardObject.CVV
+                "CreditCardCVV": cardObject.CVV,
+                "PaymentType": PaymentType
             ]
         ]
         

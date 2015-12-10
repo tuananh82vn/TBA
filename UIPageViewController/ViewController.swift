@@ -22,23 +22,37 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
     {
         super.viewDidLoad()
         
+        self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
+        
+        
         if let temp = LocalStore.accessIsPinSetup() {
             
             if(temp == "true"){
                 self.IsPinSetup = true
                 self.viewControler = ["PinLoginViewController"]
             }
+            else
+            {
+                //disable moving view - because if view animate - keyboard will disapear
+                self.pageViewController.dataSource = self
+            }
+        }
+        else
+        {
+            //disable moving view - because if view animate - keyboard will disapear
+            self.pageViewController.dataSource = self
+            
         }
         
-        self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
-        
-        self.pageViewController.dataSource = self
+
 
         let vc1 = self.viewControllerAtIndex(0)
         
         let viewControllers = NSArray(object: vc1)
         
+
         self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
+
         
         self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.width, self.view.frame.size.height - 60)
         
@@ -103,6 +117,10 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
     {
+        if(self.IsPinSetup)
+        {
+            return 0
+        }
         return 2
     }
 

@@ -21,7 +21,10 @@ class MakePaymentViewController: TKDataFormViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        cardInfo.Amount = (LocalStore.accessTotalOutstanding()?.floatValue)!
+        cardInfo.Amount = 10
+        cardInfo.CVV = "123"
+        cardInfo.NameOnCard = "Andy Pham"
+        cardInfo.CardNumber = "4444333322221111"
         
         dataSource.sourceObject = cardInfo
         
@@ -148,13 +151,15 @@ class MakePaymentViewController: TKDataFormViewController {
         cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
         cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
         cardObject.CVV          = self.dataSource["CVV"].valueCandidate as! String
-        
-
-        
-        
+        cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
 
 
-                WebApiService.MakeCreditCardPayment(cardObject){ objectReturn in
+        // Pay in FULL
+        let PaymentType = 1
+        
+
+
+                WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
         
                     if let temp1 = objectReturn
                     {

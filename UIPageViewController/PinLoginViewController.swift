@@ -27,6 +27,10 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
 
     var FirstPin : String = "";
     
+    @IBAction func btForgotten_Clicked(sender: AnyObject) {
+        TelerikAlert.ShowAlert(self.view, title: "", message: "PIN is sent to your phone", style: "Info")
+
+    }
     
     override func viewDidLoad() {
         
@@ -38,35 +42,10 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
         
         InputFirstPin = true
         
-         tf_Pin0.becomeFirstResponder()
-        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidHide:"), name:UIKeyboardWillShowNotification, object: nil);
-//
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillShowNotification, object: nil);
+        tf_Pin0.becomeFirstResponder()
 
-
-        // Do any additional setup after loading the view.
     }
     
-//    func keyboardDidHide(notification: NSNotification) {
-//        tf_Pin0.becomeFirstResponder()
-//    }
-//    
-//    func keyboardWillHide(notification: NSNotification) {
-//        tf_Pin0.becomeFirstResponder()
-//    }
-//    
-//    override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated);
-//        
-//        tf_Pin0.becomeFirstResponder()
-//    }
-//
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated);
-//        
-//        tf_Pin0.becomeFirstResponder()
-//    }
     
     func tf_Pin0DidChange(textField: UITextField) {
         if(InputFirstPin && FinishFirstPin){
