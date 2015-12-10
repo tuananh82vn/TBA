@@ -10,6 +10,7 @@ import UIKit
 class CardInfo: NSObject {
 
     var Amount = Float()
+    var CardType = 0
     var NameOnCard = ""
     var CardNumber = ""
     var ExpiryDate = NSDate()
@@ -21,8 +22,9 @@ class CardInfo: NSObject {
 class BankInfo: NSObject {
     
     var Amount = Float()
-    var BankAccountName = ""
-    var BankAccountBSB1 = ""
-    var BankAccountBSB2 = ""
+    var AccountName = ""
+    var BSB1 = ""
+    var BSB2 = ""
+    var AccountNumber = ""
     
 }

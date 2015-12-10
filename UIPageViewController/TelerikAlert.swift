@@ -34,7 +34,6 @@ struct TelerikAlert {
         alert.alertView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         alert.dismissMode = TKAlertDismissMode.Tap
         
-        
 //        alert.addActionWithTitle("Close") { (TKAlert, TKAlertAction) -> Bool in
 //            NSLog("closed")
 //            return true

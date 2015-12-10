@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MakePaymentViewController: TKDataFormViewController {
+class MakeCreditPaymentViewController: TKDataFormViewController {
 
     @IBOutlet weak var subView: UIView!
     
@@ -30,6 +30,9 @@ class MakePaymentViewController: TKDataFormViewController {
         
         dataSource["Amount"].hintText = "Amount To Pay"
         dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
+        
+        dataSource["CardType"].valuesProvider = [ "Visa", "Master" ]
+        
 
         dataSource["NameOnCard"].hintText = "Name On Card"
         
@@ -125,6 +128,18 @@ class MakePaymentViewController: TKDataFormViewController {
             
         }
         else
+            if (propery.name == "CardType") {
+                
+                let value = propery.valueCandidate as! Int
+                
+                if (value < 0)
+                {
+                    dataSource["CardType"].errorMessage = "Please select card type"
+                    return false
+                }
+                
+        }
+        else
         if (propery.name == "CVV") {
             
             let value = propery.valueCandidate as! NSString
@@ -152,29 +167,36 @@ class MakePaymentViewController: TKDataFormViewController {
         cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
         cardObject.CVV          = self.dataSource["CVV"].valueCandidate as! String
         cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
+        cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
 
 
         // Pay in FULL
         let PaymentType = 1
+ 
+        WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
         
-
-
-                WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
+            if let temp1 = objectReturn
+            {
+                self.view.hideLoading();
         
-                    if let temp1 = objectReturn
-                    {
-                        self.view.hideLoading();
-        
-                        if(temp1.IsSuccess)
-                        {
-                            TelerikAlert.ShowAlert(self.subView, title: "Paid", message: "Paid Successful", style: "Info")
-                        }
-                        else
-                        {
-                            TelerikAlert.ShowAlert(self.subView, title: "Error", message: "Invalid card number", style: "Error")
-                        }
-                    }
+                if(temp1.IsSuccess)
+                {
+                        self.performSegueWithIdentifier("GoToSummary", sender: nil)
                 }
+                else
+                {
+                    
+                    // create the alert
+                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
 

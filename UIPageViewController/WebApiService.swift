@@ -261,10 +261,17 @@ struct WebApiService {
         let componentsMonth = calendar.components(NSCalendarUnit.Month, fromDate: cardObject.ExpiryDate)
         let month =  componentsMonth.month
         
+        //Visa
+        if(cardObject.CardType == 0 ){
+            cardObject.CardType = 2
+        }
+
+        
         let parameters = [
             "Item": [
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
                 "Amount": cardObject.Amount,
+                "CardType": cardObject.CardType,
                 "NameOnCard" : cardObject.NameOnCard,
                 "CreditCardNumber": cardObject.CardNumber,
                 "CreditCardExpiryYear": year.description,

@@ -28,13 +28,23 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
     var FirstPin : String = "";
     
     @IBAction func btForgotten_Clicked(sender: AnyObject) {
-        TelerikAlert.ShowAlert(self.view, title: "", message: "PIN is sent to your phone", style: "Info")
-
+        // create the alert
+        let alert = UIAlertController(title: "PIN sent", message: "Your PIN is sent to your phone.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        
+        // show the alert
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false) //or animated: false
+        
+        self.navigationItem.setHidesBackButton(true, animated:true)
         
         tf_Pin0.delegate = self;
         
@@ -44,6 +54,14 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
         
         tf_Pin0.becomeFirstResponder()
 
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return navigationController?.navigationBarHidden == true
+    }
+    
+    override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
+        return UIStatusBarAnimation.Fade
     }
     
     
@@ -60,7 +78,14 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
             else
             {
                 
-                TelerikAlert.ShowAlert(self.view, title: "Error", message: "Incorect PIN - Please try again.", style: "Error")
+                // create the alert
+                let alert = UIAlertController(title: "Incorrect PIN", message: "Your PIN is incorrect. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
                 
                 reset()
             }

@@ -133,13 +133,13 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         NSLog("Selected item in section: %ld at index: %ld ", indexPath.section, indexPath.row)
         if(indexPath.section == 0 )
         {
-            if(indexPath.row == 0 ){
-                
-                let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
-
-                self.navigationController!.pushViewController(makepaymentController, animated: true)
-                
-            }
+//            if(indexPath.row == 0 ){
+//                
+//                let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
+//
+//                self.navigationController!.pushViewController(makepaymentController, animated: true)
+//                
+//            }
             
             if(indexPath.row == 1 ){
                 
@@ -183,9 +183,34 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     
     @IBAction func btPayment_Clicked(sender: AnyObject) {
         
-        let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
+        let paymentMethodController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentMethodViewController") as! PaymentMethodViewController
         
-        self.navigationController!.pushViewController(makepaymentController, animated: true)
+        self.navigationController!.pushViewController(paymentMethodController, animated: true)
+        
+    }
+    @IBAction func btLogout_Clicked(sender: AnyObject) {
+        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let logoutAction = UIAlertAction(title: "Log off", style: UIAlertActionStyle.Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+                    let pinLoginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PinLoginViewController") as! PinLoginViewController
+            
+                    self.navigationController!.pushViewController(pinLoginViewController, animated: true)
+        })
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+
+        optionMenu.addAction(logoutAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+
         
     }
     override func didReceiveMemoryWarning() {
