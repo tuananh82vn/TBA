@@ -29,3 +29,30 @@ class JsonReturnModel {
         IsSuccess = false
     }
 }
+
+class PaymentReturnModel {
+    
+    var Item : String
+    var Name : String
+    var Date : String
+    var Time : String
+    var Amount : String
+    var ReceiptNumber : String
+    var TransactionDescription : String
+
+    var Errors : [Error]
+    var IsSuccess : Bool
+    
+    init() {
+        Item = ""
+        Name = ""
+        Date = ""
+        Time = ""
+        Amount = ""
+        ReceiptNumber = ""
+        TransactionDescription = ""
+        
+        Errors = [Error]()
+        IsSuccess = false
+    }
+}

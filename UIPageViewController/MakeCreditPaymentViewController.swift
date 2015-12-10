@@ -14,6 +14,7 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
     
     let dataSource = TKDataFormEntityDataSource()
     let cardInfo = CardInfo()
+    var paymentReturn = PaymentReturnModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,12 +176,15 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
  
         WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
         
+            self.view.hideLoading();
+
             if let temp1 = objectReturn
             {
-                self.view.hideLoading();
         
                 if(temp1.IsSuccess)
                 {
+                        self.paymentReturn = temp1
+                    
                         self.performSegueWithIdentifier("GoToSummary", sender: nil)
                 }
                 else
@@ -196,6 +200,25 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             }
+            else
+            {
+                // create the alert
+                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToSummary" {
+            
+            let controller = segue.destinationViewController as! SummaryViewController
+            controller.paymentReturn = self.paymentReturn
         }
     }
     

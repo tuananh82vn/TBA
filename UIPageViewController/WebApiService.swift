@@ -246,11 +246,11 @@ struct WebApiService {
     }
     
     
-    static func MakeCreditCardPayment(cardObject : CardInfo, PaymentType : Int ,response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func MakeCreditCardPayment(cardObject : CardInfo, PaymentType : Int ,response : (objectReturn : PaymentReturnModel?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.MakeCreditCardPayment.description
         
-        let JsonReturn = JsonReturnModel()
+        let JsonReturn = PaymentReturnModel()
         
         let calendar = NSCalendar.currentCalendar()
         
@@ -292,7 +292,6 @@ struct WebApiService {
                 if let IsSuccess = jsonObject["IsSuccess"].bool {
                     
                     JsonReturn.IsSuccess = IsSuccess
-                    
                 }
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
@@ -300,7 +299,36 @@ struct WebApiService {
                     let ErrorsReturn = JSONParser.parseError(Errors)
                     
                     JsonReturn.Errors = ErrorsReturn
+                }
+                
+                if let Name = jsonObject["Name"].string {
                     
+                    JsonReturn.Name = Name
+                }
+                
+                if let Date = jsonObject["Date"].string {
+                    
+                    JsonReturn.Date = Date
+                }
+                
+                if let Time = jsonObject["Time"].string {
+                    
+                    JsonReturn.Time = Time
+                }
+                
+                if let Amount = jsonObject["Amount"].string {
+                    
+                    JsonReturn.Amount = Amount
+                }
+                
+                if let ReceiptNumber = jsonObject["ReceiptNumber"].string {
+                    
+                    JsonReturn.ReceiptNumber = ReceiptNumber
+                }
+                
+                if let TransactionDescription = jsonObject["TransactionDescription"].string {
+                    
+                    JsonReturn.TransactionDescription = TransactionDescription
                 }
                 
                 response (objectReturn : JsonReturn)

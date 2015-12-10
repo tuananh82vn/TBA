@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "78E75F3B1AC5FC48001A93F1"
-               BuildableName = "UIPageViewController.app"
+               BuildableName = "Recoveries Connect.app"
                BlueprintName = "UIPageViewController"
                ReferencedContainer = "container:UIPageViewController.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "78E75F3B1AC5FC48001A93F1"
-            BuildableName = "UIPageViewController.app"
+            BuildableName = "Recoveries Connect.app"
             BlueprintName = "UIPageViewController"
             ReferencedContainer = "container:UIPageViewController.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "78E75F3B1AC5FC48001A93F1"
-            BuildableName = "UIPageViewController.app"
+            BuildableName = "Recoveries Connect.app"
             BlueprintName = "UIPageViewController"
             ReferencedContainer = "container:UIPageViewController.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "78E75F3B1AC5FC48001A93F1"
-            BuildableName = "UIPageViewController.app"
+            BuildableName = "Recoveries Connect.app"
             BlueprintName = "UIPageViewController"
             ReferencedContainer = "container:UIPageViewController.xcodeproj">
          </BuildableReference>
