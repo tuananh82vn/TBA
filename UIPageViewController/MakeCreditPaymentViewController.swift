@@ -68,7 +68,7 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
     }
     
     override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
-        if property.name == "CVV" {
+        if property.name == "Cvv" {
             (editor.editor as! UITextField).secureTextEntry = true;
         }
     }
@@ -141,13 +141,13 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
                 
         }
         else
-        if (propery.name == "CVV") {
+        if (propery.name == "Cvv") {
             
             let value = propery.valueCandidate as! NSString
             
             if (value.length <= 0)
             {
-                dataSource["CVV"].errorMessage = "Please input CVV"
+                dataSource["Cvv"].errorMessage = "Please input CVV"
                 return false
             }
             
@@ -221,8 +221,8 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
             controller.paymentReturn = self.paymentReturn
         }
     }
-    
-
-
 
 }
+
+
+

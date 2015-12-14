@@ -3,10 +3,7 @@ import UIKit
 class LoginController: UIViewController {
     
     @IBOutlet weak var refreshButton: UIButton!
-    
-    var isRotating = false
-    
-    var shouldStopRotating = false
+
     
     var timer: Timer!
     
@@ -19,21 +16,9 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        loadData()
-        
-//        if self.isRotating == false {
-//            
-//            
-//            
-//            
-//            self.isRotating = true
-//        }
-        
 
-        
-        // Do any additional setup after loading the view.
+        loadData()
+
     }
     
     func loadData(){
@@ -42,11 +27,27 @@ class LoginController: UIViewController {
         // Perhaps start a process which will refresh the UI...
         
         self.timer = Timer(duration: 10.0, completionHandler: {
-            self.shouldStopRotating = true
+            
+            self.reset()
+            
+            // create the alert
+            let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                
+                self.loadData()
+            }
+            
+            alert.addAction(okAction)
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+        
         })
         
         //Display text every 1 second
-        self.timer2 = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
+        self.timer2 = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
         
         self.timer.start()
         
@@ -57,8 +58,7 @@ class LoginController: UIViewController {
                 if(temp1.IsSuccess)
                 {
                     LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
-                    self.timer.stop()
-                    self.timer2.invalidate()
+
                     self.reset()
                     self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
                 }
@@ -66,6 +66,25 @@ class LoginController: UIViewController {
                 {
                     
                 }
+            }
+            else
+            {
+                self.reset()
+                
+                // create the alert
+                let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    
+                    self.loadData()
+                }
+                
+                alert.addAction(okAction)
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+
             }
         }
     }
@@ -81,14 +100,12 @@ class LoginController: UIViewController {
     }
     
     override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-        if self.shouldStopRotating == false {
             self.refreshButton.rotate360Degrees(completionDelegate: self)
-        }
     }
     
     func reset() {
-        self.isRotating = false
-        self.shouldStopRotating = false
+        self.timer.stop()
+        self.timer2.invalidate()
     }
 }
 

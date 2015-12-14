@@ -149,7 +149,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
             
 //            if(indexPath.row == 2 ){
 //                
-//                let instalmentInfoController = self.storyboard!.instantiateViewControllerWithIdentifier("InstalmentInfoViewController") as! InstalmentInfoViewController
+//                let instalmentInfoController = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
 //                
 //                self.navigationController!.pushViewController(instalmentInfoController, animated: true)
 //            }
@@ -160,6 +160,17 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
 //                
 //                self.navigationController!.pushViewController(requestCallBackController, animated: true)
 //            }
+        }
+        else if(indexPath.section == 1 )
+        {
+            if(indexPath.row == 0 ){
+                
+                
+                let setupPayment = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
+                
+                self.navigationController!.pushViewController(setupPayment, animated: true)
+                
+            }
         }
     }
     

@@ -14,6 +14,7 @@ struct WebApiService {
         case MakeDebitPayment
         case EmailReceipt
         case RequestCallback
+        case GetPaymentDetail
         
         var description: String {
             switch self {
@@ -25,6 +26,7 @@ struct WebApiService {
                 case .MakeDebitPayment: return "/Api/MakeDebitPayment"
                 case .EmailReceipt: return "/Api/EmailReceipt"
                 case .RequestCallback: return "/Api/RequestCallback"
+                case .GetPaymentDetail: return "/Api/GetPaymentDetail"
             }
         }
     }
@@ -531,6 +533,66 @@ struct WebApiService {
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
+    static func GetCreditCardInfo(response : (objectReturn : CardInfo?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPaymentDetail.description
+        
+        let JsonReturn = CardInfo()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let NameOnCard = jsonObject["Amount"].string {
+                    
+                    JsonReturn.NameOnCard = NameOnCard
+                }
+                
+                if let CardNumber = jsonObject["CardNumber"].string {
+                    
+                    JsonReturn.CardNumber = CardNumber
+                }
+                
+//                if let ExpiryDate = jsonObject["ExpiryDate"].string {
+//                    
+//                    JsonReturn.Date = ExpiryDate
+//                }
+                
+//                if let IsSuccess = jsonObject["IsSuccess"].bool {
+//                    
+//                    JsonReturn.IsSuccess = IsSuccess
+//                    
+//                }
+//                
+//                if let Errors = jsonObject["Errors"].arrayObject {
+//                    
+//                    let ErrorsReturn = JSONParser.parseError(Errors)
+//                    
+//                    JsonReturn.Errors = ErrorsReturn
+//                    
+//                }
                 
                 response (objectReturn : JsonReturn)
             }
