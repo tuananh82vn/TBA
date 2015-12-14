@@ -10,24 +10,34 @@ import Foundation
 
 
 class DebtorInfo {
-    
+    var Name : String
+    var ClientName : String
     var ReferenceNumber : String
     var AccountCode : String
     var DebtorCode : String
     var TotalOutstanding : Float
     var NextPaymentInstallmentAmount : String
     var MerchantId : String
+    var PaymentType : Int
+    var CurrentPaymentId : Int
+    var EmailAddress : String
     
     var IsSuccess : Bool
     var Errors : [Error]
     
     init() {
+        Name = ""
+        ClientName = ""
         ReferenceNumber = ""
         AccountCode = ""
         DebtorCode = ""
         TotalOutstanding = 0
         NextPaymentInstallmentAmount = ""
         MerchantId = ""
+        PaymentType = 0
+        CurrentPaymentId = 0
+        EmailAddress = ""
+        
         IsSuccess = false
         Errors = [Error]()
     }

@@ -20,7 +20,8 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var lb_Name: UILabel!
     
     var paymentReturn = PaymentReturnModel()
-
+    var debtorInfo = DebtorInfo()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -72,8 +73,69 @@ class SummaryViewController: UIViewController {
             handler: {[weak self]
                 (paramAction:UIAlertAction!) in
                 if let textFields = alertController?.textFields{
+                    
                     let theTextFields = textFields as [UITextField]
+                    
                     let enteredText = theTextFields[0].text
+                    
+                    //Pay Other Amount
+//                    self?.debtorInfo.PaymentType = 4
+                    
+                    //Pay In Full
+                    self?.debtorInfo.PaymentType = 1
+                    
+                    self?.debtorInfo.EmailAddress = enteredText!
+                    
+                    self?.debtorInfo.CurrentPaymentId = self!.paymentReturn.PaymentId
+                    
+                    self?.debtorInfo.ClientName = self!.paymentReturn.ClientName
+                    
+                    self?.debtorInfo.Name = self!.paymentReturn.Name
+                    
+
+                    WebApiService.emailReceipt(self!.debtorInfo){ objectReturn in
+                        
+                        self!.view.hideLoading();
+                        
+                        if let temp1 = objectReturn
+                        {
+                            
+                            if(temp1.IsSuccess)
+                            {
+                                // create the alert
+                                let alert = UIAlertController(title: "Done", message: "Email sent", preferredStyle: UIAlertControllerStyle.Alert)
+                                
+                                // add an action (button)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                
+                                // show the alert
+                                self!.presentViewController(alert, animated: true, completion: nil)
+                            }
+                            else
+                            {
+                                
+                                // create the alert
+                                let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                                
+                                // add an action (button)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                
+                                // show the alert
+                                self!.presentViewController(alert, animated: true, completion: nil)
+                            }
+                        }
+                        else
+                        {
+                            // create the alert
+                            let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
+                            
+                            // add an action (button)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                            
+                            // show the alert
+                            self!.presentViewController(alert, animated: true, completion: nil)
+                        }
+                    }
                 }
             })
         

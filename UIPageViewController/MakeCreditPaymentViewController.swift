@@ -23,7 +23,7 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
         view.addGestureRecognizer(tap)
         
         cardInfo.Amount = 10
-        cardInfo.CVV = "123"
+        cardInfo.Cvv = "123"
         cardInfo.NameOnCard = "Andy Pham"
         cardInfo.CardNumber = "4444333322221111"
         
@@ -40,8 +40,8 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
         dataSource["CardNumber"].hintText = "Card Number"
         dataSource["CardNumber"].editorClass = TKDataFormNumberEditor.self
         
-        dataSource["CVV"].hintText = "Card Security Code"
-        dataSource["CVV"].editorClass = TKDataFormNumberEditor.self
+        dataSource["Cvv"].hintText = "Card Security Code"
+        dataSource["Cvv"].editorClass = TKDataFormNumberEditor.self
         
         let dataForm = TKDataForm(frame: self.subView.bounds)
         dataForm.delegate = self
@@ -166,7 +166,7 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
         cardObject.Amount       = self.dataSource["Amount"].valueCandidate.floatValue
         cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
         cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
-        cardObject.CVV          = self.dataSource["CVV"].valueCandidate as! String
+        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
         cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
         cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
 

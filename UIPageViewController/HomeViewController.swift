@@ -47,18 +47,15 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         
         // create menu
         let sectionPrimary = self.sideDrawer.addSectionWithTitle("Main")
-        sectionPrimary.addItemWithTitle("Make a payment", image: UIImage(named: "dollar")!)
-        sectionPrimary.addItemWithTitle("Payment Tracker", image: UIImage(named: "payment")!)
-        sectionPrimary.addItemWithTitle("Instalment Info",image: UIImage(named: "info")!)
-        sectionPrimary.addItemWithTitle("Defer Payment",image: UIImage(named: "defer")!)
-        sectionPrimary.addItemWithTitle("Schedule Callback",image: UIImage(named: "callback")!)
-        sectionPrimary.addItemWithTitle("Inbox",image: UIImage(named: "Inbox")!)
+        sectionPrimary.addItemWithTitle("Make a payment in Full", image: UIImage(named: "dollar")!)
+        sectionPrimary.addItemWithTitle("Setup a Payment Plan", image: UIImage(named: "payment")!)
+        sectionPrimary.addItemWithTitle("Provide Feedback",image: UIImage(named: "info")!)
         
         let sectionLabels = self.sideDrawer.addSectionWithTitle("Setting")
-        sectionLabels.addItemWithTitle("Update credit card detail")
-        sectionLabels.addItemWithTitle("Update bank account")
-        sectionLabels.addItemWithTitle("Update personal information")
-        sectionLabels.addItemWithTitle("Feedback")
+        sectionLabels.addItemWithTitle("View / Update Credit Card Detail")
+        sectionLabels.addItemWithTitle("View / Update Bank Account Detail")
+        sectionLabels.addItemWithTitle("View / Update Personal Information")
+
         
         
         self.sideDrawer.style.headerHeight = 64
@@ -144,25 +141,25 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
             if(indexPath.row == 1 ){
                 
                 
-                let paymentTracker = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTracker2ViewController") as! PaymentTracker2ViewController
+                let setupPayment = self.storyboard!.instantiateViewControllerWithIdentifier("SetupPaymentViewController") as! SetupPaymentViewController
 
-                self.navigationController!.pushViewController(paymentTracker, animated: true)
+                self.navigationController!.pushViewController(setupPayment, animated: true)
                 
             }
             
-            if(indexPath.row == 2 ){
-                
-                let instalmentInfoController = self.storyboard!.instantiateViewControllerWithIdentifier("InstalmentInfoViewController") as! InstalmentInfoViewController
-                
-                self.navigationController!.pushViewController(instalmentInfoController, animated: true)
-            }
+//            if(indexPath.row == 2 ){
+//                
+//                let instalmentInfoController = self.storyboard!.instantiateViewControllerWithIdentifier("InstalmentInfoViewController") as! InstalmentInfoViewController
+//                
+//                self.navigationController!.pushViewController(instalmentInfoController, animated: true)
+//            }
             
-            if(indexPath.row == 4 ){
-                
-                let requestCallBackController = self.storyboard!.instantiateViewControllerWithIdentifier("RequestCallbackViewController") as! RequestCallbackViewController
-                
-                self.navigationController!.pushViewController(requestCallBackController, animated: true)
-            }
+//            if(indexPath.row == 2 ){
+//                
+//                let requestCallBackController = self.storyboard!.instantiateViewControllerWithIdentifier("RequestCallbackViewController") as! RequestCallbackViewController
+//                
+//                self.navigationController!.pushViewController(requestCallBackController, animated: true)
+//            }
         }
     }
     
@@ -170,6 +167,11 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     }
     
     @IBAction func btCallback_Clicked(sender: AnyObject) {
+        
+        let requestCallBackController = self.storyboard!.instantiateViewControllerWithIdentifier("RequestCallbackViewController") as! RequestCallbackViewController
+        
+        self.navigationController!.pushViewController(requestCallBackController, animated: true)
+        
     }
 
     @IBAction func btDefer_Clicked(sender: AnyObject) {

@@ -3,7 +3,9 @@ import UIKit
 class LoginController: UIViewController {
     
     @IBOutlet weak var refreshButton: UIButton!
+    
     var isRotating = false
+    
     var shouldStopRotating = false
     
     var timer: Timer!
@@ -18,30 +20,55 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if self.isRotating == false {
-            
-            
-            self.refreshButton.rotate360Degrees(completionDelegate: self)
-            // Perhaps start a process which will refresh the UI...
-            
-            self.timer = Timer(duration: 4.0, completionHandler: {
-                self.shouldStopRotating = true
-            })
-            
-            //Display text every 1 second
-            self.timer2 = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
-            
-            self.timer.start()
-            
-            self.isRotating = true
-        }
+        
+        loadData()
+        
+//        if self.isRotating == false {
+//            
+//            
+//            
+//            
+//            self.isRotating = true
+//        }
         
 
         
         // Do any additional setup after loading the view.
     }
     
-
+    func loadData(){
+        
+        self.refreshButton.rotate360Degrees(completionDelegate: self)
+        // Perhaps start a process which will refresh the UI...
+        
+        self.timer = Timer(duration: 10.0, completionHandler: {
+            self.shouldStopRotating = true
+        })
+        
+        //Display text every 1 second
+        self.timer2 = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
+        
+        self.timer.start()
+        
+        WebApiService.GetDebtorInfo(LocalStore.accessRefNumber()!) { objectReturn in
+            
+            if let temp1 = objectReturn
+            {
+                if(temp1.IsSuccess)
+                {
+                    LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
+                    self.timer.stop()
+                    self.timer2.invalidate()
+                    self.reset()
+                    self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+    }
     
     func displayAtIndex()
     {
@@ -56,13 +83,6 @@ class LoginController: UIViewController {
     override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if self.shouldStopRotating == false {
             self.refreshButton.rotate360Degrees(completionDelegate: self)
-        }
-        else
-        {
-            self.timer2.invalidate()
-            self.reset()
-            self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
-
         }
     }
     

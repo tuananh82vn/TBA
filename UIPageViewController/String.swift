@@ -14,3 +14,12 @@ extension String {
         return (self as NSString).floatValue
     }
 }
+
+extension NSDate {
+    
+    func formattedWith(format:String) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = format
+        return formatter.stringFromDate(self)
+    }
+}

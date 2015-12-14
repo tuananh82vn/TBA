@@ -11,6 +11,9 @@ struct WebApiService {
         case VerifyNetCode
         case GetDebtorInfo
         case MakeCreditCardPayment
+        case MakeDebitPayment
+        case EmailReceipt
+        case RequestCallback
         
         var description: String {
             switch self {
@@ -19,6 +22,9 @@ struct WebApiService {
                 case .VerifyNetCode: return "/Api/VerifyNetCode"
                 case .GetDebtorInfo: return "/Api/GetDebtorInfo"
                 case .MakeCreditCardPayment: return "/Api/MakeCreditCardPayment"
+                case .MakeDebitPayment: return "/Api/MakeDebitPayment"
+                case .EmailReceipt: return "/Api/EmailReceipt"
+                case .RequestCallback: return "/Api/RequestCallback"
             }
         }
     }
@@ -181,6 +187,58 @@ struct WebApiService {
         }
     }
     
+    static func emailReceipt(debtorInfo:  DebtorInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.EmailReceipt.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "Name": debtorInfo.Name,
+                "CurrentPaymentId": debtorInfo.CurrentPaymentId,
+                "ClientName" : debtorInfo.ClientName,
+                "PaymentType" : debtorInfo.PaymentType,
+                "EmailAddress" : debtorInfo.EmailAddress
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
+    
+    
+    
     static func GetDebtorInfo(ReferenceNumber: String, response : (objectReturn : DebtorInfo?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorInfo.description
@@ -276,8 +334,9 @@ struct WebApiService {
                 "CreditCardNumber": cardObject.CardNumber,
                 "CreditCardExpiryYear": year.description,
                 "CreditCardExpiryMonth": month.description,
-                "CreditCardCVV": cardObject.CVV,
-                "PaymentType": PaymentType
+                "CreditCardCVV": cardObject.Cvv,
+                "PaymentType": PaymentType,
+                "PaymentMethod": "1"
             ]
         ]
         
@@ -301,9 +360,20 @@ struct WebApiService {
                     JsonReturn.Errors = ErrorsReturn
                 }
                 
+                if let PaymentId = jsonObject["PaymentId"].int {
+                    
+                    JsonReturn.PaymentId = PaymentId
+                }
+                
+                
                 if let Name = jsonObject["Name"].string {
                     
                     JsonReturn.Name = Name
+                }
+                
+                if let ClientName = jsonObject["ClientName"].string {
+                    
+                    JsonReturn.ClientName = ClientName
                 }
                 
                 if let Date = jsonObject["Date"].string {
@@ -340,5 +410,137 @@ struct WebApiService {
             
         }
     }
+    
+    static func MakeDebitPayment(cardObject : BankInfo, PaymentType : Int ,response : (objectReturn : PaymentReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.MakeDebitPayment.description
+        
+        let JsonReturn = PaymentReturnModel()
+        
+
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "Amount": cardObject.Amount,
+                "DirectDebitAccountName" : cardObject.AccountName,
+                "DirectDebitAccountNumber": cardObject.AccountNumber,
+                "DirectDebitBSB1": cardObject.Bsb1,
+                "DirectDebitBSB2": cardObject.Bsb2,
+                "PaymentType": PaymentType,
+                "PaymentMethod": "2"
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                }
+                
+                if let PaymentId = jsonObject["PaymentId"].int {
+                    
+                    JsonReturn.PaymentId = PaymentId
+                }
+                
+                
+                if let Name = jsonObject["Name"].string {
+                    
+                    JsonReturn.Name = Name
+                }
+                
+                if let ClientName = jsonObject["ClientName"].string {
+                    
+                    JsonReturn.ClientName = ClientName
+                }
+                
+                if let Date = jsonObject["Date"].string {
+                    
+                    JsonReturn.Date = Date
+                }
+                
+                if let Time = jsonObject["Time"].string {
+                    
+                    JsonReturn.Time = Time
+                }
+                
+                if let Amount = jsonObject["Amount"].string {
+                    
+                    JsonReturn.Amount = Amount
+                }
+
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
+    static func RequestCallback(request:  RequestCallBackForm, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.RequestCallback.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "Name": request.Name,
+                "Date" : request.Date.formattedWith("dd/MM/yyyy"),
+                "TimeFrom" : request.TimeFrom.formattedWith("HH:mm"),
+                "TimeTo" : request.TimeTo.formattedWith("HH:mm"),
+                "Notes" : request.Notes
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
 
 }

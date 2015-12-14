@@ -14,17 +14,8 @@ class CardInfo: NSObject {
     var NameOnCard = ""
     var CardNumber = ""
     var ExpiryDate = NSDate()
-    var CVV = ""
+    var Cvv = ""
 
 }
 
 
-class BankInfo: NSObject {
-    
-    var Amount = Float()
-    var AccountName = ""
-    var BSB1 = ""
-    var BSB2 = ""
-    var AccountNumber = ""
-    
-}

@@ -14,88 +14,72 @@ class RequestCallbackViewController: TKDataFormViewController {
     
     let callbackForm = RequestCallBackForm()
 
-    let btn = UIButton()
 
+    @IBOutlet weak var subView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
         dataSource.sourceObject = callbackForm
         
-        let name = dataSource["name"]
+        let name = dataSource["Name"]
         name.hintText = "Name"
         name.errorMessage = "Please fill in your name"
         name.image = UIImage(named: "guest-name")
         
-        let phone = dataSource["phone"]
+        let phone = dataSource["Phone"]
         phone.hintText = "Phone"
         phone.image = UIImage(named: "phone")
         
+        dataSource["Date"].image = UIImage(named: "calendar-1")
+        dataSource["Date"].hintText = "Date"
+        
         let formatter = NSDateFormatter()
         formatter.dateFormat = "h:mm a";
-        dataSource["timefrom"].formatter = formatter
-        dataSource["timeto"].formatter = formatter
+        dataSource["TimeFrom"].formatter = formatter
+        dataSource["TimeTo"].formatter = formatter
         
-        dataSource["date"].image = UIImage(named: "calendar-1")
-        dataSource["date"].hintText = "Date"
-        
-        dataSource["timefrom"].image = UIImage(named: "time")
-        dataSource["timeto"].image = UIImage(named: "time")
 
-        dataSource["timefrom"].editorClass = TKDataFormTimePickerEditor.self
-        dataSource["timefrom"].hintText = "From"
         
-        dataSource["timeto"].editorClass = TKDataFormTimePickerEditor.self
-        dataSource["timeto"].hintText = "To"
+        dataSource["TimeFrom"].image = UIImage(named: "time")
+        dataSource["TimeTo"].image = UIImage(named: "time")
+
+        dataSource["TimeFrom"].editorClass = TKDataFormTimePickerEditor.self
+        dataSource["TimeFrom"].hintText = "From"
         
-        dataSource["phone"].editorClass = CallEditor.self
+        dataSource["TimeTo"].editorClass = TKDataFormTimePickerEditor.self
+        dataSource["TimeTo"].hintText = "To"
         
-        let notes = dataSource["notes"]
+        dataSource["Phone"].editorClass = CallEditor.self
+        
+        let notes = dataSource["Notes"]
         notes.hintText = "Notes"
         notes.image = UIImage(named: "notes")
         
         self.dataForm.dataSource = dataSource
-        self.dataForm.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height - 66)
+        self.dataForm.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
         self.dataForm.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
         dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
 
-        btn.frame = CGRect(x: 0, y: self.dataForm.frame.size.height, width: self.view.bounds.size.width, height: 66)
-        btn.setTitle("Request", forState: .Normal)
-        btn.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0), forState: .Normal)
-        btn.addTarget(self, action: "request", forControlEvents: .TouchUpInside)
-        self.view.addSubview(btn)
-        // Do any additional setup after loading the view.
+        
+        self.subView.addSubview(dataForm)
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-//        btn.frame = CGRect(x: 0, y: self.dataForm.frame.size.height, width: self.view.bounds.size.width, height: 66)
     }
     
-    func request() {
-        let alert = TKAlert()
-        
-        alert.style.cornerRadius = 3;
-        alert.title = "Request";
-        alert.message = "Done";
-        
-        alert.addActionWithTitle("OK") { (TKAlert alert, TKAlertAction action) -> Bool in
-            return true
-        }
-        
-        alert.show(true)
-    }
-    
-    //MARK:- TKDataFormDelegate
+
     
     override func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
-        if propery.name == "name" {
+        if propery.name == "Name" {
             return (propery.valueCandidate as! NSString).length > 0
         }
         return true
@@ -107,7 +91,7 @@ class RequestCallbackViewController: TKDataFormViewController {
         editor.style.separatorLeadingSpace = 40
         editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
         
-        if ["date","name", "phone"].contains(property.name) {
+        if ["Date", "Name", "Phone"].contains(property.name) {
             editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
             let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
             editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
@@ -115,7 +99,7 @@ class RequestCallbackViewController: TKDataFormViewController {
         }
         
         
-        if property.name == "name" {
+        if property.name == "Name" {
             editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
             editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
         }
@@ -133,22 +117,62 @@ class RequestCallbackViewController: TKDataFormViewController {
     }
 
 
+    @IBAction func btContinue_Clicked(sender: AnyObject) {
+        view.showLoading()
+        
+        var requestObject = RequestCallBackForm()
+        
+        requestObject.Notes         = self.dataSource["Notes"].valueCandidate as! String
+        requestObject.Name          = self.dataSource["Name"].valueCandidate as! String
+        requestObject.Date          = self.dataSource["Date"].valueCandidate as! NSDate
+        requestObject.TimeFrom      = self.dataSource["TimeFrom"].valueCandidate as! NSDate
+        requestObject.TimeTo        = self.dataSource["TimeTo"].valueCandidate as! NSDate
+        
+        
+        WebApiService.RequestCallback(requestObject){ objectReturn in
+            
+            self.view.hideLoading();
+            
+            if let temp1 = objectReturn
+            {
+                
+                if(temp1.IsSuccess)
+                {
+                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                }
+                else
+                {
+                    
+                    // create the alert
+                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                // create the alert
+                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+
+
+    }
 
 
 }
 
-import UIKit
 
-class RequestCallBackForm: NSObject {
-    
-    var name = ""
-    var phone = ""
-    var date = NSDate()
-    var timefrom = NSDate()
-    var timeto = NSDate()
-    var notes = ""
-
-}
 
 class CallEditor: TKDataFormPhoneEditor {
     
