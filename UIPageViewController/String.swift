@@ -7,11 +7,29 @@
 //
 
 import Foundation
-
+import UIKit
 
 extension String {
+    
     var floatValue: Float {
         return (self as NSString).floatValue
+    }
+    
+    
+    func dateFromString(format: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = NSTimeZone(name: "Australia/Melbourne")
+        
+        if let date = dateFormatter.dateFromString(self)
+        {
+            return date
+        }
+        else
+        {
+            return NSDate(timeIntervalSince1970: 0)
+        }
     }
 }
 
@@ -22,4 +40,5 @@ extension NSDate {
         formatter.dateFormat = format
         return formatter.stringFromDate(self)
     }
+
 }

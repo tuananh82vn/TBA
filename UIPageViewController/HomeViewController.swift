@@ -141,9 +141,9 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
             if(indexPath.row == 1 ){
                 
                 
-                let setupPayment = self.storyboard!.instantiateViewControllerWithIdentifier("SetupPaymentViewController") as! SetupPaymentViewController
+                let view = self.storyboard!.instantiateViewControllerWithIdentifier("SetupPaymentViewController") as! SetupPaymentViewController
 
-                self.navigationController!.pushViewController(setupPayment, animated: true)
+                self.navigationController!.pushViewController(view, animated: true)
                 
             }
             
@@ -166,9 +166,27 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
             if(indexPath.row == 0 ){
                 
                 
-                let setupPayment = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
+                let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
                 
-                self.navigationController!.pushViewController(setupPayment, animated: true)
+                self.navigationController!.pushViewController(view, animated: true)
+                
+            }
+            
+            if(indexPath.row == 1 ){
+                
+                
+                let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateBankAccountViewController") as! UpdateBankAccountViewController
+                
+                self.navigationController!.pushViewController(view, animated: true)
+                
+            }
+            
+            if(indexPath.row == 2 ){
+                
+                
+                let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
+                
+                self.navigationController!.pushViewController(view, animated: true)
                 
             }
         }

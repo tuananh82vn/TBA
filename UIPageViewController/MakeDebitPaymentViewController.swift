@@ -26,8 +26,7 @@ class MakeDebitPaymentViewController: TKDataFormViewController {
         view.addGestureRecognizer(tap)
         
         bankInfo.Amount = 10
-        bankInfo.Bsb1 = "123"
-        bankInfo.Bsb2 = "123"
+        bankInfo.Bsb = "123"
         bankInfo.AccountName = "Andy Pham"
         bankInfo.AccountNumber = "4444333"
         
@@ -167,8 +166,8 @@ class MakeDebitPaymentViewController: TKDataFormViewController {
         bankObject.Amount           = self.dataSource["Amount"].valueCandidate.floatValue
         bankObject.AccountNumber    = self.dataSource["AccountNumber"].valueCandidate as! String
         bankObject.AccountName      = self.dataSource["AccountName"].valueCandidate as! String
-        bankObject.Bsb1             = self.dataSource["Bsb1"].valueCandidate as! String
-        bankObject.Bsb2             = self.dataSource["Bsb2"].valueCandidate as! String
+        bankObject.Bsb             = self.dataSource["Bsb"].valueCandidate as! String
+
 
         // Pay in FULL
         let PaymentType = 1

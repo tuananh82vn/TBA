@@ -30,7 +30,7 @@ class View2Controller: BaseViewController {
 //            self.tf_DebtCode.text = LocalStore.accessRefNumber()
 //        }
         
-        self.tf_DebtCode.text = "706132600"
+        self.tf_DebtCode.text = "706103446"
         
         // Show button get net code
         UIView.animateWithDuration(2.0, animations: { () -> Void in
@@ -134,13 +134,15 @@ class View2Controller: BaseViewController {
 
                      WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
 
-                     if let temp1 = objectReturn
-                     {
                         self.view.hideLoading();
+                        
+                        if let temp1 = objectReturn
+                        {
+                        
 
                         
-                        if(temp1.IsSuccess)
-                        {
+                            if(temp1.IsSuccess)
+                            {
                                 TelerikAlert.ShowAlert(self.view, title: "Success", message: temp1.Errors[0].ErrorMessage, style: "Positive")
                                             
                                 //disable button get net code
@@ -154,12 +156,16 @@ class View2Controller: BaseViewController {
                             
                                self.tf_Netcode.becomeFirstResponder()
 
+                            }
+                            else
+                            {
+                                TelerikAlert.ShowAlert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, style: "Error")
+                            }
                         }
                         else
                         {
-                                TelerikAlert.ShowAlert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, style: "Error")
+                            TelerikAlert.ShowAlert(self.view, title: "Error", message: "Server not found.", style: "Error")
                         }
-                    }
                     }
                 }
                 else

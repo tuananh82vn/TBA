@@ -15,6 +15,7 @@ class DebtorInfo {
     var ReferenceNumber : String
     var AccountCode : String
     var DebtorCode : String
+    var DRCode : String
     var TotalOutstanding : Float
     var NextPaymentInstallmentAmount : String
     var MerchantId : String
@@ -31,6 +32,7 @@ class DebtorInfo {
         ReferenceNumber = ""
         AccountCode = ""
         DebtorCode = ""
+        DRCode = ""
         TotalOutstanding = 0
         NextPaymentInstallmentAmount = ""
         MerchantId = ""

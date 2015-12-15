@@ -15,6 +15,8 @@ struct WebApiService {
         case EmailReceipt
         case RequestCallback
         case GetPaymentDetail
+        case GetPersonalInformationDetail
+
         
         var description: String {
             switch self {
@@ -27,6 +29,8 @@ struct WebApiService {
                 case .EmailReceipt: return "/Api/EmailReceipt"
                 case .RequestCallback: return "/Api/RequestCallback"
                 case .GetPaymentDetail: return "/Api/GetPaymentDetail"
+                case .GetPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
+
             }
         }
     }
@@ -271,12 +275,15 @@ struct WebApiService {
                 if let ReferenceNumber = jsonObject["ReferenceNumber"].string {
                     JsonReturn.ReferenceNumber = ReferenceNumber
                 }
+                
                 if let ReferenceNumber = jsonObject["AccountCode"].string {
                     JsonReturn.AccountCode = ReferenceNumber
                 }
+                
                 if let DebtorCode = jsonObject["DebtorCode"].string {
-                    JsonReturn.DebtorCode = DebtorCode
+                    JsonReturn.DRCode = DebtorCode
                 }
+
                 if let TotalOutstanding = jsonObject["TotalOutstanding"].float {
                     JsonReturn.TotalOutstanding = TotalOutstanding
                 }
@@ -426,8 +433,8 @@ struct WebApiService {
                 "Amount": cardObject.Amount,
                 "DirectDebitAccountName" : cardObject.AccountName,
                 "DirectDebitAccountNumber": cardObject.AccountNumber,
-                "DirectDebitBSB1": cardObject.Bsb1,
-                "DirectDebitBSB2": cardObject.Bsb2,
+                "DirectDebitBSB1": cardObject.Bsb,
+                "DirectDebitBSB2": "",
                 "PaymentType": PaymentType,
                 "PaymentMethod": "2"
             ]
@@ -544,15 +551,16 @@ struct WebApiService {
         }
     }
     
-    static func GetCreditCardInfo(response : (objectReturn : CardInfo?) -> ()) {
+    static func GetPaymentInfo(response : (objectReturn : PaymentInfo?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPaymentDetail.description
         
-        let JsonReturn = CardInfo()
+        let JsonReturn = PaymentInfo()
         
         let parameters = [
             "Item": [
-                "ReferenceNumber": LocalStore.accessRefNumber()!
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "Action": "G"
             ]
         ]
         
@@ -565,34 +573,60 @@ struct WebApiService {
                 let jsonObject = JSON(jsonReturn1)
                 
                 
-                if let NameOnCard = jsonObject["Amount"].string {
+                if let RecType = jsonObject["RecType"].string {
                     
-                    JsonReturn.NameOnCard = NameOnCard
+                    JsonReturn.RecType = RecType
+                    
+                    if(JsonReturn.RecType == "CC")
+                    {
+                        JsonReturn.card = CardInfo()
+                        
+                        if let CcNo = jsonObject["CcNo"].string {
+                            
+                            JsonReturn.card.CardNumber = CcNo
+                        }
+                        
+                        if let ExpireDate = jsonObject["ExpiryDate"].string {
+                            
+                            let components: NSDateComponents = NSDateComponents()
+                            components.setValue(1, forComponent: NSCalendarUnit.Day);
+                            
+                            JsonReturn.card.ExpiryDate  = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: ExpireDate.dateFromString("MMyyyy"), options: NSCalendarOptions(rawValue: 0))!
+                        }
+                    }
+                    else if(JsonReturn.RecType == "DD")
+                    {
+                        JsonReturn.bank = BankInfo()
+                        
+                        if let Bsb = jsonObject["BsbNo"].string {
+                            
+                            JsonReturn.bank.Bsb = Bsb
+                        }
+                        if let AccountNo = jsonObject["AccountNo"].string {
+                            
+                            JsonReturn.bank.AccountNumber = AccountNo
+                        }
+                        
+                        if let AccountName = jsonObject["AccountName"].string {
+                            
+                            JsonReturn.bank.AccountName = AccountName
+                        }
+                        
+                    }
                 }
                 
-                if let CardNumber = jsonObject["CardNumber"].string {
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
                     
-                    JsonReturn.CardNumber = CardNumber
+                    JsonReturn.IsSuccess = IsSuccess
+                    
                 }
-                
-//                if let ExpiryDate = jsonObject["ExpiryDate"].string {
-//                    
-//                    JsonReturn.Date = ExpiryDate
-//                }
-                
-//                if let IsSuccess = jsonObject["IsSuccess"].bool {
-//                    
-//                    JsonReturn.IsSuccess = IsSuccess
-//                    
-//                }
-//                
-//                if let Errors = jsonObject["Errors"].arrayObject {
-//                    
-//                    let ErrorsReturn = JSONParser.parseError(Errors)
-//                    
-//                    JsonReturn.Errors = ErrorsReturn
-//                    
-//                }
+
+                if let Error = jsonObject["Error"].string {
+                    
+                    JsonReturn.Errors = Error
+                    
+                }
                 
                 response (objectReturn : JsonReturn)
             }
@@ -604,5 +638,172 @@ struct WebApiService {
         }
     }
 
+    static func SetPaymentInfo(paymentInfo: PaymentInfo, response : (objectReturn : PaymentInfo?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPaymentDetail.description
+        
+        let JsonReturn = PaymentInfo()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "Action": "U",
+                "RecType": paymentInfo.RecType,
+                "CcNo" : paymentInfo.card.CardNumber,
+                "ExpiryDate" : paymentInfo.card.ExpiryDate.formattedWith("MMyyyy"),
+                "BsbNo" : paymentInfo.bank.Bsb,
+                "AccountNo" : paymentInfo.bank.AccountNumber,
+                "AccountName" : paymentInfo.bank.AccountName
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Error = jsonObject["Error"].string {
+                    
+                    JsonReturn.Errors = Error
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
+    static func GetPersonalInfo(response : (objectReturn : PaymentInfo?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPersonalInformationDetail.description
+        
+        let JsonReturn = PaymentInfo()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "DebtorCode" : LocalStore.accessDRCode()!,
+                "Action": "G"
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let StreetAddress = jsonObject["Address1s"].string {
+                    
+                    JsonReturn.personalInfo.StreetAddress = StreetAddress
+                }
+                
+                if let MailAddress = jsonObject["Address2s"].string {
+                    
+                    JsonReturn.personalInfo.MailAddress = MailAddress
+                }
+                
+                if let HomeNumber = jsonObject["HomeNumber"].string {
+                    
+                    JsonReturn.personalInfo.HomePhone = HomeNumber
+                }
+                
+                if let WorkNumber = jsonObject["WorkNumber"].string {
+                    
+                    JsonReturn.personalInfo.WorkPhone = WorkNumber
+                }
+                
+                if let MobileNumbers = jsonObject["MobileNumbers"].string {
+                    
+                    JsonReturn.personalInfo.MobilePhone = MobileNumbers
+                }
 
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Error = jsonObject["Error"].string {
+                    
+                    JsonReturn.Errors = Error
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
+    static func SetPersonalInfo(personalInfo: PersonalInfo, response : (objectReturn : PaymentInfo?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPersonalInformationDetail.description
+        
+        let JsonReturn = PaymentInfo()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "DebtorCode" : LocalStore.accessDRCode()!,
+                "Action": "U",
+                "Address1s" : personalInfo.StreetAddress,
+                "Address2s" : personalInfo.MailAddress,
+                "HomeNumber" : personalInfo.HomePhone,
+                "WorkNumber" : personalInfo.WorkPhone,
+                "MobileNumbers" : personalInfo.MobilePhone
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Error = jsonObject["Error"].string {
+                    
+                    JsonReturn.Errors = Error
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
 }

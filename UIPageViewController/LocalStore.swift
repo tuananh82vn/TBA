@@ -15,11 +15,28 @@ struct LocalStore {
     
     private static let TotalOutstanding = "TotalOutstanding"
     
+    private static let DRCode = "DRCode"
+
+    
     private static let NextPaymentInstallmentAmount = "NextPaymentInstallmentAmount"
     
     
     private static let userDefaults = NSUserDefaults.standardUserDefaults()
     
+    //----------------------------------------------------------------------------//
+    static func setDRCode(token: String) {
+        userDefaults.setObject(token, forKey: DRCode)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteDRCode() {
+        userDefaults.removeObjectForKey(DRCode)
+        userDefaults.synchronize()
+    }
+    
+    static func accessDRCode() -> String? {
+        return userDefaults.stringForKey(DRCode)
+    }
     
     //----------------------------------------------------------------------------//
     static func setNextPaymentInstallmentAmount(token: String) {

@@ -58,7 +58,8 @@ class LoginController: UIViewController {
                 if(temp1.IsSuccess)
                 {
                     LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
-
+                    LocalStore.setDRCode(temp1.DRCode)
+                    
                     self.reset()
                     self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
                 }

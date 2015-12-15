@@ -66,6 +66,12 @@ class RequestCallbackViewController: TKDataFormViewController {
         self.subView.addSubview(dataForm)
 
     }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

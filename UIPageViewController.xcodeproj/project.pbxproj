@@ -17,6 +17,8 @@
 		78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F481AC5FC48001A93F1 /* Images.xcassets */; };
 		78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */; };
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
+		C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */; };
+		C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */; };
 		C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C341BEB1664007463FD /* Spring.framework */; };
 		C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */; };
 		C72C0C391BEB2416007463FD /* TelerikAppFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */; };
@@ -95,6 +97,8 @@
 		78E75F561AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewControllerTests.swift; sourceTree = "<group>"; };
 		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfo.swift; sourceTree = "<group>"; };
+		C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
 		C72C0C341BEB1664007463FD /* Spring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spring.framework; path = "Pods/../build/Debug-iphoneos/Spring.framework"; sourceTree = "<group>"; };
 		C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActionSheetPicker_3_0.framework; path = "Pods/../build/Debug-iphoneos/ActionSheetPicker_3_0.framework"; sourceTree = "<group>"; };
 		C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelerikAppFeedback.framework; sourceTree = "<group>"; };
@@ -338,6 +342,8 @@
 				C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */,
 				C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */,
 				C7A216031C1E80EB008A03A7 /* ThreePartPayment.swift */,
+				C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */,
+				C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -511,6 +517,7 @@
 				C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */,
 				C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */,
 				C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */,
+				C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */,
 				C7813B681BEC950600876860 /* BlankViewController.swift in Sources */,
 				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
 				C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */,
@@ -518,6 +525,7 @@
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
+				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
 				C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,

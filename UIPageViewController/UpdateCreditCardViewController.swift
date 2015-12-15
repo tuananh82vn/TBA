@@ -13,8 +13,10 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     @IBOutlet weak var subView: UIView!
     
     let dataSource = TKDataFormEntityDataSource()
-    var cardInfo = CardInfo()
-    var paymentReturn = PaymentReturnModel()
+    
+    var paymentInfo = PaymentInfo()
+    
+//    var paymentReturn = PaymentReturnModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +26,10 @@ class UpdateCreditCardViewController: TKDataFormViewController {
         
 //        cardInfo.Amount = 10
 //        cardInfo.Cvv = "123"
-//        cardInfo.NameOnCard = "Andy Pham"
-//        cardInfo.CardNumber = "4444333322221111"
+        self.paymentInfo.card.NameOnCard = "Andy Pham"
+        self.paymentInfo.card.CardNumber = "4444333322221111"
         
-        dataSource.sourceObject = cardInfo
+        dataSource.sourceObject = self.paymentInfo.card
         
         dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
         
@@ -54,21 +56,30 @@ class UpdateCreditCardViewController: TKDataFormViewController {
         
         // Do any additional setup after loading the view.
         
+        
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
         loadData()
     }
     
     func loadData(){
+        
         self.view.showLoading()
         
-        WebApiService.GetCreditCardInfo(){ objectReturn in
+        WebApiService.GetPaymentInfo(){ objectReturn in
             
             self.view.hideLoading();
             
             if let temp1 = objectReturn
             {
-                    self.cardInfo = temp1
+                    self.dataSource.sourceObject = temp1.card
                 
                     self.dataForm.update()
+                
+                    self.dataForm.reloadData()
                 
             }
             else
@@ -154,13 +165,13 @@ class UpdateCreditCardViewController: TKDataFormViewController {
                         
                     }
                     else
-                        if (propery.name == "CVV") {
+                        if (propery.name == "Cvv") {
                             
                             let value = propery.valueCandidate as! NSString
                             
                             if (value.length <= 0)
                             {
-                                dataSource["CVV"].errorMessage = "Please input CVV"
+                                dataSource["Cvv"].errorMessage = "Please input CVV"
                                 return false
                             }
                             
@@ -170,60 +181,58 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
-//        //dataForm.commit()
-//        
-//        view.showLoading()
-//        
-//        var cardObject = CardInfo()
-//        
-//        cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
-//        cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
-//        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
-//        cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
-//        cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
-//        
-//        
-//        // Pay in FULL
-//        let PaymentType = 1
-//        
-//        WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
-//            
-//            self.view.hideLoading();
-//            
-//            if let temp1 = objectReturn
-//            {
-//                
-//                if(temp1.IsSuccess)
-//                {
-//                    self.paymentReturn = temp1
-//                    
-//                    self.performSegueWithIdentifier("GoToSummary", sender: nil)
-//                }
-//                else
-//                {
-//                    
-//                    // create the alert
-//                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-//                    
-//                    // add an action (button)
-//                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-//                    
-//                    // show the alert
-//                    self.presentViewController(alert, animated: true, completion: nil)
-//                }
-//            }
-//            else
-//            {
-//                // create the alert
-//                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-//                
-//                // add an action (button)
-//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-//                
-//                // show the alert
-//                self.presentViewController(alert, animated: true, completion: nil)
-//            }
-//        }
+        self.view.showLoading();
+        
+        var paymentInfo = PaymentInfo()
+        
+        paymentInfo.card.CardNumber         = self.dataSource["CardNumber"].valueCandidate as! String
+        paymentInfo.card.ExpiryDate         = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
+
+        paymentInfo.RecType = "CC"
+        
+        WebApiService.SetPaymentInfo(paymentInfo){ objectReturn in
+            
+            self.view.hideLoading();
+            
+            if let temp1 = objectReturn
+            {
+                
+                if(temp1.IsSuccess)
+                {
+                    // create the alert
+                    let alert = UIAlertController(title: "Done", message: "Update done", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else
+                {
+                    
+                    // create the alert
+                    let alert = UIAlertController(title: "Error", message: temp1.Errors, preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                // create the alert
+                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

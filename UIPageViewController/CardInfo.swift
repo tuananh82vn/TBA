@@ -19,3 +19,5 @@ class CardInfo: NSObject {
 }
 
 
+
+
