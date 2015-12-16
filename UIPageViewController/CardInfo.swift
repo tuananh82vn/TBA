@@ -18,6 +18,13 @@ class CardInfo: NSObject {
 
 }
 
+class UpdateCardInfo: NSObject {
+    
+    var CardNumber = ""
+    var ExpiryDate = NSDate()
+    
+}
+
 
 
 

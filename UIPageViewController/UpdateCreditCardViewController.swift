@@ -14,7 +14,7 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     
     let dataSource = TKDataFormEntityDataSource()
     
-    var paymentInfo = PaymentInfo()
+    var paymentInfo = UpdateCardInfo()
     
 //    var paymentReturn = PaymentReturnModel()
     
@@ -23,39 +23,6 @@ class UpdateCreditCardViewController: TKDataFormViewController {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
-        
-//        cardInfo.Amount = 10
-//        cardInfo.Cvv = "123"
-        self.paymentInfo.card.NameOnCard = "Andy Pham"
-        self.paymentInfo.card.CardNumber = "4444333322221111"
-        
-        dataSource.sourceObject = self.paymentInfo.card
-        
-        dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
-        
-        dataSource["CardType"].valuesProvider = [ "Visa", "Master" ]
-        
-        dataSource["NameOnCard"].hintText = "Name On Card"
-        
-        dataSource["CardNumber"].hintText = "Card Number"
-        dataSource["CardNumber"].editorClass = TKDataFormNumberEditor.self
-        
-        dataSource["Cvv"].hintText = "Card Security Code"
-        dataSource["Cvv"].editorClass = TKDataFormNumberEditor.self
-        
-        let dataForm = TKDataForm(frame: self.subView.bounds)
-        dataForm.delegate = self
-        dataForm.dataSource = dataSource
-        dataForm.backgroundColor = UIColor.whiteColor()
-        dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-        
-        dataForm.validationMode = TKDataFormValidationMode.Manual
-        
-        
-        self.subView.addSubview(dataForm)
-        
-        // Do any additional setup after loading the view.
-        
         
     }
     
@@ -75,11 +42,27 @@ class UpdateCreditCardViewController: TKDataFormViewController {
             
             if let temp1 = objectReturn
             {
-                    self.dataSource.sourceObject = temp1.card
+
+
+                    self.paymentInfo.CardNumber = temp1.card.CardNumber
+                    self.paymentInfo.ExpiryDate = temp1.card.ExpiryDate
                 
-                    self.dataForm.update()
                 
-                    self.dataForm.reloadData()
+                    self.dataSource.sourceObject = self.paymentInfo
+                
+
+                    self.dataSource["CardNumber"].hintText = "Card Number"
+                    self.dataSource["CardNumber"].editorClass = TKDataFormNumberEditor.self
+                
+                
+                    let dataForm = TKDataForm(frame: self.subView.bounds)
+                    dataForm.delegate = self
+                    dataForm.dataSource = self.dataSource
+                    dataForm.backgroundColor = UIColor.whiteColor()
+                    dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                
+
+                    self.subView.addSubview(dataForm)
                 
             }
             else
@@ -107,18 +90,7 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     }
     
     override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
-        if property.name == "Cvv" {
-            (editor.editor as! UITextField).secureTextEntry = true;
-        }
-        
-        if property.name == "Amount" {
-            (editor.editor as! UITextField).hidden = true;
-            
-            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
-            editor.style.editorOffset = UIOffsetMake(10, 0)
-        }
+
     }
     
     override func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {
@@ -129,18 +101,6 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     
     override func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
 
-            if (propery.name == "NameOnCard") {
-                
-                let value = propery.valueCandidate as! NSString
-                
-                if (value.length <= 0)
-                {
-                    dataSource["NameOnCard"].errorMessage = "Please input name"
-                    return false
-                }
-                
-            }
-            else
                 if (propery.name == "CardNumber") {
                     
                     let value = propery.valueCandidate as! NSString
@@ -152,30 +112,7 @@ class UpdateCreditCardViewController: TKDataFormViewController {
                     }
                     
                 }
-                else
-                    if (propery.name == "CardType") {
-                        
-                        let value = propery.valueCandidate as! Int
-                        
-                        if (value < 0)
-                        {
-                            dataSource["CardType"].errorMessage = "Please select card type"
-                            return false
-                        }
-                        
-                    }
-                    else
-                        if (propery.name == "Cvv") {
-                            
-                            let value = propery.valueCandidate as! NSString
-                            
-                            if (value.length <= 0)
-                            {
-                                dataSource["Cvv"].errorMessage = "Please input CVV"
-                                return false
-                            }
-                            
-        }
+
         return true
     }
     
@@ -236,14 +173,7 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "GoToSummary" {
-//            
-//            let controller = segue.destinationViewController as! SummaryViewController
-//            controller.paymentReturn = self.paymentReturn
-//        }
+
     }
-    
-    
-    
-    
+
 }

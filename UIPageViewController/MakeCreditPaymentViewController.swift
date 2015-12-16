@@ -22,15 +22,16 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        cardInfo.Amount = 10
-        cardInfo.Cvv = "123"
-        cardInfo.NameOnCard = "Andy Pham"
-        cardInfo.CardNumber = "4444333322221111"
+        cardInfo.Amount = (LocalStore.accessTotalOutstanding()?.floatValue)!
+//        cardInfo.Cvv = "123"
+//        cardInfo.NameOnCard = "Andy Pham"
+//        cardInfo.CardNumber = "4444333322221111"
         
         dataSource.sourceObject = cardInfo
         
         dataSource["Amount"].hintText = "Amount To Pay"
         dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
+        dataSource["Amount"].readOnly = true
         
         dataSource["CardType"].valuesProvider = [ "Visa", "Master" ]
         

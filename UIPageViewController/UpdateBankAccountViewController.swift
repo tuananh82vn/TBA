@@ -17,22 +17,9 @@ class UpdateBankAccountViewController: TKDataFormViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
       
-        dataSource.sourceObject = self.paymentInfo
+//        dataSource.sourceObject = self.paymentInfo
         
-        dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
-        
-        dataSource["Bsb"].editorClass = TKDataFormDecimalEditor.self
-        dataSource["AccountNumber"].editorClass = TKDataFormDecimalEditor.self
 
-        dataSource["AccountName"].hintText = "Account Name"
-
-        let dataForm = TKDataForm(frame: self.subView.bounds)
-        dataForm.delegate = self
-        dataForm.dataSource = dataSource
-        dataForm.backgroundColor = UIColor.whiteColor()
-        dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-        
-        self.subView.addSubview(dataForm)
         
         // Do any additional setup after loading the view.
         loadData()
@@ -52,9 +39,24 @@ class UpdateBankAccountViewController: TKDataFormViewController {
                 
                 self.paymentInfo = temp1.bank
                 
-                self.dataForm.reloadData()
+                self.dataSource.sourceObject = self.paymentInfo
                 
-                self.dataForm.update()
+                self.dataSource["Amount"].hidden = true
+                
+                self.dataSource["Bsb"].editorClass = TKDataFormDecimalEditor.self
+                self.dataSource["AccountNumber"].editorClass = TKDataFormDecimalEditor.self
+                
+                self.dataSource["AccountName"].hintText = "Account Name"
+                
+                let dataForm = TKDataForm(frame: self.subView.bounds)
+                dataForm.delegate = self
+                dataForm.dataSource = self.dataSource
+                dataForm.backgroundColor = UIColor.whiteColor()
+                dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                
+                self.subView.addSubview(dataForm)
+                
+                self.dataForm.reloadData()    
                 
             }
             else
@@ -82,14 +84,14 @@ class UpdateBankAccountViewController: TKDataFormViewController {
     
     override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
         
-        if property.name == "Amount" {
-            (editor.editor as! UITextField).hidden = true;
-            
-            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
-            editor.style.editorOffset = UIOffsetMake(10, 0)
-        }
+//        if property.name == "Amount" {
+//            (editor.editor as! UITextField).hidden = true;
+//            
+//            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
+//            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
+//            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
+//            editor.style.editorOffset = UIOffsetMake(10, 0)
+//        }
     }
     
     override func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {

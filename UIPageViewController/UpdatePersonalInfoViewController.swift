@@ -16,18 +16,7 @@ class UpdatePersonalInfoViewController: TKDataFormViewController {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
-        
-        dataSource.sourceObject = self.paymentInfo.personalInfo
-        
-        
-        let dataForm = TKDataForm(frame: self.subView.bounds)
-        dataForm.delegate = self
-        dataForm.dataSource = dataSource
-        dataForm.backgroundColor = UIColor.whiteColor()
-        dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-        
-        self.subView.addSubview(dataForm)
-        
+
         // Do any additional setup after loading the view.
         loadData()
         
@@ -45,10 +34,19 @@ class UpdatePersonalInfoViewController: TKDataFormViewController {
             {
                 
                 self.paymentInfo = temp1
+                self.dataSource.sourceObject = self.paymentInfo.personalInfo
                 
-                self.dataForm.reloadData()
+                let dataForm = TKDataForm(frame: self.subView.bounds)
+                dataForm.delegate = self
+                dataForm.dataSource = self.dataSource
+                dataForm.backgroundColor = UIColor.whiteColor()
+                dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
                 
-                self.dataForm.update()
+                self.subView.addSubview(dataForm)
+                
+//                self.dataForm.reloadData()
+//                
+//                self.dataForm.update()
                 
             }
             else
@@ -79,14 +77,14 @@ class UpdatePersonalInfoViewController: TKDataFormViewController {
     
     override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
         
-        if property.name == "Amount" {
-            (editor.editor as! UITextField).hidden = true;
-            
-            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
-            editor.style.editorOffset = UIOffsetMake(10, 0)
-        }
+//        if property.name == "Amount" {
+//            (editor.editor as! UITextField).hidden = true;
+//            
+//            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
+//            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
+//            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
+//            editor.style.editorOffset = UIOffsetMake(10, 0)
+//        }
     }
     
     override func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {

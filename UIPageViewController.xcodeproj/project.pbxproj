@@ -19,6 +19,8 @@
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
 		C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */; };
 		C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */; };
+		C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */; };
+		C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */; };
 		C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C341BEB1664007463FD /* Spring.framework */; };
 		C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */; };
 		C72C0C391BEB2416007463FD /* TelerikAppFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */; };
@@ -99,6 +101,8 @@
 		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfo.swift; sourceTree = "<group>"; };
 		C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
+		C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewController.swift; sourceTree = "<group>"; };
 		C72C0C341BEB1664007463FD /* Spring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spring.framework; path = "Pods/../build/Debug-iphoneos/Spring.framework"; sourceTree = "<group>"; };
 		C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActionSheetPicker_3_0.framework; path = "Pods/../build/Debug-iphoneos/ActionSheetPicker_3_0.framework"; sourceTree = "<group>"; };
 		C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelerikAppFeedback.framework; sourceTree = "<group>"; };
@@ -301,6 +305,7 @@
 				C7A216051C1E90CA008A03A7 /* UpdateCreditCardViewController.swift */,
 				C7A216071C1E90DE008A03A7 /* UpdateBankAccountViewController.swift */,
 				C7A216091C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift */,
+				C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -335,15 +340,16 @@
 			isa = PBXGroup;
 			children = (
 				C7E351C21C1660A500315A47 /* CardInfo.swift */,
+				C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */,
 				C783D0611C111A7C00AE7265 /* Error.swift */,
 				C7E6B0191BF068F400D60EC1 /* PaymentTrackerRecordModel.swift */,
 				C7A681791C1139FC00348EB0 /* DebtorInfo.swift */,
-				C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */,
 				C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */,
 				C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */,
 				C7A216031C1E80EB008A03A7 /* ThreePartPayment.swift */,
 				C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */,
 				C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */,
+				C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -523,6 +529,7 @@
 				C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */,
 				C7A216081C1E90DE008A03A7 /* UpdateBankAccountViewController.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
+				C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
@@ -538,6 +545,7 @@
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
 				C7A216001C1E74CE008A03A7 /* FinishCallbackViewController.swift in Sources */,
 				C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */,
+				C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */,
 				78E75F421AC5FC48001A93F1 /* AppDelegate.swift in Sources */,
 				C7F92A171C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift in Sources */,
 				C7F92A191C1928FD00AE9AAB /* SummaryViewController.swift in Sources */,

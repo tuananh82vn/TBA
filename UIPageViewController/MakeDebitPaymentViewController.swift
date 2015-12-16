@@ -25,10 +25,11 @@ class MakeDebitPaymentViewController: TKDataFormViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        bankInfo.Amount = 10
-        bankInfo.Bsb = "123"
-        bankInfo.AccountName = "Andy Pham"
-        bankInfo.AccountNumber = "4444333"
+        bankInfo.Amount = (LocalStore.accessTotalOutstanding()?.floatValue)!
+
+//        bankInfo.Bsb = "123"
+//        bankInfo.AccountName = "Andy Pham"
+//        bankInfo.AccountNumber = "4444333"
         
         dataSource.sourceObject = bankInfo
         
@@ -37,10 +38,10 @@ class MakeDebitPaymentViewController: TKDataFormViewController {
         
         dataSource["AccountName"].hintText = "Account Name"
         
-        dataSource["Bsb1"].hintText = ""
-        dataSource["Bsb1"].editorClass = TKDataFormNumberEditor.self
-        dataSource["Bsb2"].hintText = ""
-        dataSource["Bsb2"].editorClass = TKDataFormNumberEditor.self
+        dataSource["Bsb"].hintText = ""
+        dataSource["Bsb"].editorClass = TKDataFormNumberEditor.self
+//        dataSource["Bsb2"].hintText = ""
+//        dataSource["Bsb2"].editorClass = TKDataFormNumberEditor.self
         
         dataSource["AccountNumber"].hintText = "Account Number"
         dataSource["AccountNumber"].editorClass = TKDataFormNumberEditor.self
@@ -118,29 +119,29 @@ class MakeDebitPaymentViewController: TKDataFormViewController {
                 
             }
         else
-            if (propery.name == "Bsb1") {
+            if (propery.name == "Bsb") {
                 
                 let value = propery.valueCandidate as! NSString
                 
                 if (value.length <= 0)
                 {
-                    dataSource["Bsb1"].errorMessage = "Please input Bsb 1"
+                    dataSource["Bsb"].errorMessage = "Please input Bsb"
                     return false
                 }
                 
             }
-            else
-                if (propery.name == "Bsb2") {
-                    
-                    let value = propery.valueCandidate as! NSString
-                    
-                    if (value.length <= 0)
-                    {
-                        dataSource["Bsb2"].errorMessage = "Please input Bsb 2"
-                        return false
-                    }
-                    
-                }
+//            else
+//                if (propery.name == "Bsb2") {
+//                    
+//                    let value = propery.valueCandidate as! NSString
+//                    
+//                    if (value.length <= 0)
+//                    {
+//                        dataSource["Bsb2"].errorMessage = "Please input Bsb 2"
+//                        return false
+//                    }
+//                    
+//                }
                 else
                     if (propery.name == "AccountNumber") {
                         

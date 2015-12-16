@@ -16,7 +16,7 @@ struct WebApiService {
         case RequestCallback
         case GetPaymentDetail
         case GetPersonalInformationDetail
-
+        case SendFeedback
         
         var description: String {
             switch self {
@@ -30,7 +30,7 @@ struct WebApiService {
                 case .RequestCallback: return "/Api/RequestCallback"
                 case .GetPaymentDetail: return "/Api/GetPaymentDetail"
                 case .GetPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
-
+                case .SendFeedback: return "/Api/SendFeedback"
             }
         }
     }
@@ -588,10 +588,13 @@ struct WebApiService {
                         
                         if let ExpireDate = jsonObject["ExpiryDate"].string {
                             
-                            let components: NSDateComponents = NSDateComponents()
-                            components.setValue(1, forComponent: NSCalendarUnit.Day);
+//                            let components: NSDateComponents = NSDateComponents()
+//                            components.setValue(1, forComponent: NSCalendarUnit.Day);
                             
-                            JsonReturn.card.ExpiryDate  = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: ExpireDate.dateFromString("MMyyyy"), options: NSCalendarOptions(rawValue: 0))!
+//                            JsonReturn.card.ExpiryDate  = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: ExpireDate.dateFromString("MMyyyy"), options: NSCalendarOptions(rawValue: 0))!
+                            
+                              JsonReturn.card.ExpiryDate  = ExpireDate.dateFromString("MMyyyy")
+
                         }
                     }
                     else if(JsonReturn.RecType == "DD")
@@ -806,4 +809,52 @@ struct WebApiService {
             
         }
     }
+    
+    static func SendFeedback(object: Feedback, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SendFeedback.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "Subject" : object.Subject,
+                "Content" : object.Content
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
 }

@@ -127,16 +127,16 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     
     
     func sideDrawer(sideDrawer: TKSideDrawer!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
-        NSLog("Selected item in section: %ld at index: %ld ", indexPath.section, indexPath.row)
+//        NSLog("Selected item in section: %ld at index: %ld ", indexPath.section, indexPath.row)
         if(indexPath.section == 0 )
         {
-//            if(indexPath.row == 0 ){
-//                
-//                let makepaymentController = self.storyboard!.instantiateViewControllerWithIdentifier("MakePaymentViewController") as! MakePaymentViewController
-//
-//                self.navigationController!.pushViewController(makepaymentController, animated: true)
-//                
-//            }
+           if(indexPath.row == 0 ){
+            
+                let paymentMethodController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentMethodViewController") as! PaymentMethodViewController
+            
+                self.navigationController!.pushViewController(paymentMethodController, animated: true)
+            
+            }
             
             if(indexPath.row == 1 ){
                 
@@ -147,12 +147,12 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
                 
             }
             
-//            if(indexPath.row == 2 ){
-//                
-//                let instalmentInfoController = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
-//                
-//                self.navigationController!.pushViewController(instalmentInfoController, animated: true)
-//            }
+            if(indexPath.row == 2 ){
+                
+                let view = self.storyboard!.instantiateViewControllerWithIdentifier("SendFeedbackViewController") as! SendFeedbackViewController
+                
+                self.navigationController!.pushViewController(view, animated: true)
+            }
             
 //            if(indexPath.row == 2 ){
 //                

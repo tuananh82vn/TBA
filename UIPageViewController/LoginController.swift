@@ -16,15 +16,16 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.refreshButton.rotate360Degrees(completionDelegate: self)
+        
         loadData()
 
     }
     
     func loadData(){
         
-        self.refreshButton.rotate360Degrees(completionDelegate: self)
-        // Perhaps start a process which will refresh the UI...
+        
         
         self.timer = Timer(duration: 10.0, completionHandler: {
             
