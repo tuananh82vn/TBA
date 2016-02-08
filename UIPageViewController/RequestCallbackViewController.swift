@@ -12,7 +12,7 @@ class RequestCallbackViewController: TKDataFormViewController {
 
     let dataSource = TKDataFormEntityDataSource()
     
-    let callbackForm = RequestCallBackForm()
+    let requestCallBack = RequestCallBack()
 
 
     @IBOutlet weak var subView: UIView!
@@ -21,15 +21,18 @@ class RequestCallbackViewController: TKDataFormViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
-        dataSource.sourceObject = callbackForm
+        
+        dataSource.sourceObject = requestCallBack
         
         let name = dataSource["Name"]
         name.hintText = "Name"
         name.errorMessage = "Please fill in your name"
         name.image = UIImage(named: "guest-name")
         
+        
         let phone = dataSource["Phone"]
         phone.hintText = "Phone"
+        phone.errorMessage = "Please fill in your number"
         phone.image = UIImage(named: "phone")
         
         dataSource["Date"].image = UIImage(named: "calendar-1")
@@ -41,11 +44,11 @@ class RequestCallbackViewController: TKDataFormViewController {
         dataSource["TimeTo"].formatter = formatter
         
 
-        
         dataSource["TimeFrom"].image = UIImage(named: "time")
         dataSource["TimeTo"].image = UIImage(named: "time")
 
         dataSource["TimeFrom"].editorClass = TKDataFormTimePickerEditor.self
+        
         dataSource["TimeFrom"].hintText = "From"
         
         dataSource["TimeTo"].editorClass = TKDataFormTimePickerEditor.self
@@ -58,13 +61,16 @@ class RequestCallbackViewController: TKDataFormViewController {
         notes.image = UIImage(named: "notes")
         
         self.dataForm.dataSource = dataSource
+        self.dataForm.commitMode = TKDataFormCommitMode.OnLostFocus
+        self.dataForm.validationMode = TKDataFormValidationMode.Manual
+
+
         self.dataForm.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
-        self.dataForm.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
+        
         dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
 
-        
         self.subView.addSubview(dataForm)
-
+        
     }
     
     override func viewDidAppear(animated: Bool)
@@ -82,13 +88,14 @@ class RequestCallbackViewController: TKDataFormViewController {
         super.viewWillLayoutSubviews()
     }
     
-
-    
     override func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         if propery.name == "Name" {
             return (propery.valueCandidate as! NSString).length > 0
         }
-        return true
+        if propery.name == "Phone" {
+            return (propery.valueCandidate as! NSString).length > 0
+        }
+        return propery.isValid
     }
     
     override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
@@ -110,6 +117,11 @@ class RequestCallbackViewController: TKDataFormViewController {
             editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
         }
         
+        if property.name == "Phone" {
+            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
+            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
+        }
+        
 
     }
     
@@ -124,11 +136,14 @@ class RequestCallbackViewController: TKDataFormViewController {
 
 
     @IBAction func btContinue_Clicked(sender: AnyObject) {
+        
+        
         view.showLoading()
         
-        var requestObject = RequestCallBackForm()
+        var requestObject = RequestCallBack()
         
         requestObject.Notes         = self.dataSource["Notes"].valueCandidate as! String
+        requestObject.Phone         = self.dataSource["Phone"].valueCandidate as! String
         requestObject.Name          = self.dataSource["Name"].valueCandidate as! String
         requestObject.Date          = self.dataSource["Date"].valueCandidate as! NSDate
         requestObject.TimeFrom      = self.dataSource["TimeFrom"].valueCandidate as! NSDate
@@ -184,11 +199,20 @@ class CallEditor: TKDataFormPhoneEditor {
     
     let actionButton = UIButton()
     
+    override init(property: TKEntityProperty, owner: TKDataForm) {
+        super.init(property: property, owner: owner)
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         actionButton.setTitle("Enter your number", forState: UIControlState.Normal)
-        actionButton.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.233, alpha: 1.0), forState: UIControlState.Normal)
+        
+//        actionButton.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.233, alpha: 1.0), forState: UIControlState.Normal)
+        
+        actionButton.setTitleColor(UIColor.init(hex: "#357d89"), forState: UIControlState.Normal)
+        
         self.addSubview(actionButton)
         self.gridLayout.addArrangedView(actionButton)
         let btnDef = self.gridLayout.definitionForView(actionButton)

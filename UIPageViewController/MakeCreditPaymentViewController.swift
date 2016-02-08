@@ -16,6 +16,9 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
     let cardInfo = CardInfo()
     var paymentReturn = PaymentReturnModel()
     
+    var isFormValidate : Bool = true
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +40,8 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
         
 
         dataSource["NameOnCard"].hintText = "Name On Card"
-        
+        dataSource["NameOnCard"].errorMessage = "Please input name"
+
         dataSource["CardNumber"].hintText = "Card Number"
         dataSource["CardNumber"].editorClass = TKDataFormNumberEditor.self
         
@@ -50,8 +54,8 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
         dataForm.backgroundColor = UIColor.whiteColor()
         dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
         
-        dataForm.validationMode = TKDataFormValidationMode.Manual
-        
+        self.dataForm.commitMode = TKDataFormCommitMode.OnLostFocus
+        self.dataForm.validationMode = TKDataFormValidationMode.Manual
 
         self.subView.addSubview(dataForm)
 
@@ -99,11 +103,11 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
                 return false
             }
             
-            if (floatValue >  1000)
-            {
-                dataSource["Amount"].errorMessage = "Amount can not greater than $1000"
-                return false
-            }
+//            if (floatValue >  1000)
+//            {
+//                dataSource["Amount"].errorMessage = "Amount can not greater than $1000"
+//                return false
+//            }
         }
         else
         if (propery.name == "NameOnCard") {
@@ -112,7 +116,7 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
             
             if (value.length <= 0)
             {
-                dataSource["NameOnCard"].errorMessage = "Please input name"
+                self.isFormValidate = false
                 return false
             }
 
@@ -126,8 +130,7 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
             {
                 dataSource["CardNumber"].errorMessage = "Please input card number"
                 return false
-            }
-            
+            } 
         }
         else
             if (propery.name == "CardType") {
@@ -158,61 +161,76 @@ class MakeCreditPaymentViewController: TKDataFormViewController {
 
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
-        //dataForm.commit()
+        self.dataForm.commit()
         
-        view.showLoading()
-        
-        var cardObject = CardInfo()
-        
-        cardObject.Amount       = self.dataSource["Amount"].valueCandidate.floatValue
-        cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
-        cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
-        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
-        cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
-        cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
-
-
-        // Pay in FULL
-        let PaymentType = 1
- 
-        WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
-        
-            self.view.hideLoading();
-
-            if let temp1 = objectReturn
-            {
-        
-                if(temp1.IsSuccess)
-                {
-                        self.paymentReturn = temp1
-                    
-                        self.performSegueWithIdentifier("GoToSummary", sender: nil)
-                }
-                else
-                {
-                    
-                    // create the alert
-                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-            else
-            {
-                // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                
-                // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+        if(!self.isFormValidate){
+            
+            // create the alert
+            let alert = UIAlertController(title: "Error", message: "form not validate", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            return
+            
         }
+        
+//        view.showLoading()
+//        
+//        let cardObject = CardInfo()
+//        
+//        cardObject.Amount       = self.dataSource["Amount"].valueCandidate.floatValue
+//        cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
+//        cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
+//        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
+//        cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
+//        cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
+//
+//
+//        // Pay in FULL
+//        let PaymentType = 1
+// 
+//        WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
+//        
+//            self.view.hideLoading();
+//
+//            if let temp1 = objectReturn
+//            {
+//        
+//                if(temp1.IsSuccess)
+//                {
+//                        self.paymentReturn = temp1
+//                    
+//                        self.performSegueWithIdentifier("GoToSummary", sender: nil)
+//                }
+//                else
+//                {
+//                    
+//                    // create the alert
+//                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+//                    
+//                    // add an action (button)
+//                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+//                    
+//                    // show the alert
+//                    self.presentViewController(alert, animated: true, completion: nil)
+//                }
+//            }
+//            else
+//            {
+//                // create the alert
+//                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
+//                
+//                // add an action (button)
+//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+//                
+//                // show the alert
+//                self.presentViewController(alert, animated: true, completion: nil)
+//            }
+//        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

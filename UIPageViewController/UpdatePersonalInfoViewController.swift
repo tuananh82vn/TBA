@@ -34,7 +34,15 @@ class UpdatePersonalInfoViewController: TKDataFormViewController {
             {
                 
                 self.paymentInfo = temp1
+                
                 self.dataSource.sourceObject = self.paymentInfo.personalInfo
+                
+//                self.dataSource["HomePhone"].editorClass = TKDataFormNumberEditor.self
+//                self.dataSource["WorkPhone"].editorClass = TKDataFormNumberEditor.self
+//                self.dataSource["MobilePhone"].editorClass = TKDataFormNumberEditor.self
+
+                
+                
                 
                 let dataForm = TKDataForm(frame: self.subView.bounds)
                 dataForm.delegate = self
@@ -43,11 +51,7 @@ class UpdatePersonalInfoViewController: TKDataFormViewController {
                 dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
                 
                 self.subView.addSubview(dataForm)
-                
-//                self.dataForm.reloadData()
-//                
-//                self.dataForm.update()
-                
+ 
             }
             else
             {
@@ -122,14 +126,8 @@ class UpdatePersonalInfoViewController: TKDataFormViewController {
                 
                 if(temp1.IsSuccess)
                 {
-                    // create the alert
-                    let alert = UIAlertController(title: "Done", message: "Update done", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+
                 }
                 else
                 {

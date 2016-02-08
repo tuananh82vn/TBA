@@ -45,7 +45,7 @@ class SetupPaymentViewController: TKDataFormViewController {
         let FirstAmount = dataSource["FirstAmount"]
         FirstAmount.hintText = "First Amount"
         FirstAmount.errorMessage = "Please fill in 1st Payment"
-        dataSource["FirstAmount"].editorClass = TKDataFormDecimalEditor.self
+        dataSource["FirstAmount"].editorClass = TKDataFormNumberEditor.self
 
         
         
@@ -55,7 +55,7 @@ class SetupPaymentViewController: TKDataFormViewController {
         let SecondAmount = dataSource["SecondAmount"]
         SecondAmount.hintText = "Second Amount"
         SecondAmount.errorMessage = "Please fill in 2nd Payment"
-        dataSource["SecondAmount"].editorClass = TKDataFormDecimalEditor.self
+        dataSource["SecondAmount"].editorClass = TKDataFormNumberEditor.self
 
         
         
@@ -65,7 +65,7 @@ class SetupPaymentViewController: TKDataFormViewController {
         let ThirdAmount = dataSource["ThirdAmount"]
         ThirdAmount.hintText = "Third Amount"
         ThirdAmount.errorMessage = "Please fill in 3rd Payment"
-        dataSource["ThirdAmount"].editorClass = TKDataFormDecimalEditor.self
+        dataSource["ThirdAmount"].editorClass = TKDataFormNumberEditor.self
 
         
         
@@ -131,13 +131,11 @@ class SetupPaymentViewController: TKDataFormViewController {
 
     }
     
+    @IBAction func btNext_Clicked(sender: AnyObject) {
+        
+    }
+    
     override func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
-//        groupView.titleView.titleLabel.textColor = UIColor.lightGrayColor()
-//        groupView.titleView.titleLabel.font = UIFont.systemFontOfSize(13)
-//        groupView.titleView.style.insets = UIEdgeInsetsMake(0, 10, 0, 0)
-//        if groupIndex == 1 {
-//            groupView.editorsContainer.backgroundColor = UIColor.clearColor()
-//        }
     }
     
 

@@ -59,10 +59,22 @@ class LoginController: UIViewController {
                 if(temp1.IsSuccess)
                 {
                     LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
+                    LocalStore.setNextPaymentInstallment(temp1.NextPaymentInstallment.description)
                     LocalStore.setDRCode(temp1.DRCode)
-                    
+                    LocalStore.setIsExistingArrangementManual(temp1.IsExistingArrangement)
+                    LocalStore.setIsExistingArrangementCC(temp1.IsExistingArrangementCC)
+                    LocalStore.setIsExistingArrangementDD(temp1.IsExistingArrangementDD)
+                    LocalStore.setIsCoBorrowers(temp1.IsCoBorrowers)
+
                     self.reset()
-                    self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
+                    if(temp1.IsCoBorrowers){
+                        self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
+                    }
+                    else
+                    {
+                        self.performSegueWithIdentifier("GoToBlank", sender: nil)
+                    }
+                    
                 }
                 else
                 {
@@ -89,6 +101,8 @@ class LoginController: UIViewController {
 
             }
         }
+        
+        
     }
     
     func displayAtIndex()

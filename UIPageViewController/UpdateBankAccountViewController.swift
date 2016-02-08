@@ -6,27 +6,25 @@ class UpdateBankAccountViewController: TKDataFormViewController {
     
     @IBOutlet weak var subView: UIView!
     
-    let dataSource = TKDataFormEntityDataSource()
+    let dataFormEntityDataSource = TKDataFormEntityDataSource()
     
-    var paymentInfo = BankInfo()
+    var bankInfo = BankInfo()
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
-      
-//        dataSource.sourceObject = self.paymentInfo
         
+        view.addGestureRecognizer(tap)
 
         
-        // Do any additional setup after loading the view.
-        loadData()
+        initData()
         
     }
     
-    func loadData(){
+    func initData(){
         
         self.view.showLoading()
         
@@ -36,27 +34,29 @@ class UpdateBankAccountViewController: TKDataFormViewController {
             
             if let temp1 = objectReturn
             {
+
+                self.bankInfo = temp1.bank
                 
-                self.paymentInfo = temp1.bank
+                self.dataFormEntityDataSource.sourceObject = self.bankInfo
                 
-                self.dataSource.sourceObject = self.paymentInfo
+                self.dataFormEntityDataSource["Amount"].hidden = true
                 
-                self.dataSource["Amount"].hidden = true
+                self.dataFormEntityDataSource["Bsb"].editorClass = TKDataFormNumberEditor.self
+                //
+                self.dataFormEntityDataSource["AccountNumber"].editorClass = TKDataFormNumberEditor.self
+                //
                 
-                self.dataSource["Bsb"].editorClass = TKDataFormDecimalEditor.self
-                self.dataSource["AccountNumber"].editorClass = TKDataFormDecimalEditor.self
                 
-                self.dataSource["AccountName"].hintText = "Account Name"
+                self.dataForm.dataSource = self.dataFormEntityDataSource
+                self.dataForm.commitMode = TKDataFormCommitMode.OnLostFocus
+                self.dataForm.validationMode = TKDataFormValidationMode.Manual
                 
-                let dataForm = TKDataForm(frame: self.subView.bounds)
-                dataForm.delegate = self
-                dataForm.dataSource = self.dataSource
-                dataForm.backgroundColor = UIColor.whiteColor()
-                dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
                 
-                self.subView.addSubview(dataForm)
+                self.dataForm.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
                 
-                self.dataForm.reloadData()    
+                self.dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                
+                self.subView.addSubview(self.dataForm)
                 
             }
             else
@@ -71,7 +71,13 @@ class UpdateBankAccountViewController: TKDataFormViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+        
+        
+        
+
+
     }
+    
     
     func dismissKeyboard() {
         
@@ -113,9 +119,10 @@ class UpdateBankAccountViewController: TKDataFormViewController {
         
         var paymentInfo = PaymentInfo()
         
-        paymentInfo.bank.AccountName        = self.dataSource["AccountName"].valueCandidate as! String
-        paymentInfo.bank.AccountNumber      = self.dataSource["AccountNumber"].valueCandidate as! String
-        paymentInfo.bank.Bsb               = self.dataSource["Bsb"].valueCandidate as! String
+        paymentInfo.bank.AccountName        = self.dataFormEntityDataSource["AccountName"].valueCandidate.description
+        paymentInfo.bank.AccountNumber      = self.dataFormEntityDataSource["AccountNumber"].valueCandidate.description
+        paymentInfo.bank.Bsb                = self.dataFormEntityDataSource["Bsb"].valueCandidate.description
+        
         paymentInfo.RecType = "DD"
         
         WebApiService.SetPaymentInfo(paymentInfo){ objectReturn in
@@ -127,14 +134,8 @@ class UpdateBankAccountViewController: TKDataFormViewController {
                 
                 if(temp1.IsSuccess)
                 {
-                    // create the alert
-                    let alert = UIAlertController(title: "Done", message: "Update done", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+
                 }
                 else
                 {

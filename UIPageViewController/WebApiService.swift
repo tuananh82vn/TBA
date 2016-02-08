@@ -17,6 +17,7 @@ struct WebApiService {
         case GetPaymentDetail
         case GetPersonalInformationDetail
         case SendFeedback
+        case ArrangeDetail
         
         var description: String {
             switch self {
@@ -31,6 +32,8 @@ struct WebApiService {
                 case .GetPaymentDetail: return "/Api/GetPaymentDetail"
                 case .GetPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
                 case .SendFeedback: return "/Api/SendFeedback"
+                case .ArrangeDetail: return "/Api/GetArrangeDetails"
+
             }
         }
     }
@@ -265,11 +268,9 @@ struct WebApiService {
                 
                 let jsonObject = JSON(jsonReturn1)
                 
-                
                 if let IsSuccess = jsonObject["IsSuccess"].bool {
                     
                     JsonReturn.IsSuccess = IsSuccess
-                    
                 }
                 
                 if let ReferenceNumber = jsonObject["ReferenceNumber"].string {
@@ -287,12 +288,48 @@ struct WebApiService {
                 if let TotalOutstanding = jsonObject["TotalOutstanding"].float {
                     JsonReturn.TotalOutstanding = TotalOutstanding
                 }
-                if let NextPaymentInstallmentAmount = jsonObject["NextPaymentInstallmentAmount"].string {
-                    JsonReturn.NextPaymentInstallmentAmount = NextPaymentInstallmentAmount
+                
+                if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].float {
+                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment
                 }
+                
                 if let MerchantId = jsonObject["NTID"].string {
                     JsonReturn.MerchantId = MerchantId
                 }
+                
+                if let IsExistingArrangement = jsonObject["IsExistingArrangement"].bool {
+                    JsonReturn.IsExistingArrangement = IsExistingArrangement
+                }
+                
+                if let IsCoBorrowers = jsonObject["IsCoBorrowers"].bool {
+                    JsonReturn.IsCoBorrowers = IsCoBorrowers
+                }
+                
+                if let IsExistingArrangementCC = jsonObject["IsExistingArrangementCC"].bool {
+                    JsonReturn.IsExistingArrangementCC = IsExistingArrangementCC
+                }
+                
+                if let IsExistingArrangementDD = jsonObject["IsExistingArrangementDD"].bool {
+                    JsonReturn.IsExistingArrangementDD = IsExistingArrangementDD
+                }
+                
+                
+                if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
+                    
+                    let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                    
+                    JsonReturn.HistoryList = HistoryList
+                    
+                }
+                
+                if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
+                    
+                    let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                    
+                    JsonReturn.ScheduleList = ScheduleList
+                    
+                }
+                
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
@@ -300,6 +337,77 @@ struct WebApiService {
                     
                     JsonReturn.Errors = ErrorsReturn
                     
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
+    static func GetArrangmentDetail(ReferenceNumber: String, response : (objectReturn : ArrangeDetails?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.ArrangeDetail.description
+        
+        let JsonReturn = ArrangeDetails()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                }
+                
+                if let ReferenceNumber = jsonObject["ReferenceNumber"].string {
+                    JsonReturn.ReferenceNumber = ReferenceNumber
+                }
+                
+                if let ArrangeAmount = jsonObject["ArrangeAmount"].float {
+                    JsonReturn.ArrangeAmount = ArrangeAmount
+                }
+                
+                if let Frequency = jsonObject["Frequency"].string {
+                    JsonReturn.Frequency = Frequency
+                }
+                
+                if let LeftToPay = jsonObject["LeftToPay"].float {
+                    JsonReturn.LeftToPay = LeftToPay
+                }
+                
+                if let NextInstalmentDate = jsonObject["NextInstalmentDate"].string {
+                    JsonReturn.NextInstalmentDate = NextInstalmentDate
+                }
+                
+                if let OverdueAmount = jsonObject["OverdueAmount"].float {
+                    JsonReturn.OverdueAmount = OverdueAmount
+                }
+                
+                if let PaidAmount = jsonObject["PaidAmount"].float {
+                    JsonReturn.PaidAmount = PaidAmount
+                }
+                
+                if let Status = jsonObject["Status"].string {
+                    JsonReturn.Status = Status
+                }
+                
+                if let Error = jsonObject["Error"].string {
+                    JsonReturn.Error = Error
                 }
                 
                 response (objectReturn : JsonReturn)
@@ -501,7 +609,7 @@ struct WebApiService {
         }
     }
     
-    static func RequestCallback(request:  RequestCallBackForm, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func RequestCallback(request:  RequestCallBack, response : (objectReturn : JsonReturnModel?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.RequestCallback.description
         
@@ -510,6 +618,7 @@ struct WebApiService {
         let parameters = [
             "Item": [
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "Number": request.Phone,
                 "Name": request.Name,
                 "Date" : request.Date.formattedWith("dd/MM/yyyy"),
                 "TimeFrom" : request.TimeFrom.formattedWith("HH:mm"),

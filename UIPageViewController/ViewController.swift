@@ -14,13 +14,15 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
 
     var viewControler = ["View1Controller","View2Controller"]
     
-    //var viewControler2 = ["View1Controller","PinLoginViewController"]
-    
     var IsPinSetup : Bool = false
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        
+        LocalStore.setDeviceName(UIDevice.currentDevice().modelName)
+
         
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         

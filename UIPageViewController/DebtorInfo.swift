@@ -17,12 +17,18 @@ class DebtorInfo {
     var DebtorCode : String
     var DRCode : String
     var TotalOutstanding : Float
-    var NextPaymentInstallmentAmount : String
+    var NextPaymentInstallment: Float
     var MerchantId : String
     var PaymentType : Int
     var CurrentPaymentId : Int
     var EmailAddress : String
-    
+    var IsExistingArrangementDD : Bool
+    var IsExistingArrangementCC : Bool
+    var IsExistingArrangement : Bool
+    var IsCoBorrowers : Bool
+    var ArrangementType: String
+    var HistoryList : [PaymentTrackerRecordModel]
+    var ScheduleList : [PaymentTrackerRecordModel]
     var IsSuccess : Bool
     var Errors : [Error]
     
@@ -34,16 +40,23 @@ class DebtorInfo {
         DebtorCode = ""
         DRCode = ""
         TotalOutstanding = 0
-        NextPaymentInstallmentAmount = ""
+        NextPaymentInstallment = 0
         MerchantId = ""
         PaymentType = 0
         CurrentPaymentId = 0
         EmailAddress = ""
-        
+        IsExistingArrangementDD = false
+        IsExistingArrangementCC = false
+        IsExistingArrangement = false
+        IsCoBorrowers = false
+        ArrangementType = ""
+        HistoryList = [PaymentTrackerRecordModel]()
+        ScheduleList = [PaymentTrackerRecordModel]()
         IsSuccess = false
         Errors = [Error]()
     }
     
+}
 //    public virtual Decimal TotalOutstanding { get; set; }
 //    
 //    public virtual Nullable<Double> OtherAmount { get; set; }
@@ -128,13 +141,7 @@ class DebtorInfo {
 //
 //    public virtual String MerchantId
 //
-//    public virtual bool IsExistingArrangementDD { get; set; }
-//
-//    public virtual bool IsExistingArrangementCC { get; set; }
-//
-//    public virtual bool IsExistingArrangement { get; set; }
-//
-//    public virtual bool IsCoBorrowers { get; set; }
+
 //
 //    public virtual string PinNumber { get; set; }
 //
@@ -142,11 +149,11 @@ class DebtorInfo {
 //
 //    public virtual string Netcode { get; set; }
 //
-//    public virtual string ArrangementDebtor { get; set; }
+
 //
 //    public virtual bool IsArrangementUnderThisDebtor { get; set; }
 //
-//    public virtual string ArrangementType { get; set; }
+//    public virtual
 //
 //    public virtual DebtorPayment CurrentPayment { get; set; }
 //
@@ -189,6 +196,3 @@ class DebtorInfo {
 //    public virtual string FinalInstalmentDate { get; set; }
 //    public virtual string TotalPaid { get; set; }
 //    public bool IsPinNumberExits { get; set; }
-    
-
-}

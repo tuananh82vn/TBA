@@ -2,6 +2,8 @@
 import UIKit
 
 struct LocalStore {
+    
+    private static let DeviceName = "DeviceName"
 
     private static let RefNumber = "RefNumber"
     
@@ -15,13 +17,38 @@ struct LocalStore {
     
     private static let TotalOutstanding = "TotalOutstanding"
     
+    private static let TotalPaid = "TotalPaid"
+    
+    private static let TotalOverDue = "TotalOverDue"
+
     private static let DRCode = "DRCode"
 
-    
-    private static let NextPaymentInstallmentAmount = "NextPaymentInstallmentAmount"
-    
-    
+    private static let NextPaymentInstallment = "NextPaymentInstallment"
+
     private static let userDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private static let IsExistingArrangementManual = "IsExistingArrangementManual";
+    
+    private static let IsExistingArrangementCC = "IsExistingArrangementCC";
+
+    private static let IsExistingArrangementDD = "IsExistingArrangementDD";
+
+    private static let IsCoBorrowers = "IsCoBorrowers";
+    
+    //----------------------------------------------------------------------------//
+    static func setDeviceName(token: String) {
+        userDefaults.setObject(token, forKey: DeviceName)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteDeviceName() {
+        userDefaults.removeObjectForKey(DeviceName)
+        userDefaults.synchronize()
+    }
+    
+    static func accessDeviceName() -> String {
+        return userDefaults.stringForKey(DeviceName)!
+    }
     
     //----------------------------------------------------------------------------//
     static func setDRCode(token: String) {
@@ -39,18 +66,19 @@ struct LocalStore {
     }
     
     //----------------------------------------------------------------------------//
-    static func setNextPaymentInstallmentAmount(token: String) {
-        userDefaults.setObject(token, forKey: NextPaymentInstallmentAmount)
+    
+    static func setNextPaymentInstallment(token: String) {
+        userDefaults.setObject(token, forKey: NextPaymentInstallment)
         userDefaults.synchronize()
     }
     
-    private static func deleteNextPaymentInstallmentAmount() {
-        userDefaults.removeObjectForKey(NextPaymentInstallmentAmount)
+    private static func deleteNextPaymentInstallment() {
+        userDefaults.removeObjectForKey(NextPaymentInstallment)
         userDefaults.synchronize()
     }
     
-    static func accessNextPaymentInstallmentAmount() -> String? {
-        return userDefaults.stringForKey(NextPaymentInstallmentAmount)
+    static func accessNextPaymentInstallment() -> String? {
+        return userDefaults.stringForKey(NextPaymentInstallment)
     }
     
     //----------------------------------------------------------------------------//
@@ -67,6 +95,38 @@ struct LocalStore {
     
     static func accessTotalOutstanding() -> String? {
         return userDefaults.stringForKey(TotalOutstanding)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setTotalPaid(token: String) {
+        userDefaults.setObject(token, forKey: TotalPaid)
+        userDefaults.synchronize()
+    }
+    
+    private static func deletesetTotalPaid() {
+        userDefaults.removeObjectForKey(TotalPaid)
+        userDefaults.synchronize()
+    }
+    
+    static func accesssetTotalPaid() -> String? {
+        return userDefaults.stringForKey(TotalPaid)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setTotalOverDue(token: String) {
+        userDefaults.setObject(token, forKey: TotalOverDue)
+        userDefaults.synchronize()
+    }
+    
+    private static func deletesetTotalOverDue() {
+        userDefaults.removeObjectForKey(TotalOverDue)
+        userDefaults.synchronize()
+    }
+    
+    static func accesssetTotalOverDue() -> String? {
+        return userDefaults.stringForKey(TotalOverDue)
     }
     
     
@@ -150,6 +210,74 @@ struct LocalStore {
     static func accessIsPinSetup() -> String? {
         return userDefaults.stringForKey(IsPinSetup)
     }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setIsExistingArrangementManual(token: Bool) {
+        userDefaults.setObject(token, forKey: IsExistingArrangementManual)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteIsExistingArrangementManual() {
+        userDefaults.removeObjectForKey(IsExistingArrangementManual)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsExistingArrangementManual() -> Bool? {
+        return userDefaults.boolForKey(IsExistingArrangementManual)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setIsExistingArrangementCC(token: Bool) {
+        userDefaults.setObject(token, forKey: IsExistingArrangementCC)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteIsExistingArrangementCC() {
+        userDefaults.removeObjectForKey(IsExistingArrangementCC)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsExistingArrangementCC() -> Bool? {
+        return userDefaults.boolForKey(IsExistingArrangementCC)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    
+    static func setIsExistingArrangementDD(token: Bool) {
+        userDefaults.setObject(token, forKey: IsExistingArrangementDD)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteIsExistingArrangementDD() {
+        userDefaults.removeObjectForKey(IsExistingArrangementDD)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsExistingArrangementDD() -> Bool? {
+        return userDefaults.boolForKey(IsExistingArrangementDD)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    
+    static func setIsCoBorrowers(token: Bool) {
+        userDefaults.setObject(token, forKey: IsCoBorrowers)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteIsCoBorrowers() {
+        userDefaults.removeObjectForKey(IsCoBorrowers)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsCoBorrowers() -> Bool? {
+        return userDefaults.boolForKey(IsCoBorrowers)
+    }
+    
+    //----------------------------------------------------------------------------//
 
 
     // MARK: Helper

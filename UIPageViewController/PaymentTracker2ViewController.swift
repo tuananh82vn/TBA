@@ -92,76 +92,76 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         let record1 = PaymentTrackerRecordModel()
         record1.Amount = "$ 100.00"
         record1.DueDate = "12/20/2015"
-        record1.Remaining = "$ 1000.00"
-        record1.PaymentStatusId = 2
-        record1.PaidDetail = "Paid $50 on 21/10/2015"
-        record1.DeptCode = "Dept Code : 1234567890"
+//        record1.Remaining = "$ 1000.00"
+//        record1.PaymentStatusId = 2
+//        record1.PaidDetail = "Paid $50 on 21/10/2015"
+//        record1.DeptCode = "Dept Code : 1234567890"
 
         paymentTrackerRecord.append(record1)
         
         let record2 = PaymentTrackerRecordModel()
         record2.Amount = "$ 100.00"
         record2.DueDate = "12/20/2015"
-        record2.Remaining = "$ 1000.00"
-        record2.PaymentStatusId = 0
-        paymentTrackerRecord.append(record2)
+//        record2.Remaining = "$ 1000.00"
+//        record2.PaymentStatusId = 0
+//        paymentTrackerRecord.append(record2)
         
         let record3 = PaymentTrackerRecordModel()
         record3.Amount = "$ 100.00"
         record3.DueDate = "12/20/2015"
-        record3.Remaining = "$ 1000.00"
-        record3.PaymentStatusId = 1
-        paymentTrackerRecord.append(record3)
+//        record3.Remaining = "$ 1000.00"
+//        record3.PaymentStatusId = 1
+//        paymentTrackerRecord.append(record3)
         
         let record4 = PaymentTrackerRecordModel()
         record4.Amount = "$ 100.00"
         record4.DueDate = "12/20/2015"
-        record4.Remaining = "$ 1000.00"
-        record4.PaymentStatusId = 0
-        paymentTrackerRecord.append(record4)
+//        record4.Remaining = "$ 1000.00"
+//        record4.PaymentStatusId = 0
+//        paymentTrackerRecord.append(record4)
         
         
         let record5 = PaymentTrackerRecordModel()
         record5.Amount = "$ 100.00"
         record5.DueDate = "12/20/2015"
-        record5.Remaining = "$ 1000.00"
-        record5.PaymentStatusId = 1
-        paymentTrackerRecord.append(record5)
+//        record5.Remaining = "$ 1000.00"
+//        record5.PaymentStatusId = 1
+//        paymentTrackerRecord.append(record5)
         
         let record6 = PaymentTrackerRecordModel()
         record6.Amount = "$ 100.00"
         record6.DueDate = "12/20/2015"
-        record6.Remaining = "$ 1000.00"
-        record6.PaymentStatusId = 1
-        paymentTrackerRecord.append(record6)
+//        record6.Remaining = "$ 1000.00"
+//        record6.PaymentStatusId = 1
+//        paymentTrackerRecord.append(record6)
         
         let record7 = PaymentTrackerRecordModel()
         record7.Amount = "$ 100.00"
         record7.DueDate = "12/20/2015"
-        record7.Remaining = "$ 1000.00"
-        record7.PaymentStatusId = 1
-        paymentTrackerRecord.append(record7)
+//        record7.Remaining = "$ 1000.00"
+//        record7.PaymentStatusId = 1
+//        paymentTrackerRecord.append(record7)
         
         let record8 = PaymentTrackerRecordModel()
         record8.Amount = "$ 100.00"
         record8.DueDate = "12/20/2015"
-        record8.Remaining = "$ 1000.00"
-        record8.PaymentStatusId = 2
-        paymentTrackerRecord.append(record8)
+//        record8.Remaining = "$ 1000.00"
+//        record8.PaymentStatusId = 2
+//        paymentTrackerRecord.append(record8)
         
         let record9 = PaymentTrackerRecordModel()
         record9.Amount = "$ 100.00"
         record9.DueDate = "12/20/2015"
-        record9.Remaining = "$ 1000.00"
-        record9.PaymentStatusId = 1
-        paymentTrackerRecord.append(record9)
+//        record9.Remaining = "$ 1000.00"
+//        record9.PaymentStatusId = 1
+//        paymentTrackerRecord.append(record9)
         
         let record10 = PaymentTrackerRecordModel()
         record10.Amount = "$ 100.00"
         record10.DueDate = "12/20/2015"
-        record10.Remaining = "$ 1000.00"
-        record10.PaymentStatusId = 2
-        paymentTrackerRecord.append(record10)
+//        record10.Remaining = "$ 1000.00"
+//        record10.PaymentStatusId = 2
+//        paymentTrackerRecord.append(record10)
         
     }
     
@@ -209,25 +209,25 @@ class PaymentTracker2ViewController: UIViewController, TKListViewDelegate , TKLi
         
         cell1.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
         
-        cell1.lb_Remaining.text = self.paymentTrackerRecord[indexPath.row].Remaining
-        
-        cell1.lb_PaidDetail.text = self.paymentTrackerRecord[indexPath.row].PaidDetail
-
-        cell1.lb_DeptCode.text = self.paymentTrackerRecord[indexPath.row].DeptCode
-
-        
-        if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 0 ){
-            cell1.img_Status.image = UIImage(named: "circle_blue")
-
-        }
-        else
-            if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 1 ){
-                cell1.img_Status.image = UIImage(named: "circle_red")
-            }
-            else
-                if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 2 ){
-                    cell1.img_Status.image = UIImage(named: "circle_green")
-        }
+//        cell1.lb_Remaining.text = self.paymentTrackerRecord[indexPath.row].Remaining
+//        
+//        cell1.lb_PaidDetail.text = self.paymentTrackerRecord[indexPath.row].PaidDetail
+//
+//        cell1.lb_DeptCode.text = self.paymentTrackerRecord[indexPath.row].DeptCode
+//
+//        
+//        if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 0 ){
+//            cell1.img_Status.image = UIImage(named: "circle_blue")
+//
+//        }
+//        else
+//            if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 1 ){
+//                cell1.img_Status.image = UIImage(named: "circle_red")
+//            }
+//            else
+//                if(self.paymentTrackerRecord[indexPath.row].PaymentStatusId == 2 ){
+//                    cell1.img_Status.image = UIImage(named: "circle_green")
+//        }
         
         if(cell1.swipeBackgroundView.subviews.count == 0){
             let size = cell1.frame.size

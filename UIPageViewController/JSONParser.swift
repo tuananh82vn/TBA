@@ -39,6 +39,68 @@ struct JSONParser {
         return Object
     }
     
+    static func parseHistoryPaymentTracker(story: NSArray) -> [PaymentTrackerRecordModel] {
+        
+        var ErrorArray = [PaymentTrackerRecordModel]()
+        
+        if let Items = story as Array? {
+            
+            for var index = 0; index < Items.count; ++index {
+                
+                if let Item = Items[index] as? NSDictionary {
+                    
+                    let temp = JSONParser.parseObjectHistoryPaymentTracker(Item as NSDictionary)
+                    
+                    ErrorArray.append(temp)
+                }
+            }
+        }
+        
+        return ErrorArray
+    }
+    
+    static func parseSchedulePaymentTracker(story: NSArray) -> [PaymentTrackerRecordModel] {
+        
+        var ErrorArray = [PaymentTrackerRecordModel]()
+        
+        if let Items = story as Array? {
+            
+            for var index = 0; index < Items.count; ++index {
+                
+                if let Item = Items[index] as? NSDictionary {
+                    
+                    let temp = JSONParser.parseObjectSchedulePaymentTracker(Item as NSDictionary)
+                    
+                    ErrorArray.append(temp)
+                }
+            }
+        }
+        
+        return ErrorArray
+    }
+    
+    static func parseObjectHistoryPaymentTracker(story: NSDictionary) -> PaymentTrackerRecordModel {
+        
+        let Object =  PaymentTrackerRecordModel()
+        
+        Object.DueDate = story["HistInstalDate"] as? String ?? ""
+        
+        Object.Amount = story["HistInstalAmount"] as? String ?? ""
+        
+        return Object
+    }
+    
+    static func parseObjectSchedulePaymentTracker(story: NSDictionary) -> PaymentTrackerRecordModel {
+        
+        let Object =  PaymentTrackerRecordModel()
+        
+        Object.DueDate = story["InstalmentDate"] as? String ?? ""
+        
+        Object.Amount = story["InstalmentAmount"] as? String ?? ""
+        
+        return Object
+    }
+    
 //    static func parseLoginModel(story: NSDictionary) -> LoginModel {
 //        
 //        let object =  LoginModel()

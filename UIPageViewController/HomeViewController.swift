@@ -1,6 +1,6 @@
 import UIKit
 
-class HomeViewController: UIViewController, TKSideDrawerDelegate {
+class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     @IBOutlet weak var deferButton: UIButton!
     @IBOutlet weak var callbackButton: UIButton!
@@ -8,6 +8,15 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     @IBOutlet weak var instalmentButton: UIButton!
     @IBOutlet weak var paymentButton: UIButton!
     @IBOutlet weak var trackerButton: UIButton!
+    @IBOutlet weak var lbl_refnumber: UILabel!
+    @IBOutlet weak var lbl_outstanding: UILabel!
+    @IBOutlet weak var lbl_nextinstalment: UILabel!
+    
+    @IBOutlet weak var view_Chart: UIView!
+    
+    
+    let pieChart = TKChart()
+    
     
     override func viewDidLoad() {
         
@@ -15,35 +24,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-//        var nav = self.navigationController?.navigationBar
-//        
-//        nav?.barStyle = UIBarStyle.Black
-//        
-//        nav?.tintColor = UIColor.yellowColor()
-//
-//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-//        
-//        imageView.contentMode = .ScaleAspectFit
-//        // 4
-//        let image = UIImage(named: "lock")
-//        
-//        imageView.image = image
-//        // 5
-//        navigationItem.titleView = imageView
-        
-//        let navItem = UINavigationItem(title: "Home")
-//        
-//        let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
-//        navigationBar.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-//        
-//        let showSideDrawerButton = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self, action: "showSideDrawer")
-//        let logoutButton = UIBarButtonItem(image: UIImage(named: "lock"), style: UIBarButtonItemStyle.Plain, target: self, action: "logout")
-//        
-//        navItem.rightBarButtonItem = logoutButton
-//        navItem.leftBarButtonItem = showSideDrawerButton
-//        nav!.items = [navItem]
-        
-        //self.view.addSubview(navBar)
         
         // create menu
         let sectionPrimary = self.sideDrawer.addSectionWithTitle("Main")
@@ -52,15 +32,26 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         sectionPrimary.addItemWithTitle("Provide Feedback",image: UIImage(named: "info")!)
         
         let sectionLabels = self.sideDrawer.addSectionWithTitle("Setting")
-        sectionLabels.addItemWithTitle("View / Update Credit Card Detail")
-        sectionLabels.addItemWithTitle("View / Update Bank Account Detail")
+        
+        if(!LocalStore.accessIsExistingArrangementManual()!){
+            
+            if(LocalStore.accessIsExistingArrangementCC()!){
+                sectionLabels.addItemWithTitle("View / Update Credit Card Detail")
+            }
+            
+            if(LocalStore.accessIsExistingArrangementDD()!){
+                sectionLabels.addItemWithTitle("View / Update Bank Account Detail")
+            }
+        
+        }
+
+        
         sectionLabels.addItemWithTitle("View / Update Personal Information")
 
         
         
         self.sideDrawer.style.headerHeight = 64
         self.sideDrawer.fill = TKSolidFill(color: UIColor(rgba: "#00757D"))
-        //self.sideDrawer.fill = TKSolidFill(color: UIColor(red: 28 / 255.0, green: 171/255.0, blue: 241/255.0, alpha:0.5))
         self.sideDrawer.style.shadowMode = TKSideDrawerShadowMode.Hostview
         self.sideDrawer.style.shadowOffset = CGSizeMake(-2, -0.5)
         self.sideDrawer.style.shadowRadius = 5
@@ -73,34 +64,86 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         
         //----------------------------------------------------//
 
-        let modelName = UIDevice.currentDevice().modelName
 
-        setupButton(modelName);
+        setupButton(LocalStore.accessDeviceName());
+        
+        self.lbl_refnumber.text = LocalStore.accessRefNumber();
+        self.lbl_outstanding.text = "$"+LocalStore.accessTotalOutstanding()!;
+        self.lbl_nextinstalment.text = "$"+LocalStore.accessNextPaymentInstallment()!
         
     }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+    }
+    
     
     func setupButton(iphone : String){
         
         if(iphone == "iPhone 6s Plus" || iphone == "iPhone 6 Plus" ){
             
-        self.paymentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
-        self.paymentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 55, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 55, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
 
-        self.trackerButton.titleEdgeInsets = UIEdgeInsetsMake(40, 5 , 0, 0)
-        self.trackerButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
         
-        self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 10 , 0, 0)
-        self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
-        
-        self.deferButton.titleEdgeInsets = UIEdgeInsetsMake(40, 5 , 0, 0)
-        self.deferButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
-        
-        self.callbackButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
-        self.callbackButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
-        
-        self.inboxButton.titleEdgeInsets = UIEdgeInsetsMake(40, 30 , 0, 0)
-        self.inboxButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 55, 0, 0)
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 55, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 55, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 55, 0, 0)
             
+
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, 0 , 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, 5 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 10 , 0, 0)
+            
+            
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 5 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, 0 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 30 , 0, 0)
+      
+        }
+            
+        else if(iphone == "iPhone 5" || iphone == "iPhone 5s"  )
+        {
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 40, 0, 0)
+            
+            
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
+            
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, -10 , 0, 0)
+            
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -15 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 15 , 0, 0)
+
+        }
+        
+        else if(iphone == "iPhone 4s" || iphone == "Simulator")
+        {
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 40, 0, 0)
+
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
+            
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -12 , 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -12 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, -10 , 0, 0)
+            
+            
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -17 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40,  15 , 0, 0)
+
         }
         
     }
@@ -153,41 +196,55 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
                 
                 self.navigationController!.pushViewController(view, animated: true)
             }
-            
-//            if(indexPath.row == 2 ){
-//                
-//                let requestCallBackController = self.storyboard!.instantiateViewControllerWithIdentifier("RequestCallbackViewController") as! RequestCallbackViewController
-//                
-//                self.navigationController!.pushViewController(requestCallBackController, animated: true)
-//            }
         }
         else if(indexPath.section == 1 )
         {
-            if(indexPath.row == 0 ){
+            
+            
+            if(!LocalStore.accessIsExistingArrangementManual()!){
                 
+                if(LocalStore.accessIsExistingArrangementCC()!){
+                    if(indexPath.row == 0 ){
+                        
+                        
+                        let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
+                        
+                        self.navigationController!.pushViewController(view, animated: true)
+                        
+                    }
+                }
                 
-                let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
+                if(LocalStore.accessIsExistingArrangementDD()!){
+                    if(indexPath.row == 0 ){
+                        
+                        
+                        let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateBankAccountViewController") as! UpdateBankAccountViewController
+                        
+                        self.navigationController!.pushViewController(view, animated: true)
+                        
+                    }
+                }
                 
-                self.navigationController!.pushViewController(view, animated: true)
+                if(indexPath.row == 1 ){
+                    
+                    
+                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
+                    
+                    self.navigationController!.pushViewController(view, animated: true)
+                    
+                }
                 
             }
-            
-            if(indexPath.row == 1 ){
-                
-                
-                let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateBankAccountViewController") as! UpdateBankAccountViewController
-                
-                self.navigationController!.pushViewController(view, animated: true)
-                
-            }
-            
-            if(indexPath.row == 2 ){
-                
-                
-                let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
-                
-                self.navigationController!.pushViewController(view, animated: true)
-                
+            else
+            {
+                if(indexPath.row == 0 ){
+                    
+                    
+                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
+                    
+                    self.navigationController!.pushViewController(view, animated: true)
+                    
+                }
             }
         }
     }
@@ -207,9 +264,17 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
     }
     
     @IBAction func btInstalment_Clicked(sender: AnyObject) {
+        
+        let instalmentInfoViewController = self.storyboard!.instantiateViewControllerWithIdentifier("InstalmentInfoViewController") as! InstalmentInfoViewController
+        
+        self.navigationController!.pushViewController(instalmentInfoViewController, animated: true)
     }
     
     @IBAction func btTracker_Clicked(sender: AnyObject) {
+        
+        let paymentTrackerViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTrackerViewController") as! PaymentTrackerViewController
+        
+        self.navigationController!.pushViewController(paymentTrackerViewController, animated: true)
     }
     
     @IBAction func btPayment_Clicked(sender: AnyObject) {
@@ -225,9 +290,11 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         
         let logoutAction = UIAlertAction(title: "Log off", style: UIAlertActionStyle.Destructive, handler: {
             (alert: UIAlertAction!) -> Void in
+            
                     let pinLoginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PinLoginViewController") as! PinLoginViewController
             
                     self.navigationController!.pushViewController(pinLoginViewController, animated: true)
+            
         })
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
@@ -248,5 +315,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 }
 

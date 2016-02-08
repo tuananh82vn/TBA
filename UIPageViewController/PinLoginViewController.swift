@@ -27,16 +27,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
 
     var FirstPin : String = "";
     
-    @IBAction func btForgotten_Clicked(sender: AnyObject) {
-        // create the alert
-        let alert = UIAlertController(title: "PIN sent", message: "Your PIN is sent to your phone.", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        
-        // show the alert
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
+
     
     override func viewDidLoad() {
         
@@ -62,6 +53,26 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
     
     override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
         return UIStatusBarAnimation.Fade
+    }
+    
+    @IBAction func btForgotten_Clicked(sender: AnyObject) {
+        //        // create the alert
+        //        let alert = UIAlertController(title: "PIN sent", message: "Your PIN is sent to your phone.", preferredStyle: UIAlertControllerStyle.Alert)
+        //
+        //        // add an action (button)
+        //        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        //
+        //        // show the alert
+        //        self.presentViewController(alert, animated: true, completion: nil)
+        
+        LocalStore.setIsPinSetup("false");
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+        
+        self.presentViewController(vc, animated: true, completion: nil)
+        
     }
     
     

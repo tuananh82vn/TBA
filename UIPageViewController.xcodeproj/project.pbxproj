@@ -23,8 +23,6 @@
 		C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */; };
 		C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C341BEB1664007463FD /* Spring.framework */; };
 		C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */; };
-		C72C0C391BEB2416007463FD /* TelerikAppFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */; };
-		C72C0C3B1BEB242A007463FD /* TelerikUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3A1BEB242A007463FD /* TelerikUI.framework */; };
 		C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3C1BEB2496007463FD /* EventKit.framework */; };
 		C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3E1BEB249C007463FD /* EventKitUI.framework */; };
 		C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C451BEC220D007463FD /* UIColorExtension.swift */; };
@@ -38,6 +36,11 @@
 		C783D0621C111A7C00AE7265 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0611C111A7C00AE7265 /* Error.swift */; };
 		C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0631C111AB200AE7265 /* JSONParser.swift */; };
 		C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */; };
+		C797D60B1C62FFBF0083CD88 /* TelerikUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C797D60A1C62FFBF0083CD88 /* TelerikUI.framework */; };
+		C797D60D1C6309950083CD88 /* ArrangeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D60C1C6309950083CD88 /* ArrangeDetails.swift */; };
+		C797D6151C680C090083CD88 /* FinishUpdateContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6141C680C090083CD88 /* FinishUpdateContactViewController.swift */; };
+		C797D6171C680E690083CD88 /* FinishUpdateBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6161C680E690083CD88 /* FinishUpdateBankAccountViewController.swift */; };
+		C797D6191C680E890083CD88 /* FinishUpdateCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6181C680E890083CD88 /* FinishUpdateCreditCardViewController.swift */; };
 		C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */; };
 		C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */; };
 		C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */; };
@@ -105,7 +108,6 @@
 		C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewController.swift; sourceTree = "<group>"; };
 		C72C0C341BEB1664007463FD /* Spring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spring.framework; path = "Pods/../build/Debug-iphoneos/Spring.framework"; sourceTree = "<group>"; };
 		C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActionSheetPicker_3_0.framework; path = "Pods/../build/Debug-iphoneos/ActionSheetPicker_3_0.framework"; sourceTree = "<group>"; };
-		C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelerikAppFeedback.framework; sourceTree = "<group>"; };
 		C72C0C3A1BEB242A007463FD /* TelerikUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelerikUI.framework; sourceTree = "<group>"; };
 		C72C0C3C1BEB2496007463FD /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		C72C0C3E1BEB249C007463FD /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
@@ -122,6 +124,11 @@
 		C783D0631C111AB200AE7265 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		C783D0681C11233B00AE7265 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentInfoViewController.swift; sourceTree = "<group>"; };
+		C797D60A1C62FFBF0083CD88 /* TelerikUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TelerikUI.framework; path = Library/Frameworks/TelerikUI.framework; sourceTree = DEVELOPER_DIR; };
+		C797D60C1C6309950083CD88 /* ArrangeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangeDetails.swift; sourceTree = "<group>"; };
+		C797D6141C680C090083CD88 /* FinishUpdateContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishUpdateContactViewController.swift; sourceTree = "<group>"; };
+		C797D6161C680E690083CD88 /* FinishUpdateBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishUpdateBankAccountViewController.swift; sourceTree = "<group>"; };
+		C797D6181C680E890083CD88 /* FinishUpdateCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishUpdateCreditCardViewController.swift; sourceTree = "<group>"; };
 		C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInfo.swift; sourceTree = "<group>"; };
 		C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReturnModel.swift; sourceTree = "<group>"; };
 		C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCallback.swift; sourceTree = "<group>"; };
@@ -161,13 +168,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C797D60B1C62FFBF0083CD88 /* TelerikUI.framework in Frameworks */,
 				C781D3831C1A898E00E8832E /* Alamofire.framework in Frameworks */,
 				C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */,
 				C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */,
 				C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */,
 				C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */,
-				C72C0C3B1BEB242A007463FD /* TelerikUI.framework in Frameworks */,
-				C72C0C391BEB2416007463FD /* TelerikAppFeedback.framework in Frameworks */,
 				0E0F677C34110A19DE0606A6 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,12 +255,12 @@
 		A2F449B641C43B271AAD8CE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C797D60A1C62FFBF0083CD88 /* TelerikUI.framework */,
 				C781D3821C1A898E00E8832E /* Alamofire.framework */,
 				C783D0681C11233B00AE7265 /* Alamofire.framework */,
 				C72C0C3E1BEB249C007463FD /* EventKitUI.framework */,
 				C72C0C3C1BEB2496007463FD /* EventKit.framework */,
 				C72C0C3A1BEB242A007463FD /* TelerikUI.framework */,
-				C72C0C381BEB2416007463FD /* TelerikAppFeedback.framework */,
 				C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */,
 				C72C0C341BEB1664007463FD /* Spring.framework */,
 				8E33AF7EC9D660BEF0C529EF /* Pods.framework */,
@@ -306,6 +312,9 @@
 				C7A216071C1E90DE008A03A7 /* UpdateBankAccountViewController.swift */,
 				C7A216091C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift */,
 				C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */,
+				C797D6141C680C090083CD88 /* FinishUpdateContactViewController.swift */,
+				C797D6161C680E690083CD88 /* FinishUpdateBankAccountViewController.swift */,
+				C797D6181C680E890083CD88 /* FinishUpdateCreditCardViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -350,6 +359,7 @@
 				C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */,
 				C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */,
 				C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */,
+				C797D60C1C6309950083CD88 /* ArrangeDetails.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -520,6 +530,7 @@
 				C7813B641BEC7FD300876860 /* HomeViewController.swift in Sources */,
 				66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */,
 				C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */,
+				C797D6151C680C090083CD88 /* FinishUpdateContactViewController.swift in Sources */,
 				C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */,
 				C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */,
 				C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */,
@@ -532,6 +543,7 @@
 				C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
+				C797D6171C680E690083CD88 /* FinishUpdateBankAccountViewController.swift in Sources */,
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
 				C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */,
@@ -539,6 +551,7 @@
 				C7E351C51C167A6400315A47 /* String.swift in Sources */,
 				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
 				C7A216041C1E80EB008A03A7 /* ThreePartPayment.swift in Sources */,
+				C797D6191C680E890083CD88 /* FinishUpdateCreditCardViewController.swift in Sources */,
 				C7A216061C1E90CA008A03A7 /* UpdateCreditCardViewController.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
 				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
@@ -550,6 +563,7 @@
 				C7F92A171C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift in Sources */,
 				C7F92A191C1928FD00AE9AAB /* SummaryViewController.swift in Sources */,
 				C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */,
+				C797D60D1C6309950083CD88 /* ArrangeDetails.swift in Sources */,
 				C7E6B01A1BF068F400D60EC1 /* PaymentTrackerRecordModel.swift in Sources */,
 				C7E6B0241BF15AAA00D60EC1 /* CustomTelrikViewCell.swift in Sources */,
 				C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */,

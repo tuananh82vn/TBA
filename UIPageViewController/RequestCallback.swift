@@ -9,7 +9,7 @@
 import Foundation
 
 
-class RequestCallBackForm: NSObject {
+class RequestCallBack: NSObject {
     
     var Name = ""
     var Phone = ""
