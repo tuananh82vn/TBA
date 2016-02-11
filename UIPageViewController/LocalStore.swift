@@ -3,6 +3,8 @@ import UIKit
 
 struct LocalStore {
     
+    private static let MakePaymentInFull = "MakePaymentInFull"
+
     private static let DeviceName = "DeviceName"
 
     private static let RefNumber = "RefNumber"
@@ -34,6 +36,28 @@ struct LocalStore {
     private static let IsExistingArrangementDD = "IsExistingArrangementDD";
 
     private static let IsCoBorrowers = "IsCoBorrowers";
+    
+    private static let IsAllowMonthlyInstallment = "IsAllowMonthlyInstallment";
+
+    private static let MaxNoPay = "MaxNoPay";
+    
+    private static let ThreePartDateDurationDays = "ThreePartDateDurationDays";
+
+    //----------------------------------------------------------------------------//
+    static func setMakePaymentInFull(token: Bool) {
+        userDefaults.setObject(token, forKey: MakePaymentInFull)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteMakePaymentInFull() {
+        userDefaults.removeObjectForKey(MakePaymentInFull)
+        userDefaults.synchronize()
+    }
+    
+    static func accessMakePaymentInFull() -> Bool {
+        return userDefaults.boolForKey(MakePaymentInFull)
+    }
+    
     
     //----------------------------------------------------------------------------//
     static func setDeviceName(token: String) {
@@ -275,6 +299,57 @@ struct LocalStore {
     
     static func accessIsCoBorrowers() -> Bool? {
         return userDefaults.boolForKey(IsCoBorrowers)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    
+    static func setIsAllowMonthlyInstallment(token: Bool) {
+        userDefaults.setObject(token, forKey: IsAllowMonthlyInstallment)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteIsAllowMonthlyInstallment() {
+        userDefaults.removeObjectForKey(IsAllowMonthlyInstallment)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsAllowMonthlyInstallment() -> Bool? {
+        return userDefaults.boolForKey(IsAllowMonthlyInstallment)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    
+    static func setMaxNoPay(token: Int) {
+        userDefaults.setObject(token, forKey: MaxNoPay)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteMaxNoPay() {
+        userDefaults.removeObjectForKey(MaxNoPay)
+        userDefaults.synchronize()
+    }
+    
+    static func accessMaxNoPay() -> Int {
+        return userDefaults.integerForKey(MaxNoPay)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    
+    static func setThreePartDateDurationDays(token: Int) {
+        userDefaults.setObject(token, forKey: ThreePartDateDurationDays)
+        userDefaults.synchronize()
+    }
+    
+    private static func deleteThreePartDateDurationDays() {
+        userDefaults.removeObjectForKey(ThreePartDateDurationDays)
+        userDefaults.synchronize()
+    }
+    
+    static func accessThreePartDateDurationDays() -> Int {
+        return userDefaults.integerForKey(ThreePartDateDurationDays)
     }
     
     //----------------------------------------------------------------------------//

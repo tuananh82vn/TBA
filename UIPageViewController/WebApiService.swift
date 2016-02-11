@@ -289,6 +289,10 @@ struct WebApiService {
                     JsonReturn.TotalOutstanding = TotalOutstanding
                 }
                 
+                if let MaxNoPay = jsonObject["MaxNoPay"].int {
+                    JsonReturn.MaxNoPay = MaxNoPay
+                }
+                
                 if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].float {
                     JsonReturn.NextPaymentInstallment = NextPaymentInstallment
                 }
@@ -313,6 +317,9 @@ struct WebApiService {
                     JsonReturn.IsExistingArrangementDD = IsExistingArrangementDD
                 }
                 
+                if let IsAllowMonthlyInstallment = jsonObject["IsAllowMonthlyInstallment"].bool {
+                    JsonReturn.IsAllowMonthlyInstallment = IsAllowMonthlyInstallment
+                }
                 
                 if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
                     
@@ -336,6 +343,14 @@ struct WebApiService {
                     let ErrorsReturn = JSONParser.parseError(Errors)
                     
                     JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                if let Client = jsonObject["Client"].dictionaryObject {
+                    
+                    let ClientReturn = JSONParser.parseClient(Client)
+                    
+                    JsonReturn.client = ClientReturn
                     
                 }
                 
@@ -541,8 +556,8 @@ struct WebApiService {
                 "Amount": cardObject.Amount,
                 "DirectDebitAccountName" : cardObject.AccountName,
                 "DirectDebitAccountNumber": cardObject.AccountNumber,
-                "DirectDebitBSB1": cardObject.Bsb,
-                "DirectDebitBSB2": "",
+                "DirectDebitBSB1": cardObject.Bsb1,
+                "DirectDebitBSB2": cardObject.Bsb2,
                 "PaymentType": PaymentType,
                 "PaymentMethod": "2"
             ]

@@ -65,6 +65,12 @@ class LoginController: UIViewController {
                     LocalStore.setIsExistingArrangementCC(temp1.IsExistingArrangementCC)
                     LocalStore.setIsExistingArrangementDD(temp1.IsExistingArrangementDD)
                     LocalStore.setIsCoBorrowers(temp1.IsCoBorrowers)
+                    LocalStore.setIsAllowMonthlyInstallment(temp1.IsAllowMonthlyInstallment)
+                    if(temp1.MaxNoPay > 3 ){
+                        temp1.MaxNoPay = 3
+                    }
+                    LocalStore.setMaxNoPay(temp1.MaxNoPay)
+                    LocalStore.setThreePartDateDurationDays(temp1.client.ThreePartDateDurationDays)
 
                     self.reset()
                     if(temp1.IsCoBorrowers){

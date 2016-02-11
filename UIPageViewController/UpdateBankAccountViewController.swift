@@ -2,15 +2,19 @@
 
 import UIKit
 
-class UpdateBankAccountViewController: TKDataFormViewController {
+class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
     
     @IBOutlet weak var subView: UIView!
     
-    let dataFormEntityDataSource = TKDataFormEntityDataSource()
+    let dataSource = TKDataFormEntityDataSource()
     
     var bankInfo = BankInfo()
     
+    var dataForm1 = TKDataForm()
     
+    var isFormValidate : Bool = true
+
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -32,31 +36,59 @@ class UpdateBankAccountViewController: TKDataFormViewController {
             
             self.view.hideLoading();
             
-            if let temp1 = objectReturn
-            {
+                if let temp1 = objectReturn
+                {
 
-                self.bankInfo = temp1.bank
                 
-                self.dataFormEntityDataSource.sourceObject = self.bankInfo
+                if(temp1.IsSuccess){
+                    self.bankInfo = temp1.bank
                 
-                self.dataFormEntityDataSource["Amount"].hidden = true
+                    self.dataSource.sourceObject = self.bankInfo
                 
-                self.dataFormEntityDataSource["Bsb"].editorClass = TKDataFormNumberEditor.self
-                //
-                self.dataFormEntityDataSource["AccountNumber"].editorClass = TKDataFormNumberEditor.self
-                //
+                    self.dataSource["Amount"].hidden = true
+                    self.dataSource["Bsb1"].hidden = true
+                    self.dataSource["Bsb2"].hidden = true
+
+                
+                    self.dataSource["AmountName"].index = 0
+                
+                    self.dataSource["Bsb"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["Bsb"].index = 1
+
+                    self.dataSource["AccountNumber"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["AccountNumber"].index = 2
+                
+
+                    self.dataForm1 = TKDataForm(frame: self.subView.bounds)
+                    self.dataForm1.dataSource = self.dataSource
+                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.Manual
                 
                 
-                self.dataForm.dataSource = self.dataFormEntityDataSource
-                self.dataForm.commitMode = TKDataFormCommitMode.OnLostFocus
-                self.dataForm.validationMode = TKDataFormValidationMode.Manual
+                    self.dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
                 
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
                 
-                self.dataForm.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
-                
-                self.dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-                
-                self.subView.addSubview(self.dataForm)
+                    self.subView.addSubview(self.dataForm1)
+                }
+                else
+                {
+                    // create the alert
+                    let alert = UIAlertController(title: "Error", message: temp1.Errors, preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                        UIAlertAction in
+                        
+                        self.navigationController?.popViewControllerAnimated(true)
+                        
+                    }
+                    
+                    alert.addAction(okAction)
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                    
                 
             }
             else
@@ -64,8 +96,14 @@ class UpdateBankAccountViewController: TKDataFormViewController {
                 // create the alert
                 let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
                 
-                // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                }
+                
+                alert.addAction(okAction)
                 
                 // show the alert
                 self.presentViewController(alert, animated: true, completion: nil)
@@ -88,40 +126,80 @@ class UpdateBankAccountViewController: TKDataFormViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
         
-//        if property.name == "Amount" {
-//            (editor.editor as! UITextField).hidden = true;
-//            
-//            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-//            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-//            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
-//            editor.style.editorOffset = UIOffsetMake(10, 0)
-//        }
     }
     
-    override func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {
+    func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {
     }
     
-    override func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
+    func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
     }
     
-    override func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+        self.isFormValidate = true
+        
 
-        return true
+            if (propery.name == "AccountName") {
+                
+                let value = propery.valueCandidate as! NSString
+                
+                if (value.length <= 0)
+                {
+                    dataSource["AccountName"].errorMessage = "Please input Account Name"
+                    self.isFormValidate = false
+                }
+                
+            }
+            else
+                if (propery.name == "Bsb") {
+                    
+                    let value = propery.valueCandidate as! NSString
+                    
+                    if (value.length <= 0)
+                    {
+                        self.isFormValidate = false
+                    }
+                    else
+                        if (value.length > 6)
+                        {
+                            dataSource["Bsb1"].errorMessage = "Bsb is maximum 6 number in lenght"
+                            self.isFormValidate = false
+                    }
+                    
+                }
+                else
+                        if (propery.name == "AccountNumber") {
+                            
+                            let value = propery.valueCandidate as! NSString
+                            
+                            if (value.length <= 0)
+                            {
+                                dataSource["AccountNumber"].errorMessage = "Please input Account Number"
+                                self.isFormValidate = false
+                            }
+                            
+        }
+        
+        return isFormValidate
     }
     
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
-        //self.dataForm.reloadData()
+        self.dataForm1.commit()
+        
+        if(!self.isFormValidate){
+            
+            return
+        }
         
         self.view.showLoading();
         
-        var paymentInfo = PaymentInfo()
+        let paymentInfo = PaymentInfo()
         
-        paymentInfo.bank.AccountName        = self.dataFormEntityDataSource["AccountName"].valueCandidate.description
-        paymentInfo.bank.AccountNumber      = self.dataFormEntityDataSource["AccountNumber"].valueCandidate.description
-        paymentInfo.bank.Bsb                = self.dataFormEntityDataSource["Bsb"].valueCandidate.description
+        paymentInfo.bank.AccountName        = self.dataSource["AccountName"].valueCandidate.description
+        paymentInfo.bank.AccountNumber      = self.dataSource["AccountNumber"].valueCandidate.description
+        paymentInfo.bank.Bsb                = self.dataSource["Bsb"].valueCandidate.description
         
         paymentInfo.RecType = "DD"
         

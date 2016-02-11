@@ -30,7 +30,7 @@ class View2Controller: BaseViewController {
 //            self.tf_DebtCode.text = LocalStore.accessRefNumber()
 //        }
         
-        self.tf_DebtCode.text = "705693499"
+        self.tf_DebtCode.text = "706274877"
         
         // Show button get net code
         UIView.animateWithDuration(2.0, animations: { () -> Void in

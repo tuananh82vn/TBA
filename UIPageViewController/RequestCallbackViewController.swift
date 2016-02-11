@@ -24,41 +24,42 @@ class RequestCallbackViewController: TKDataFormViewController {
         
         dataSource.sourceObject = requestCallBack
         
-        let name = dataSource["Name"]
-        name.hintText = "Name"
-        name.errorMessage = "Please fill in your name"
-        name.image = UIImage(named: "guest-name")
         
         
-        let phone = dataSource["Phone"]
-        phone.hintText = "Phone"
-        phone.errorMessage = "Please fill in your number"
-        phone.image = UIImage(named: "phone")
+        dataSource["Name"].hintText = "Name"
+        dataSource["Name"].errorMessage = "Please fill in your name"
+        dataSource["Name"].image = UIImage(named: "guest-name")
         
+        dataSource["Phone"].hintText = "Number"
+        dataSource["Phone"].errorMessage = "Please fill in your number"
+        dataSource["Phone"].image = UIImage(named: "phone")
+        dataSource["Phone"].editorClass = TKDataFormPhoneEditor.self
+        
+
         dataSource["Date"].image = UIImage(named: "calendar-1")
         dataSource["Date"].hintText = "Date"
         
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "h:mm a";
-        dataSource["TimeFrom"].formatter = formatter
-        dataSource["TimeTo"].formatter = formatter
+
+        let TimeFormatter = NSDateFormatter()
+        TimeFormatter.dateFormat = "h:mm a";
         
 
         dataSource["TimeFrom"].image = UIImage(named: "time")
-        dataSource["TimeTo"].image = UIImage(named: "time")
-
         dataSource["TimeFrom"].editorClass = TKDataFormTimePickerEditor.self
-        
         dataSource["TimeFrom"].hintText = "From"
+        dataSource["TimeFrom"].formatter = TimeFormatter
+
         
+        dataSource["TimeTo"].image = UIImage(named: "time")
         dataSource["TimeTo"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["TimeTo"].hintText = "To"
+        dataSource["TimeTo"].formatter = TimeFormatter
+
+
+        dataSource["Notes"].hintText = "Notes"
+        dataSource["Notes"].image = UIImage(named: "notes")
         
-        dataSource["Phone"].editorClass = CallEditor.self
         
-        let notes = dataSource["Notes"]
-        notes.hintText = "Notes"
-        notes.image = UIImage(named: "notes")
         
         self.dataForm.dataSource = dataSource
         self.dataForm.commitMode = TKDataFormCommitMode.OnLostFocus
@@ -100,38 +101,38 @@ class RequestCallbackViewController: TKDataFormViewController {
     
     override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
         
-        editor.style.textLabelOffset = UIOffsetMake(10, 0)
-        editor.style.separatorLeadingSpace = 40
-        editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
-        
-        if ["Date", "Name", "Phone"].contains(property.name) {
-            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
-            editor.style.editorOffset = UIOffsetMake(10, 0)
-        }
-        
-        
-        if property.name == "Name" {
-            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
-            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
-        }
-        
-        if property.name == "Phone" {
-            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
-            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
-        }
+//        editor.style.textLabelOffset = UIOffsetMake(10, 0)
+//        editor.style.separatorLeadingSpace = 40
+//        editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
+//        
+//        if ["Date", "Name", "Phone"].contains(property.name) {
+//            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
+//            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
+//            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
+//            editor.style.editorOffset = UIOffsetMake(10, 0)
+//        }
+//        
+//        
+//        if property.name == "Name" {
+//            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
+//            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
+//        }
+//        
+//        if property.name == "Phone" {
+//            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
+//            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
+//        }
         
 
     }
     
     override func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
-        groupView.titleView.titleLabel.textColor = UIColor.lightGrayColor()
-        groupView.titleView.titleLabel.font = UIFont.systemFontOfSize(13)
-        groupView.titleView.style.insets = UIEdgeInsetsMake(0, 10, 0, 0)
-        if groupIndex == 1 {
-            groupView.editorsContainer.backgroundColor = UIColor.clearColor()
-        }
+//        groupView.titleView.titleLabel.textColor = UIColor.lightGrayColor()
+//        groupView.titleView.titleLabel.font = UIFont.systemFontOfSize(13)
+//        groupView.titleView.style.insets = UIEdgeInsetsMake(0, 10, 0, 0)
+//        if groupIndex == 1 {
+//            groupView.editorsContainer.backgroundColor = UIColor.clearColor()
+//        }
     }
 
 
@@ -195,64 +196,61 @@ class RequestCallbackViewController: TKDataFormViewController {
 
 
 
-class CallEditor: TKDataFormPhoneEditor {
-    
-    let actionButton = UIButton()
-    
-    override init(property: TKEntityProperty, owner: TKDataForm) {
-        super.init(property: property, owner: owner)
-    }
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        actionButton.setTitle("Enter your number", forState: UIControlState.Normal)
-        
-//        actionButton.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.233, alpha: 1.0), forState: UIControlState.Normal)
-        
-        actionButton.setTitleColor(UIColor.init(hex: "#357d89"), forState: UIControlState.Normal)
-        
-        self.addSubview(actionButton)
-        self.gridLayout.addArrangedView(actionButton)
-        let btnDef = self.gridLayout.definitionForView(actionButton)
-        btnDef.row = 0
-        btnDef.column = 3
-        self.gridLayout.setWidth(actionButton.sizeThatFits(CGSizeZero).width, forColumn: 3)
-    }
-    
-    override init(property: TKEntityProperty) {
-        super.init(property: property)
-    }
-    
-    required convenience init(coder aDecoder: NSCoder) {
-        self.init(frame: CGRectZero)
-    }
-}
+//class CallEditor: TKDataFormPhoneEditor {
+//    
+//    let actionButton = UIButton()
+//    
+//    override init(property: TKEntityProperty, owner: TKDataForm) {
+//        super.init(property: property, owner: owner)
+//    }
+//    
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        
+//        actionButton.setTitle("Enter your number", forState: UIControlState.Normal)
+//        actionButton.setTitleColor(UIColor.init(hex: "#357d89"), forState: UIControlState.Normal)
+//        
+//        self.addSubview(actionButton)
+//        self.gridLayout.addArrangedView(actionButton)
+//        let btnDef = self.gridLayout.definitionForView(actionButton)
+//        btnDef.row = 0
+//        btnDef.column = 3
+//        self.gridLayout.setWidth(actionButton.sizeThatFits(CGSizeZero).width, forColumn: 3)
+//    }
+//    
+//    override init(property: TKEntityProperty) {
+//        super.init(property: property)
+//    }
+//    
+//    required convenience init(coder aDecoder: NSCoder) {
+//        self.init(frame: CGRectZero)
+//    }
+//}
 
-class TimeEditor: TKDataFormTimePickerEditor {
-    
-    let actionButton = UIButton()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        actionButton.setTitle("From", forState: UIControlState.Normal)
-        actionButton.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.233, alpha: 1.0), forState: UIControlState.Normal)
-        self.addSubview(actionButton)
-        self.gridLayout.addArrangedView(actionButton)
-        let btnDef = self.gridLayout.definitionForView(actionButton)
-        btnDef.row = 0
-        btnDef.column = 3
-        self.gridLayout.setWidth(actionButton.sizeThatFits(CGSizeZero).width, forColumn: 3)
-    }
-    
-    override init(property: TKEntityProperty) {
-        super.init(property: property)
-    }
-    
-    required convenience init(coder aDecoder: NSCoder) {
-        self.init(frame: CGRectZero)
-    }
-}
+//class TimeEditor: TKDataFormTimePickerEditor {
+//    
+//    let actionButton = UIButton()
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        
+//        actionButton.setTitle("From", forState: UIControlState.Normal)
+//        actionButton.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.233, alpha: 1.0), forState: UIControlState.Normal)
+//        self.addSubview(actionButton)
+//        self.gridLayout.addArrangedView(actionButton)
+//        let btnDef = self.gridLayout.definitionForView(actionButton)
+//        btnDef.row = 0
+//        btnDef.column = 3
+//        self.gridLayout.setWidth(actionButton.sizeThatFits(CGSizeZero).width, forColumn: 3)
+//    }
+//    
+//    override init(property: TKEntityProperty) {
+//        super.init(property: property)
+//    }
+//    
+//    required convenience init(coder aDecoder: NSCoder) {
+//        self.init(frame: CGRectZero)
+//    }
+//}
 

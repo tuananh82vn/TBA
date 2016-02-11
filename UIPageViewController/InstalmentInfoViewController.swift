@@ -25,6 +25,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     
     
     @IBOutlet weak var view_Chart: UIView!
+    
+    var IsDisplayChart =  false
 
     override func viewDidLoad() {
         
@@ -55,6 +57,24 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                     
                     self.displayChart()
                 }
+                else
+                {
+                    // create the alert
+                    let alert = UIAlertController(title: "Error", message: temp1.Error, preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                        UIAlertAction in
+                        
+                        self.navigationController?.popViewControllerAnimated(true)
+                        
+                    }
+                    
+                    alert.addAction(okAction)
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+
+                }
             }
             else
             {
@@ -64,7 +84,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     
-                    self.loadData()
+                    self.navigationController?.popViewControllerAnimated(true)
+
                 }
                 
                 alert.addAction(okAction)
@@ -78,6 +99,9 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     }
     
     func displayChart(){
+        
+        
+        self.IsDisplayChart = true
         
         let bounds = self.view_Chart.bounds
         
@@ -145,7 +169,10 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
-        pieChart.select(TKChartSelectionInfo(series:pieChart.series[0], dataPointIndex: 0))
+        
+        if(self.IsDisplayChart){
+            pieChart.select(TKChartSelectionInfo(series:pieChart.series[0], dataPointIndex: 0))
+        }
     }
 
     override func didReceiveMemoryWarning() {

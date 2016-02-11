@@ -25,10 +25,13 @@ class DebtorInfo {
     var IsExistingArrangementDD : Bool
     var IsExistingArrangementCC : Bool
     var IsExistingArrangement : Bool
+    var IsAllowMonthlyInstallment : Bool
     var IsCoBorrowers : Bool
     var ArrangementType: String
+    var MaxNoPay : Int
     var HistoryList : [PaymentTrackerRecordModel]
     var ScheduleList : [PaymentTrackerRecordModel]
+    var client : Client
     var IsSuccess : Bool
     var Errors : [Error]
     
@@ -49,9 +52,12 @@ class DebtorInfo {
         IsExistingArrangementCC = false
         IsExistingArrangement = false
         IsCoBorrowers = false
+        IsAllowMonthlyInstallment = false
+        MaxNoPay = 0
         ArrangementType = ""
         HistoryList = [PaymentTrackerRecordModel]()
         ScheduleList = [PaymentTrackerRecordModel]()
+        client = Client()
         IsSuccess = false
         Errors = [Error]()
     }

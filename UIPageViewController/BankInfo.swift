@@ -14,6 +14,8 @@ class BankInfo: NSObject {
     var Amount = Float()
     var AccountName = ""
     var Bsb = ""
+    var Bsb1 = ""
+    var Bsb2 = ""
     var AccountNumber = ""
     
 }

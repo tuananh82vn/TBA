@@ -175,6 +175,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         {
            if(indexPath.row == 0 ){
             
+                LocalStore.setMakePaymentInFull(true)
+            
                 let paymentMethodController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentMethodViewController") as! PaymentMethodViewController
             
                 self.navigationController!.pushViewController(paymentMethodController, animated: true)
@@ -279,9 +281,11 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     @IBAction func btPayment_Clicked(sender: AnyObject) {
         
-        let paymentMethodController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentMethodViewController") as! PaymentMethodViewController
+        LocalStore.setMakePaymentInFull(false)
         
-        self.navigationController!.pushViewController(paymentMethodController, animated: true)
+        let makeCreditPaymentViewController = self.storyboard!.instantiateViewControllerWithIdentifier("MakeCreditPaymentViewController") as! MakeCreditPaymentViewController
+        
+        self.navigationController!.pushViewController(makeCreditPaymentViewController, animated: true)
         
     }
     @IBAction func btLogout_Clicked(sender: AnyObject) {

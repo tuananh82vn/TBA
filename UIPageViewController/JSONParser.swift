@@ -101,6 +101,35 @@ struct JSONParser {
         return Object
     }
     
+    static func parseClient(story: NSDictionary) -> Client {
+        
+        let client =  Client()
+        
+        client.ClientAcCode = story["ClientAcCode"] as? String ?? ""
+        
+        client.ClientCode = story["ClientCode"] as? String ?? ""
+        
+        client.FirstName = story["FirstName"] as? String ?? ""
+
+        client.LastName = story["LastName"] as? String ?? ""
+        
+        client.BusinessName = story["BusinessName"] as? String ?? ""
+
+        client.Email = story["Email"] as? String ?? ""
+        
+        client.Phone = story["Phone"] as? String ?? ""
+
+        client.Mobile = story["Mobile"] as? String ?? ""
+        
+        client.ThreePartDateDurationDays = story["ThreePartDateDurationDays"] as? Int ?? 0
+
+        client.ThreePartMaxDaysBetweenPayments = story["ThreePartMaxDaysBetweenPayments"] as? Int ?? 0
+        
+        client.IsAllowMonthlyInstallment = story["IsAllowMonthlyInstallment"] as? Bool ?? false
+
+        return client
+    }
+    
 //    static func parseLoginModel(story: NSDictionary) -> LoginModel {
 //        
 //        let object =  LoginModel()
