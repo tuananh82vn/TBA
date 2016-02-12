@@ -16,8 +16,8 @@ class DebtorInfo {
     var AccountCode : String
     var DebtorCode : String
     var DRCode : String
-    var TotalOutstanding : Float
-    var NextPaymentInstallment: Float
+    var TotalOutstanding : Double
+    var NextPaymentInstallment: Double
     var MerchantId : String
     var PaymentType : Int
     var CurrentPaymentId : Int

@@ -29,7 +29,7 @@ struct LocalStore {
 
     private static let userDefaults = NSUserDefaults.standardUserDefaults()
     
-    private static let IsExistingArrangementManual = "IsExistingArrangementManual";
+    private static let IsExistingArrangement = "IsExistingArrangement";
     
     private static let IsExistingArrangementCC = "IsExistingArrangementCC";
 
@@ -42,6 +42,27 @@ struct LocalStore {
     private static let MaxNoPay = "MaxNoPay";
     
     private static let ThreePartDateDurationDays = "ThreePartDateDurationDays";
+    
+    private static let MakePaymentIn3Part = "MakePaymentIn3Part";
+    
+    private static let FirstAmountOfInstalment = "FirstAmountOfInstalment"
+
+    
+    //----------------------------------------------------------------------------//
+    static func setMakePaymentIn3Part(token: Bool) {
+        userDefaults.setObject(token, forKey: MakePaymentIn3Part)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteMakePaymentIn3Part() {
+        userDefaults.removeObjectForKey(MakePaymentIn3Part)
+        userDefaults.synchronize()
+    }
+    
+    static func accessMakePaymentIn3Part() -> Bool {
+        return userDefaults.boolForKey(MakePaymentIn3Part)
+    }
+    
 
     //----------------------------------------------------------------------------//
     static func setMakePaymentInFull(token: Bool) {
@@ -49,7 +70,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteMakePaymentInFull() {
+    static func deleteMakePaymentInFull() {
         userDefaults.removeObjectForKey(MakePaymentInFull)
         userDefaults.synchronize()
     }
@@ -65,7 +86,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteDeviceName() {
+    static func deleteDeviceName() {
         userDefaults.removeObjectForKey(DeviceName)
         userDefaults.synchronize()
     }
@@ -80,7 +101,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteDRCode() {
+    static func deleteDRCode() {
         userDefaults.removeObjectForKey(DRCode)
         userDefaults.synchronize()
     }
@@ -96,7 +117,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteNextPaymentInstallment() {
+    static func deleteNextPaymentInstallment() {
         userDefaults.removeObjectForKey(NextPaymentInstallment)
         userDefaults.synchronize()
     }
@@ -107,18 +128,34 @@ struct LocalStore {
     
     //----------------------------------------------------------------------------//
 
-    static func setTotalOutstanding(token: String) {
+    static func setTotalOutstanding(token: Double) {
         userDefaults.setObject(token, forKey: TotalOutstanding)
         userDefaults.synchronize()
     }
     
-    private static func deleteTotalOutstanding() {
+    static func deleteTotalOutstanding() {
         userDefaults.removeObjectForKey(TotalOutstanding)
         userDefaults.synchronize()
     }
     
-    static func accessTotalOutstanding() -> String? {
-        return userDefaults.stringForKey(TotalOutstanding)
+    static func accessTotalOutstanding() -> Double {
+        return userDefaults.doubleForKey(TotalOutstanding)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setFirstAmountOfInstalment(token: Double) {
+        userDefaults.setObject(token, forKey: FirstAmountOfInstalment)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteFirstAmountOfInstalment() {
+        userDefaults.removeObjectForKey(FirstAmountOfInstalment)
+        userDefaults.synchronize()
+    }
+    
+    static func accessFirstAmountOfInstalment() -> Double {
+        return userDefaults.doubleForKey(FirstAmountOfInstalment)
     }
     
     //----------------------------------------------------------------------------//
@@ -128,7 +165,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deletesetTotalPaid() {
+    static func deletesetTotalPaid() {
         userDefaults.removeObjectForKey(TotalPaid)
         userDefaults.synchronize()
     }
@@ -144,7 +181,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deletesetTotalOverDue() {
+    static func deletesetTotalOverDue() {
         userDefaults.removeObjectForKey(TotalOverDue)
         userDefaults.synchronize()
     }
@@ -161,7 +198,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteRefNumber() {
+    static func deleteRefNumber() {
         userDefaults.removeObjectForKey(RefNumber)
         userDefaults.synchronize()
     }
@@ -178,7 +215,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteRCS_URL_API() {
+    static func deleteRCS_URL_API() {
         userDefaults.removeObjectForKey(RCS_URL_API)
         userDefaults.synchronize()
     }
@@ -194,7 +231,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteWeb_URL_API() {
+    static func deleteWeb_URL_API() {
         userDefaults.removeObjectForKey(Web_URL_API)
         userDefaults.synchronize()
     }
@@ -210,7 +247,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deletePin() {
+    static func deletePin() {
         userDefaults.removeObjectForKey(Pin)
         userDefaults.synchronize()
     }
@@ -226,7 +263,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteIsPinSetup() {
+    static func deleteIsPinSetup() {
         userDefaults.removeObjectForKey(IsPinSetup)
         userDefaults.synchronize()
     }
@@ -237,18 +274,18 @@ struct LocalStore {
     
     //----------------------------------------------------------------------------//
     
-    static func setIsExistingArrangementManual(token: Bool) {
-        userDefaults.setObject(token, forKey: IsExistingArrangementManual)
+    static func setIsExistingArrangement(token: Bool) {
+        userDefaults.setObject(token, forKey: IsExistingArrangement)
         userDefaults.synchronize()
     }
     
-    private static func deleteIsExistingArrangementManual() {
-        userDefaults.removeObjectForKey(IsExistingArrangementManual)
+    static func deleteIsExistingArrangement() {
+        userDefaults.removeObjectForKey(IsExistingArrangement)
         userDefaults.synchronize()
     }
     
-    static func accessIsExistingArrangementManual() -> Bool? {
-        return userDefaults.boolForKey(IsExistingArrangementManual)
+    static func accessIsExistingArrangement() -> Bool? {
+        return userDefaults.boolForKey(IsExistingArrangement)
     }
     
     //----------------------------------------------------------------------------//
@@ -258,7 +295,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteIsExistingArrangementCC() {
+    static func deleteIsExistingArrangementCC() {
         userDefaults.removeObjectForKey(IsExistingArrangementCC)
         userDefaults.synchronize()
     }
@@ -275,7 +312,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteIsExistingArrangementDD() {
+    static func deleteIsExistingArrangementDD() {
         userDefaults.removeObjectForKey(IsExistingArrangementDD)
         userDefaults.synchronize()
     }
@@ -292,7 +329,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteIsCoBorrowers() {
+    static func deleteIsCoBorrowers() {
         userDefaults.removeObjectForKey(IsCoBorrowers)
         userDefaults.synchronize()
     }
@@ -309,7 +346,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteIsAllowMonthlyInstallment() {
+    static func deleteIsAllowMonthlyInstallment() {
         userDefaults.removeObjectForKey(IsAllowMonthlyInstallment)
         userDefaults.synchronize()
     }
@@ -326,7 +363,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteMaxNoPay() {
+    static func deleteMaxNoPay() {
         userDefaults.removeObjectForKey(MaxNoPay)
         userDefaults.synchronize()
     }
@@ -343,7 +380,7 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    private static func deleteThreePartDateDurationDays() {
+    static func deleteThreePartDateDurationDays() {
         userDefaults.removeObjectForKey(ThreePartDateDurationDays)
         userDefaults.synchronize()
     }

@@ -27,13 +27,22 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         // create menu
         let sectionPrimary = self.sideDrawer.addSectionWithTitle("Main")
-        sectionPrimary.addItemWithTitle("Make a payment in Full", image: UIImage(named: "dollar")!)
-        sectionPrimary.addItemWithTitle("Setup a Payment Plan", image: UIImage(named: "payment")!)
+        sectionPrimary.addItemWithTitle("Pay In Full", image: UIImage(named: "dollar")!)
+        
+        if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+
+        }
+        else
+        {
+            sectionPrimary.addItemWithTitle("Setup Schedule Payment", image: UIImage(named: "payment")!)
+        }
+
+        
         sectionPrimary.addItemWithTitle("Provide Feedback",image: UIImage(named: "info")!)
         
         let sectionLabels = self.sideDrawer.addSectionWithTitle("Setting")
         
-        if(!LocalStore.accessIsExistingArrangementManual()!){
+        if(!LocalStore.accessIsExistingArrangement()!){
             
             if(LocalStore.accessIsExistingArrangementCC()!){
                 sectionLabels.addItemWithTitle("View / Update Credit Card Detail")
@@ -68,7 +77,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         setupButton(LocalStore.accessDeviceName());
         
         self.lbl_refnumber.text = LocalStore.accessRefNumber();
-        self.lbl_outstanding.text = "$"+LocalStore.accessTotalOutstanding()!;
+        self.lbl_outstanding.text = "$"+LocalStore.accessTotalOutstanding().description;
         self.lbl_nextinstalment.text = "$"+LocalStore.accessNextPaymentInstallment()!
         
     }
@@ -177,6 +186,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             
                 LocalStore.setMakePaymentInFull(true)
             
+                LocalStore.setMakePaymentIn3Part(false)
+            
                 let paymentMethodController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentMethodViewController") as! PaymentMethodViewController
             
                 self.navigationController!.pushViewController(paymentMethodController, animated: true)
@@ -185,25 +196,42 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             
             if(indexPath.row == 1 ){
                 
-                
-                let view = self.storyboard!.instantiateViewControllerWithIdentifier("SetupPaymentViewController") as! SetupPaymentViewController
-
-                self.navigationController!.pushViewController(view, animated: true)
-                
+                if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+                    
+                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("SendFeedbackViewController") as! SendFeedbackViewController
+                    
+                    self.navigationController!.pushViewController(view, animated: true)
+                    
+                }
+                else
+                {
+                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("SetupPaymentViewController") as! SetupPaymentViewController
+                    
+                    self.navigationController!.pushViewController(view, animated: true)
+                }
             }
             
-            if(indexPath.row == 2 ){
+            if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
                 
-                let view = self.storyboard!.instantiateViewControllerWithIdentifier("SendFeedbackViewController") as! SendFeedbackViewController
                 
-                self.navigationController!.pushViewController(view, animated: true)
             }
+            else
+            {
+                if(indexPath.row == 2 ){
+                    
+                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("SendFeedbackViewController") as! SendFeedbackViewController
+                    
+                    self.navigationController!.pushViewController(view, animated: true)
+                }
+            }
+            
+
         }
         else if(indexPath.section == 1 )
         {
             
             
-            if(!LocalStore.accessIsExistingArrangementManual()!){
+            if(!LocalStore.accessIsExistingArrangement()!){
                 
                 if(LocalStore.accessIsExistingArrangementCC()!){
                     if(indexPath.row == 0 ){

@@ -123,11 +123,10 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             array.append(point1);
         }
         
-        if let temp2 = LocalStore.accessTotalOutstanding()
-        {
-            let point2 =  TKChartDataPoint(name: "Remaining", value: temp2.floatValue)
-            array.append(point2);
-        }
+
+        let point2 =  TKChartDataPoint(name: "Remaining", value: LocalStore.accessTotalOutstanding())
+        array.append(point2);
+ 
         
         
         if let temp3 = LocalStore.accesssetTotalOverDue()

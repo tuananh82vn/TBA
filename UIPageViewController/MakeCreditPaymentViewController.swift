@@ -20,7 +20,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
 
     var dataForm1 = TKDataForm()
     
-
+    var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,11 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         view.addGestureRecognizer(tap)
         
         if(LocalStore.accessMakePaymentInFull()){
-            cardInfo.Amount = (LocalStore.accessTotalOutstanding()?.floatValue)!
+            cardInfo.Amount = LocalStore.accessTotalOutstanding()
+        }
+        
+        if(LocalStore.accessMakePaymentIn3Part()){
+            cardInfo.Amount = LocalStore.accessFirstAmountOfInstalment()
         }
         
         dataSource.sourceObject = cardInfo
@@ -38,6 +42,9 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource["Amount"].editorClass = TKDataFormNumberEditor.self
         
         if(LocalStore.accessMakePaymentInFull()){
+            dataSource["Amount"].readOnly = true
+        }
+        if(LocalStore.accessMakePaymentIn3Part()){
             dataSource["Amount"].readOnly = true
         }
         
@@ -55,6 +62,8 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource["Cvv"].editorClass = TKDataFormPhoneEditor.self
         dataSource["Cvv"].errorMessage = "Please input CVV"
 
+        dataSource["DebtorPaymentInstallment"].hidden = true
+        
         
         let DateFormatter = NSDateFormatter()
         DateFormatter.dateFormat = "MM/yyyy";
@@ -171,17 +180,41 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         let cardObject = CardInfo()
         
-        cardObject.Amount       = self.dataSource["Amount"].valueCandidate.floatValue
+        cardObject.Amount       = self.dataSource["Amount"].valueCandidate.doubleValue
         cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
         cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
         cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
         cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
         cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
         
+        if(LocalStore.accessMakePaymentIn3Part()) {
+            
+        //Generate Debtor Payment Installment
+            
+        
+            let jsonCompatibleArray = DebtorPaymentInstallmentList.map { model in
+                return [
+                    "PaymentDate":model.PaymentDate,
+                    "Amount":model.Amount
+                ]
+            }
+ 
+            let data = try?  NSJSONSerialization.dataWithJSONObject(jsonCompatibleArray, options: NSJSONWritingOptions(rawValue:0))
+        
+            if let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            {
+                cardObject.DebtorPaymentInstallment = jsonString as String
+            }
+
+        }
+        
         var PaymentType = 0
 
         if(LocalStore.accessMakePaymentInFull()){
             PaymentType = 1
+        }
+        else if(LocalStore.accessMakePaymentIn3Part()){
+            PaymentType = 2
         }
         else
         {

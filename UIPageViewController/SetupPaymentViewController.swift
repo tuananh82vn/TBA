@@ -17,7 +17,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     
     let dataSource = TKDataFormEntityDataSource()
     
-    let threePartPayment   = ThreePartPayment()
+    var threePartPayment   = ThreePartPayment()
     
     var ScheduleList = [PaymentTrackerRecordModel]()
     
@@ -26,6 +26,14 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     var validate1 : Bool = true
 
     var validate2 : Bool = true
+    
+    var validate3 : Bool = true
+    
+    var validate4 : Bool = true
+    
+    var validate5 : Bool = true
+    
+    var validate6 : Bool = true
 
 
     var dataForm1 = TKDataForm()
@@ -39,47 +47,67 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         self.subView.hidden = true
         
+        dataForm1 = TKDataForm(frame: self.subView.bounds)
+        dataForm1.delegate = self
 
-        let totalAmount =  LocalStore.accessTotalOutstanding()!.floatValue
         
+        InitData()
+        
+
+        
+        dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
+        dataForm1.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
+        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+        
+        self.subView.addSubview(dataForm1)
+        
+    }
+    
+    func InitData(){
+        
+        let totalAmount =  LocalStore.accessTotalOutstanding()
         
         if(LocalStore.accessMaxNoPay()==2){
             
-            threePartPayment.FirstAmount = roundf(totalAmount/2)
-            threePartPayment.SecondAmount = totalAmount - roundf(totalAmount/2)
+            threePartPayment.FirstAmount = round(totalAmount/2)
+            
+            threePartPayment.SecondAmount = totalAmount - threePartPayment.FirstAmount
         }
         else if(LocalStore.accessMaxNoPay()==3)
         {
-            threePartPayment.FirstAmount = roundf(totalAmount/3)
-            threePartPayment.SecondAmount = roundf(totalAmount/3)
-            threePartPayment.ThirdAmount = totalAmount - roundf(totalAmount/3)*2
-        }
+            threePartPayment.FirstAmount = round(totalAmount/3)
 
+            threePartPayment.SecondAmount = round(totalAmount/3)
+
+            threePartPayment.ThirdAmount = (totalAmount - threePartPayment.FirstAmount - threePartPayment.SecondAmount).roundToPlaces(2)
+        }
         
-        threePartPayment.FirstDate = NSDate()
-    
+        
+        threePartPayment.FirstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+        threePartPayment.SecondDate = threePartPayment.FirstDate
+        threePartPayment.ThirdDate = threePartPayment.FirstDate
         
         dataSource.sourceObject = threePartPayment
-
+        
         let FirstAmount = dataSource["FirstAmount"]
         FirstAmount.hintText = "First Amount"
-        FirstAmount.editorClass = TKDataFormNumberEditor.self
-
-
+        FirstAmount.editorClass = TKDataFormDecimalEditor.self
+        
+        
         dataSource["FirstDate"].image = UIImage(named: "calendar-1")
         dataSource["FirstDate"].hintText = "First Date"
         
         let SecondAmount = dataSource["SecondAmount"]
         SecondAmount.hintText = "Second Amount"
-        SecondAmount.editorClass = TKDataFormNumberEditor.self
-
+        SecondAmount.editorClass = TKDataFormDecimalEditor.self
+        
         
         dataSource["SecondDate"].image = UIImage(named: "calendar-1")
         dataSource["SecondDate"].hintText = "Second Date"
         
         let ThirdAmount = dataSource["ThirdAmount"]
         ThirdAmount.hintText = "Third Amount"
-        ThirdAmount.editorClass = TKDataFormNumberEditor.self
+        ThirdAmount.editorClass = TKDataFormDecimalEditor.self
         
         dataSource["ThirdDate"].image = UIImage(named: "calendar-1")
         dataSource["ThirdDate"].hintText = "Third Date"
@@ -89,20 +117,11 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             dataSource["ThirdDate"].hidden = true
         }
         
-        dataForm1 = TKDataForm(frame: self.subView.bounds)
-        dataForm1.delegate = self
         dataForm1.dataSource = dataSource
-        
         dataForm1.commitMode = TKDataFormCommitMode.Manual
         dataForm1.validationMode = TKDataFormValidationMode.Manual
-        
-        dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
-        dataForm1.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
-        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-        
-        
-        self.subView.addSubview(dataForm1)
-        
+
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -154,12 +173,130 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
                 }
                 
+                let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+                
+                if(value.isLessThanDate(firstDate)){
+                    dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next seven days."
+                    self.validate2 = false
+                    return self.validate2
+                }
+                
                 self.validate2 = true
-
-
+            }
+        else
+        if (propery.name == "SecondAmount") {
+            
+            let value = propery.valueCandidate.description
+            if (value.length <= 0)
+            {
+                dataSource["SecondAmount"].errorMessage = "Please enter 2nd payment instalment."
+                self.validate3 = false
+                return self.validate3
+                
+            }
+            
+            let floatValue = value.floatValue
+            
+            if (floatValue < 10)
+            {
+                dataSource["SecondAmount"].errorMessage = "2nd payment should be greater than or equal to $10."
+                self.validate3 = false
+                return self.validate3
+            }
+            
+            self.validate3 = true
+            
         }
         
-        self.isFormValidate = self.validate1 && self.validate2
+        else
+            if (propery.name == "SecondDate") {
+                
+                let value = propery.valueCandidate as! NSDate
+                
+                let firstDate = self.dataSource["FirstDate"].valueCandidate as! NSDate
+                
+                let Maxdate = firstDate.addDays(14)
+
+                if(value.isLessThanDate(firstDate)){
+                    dataSource["SecondDate"].errorMessage = "2nd payment date must be greater than 1st instalment date."
+                    self.validate4 = false
+                    return self.validate4
+                }
+                
+                if(value.equalToDate(firstDate)){
+                    dataSource["SecondDate"].errorMessage = "2nd payment date must be greater than 1st instalment date."
+                    self.validate4 = false
+                    return self.validate4
+                }
+                
+                if(value.isGreaterThanDate(Maxdate)){
+                    dataSource["SecondDate"].errorMessage = "Maximum between 2 payments is 14 days"
+                    self.validate4 = false
+                    return self.validate4
+                    
+                }
+                
+                self.validate4 = true
+        }
+        
+        if(LocalStore.accessMaxNoPay()==3)
+        {
+            if (propery.name == "ThirdAmount") {
+                
+                let value = propery.valueCandidate.description
+                if (value.length <= 0)
+                {
+                    dataSource["ThirdAmount"].errorMessage = "Please enter 3rd payment instalment."
+                    self.validate5 = false
+                    return self.validate5
+                    
+                }
+                
+                let floatValue = value.floatValue
+                
+                if (floatValue < 10)
+                {
+                    dataSource["ThirdAmount"].errorMessage = "3rd payment should be greater than or equal to $10."
+                    self.validate5 = false
+                    return self.validate5
+                }
+                
+                self.validate5 = true
+                
+            }
+                
+            else
+                if (propery.name == "ThirdDate") {
+                    
+                    let value = propery.valueCandidate as! NSDate
+                    
+                    let secondDate = self.dataSource["SecondDate"].valueCandidate as! NSDate
+                    
+                    let Maxdate = secondDate.addDays(14)
+                    
+                    if(value.isLessThanDate(secondDate)){
+                        dataSource["ThirdDate"].errorMessage = "3rd payment date must be greater than 2nd instalment date."
+                        self.validate6 = false
+                        return self.validate6
+                    }
+                    
+                    if(value.equalToDate(secondDate)){
+                        dataSource["ThirdDate"].errorMessage = "3rd payment date must be greater than 2nd instalment date."
+                        self.validate6 = false
+                        return self.validate6
+                    }
+                    
+                    if(value.isGreaterThanDate(Maxdate)){
+                        dataSource["ThirdDate"].errorMessage = "Maximum between 2 payments is 14 days"
+                        self.validate6 = false
+                        return self.validate6
+                        
+                    }
+                    
+                    self.validate6 = true
+            }
+        }
+        
         
         return true
     }
@@ -197,10 +334,49 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         self.dataForm1.commit()
         
-        if(LocalStore.accessMaxNoPay()==2){
+        var totalAmount : Double =  0
         
+        if(LocalStore.accessMaxNoPay()==2)
+        {
+            totalAmount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue + self.dataSource["SecondAmount"].valueCandidate.description.doubleValue
+
+        }
+        else
+        {
+            var amount1String = self.dataSource["FirstAmount"].valueCandidate.description
+            
+            var amount1Number = amount1String.doubleValue
+            
+            var amount2String = self.dataSource["SecondAmount"].valueCandidate.description
+            
+            var amount2Number = amount2String.doubleValue
+            
+            var amount3String = self.dataSource["ThirdAmount"].valueCandidate.description
+            
+            var amount3Number = amount3String.doubleValue
+            
+            totalAmount = amount1Number + amount2Number + amount3Number
+            
+            totalAmount = totalAmount.roundToPlaces(2)
+
         }
         
+        
+        
+        if(totalAmount != LocalStore.accessTotalOutstanding()){
+            
+            // create the alert
+            let alert = UIAlertController(title: "Error", message: "Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
+
         if(self.isFormValidate){
             
             self.performSegueWithIdentifier("GoToPaymentSumary", sender: nil)
@@ -208,6 +384,11 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
     }
     
+    @IBAction func BtClear_Clicked(sender: AnyObject) {
+        
+        self.InitData()
+
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToPaymentSumary" {
 
@@ -217,7 +398,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let firstPayment = PaymentTrackerRecordModel()
             
             firstPayment.DueDate = (self.dataSource["FirstDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description
+            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue.roundToPlaces(2).description
             
             self.ScheduleList.append(firstPayment)
 
@@ -225,9 +406,19 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let secondPayment = PaymentTrackerRecordModel()
             
             secondPayment.DueDate = (self.dataSource["SecondDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description
+            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description.doubleValue.roundToPlaces(2).description
 
             self.ScheduleList.append(secondPayment)
+            
+            if(LocalStore.accessMaxNoPay()==3)
+            {
+                let thirdPayment = PaymentTrackerRecordModel()
+                
+                thirdPayment.DueDate = (self.dataSource["ThirdDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
+                thirdPayment.Amount = self.dataSource["ThirdAmount"].valueCandidate.description.doubleValue.roundToPlaces(2).description
+                
+                self.ScheduleList.append(thirdPayment)
+            }
             
             let instalmentSumaryViewController = segue.destinationViewController as! InstalmentSumaryViewController
             

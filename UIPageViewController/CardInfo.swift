@@ -9,12 +9,13 @@ import UIKit
 
 class CardInfo: NSObject {
 
-    var Amount = Float()
+    var Amount = Double()
     var CardType = 0
     var NameOnCard = ""
     var CardNumber = ""
     var ExpiryDate = NSDate()
     var Cvv = ""
+    var DebtorPaymentInstallment = ""
 
 }
 

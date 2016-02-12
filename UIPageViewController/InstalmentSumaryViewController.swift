@@ -14,7 +14,8 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
     @IBOutlet weak var tableView: UITableView!
     var ScheduleList = [PaymentTrackerRecordModel]()
 
-    
+    var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,9 +49,55 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
         
     }
     
+    @IBAction func btNext_Clicked(sender: AnyObject) {
+        
+        LocalStore.setMakePaymentInFull(false)
+        
+        LocalStore.setMakePaymentIn3Part(true)
+        
+        LocalStore.setFirstAmountOfInstalment(ScheduleList[0].Amount.doubleValue)
+        
+        self.performSegueWithIdentifier("GoToPaymentOption", sender: nil)
+
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToPaymentOption" {
+            
+            for(var i = 0 ; i < self.ScheduleList.count ; i++){
+                
+                let temp1 = DebtorPaymentInstallment()
+                
+                temp1.PaymentDate = self.ScheduleList[i].DueDate
+                
+                let formatter = NSDateFormatter()
+                
+                formatter.dateFormat =  NSDateFormatter.dateFormatFromTemplate("MMddyyyy", options: 0, locale: NSLocale(localeIdentifier: "en-AU"))
+                
+                let date1 = formatter.dateFromString(temp1.PaymentDate)
+                
+                let dateFormatter = NSDateFormatter()
+                
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                
+                temp1.PaymentDate = dateFormatter.stringFromDate(date1!)
+                
+                temp1.Amount = self.ScheduleList[i].Amount.doubleValue
+
+                self.DebtorPaymentInstallmentList.append(temp1)
+            }
+            
+            
+            let paymentMethodViewController = segue.destinationViewController as! PaymentMethodViewController
+            
+            paymentMethodViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
+        }
+    }
+
 
 
 }

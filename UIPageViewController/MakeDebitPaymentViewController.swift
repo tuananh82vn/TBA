@@ -30,7 +30,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         view.addGestureRecognizer(tap)
         
         if(LocalStore.accessMakePaymentInFull()){
-            bankInfo.Amount = (LocalStore.accessTotalOutstanding()?.floatValue)!
+            bankInfo.Amount = LocalStore.accessTotalOutstanding()
         }
 
         
@@ -195,7 +195,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         let bankObject = BankInfo()
         
-        bankObject.Amount           = self.dataSource["Amount"].valueCandidate.floatValue
+        bankObject.Amount           = self.dataSource["Amount"].valueCandidate.doubleValue
         bankObject.AccountNumber    = self.dataSource["AccountNumber"].valueCandidate as! String
         bankObject.AccountName      = self.dataSource["AccountName"].valueCandidate as! String
         bankObject.Bsb1             = self.dataSource["Bsb1"].valueCandidate as! String

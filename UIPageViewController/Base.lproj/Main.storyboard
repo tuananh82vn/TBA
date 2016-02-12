@@ -4742,7 +4742,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="btNext_Clicked:" destination="7Uk-dk-e7s" eventType="touchUpInside" id="ikM-2R-cGe"/>
+                                    <action selector="BtClear_Clicked:" destination="7Uk-dk-e7s" eventType="touchUpInside" id="9vA-gP-iT3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -5642,7 +5642,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jqS-sx-2aK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11311" y="1528"/>
+            <point key="canvasLocation" x="11311.5" y="1321.5"/>
         </scene>
         <!--Finish Update Bank Account-->
         <scene sceneID="G7i-6V-pyd">
@@ -5777,7 +5777,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gQi-V3-Xy9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10635" y="1527.75"/>
+            <point key="canvasLocation" x="10635" y="1321.5"/>
         </scene>
         <!--Finish Update Credit Card-->
         <scene sceneID="3ef-i4-uti">
@@ -5912,7 +5912,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vO-aI-oIX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9970.5" y="1527.75"/>
+            <point key="canvasLocation" x="9970.5" y="1321.5"/>
         </scene>
         <!--Instalment Sumary-->
         <scene sceneID="wCv-ha-4eI">
@@ -6013,7 +6013,7 @@
                                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="24" id="BTp-Xo-8p7">
-                                                                    <variation key="heightClass=regular-widthClass=compact" constant="103"/>
+                                                                    <variation key="heightClass=regular-widthClass=compact" constant="116"/>
                                                                 </constraint>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -6034,7 +6034,7 @@
                                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="180" id="wNm-F2-gYa">
-                                                                    <variation key="heightClass=regular-widthClass=compact" constant="126"/>
+                                                                    <variation key="heightClass=regular-widthClass=compact" constant="118"/>
                                                                 </constraint>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -6057,7 +6057,7 @@
                                                         <constraint firstItem="t5V-h2-HHQ" firstAttribute="baseline" secondItem="lb0-NN-iCd" secondAttribute="baseline" id="KEq-26-qVG"/>
                                                         <constraint firstItem="lb0-NN-iCd" firstAttribute="centerY" secondItem="3iD-52-Fxw" secondAttribute="centerY" id="fiu-6f-mK0"/>
                                                         <constraint firstItem="t5V-h2-HHQ" firstAttribute="leading" secondItem="lb0-NN-iCd" secondAttribute="trailing" constant="8" symbolic="YES" id="v4o-wE-7h2">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="62"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="70"/>
                                                         </constraint>
                                                     </constraints>
                                                     <variation key="default">
@@ -6159,6 +6159,9 @@
                                         <exclude reference="yhj-pq-WHC"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="btNext_Clicked:" destination="n3l-hl-7xw" eventType="touchUpInside" id="fQd-n1-Sfb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -6219,6 +6222,7 @@
                     <navigationItem key="navigationItem" title="Instalment Sumary" id="KNf-1G-3Gd"/>
                     <connections>
                         <outlet property="tableView" destination="1tm-I4-OTC" id="hXK-Uy-VBz"/>
+                        <segue destination="seO-1n-t4r" kind="show" identifier="GoToPaymentOption" id="8VT-uK-nCQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dXw-SI-cwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6239,7 +6243,8 @@
         <image name="menu" width="20" height="14"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T3j-Uc-kZF"/>
+        <segue reference="8VT-uK-nCQ"/>
+        <segue reference="FDR-zM-L8i"/>
         <segue reference="x4J-hl-Gvw"/>
         <segue reference="QC2-go-wW3"/>
     </inferredMetricsTieBreakers>

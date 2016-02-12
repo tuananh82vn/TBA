@@ -58,10 +58,11 @@ class LoginController: UIViewController {
             {
                 if(temp1.IsSuccess)
                 {
-                    LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
+                    LocalStore.setTotalOutstanding(temp1.TotalOutstanding)
+                    
                     LocalStore.setNextPaymentInstallment(temp1.NextPaymentInstallment.description)
                     LocalStore.setDRCode(temp1.DRCode)
-                    LocalStore.setIsExistingArrangementManual(temp1.IsExistingArrangement)
+                    LocalStore.setIsExistingArrangement(temp1.IsExistingArrangement)
                     LocalStore.setIsExistingArrangementCC(temp1.IsExistingArrangementCC)
                     LocalStore.setIsExistingArrangementDD(temp1.IsExistingArrangementDD)
                     LocalStore.setIsCoBorrowers(temp1.IsCoBorrowers)

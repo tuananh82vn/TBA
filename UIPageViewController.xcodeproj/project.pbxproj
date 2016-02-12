@@ -45,6 +45,8 @@
 		C797D6211C6C405C0083CD88 /* InstalmentSumaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */; };
 		C797D6231C6C43E10083CD88 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6221C6C43E10083CD88 /* Client.swift */; };
 		C797D62B1C6C5CC80083CD88 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D62A1C6C5CC80083CD88 /* DateExtension.swift */; };
+		C797D62D1C6D79960083CD88 /* NumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D62C1C6D79960083CD88 /* NumberExtension.swift */; };
+		C797D62F1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */; };
 		C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */; };
 		C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */; };
 		C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */; };
@@ -135,6 +137,8 @@
 		C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentSumaryViewController.swift; sourceTree = "<group>"; };
 		C797D6221C6C43E10083CD88 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		C797D62A1C6C5CC80083CD88 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		C797D62C1C6D79960083CD88 /* NumberExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtension.swift; sourceTree = "<group>"; };
+		C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebtorPaymentInstallment.swift; sourceTree = "<group>"; };
 		C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInfo.swift; sourceTree = "<group>"; };
 		C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReturnModel.swift; sourceTree = "<group>"; };
 		C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCallback.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 				C7E351BE1C155A2600315A47 /* DeviceDetect.swift */,
 				C7E351C41C167A6400315A47 /* String.swift */,
 				C797D62A1C6C5CC80083CD88 /* DateExtension.swift */,
+				C797D62C1C6D79960083CD88 /* NumberExtension.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 				C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */,
 				C797D60C1C6309950083CD88 /* ArrangeDetails.swift */,
 				C797D6221C6C43E10083CD88 /* Client.swift */,
+				C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -538,6 +544,7 @@
 			files = (
 				C7813B641BEC7FD300876860 /* HomeViewController.swift in Sources */,
 				66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */,
+				C797D62F1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift in Sources */,
 				C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */,
 				C797D6151C680C090083CD88 /* FinishUpdateContactViewController.swift in Sources */,
 				C797D6231C6C43E10083CD88 /* Client.swift in Sources */,
@@ -578,6 +585,7 @@
 				C7E6B01A1BF068F400D60EC1 /* PaymentTrackerRecordModel.swift in Sources */,
 				C7E6B0241BF15AAA00D60EC1 /* CustomTelrikViewCell.swift in Sources */,
 				C797D6211C6C405C0083CD88 /* InstalmentSumaryViewController.swift in Sources */,
+				C797D62D1C6D79960083CD88 /* NumberExtension.swift in Sources */,
 				C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */,
 				C7E6357D1BEC5E1D002D8438 /* MakeCreditPaymentViewController.swift in Sources */,
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,

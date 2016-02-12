@@ -285,16 +285,16 @@ struct WebApiService {
                     JsonReturn.DRCode = DebtorCode
                 }
 
-                if let TotalOutstanding = jsonObject["TotalOutstanding"].float {
-                    JsonReturn.TotalOutstanding = TotalOutstanding
+                if let TotalOutstanding = jsonObject["TotalOutstanding"].double {
+                    JsonReturn.TotalOutstanding = TotalOutstanding.roundToPlaces(2)
                 }
                 
                 if let MaxNoPay = jsonObject["MaxNoPay"].int {
                     JsonReturn.MaxNoPay = MaxNoPay
                 }
                 
-                if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].float {
-                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment
+                if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].double {
+                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment.roundToPlaces(2)
                 }
                 
                 if let MerchantId = jsonObject["NTID"].string {
@@ -457,6 +457,8 @@ struct WebApiService {
         }
 
         
+        
+        
         let parameters = [
             "Item": [
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
@@ -468,7 +470,8 @@ struct WebApiService {
                 "CreditCardExpiryMonth": month.description,
                 "CreditCardCVV": cardObject.Cvv,
                 "PaymentType": PaymentType,
-                "PaymentMethod": "1"
+                "PaymentMethod": "1",
+                "DebtorPaymentInstallment" : cardObject.DebtorPaymentInstallment
             ]
         ]
         

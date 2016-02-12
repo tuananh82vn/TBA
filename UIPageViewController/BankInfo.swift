@@ -11,7 +11,7 @@ import Foundation
 
 class BankInfo: NSObject {
     
-    var Amount = Float()
+    var Amount = Double()
     var AccountName = ""
     var Bsb = ""
     var Bsb1 = ""

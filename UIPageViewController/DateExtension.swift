@@ -10,6 +10,13 @@ import Foundation
 
 
 extension NSDate {
+    
+    func formattedWith(format:String) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = format
+        return formatter.stringFromDate(self)
+    }
+    
     func isGreaterThanDate(dateToCompare: NSDate) -> Bool {
         //Declare Variables
         var isGreater = false
