@@ -67,6 +67,10 @@ class LoginController: UIViewController {
                     LocalStore.setIsExistingArrangementDD(temp1.IsExistingArrangementDD)
                     LocalStore.setIsCoBorrowers(temp1.IsCoBorrowers)
                     LocalStore.setIsAllowMonthlyInstallment(temp1.IsAllowMonthlyInstallment)
+                    LocalStore.setWeeklyAmount(temp1.MinimumWeeklyOutstanding)
+                    LocalStore.setMonthlyAmount(temp1.MinimumMonthlyOustanding)
+                    LocalStore.setFortnightAmount(temp1.MinimumFortnightlyOutstanding)
+                    
                     if(temp1.MaxNoPay > 3 ){
                         temp1.MaxNoPay = 3
                     }

@@ -332,6 +332,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     
     @IBAction func btNext_Clicked(sender: AnyObject) {
         
+        
+        if(mySwitch.on) {
+            
         self.dataForm1.commit()
         
         var totalAmount : Double =  0
@@ -343,17 +346,17 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         }
         else
         {
-            var amount1String = self.dataSource["FirstAmount"].valueCandidate.description
+            let amount1String = self.dataSource["FirstAmount"].valueCandidate.description
             
-            var amount1Number = amount1String.doubleValue
+            let amount1Number = amount1String.doubleValue
             
-            var amount2String = self.dataSource["SecondAmount"].valueCandidate.description
+            let amount2String = self.dataSource["SecondAmount"].valueCandidate.description
             
-            var amount2Number = amount2String.doubleValue
+            let amount2Number = amount2String.doubleValue
             
-            var amount3String = self.dataSource["ThirdAmount"].valueCandidate.description
+            let amount3String = self.dataSource["ThirdAmount"].valueCandidate.description
             
-            var amount3Number = amount3String.doubleValue
+            let amount3Number = amount3String.doubleValue
             
             totalAmount = amount1Number + amount2Number + amount3Number
             
@@ -379,7 +382,14 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
         if(self.isFormValidate){
             
-            self.performSegueWithIdentifier("GoToPaymentSumary", sender: nil)
+            self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
+        }
+            
+        }
+        else
+        {
+            self.performSegueWithIdentifier("GoTo4Payment", sender: nil)
+
         }
 
     }

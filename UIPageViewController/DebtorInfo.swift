@@ -29,6 +29,10 @@ class DebtorInfo {
     var IsCoBorrowers : Bool
     var ArrangementType: String
     var MaxNoPay : Int
+    var MinimumWeeklyOutstanding : Double
+    var MinimumFortnightlyOutstanding : Double
+    var MinimumMonthlyOustanding : Double
+    
     var HistoryList : [PaymentTrackerRecordModel]
     var ScheduleList : [PaymentTrackerRecordModel]
     var client : Client
@@ -54,6 +58,9 @@ class DebtorInfo {
         IsCoBorrowers = false
         IsAllowMonthlyInstallment = false
         MaxNoPay = 0
+        MinimumWeeklyOutstanding = 0
+        MinimumFortnightlyOutstanding = 0
+        MinimumMonthlyOustanding = 0
         ArrangementType = ""
         HistoryList = [PaymentTrackerRecordModel]()
         ScheduleList = [PaymentTrackerRecordModel]()

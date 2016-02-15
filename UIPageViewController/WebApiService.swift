@@ -297,6 +297,18 @@ struct WebApiService {
                     JsonReturn.NextPaymentInstallment = NextPaymentInstallment.roundToPlaces(2)
                 }
                 
+                if let MinimumMonthlyOustanding = jsonObject["MinimumMonthlyOustanding"].double {
+                    JsonReturn.MinimumMonthlyOustanding = MinimumMonthlyOustanding.roundToPlaces(2)
+                }
+                
+                if let MinimumFortnightlyOutstanding = jsonObject["MinimumFortnightlyOutstanding"].double {
+                    JsonReturn.MinimumFortnightlyOutstanding = MinimumFortnightlyOutstanding.roundToPlaces(2)
+                }
+                
+                if let MinimumWeeklyOutstanding = jsonObject["MinimumWeeklyOutstanding"].double {
+                    JsonReturn.MinimumWeeklyOutstanding = MinimumWeeklyOutstanding.roundToPlaces(2)
+                }
+                
                 if let MerchantId = jsonObject["NTID"].string {
                     JsonReturn.MerchantId = MerchantId
                 }

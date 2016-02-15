@@ -47,6 +47,58 @@ struct LocalStore {
     
     private static let FirstAmountOfInstalment = "FirstAmountOfInstalment"
 
+    private static let WeeklyAmount = "WeeklyAmount"
+    
+    private static let FortnightAmount = "FortnightAmount"
+    
+    private static let MonthlyAmount = "MonthlyAmount"
+
+    //----------------------------------------------------------------------------//
+    
+    static func setMonthlyAmount(token: Double) {
+        userDefaults.setObject(token, forKey: MonthlyAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteMonthlyAmount() {
+        userDefaults.removeObjectForKey(MonthlyAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func accessMonthlyAmount() -> Double {
+        return userDefaults.doubleForKey(MonthlyAmount)
+    }
+    
+    //----------------------------------------------------------------------------//
+    
+    static func setFortnightAmount(token: Double) {
+        userDefaults.setObject(token, forKey: FortnightAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteFortnightAmount() {
+        userDefaults.removeObjectForKey(FortnightAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func accessFortnightAmount() -> Double {
+        return userDefaults.doubleForKey(FortnightAmount)
+    }
+    //----------------------------------------------------------------------------//
+    
+    static func setWeeklyAmount(token: Double) {
+        userDefaults.setObject(token, forKey: WeeklyAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteWeeklyAmount() {
+        userDefaults.removeObjectForKey(WeeklyAmount)
+        userDefaults.synchronize()
+    }
+    
+    static func accessWeeklyAmount() -> Double {
+        return userDefaults.doubleForKey(WeeklyAmount)
+    }
     
     //----------------------------------------------------------------------------//
     static func setMakePaymentIn3Part(token: Bool) {
