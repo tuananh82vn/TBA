@@ -382,6 +382,8 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
         if(self.isFormValidate){
             
+            SetPayment.SetPayment(2)
+            
             self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
         }
             
@@ -400,7 +402,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToPaymentSumary" {
+        if segue.identifier == "GoToInstalmentSumary" {
 
             
             self.ScheduleList.removeAll()

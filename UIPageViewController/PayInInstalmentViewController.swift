@@ -27,6 +27,9 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     var validate3 : Bool = true
     
     var dataForm1 = TKDataForm()
+    
+    var ScheduleList = [PaymentTrackerRecordModel]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +107,8 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         self.isFormValidate = self.validate1 && self.validate2 && self.validate3
         
         if(self.isFormValidate){
+
+            SetPayment.SetPayment(3)
             
             self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
         }
@@ -117,12 +122,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     }
     
     func dataForm(dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, atIndex editorIndex: UInt) -> CGFloat {
-        
-//            if gorupIndex == 0 && editorIndex == 2 {
-//                return 40
-//            }
-        
-            return 65
+        return 65
     }
 
     func dataForm(dataForm: TKDataForm, didSelectEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
@@ -289,6 +289,78 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         layer.borderWidth = 1.0
         layer.cornerRadius = 4
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToInstalmentSumary" {
+            
+            
+            self.ScheduleList.removeAll()
+            
+            var installmentDate = self.dataSource["FirstInstalmentDate"].valueCandidate as! NSDate
+            
+            var paidAmount : Double = 0
+            var amount = self.dataSource["InstalmentAmount"].valueCandidate.description.doubleValue.roundToPlaces(2)
+            var totalAmount = LocalStore.accessTotalOutstanding()
+            var installmentAmount =  amount < totalAmount ? amount : totalAmount
+            
+            let Frequency = self.dataSource["Frequency"].valueCandidate as! Int
+            
+            while ( totalAmount > paidAmount && installmentAmount > 0)
+            {
+                let firstPayment = PaymentTrackerRecordModel()
+                
+                firstPayment.DueDate = installmentDate.formattedWith("dd/MM/yyyy")
+                
+                firstPayment.Amount = installmentAmount.description
+                
+                self.ScheduleList.append(firstPayment)
+                
+                paidAmount = paidAmount + installmentAmount
+                
+                if( paidAmount + amount <= totalAmount)
+                {
+                    installmentAmount = amount
+                }
+                else
+                {
+                    installmentAmount = (totalAmount - paidAmount).roundToPlaces(2)
+                }
+                
+                switch(Frequency){
+                    case 0:
+                    installmentDate = installmentDate.addDays(7)
+                    break
+                    
+                    case 1:
+                    installmentDate = installmentDate.addDays(14)
+                    break
+                
+                    case 2:
+                    installmentDate = installmentDate.addMonths(1)
+                    break
+                    
+                    default: break
+                }
+            }
+            
+            if(self.ScheduleList.count > 0){
+                
+                
+                var lastInstallment = self.ScheduleList[self.ScheduleList.count - 1].Amount.doubleValue
+                
+                if( lastInstallment < 10){
+                    self.ScheduleList.removeAtIndex(self.ScheduleList.count-1)
+                    self.ScheduleList[self.ScheduleList.count-1].Amount = (self.ScheduleList[self.ScheduleList.count-1].Amount.doubleValue + lastInstallment).description
+                }
+            }
+
+            
+            let instalmentSumaryViewController = segue.destinationViewController as! InstalmentSumaryViewController
+            
+            instalmentSumaryViewController.ScheduleList = self.ScheduleList
+        }
+    }
+
 
     
 }

@@ -14,14 +14,22 @@ import ActionSheetPicker_3_0
 class SelectDebtorController: UIViewController {
 
     
-    var debtorList = ["Andy Pham","Khanh Le"]
+    var debtorList = [CoDebtor]()
+    
+    var debtorNameList = [String]()
+    
     var selectDebtor : Int = 0
 
     @IBOutlet weak var bt_Debtor: UIButton!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
+        
+        for var index = 0; index < debtorList.count; ++index {
+            debtorNameList.append(debtorList[index].FullName + " - " + debtorList[index].MarkMobile)
+        }
+        
         // Do any additional setup after loading the view.
     }
 
@@ -32,8 +40,10 @@ class SelectDebtorController: UIViewController {
     
     @IBAction func bt_DebtorSelected(sender: AnyObject) {
         
-        ActionSheetStringPicker.showPickerWithTitle("Select", rows: debtorList as [AnyObject] , initialSelection: self.selectDebtor, doneBlock: {
+        ActionSheetStringPicker.showPickerWithTitle("Select", rows: debtorNameList as [AnyObject] , initialSelection: self.selectDebtor, doneBlock: {
             picker, value, index in
+            
+            self.selectDebtor = value
             
             self.bt_Debtor.setTitle((index as! String), forState: .Normal)
             
@@ -45,17 +55,17 @@ class SelectDebtorController: UIViewController {
 
     @IBAction func bt_ContinueClicked(sender: AnyObject) {
         
-        self.performSegueWithIdentifier("GoToBlank", sender: nil)
+        self.performSegueWithIdentifier("GoToVerify", sender: nil)
 
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToVerify" {
+            
+            let controller = segue.destinationViewController as! VerifyCoDebtorViewController
+            controller.selectedDebtor = self.debtorList[self.selectDebtor]
+        }
     }
-    */
+    
 
 }

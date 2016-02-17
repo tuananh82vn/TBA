@@ -17,11 +17,11 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
     
     var HistoryList = [PaymentTrackerRecordModel]()
 
-    
     var ScheduleList = [PaymentTrackerRecordModel]()
 
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         initData()
@@ -43,6 +43,14 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                     self.ScheduleList = temp1.ScheduleList
 
                     self.paymentTrackerRecord = self.ScheduleList
+                    
+                    if(self.paymentTrackerRecord.count == 0){
+                        self.tableView.hidden = true
+                    }
+                    else
+                    {
+                        self.tableView.hidden = false
+                    }
                     
                     self.tableView.reloadData()
 
@@ -78,10 +86,26 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
             
                 self.paymentTrackerRecord = self.ScheduleList
                 
+                if(self.paymentTrackerRecord.count == 0){
+                    self.tableView.hidden = true
+                }
+                else
+                {
+                    self.tableView.hidden = false
+                }
+                
                 self.tableView.reloadData()
             case 1:
             
                 self.paymentTrackerRecord = self.HistoryList
+                
+                if(self.paymentTrackerRecord.count == 0){
+                    self.tableView.hidden = true
+                }
+                else
+                {
+                    self.tableView.hidden = false
+                }
                 
                 self.tableView.reloadData()
             
@@ -116,6 +140,14 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         
     }
     
+    @IBAction func btPayment_Clicked(sender: AnyObject) {
+        
+        SetPayment.SetPayment(4)
+        
+        self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+
+        
+    }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }

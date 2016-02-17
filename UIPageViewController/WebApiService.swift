@@ -8,8 +8,10 @@ struct WebApiService {
     private enum ResourcePath: CustomStringConvertible {
         case Verify
         case GetNetCode
+        case GetNetCodeVerify
         case VerifyNetCode
         case GetDebtorInfo
+        case ValidateCreditCard
         case MakeCreditCardPayment
         case MakeDebitPayment
         case EmailReceipt
@@ -18,13 +20,15 @@ struct WebApiService {
         case GetPersonalInformationDetail
         case SendFeedback
         case ArrangeDetail
-        
+
         var description: String {
             switch self {
                 case .Verify: return "/Api/Verify"
                 case .GetNetCode: return "/Api/GetNetCode"
+                case .GetNetCodeVerify: return "/Api/GetNetCodeVerify"
                 case .VerifyNetCode: return "/Api/VerifyNetCode"
                 case .GetDebtorInfo: return "/Api/GetDebtorInfo"
+                case .ValidateCreditCard: return "/Api/ValidateCreditCard"
                 case .MakeCreditCardPayment: return "/Api/MakeCreditCardPayment"
                 case .MakeDebitPayment: return "/Api/MakeDebitPayment"
                 case .EmailReceipt: return "/Api/EmailReceipt"
@@ -33,7 +37,6 @@ struct WebApiService {
                 case .GetPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
                 case .SendFeedback: return "/Api/SendFeedback"
                 case .ArrangeDetail: return "/Api/GetArrangeDetails"
-
             }
         }
     }
@@ -150,6 +153,53 @@ struct WebApiService {
 
     }
     
+    static func getNetCodeVerify(ReferenceNumber: String, MobileNumber: String,  response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetNetCodeVerify.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber,
+                "MobileNumber": MobileNumber
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+        
+    }
+    
     static func verifyNetCode(ReferenceNumber: String, Netcode: String, response : (objectReturn : JsonReturnModel?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.VerifyNetCode.description
@@ -195,6 +245,53 @@ struct WebApiService {
             
         }
     }
+    
+    static func validateCreditCard(CardNumber: String, CardType: Int, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.ValidateCreditCard.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "CardType": CardType,
+                "CreditCardNumber": CardNumber
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
     
     static func emailReceipt(debtorInfo:  DebtorInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
         
@@ -346,6 +443,73 @@ struct WebApiService {
                     let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
                     
                     JsonReturn.ScheduleList = ScheduleList
+                    
+                }
+                
+                if let coDebtorCode = jsonObject["CoDebtorCode"].arrayObject {
+                    
+                    let coDebtorCodeList = JSONParser.parseCoDebtorCode(coDebtorCode)
+                    
+                    JsonReturn.coDebtorCode = coDebtorCodeList
+                    
+                }
+                
+                if let coFirstName = jsonObject["CoFirstName"].arrayObject {
+                    
+                    let coFirstNameList = JSONParser.parseCoDebtorCode(coFirstName)
+                    
+                    JsonReturn.coFirstName = coFirstNameList
+                    
+                }
+                
+                if let coLastName = jsonObject["CoLastName"].arrayObject {
+                    
+                    let coLastNameList = JSONParser.parseCoDebtorCode(coLastName)
+                    
+                    JsonReturn.coLastName = coLastNameList
+                    
+                }
+                
+                if let coMobileNumbers = jsonObject["CoMobileNumbers"].arrayObject {
+                    
+                    let coMobileNumbersList = JSONParser.parseCoDebtorCode(coMobileNumbers)
+                    
+                    JsonReturn.coMobileNumbers = coMobileNumbersList
+                    
+                }
+                
+                if let coDriverLicenseNumber = jsonObject["CoDriverLicenseNumber"].arrayObject {
+                    
+                    let coDriverLicenseNumberList = JSONParser.parseCoDebtorCode(coDriverLicenseNumber)
+                    
+                    JsonReturn.coDriverLicenses = coDriverLicenseNumberList
+                }
+                
+                if(JsonReturn.IsCoBorrowers){
+                    
+                    for var index = 0; index < JsonReturn.coDebtorCode.count; ++index {
+                        
+                        let coDebtor = CoDebtor()
+                        
+                        coDebtor.DebtorCode = JsonReturn.coDebtorCode[index]
+                        coDebtor.FullName = JsonReturn.coFirstName[index] + " " + JsonReturn.coLastName[index]
+                        coDebtor.FullName = coDebtor.FullName.trim()
+                        coDebtor.Mobile = JsonReturn.coMobileNumbers[index].trim()
+                        if(coDebtor.Mobile == "")
+                        {
+                            coDebtor.Mobile = "No Number"
+                        }
+                        else{
+                            
+                            let index2: String.Index = coDebtor.Mobile.startIndex.advancedBy(2)
+                            
+                            let index6: String.Index = coDebtor.Mobile.startIndex.advancedBy(6)
+    
+                            coDebtor.MarkMobile = coDebtor.Mobile.substringToIndex(index2) + "XXXXX" + coDebtor.Mobile.substringFromIndex(index6)
+                        }
+                        
+                        JsonReturn.coDebtor.append(coDebtor)
+                    }
                     
                 }
                 

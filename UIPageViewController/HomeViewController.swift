@@ -27,6 +27,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         // create menu
         let sectionPrimary = self.sideDrawer.addSectionWithTitle("Main")
+        
         sectionPrimary.addItemWithTitle("Pay In Full", image: UIImage(named: "dollar")!)
         
         if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
@@ -34,7 +35,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         }
         else
         {
-            sectionPrimary.addItemWithTitle("Setup Schedule Payment", image: UIImage(named: "payment")!)
+            sectionPrimary.addItemWithTitle("Setup Schedule Payment", image: UIImage(named: "instalment")!)
         }
 
         
@@ -45,19 +46,17 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         if(!LocalStore.accessIsExistingArrangement()!){
             
             if(LocalStore.accessIsExistingArrangementCC()!){
-                sectionLabels.addItemWithTitle("View / Update Credit Card Detail")
+                sectionLabels.addItemWithTitle("View / Update Credit Card Detail", image: UIImage(named: "creditcard")!)
             }
             
             if(LocalStore.accessIsExistingArrangementDD()!){
-                sectionLabels.addItemWithTitle("View / Update Bank Account Detail")
+                sectionLabels.addItemWithTitle("View / Update Bank Account Detail", image: UIImage(named: "bank")!)
             }
         
         }
 
         
-        sectionLabels.addItemWithTitle("View / Update Personal Information")
-
-        
+        sectionLabels.addItemWithTitle("View / Update Personal Information", image: UIImage(named: "personal")!)
         
         self.sideDrawer.style.headerHeight = 64
         self.sideDrawer.fill = TKSolidFill(color: UIColor(rgba: "#00757D"))
@@ -79,6 +78,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         self.lbl_refnumber.text = LocalStore.accessRefNumber();
         self.lbl_outstanding.text = "$"+LocalStore.accessTotalOutstanding().description;
         self.lbl_nextinstalment.text = "$"+LocalStore.accessNextPaymentInstallment()!
+        
+        SetPayment.SetPayment(0)
         
     }
     
@@ -184,10 +185,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         {
            if(indexPath.row == 0 ){
             
-                LocalStore.setMakePaymentInFull(true)
-            
-                LocalStore.setMakePaymentIn3Part(false)
-            
+                SetPayment.SetPayment(1)
+
                 let paymentMethodController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentMethodViewController") as! PaymentMethodViewController
             
                 self.navigationController!.pushViewController(paymentMethodController, animated: true)
@@ -242,8 +241,17 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
                         self.navigationController!.pushViewController(view, animated: true)
                         
                     }
+                    
+                    if(indexPath.row == 1 ){
+                        
+                        
+                        let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
+                        
+                        self.navigationController!.pushViewController(view, animated: true)
+                        
+                    }
                 }
-                
+                else
                 if(LocalStore.accessIsExistingArrangementDD()!){
                     if(indexPath.row == 0 ){
                         
@@ -253,9 +261,19 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
                         self.navigationController!.pushViewController(view, animated: true)
                         
                     }
+                    
+                    if(indexPath.row == 1 ){
+                        
+                        
+                        let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
+                        
+                        self.navigationController!.pushViewController(view, animated: true)
+                        
+                    }
                 }
                 
-                if(indexPath.row == 1 ){
+                
+                if(indexPath.row == 0 ){
                     
                     
                     let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
@@ -309,7 +327,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     @IBAction func btPayment_Clicked(sender: AnyObject) {
         
-        LocalStore.setMakePaymentInFull(false)
+        SetPayment.SetPayment(4)
         
         let makeCreditPaymentViewController = self.storyboard!.instantiateViewControllerWithIdentifier("MakeCreditPaymentViewController") as! MakeCreditPaymentViewController
         

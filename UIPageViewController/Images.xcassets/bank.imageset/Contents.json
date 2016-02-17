@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "page1.png"
+      "filename" : "Bank-25.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Bank-64.png",
       "scale" : "2x"
     },
     {

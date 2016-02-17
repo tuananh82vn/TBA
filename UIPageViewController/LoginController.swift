@@ -12,7 +12,11 @@ class LoginController: UIViewController {
     var textDisplay : [String] = ["Thank you for waiting...", "We are logging you into system...", "It will take few seconds..."]
     
     var timer2 = NSTimer()
+    
     var index = 0
+    
+    var debtorList = [CoDebtor]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +65,6 @@ class LoginController: UIViewController {
                     LocalStore.setTotalOutstanding(temp1.TotalOutstanding)
                     
                     LocalStore.setNextPaymentInstallment(temp1.NextPaymentInstallment.description)
-                    LocalStore.setDRCode(temp1.DRCode)
                     LocalStore.setIsExistingArrangement(temp1.IsExistingArrangement)
                     LocalStore.setIsExistingArrangementCC(temp1.IsExistingArrangementCC)
                     LocalStore.setIsExistingArrangementDD(temp1.IsExistingArrangementDD)
@@ -79,10 +82,26 @@ class LoginController: UIViewController {
 
                     self.reset()
                     if(temp1.IsCoBorrowers){
-                        self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
+                        if(!LocalStore.accessIsCoBorrowersSelected()!){
+                            
+                            self.debtorList = temp1.coDebtor
+                            
+                            self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
+                        }
+                        else
+                        {
+                            
+                            let DrCode = LocalStore.accessDebtorCodeSelected()!
+                            LocalStore.setDRCode(DrCode)
+
+                            self.performSegueWithIdentifier("GoToBlank", sender: nil)
+                        }
                     }
                     else
                     {
+                        
+                        LocalStore.setDRCode(temp1.DRCode)
+
                         self.performSegueWithIdentifier("GoToBlank", sender: nil)
                     }
                     
@@ -133,6 +152,14 @@ class LoginController: UIViewController {
     func reset() {
         self.timer.stop()
         self.timer2.invalidate()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToDebtorSelect" {
+            
+            let controller = segue.destinationViewController as! SelectDebtorController
+            controller.debtorList = self.debtorList
+        }
     }
 }
 

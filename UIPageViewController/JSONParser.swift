@@ -79,6 +79,26 @@ struct JSONParser {
         return ErrorArray
     }
     
+    static func parseCoDebtorCode(story: NSArray) -> [String] {
+        
+        var CoDebtorCodeArray = [String]()
+        
+        if let Items = story as Array? {
+            
+            for var index = 0; index < Items.count; ++index {
+                
+                if let Item = Items[index] as? String {
+                    
+                    CoDebtorCodeArray.append(Item)
+                }
+            }
+        }
+        
+        return CoDebtorCodeArray
+    }
+    
+
+    
     static func parseObjectHistoryPaymentTracker(story: NSDictionary) -> PaymentTrackerRecordModel {
         
         let Object =  PaymentTrackerRecordModel()

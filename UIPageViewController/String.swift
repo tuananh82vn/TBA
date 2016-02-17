@@ -36,5 +36,11 @@ extension String {
             return NSDate(timeIntervalSince1970: 0)
         }
     }
+    
+    func trim() -> String
+    {
+        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+
 }
 

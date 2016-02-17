@@ -84,7 +84,7 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
                 //Save Pin
                 LocalStore.setPin(self.FirstPin)
                 
-                LocalStore.setIsPinSetup("true")
+                LocalStore.setIsPinSetup(true)
                 
                 self.performSegueWithIdentifier("GoToLogin", sender: nil)
 

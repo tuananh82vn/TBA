@@ -57,17 +57,20 @@ extension NSDate {
     }
     
     func addDays(daysToAdd: Int) -> NSDate {
-        
-        
-//        let secondsInDays: NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
-//        let dateWithDaysAdded: NSDate = self.dateByAddingTimeInterval(secondsInDays)
-//        
-//        //Return Result
-//        return dateWithDaysAdded
-        
+
         let components: NSDateComponents = NSDateComponents()
 
         components.setValue(daysToAdd, forComponent: NSCalendarUnit.Day);
+        
+        return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
+        
+    }
+    
+    func addMonths(monthToAdd: Int) -> NSDate {
+        
+        let components: NSDateComponents = NSDateComponents()
+        
+        components.setValue(monthToAdd, forComponent: NSCalendarUnit.Month);
         
         return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
         

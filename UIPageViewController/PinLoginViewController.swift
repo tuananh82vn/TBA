@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PinLoginViewController: BaseViewController, UITextFieldDelegate {
+class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertDelegate{
     
 
     @IBOutlet weak var tf_Pin0: UITextField!
@@ -44,6 +44,10 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
         InputFirstPin = true
         
         tf_Pin0.becomeFirstResponder()
+        
+//        //Handle auto hide keyboard
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+//        view.addGestureRecognizer(tap)
 
     }
     
@@ -55,26 +59,58 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate {
         return UIStatusBarAnimation.Fade
     }
     
+//    //Calls this function when the tap is recognized.
+//    func dismissKeyboard() {
+//        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+//        view.endEditing(true)
+//    }
+    
     @IBAction func btForgotten_Clicked(sender: AnyObject) {
-        //        // create the alert
-        //        let alert = UIAlertController(title: "PIN sent", message: "Your PIN is sent to your phone.", preferredStyle: UIAlertControllerStyle.Alert)
-        //
-        //        // add an action (button)
-        //        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        //
-        //        // show the alert
-        //        self.presentViewController(alert, animated: true, completion: nil)
+                
         
-        LocalStore.setIsPinSetup("false");
+
+            
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let optionMenu = UIAlertController(title: nil, message: "The app will be reseted , you will need to setup and verify it again. Continue ?", preferredStyle: .Alert)
         
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+        let logoutAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            //Reset Setting
+            LocalStore.setIsPinSetup(false);
+            LocalStore.setIsCoBorrowersSelected(false)
+            LocalStore.setPin("")
+            LocalStore.setRefNumber("")
+            LocalStore.setIsArrangementUnderThisDebtor(false)
+            LocalStore.setDebtorCodeSelected("")
+            
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+            
+            self.presentViewController(vc, animated: true, completion: nil)
+        })
         
-        self.presentViewController(vc, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "No", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+
+            self.tf_Pin0.becomeFirstResponder()
+
+        })
+        
+        
+        optionMenu.addAction(logoutAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+
+        
         
     }
     
+
     
     func tf_Pin0DidChange(textField: UITextField) {
         if(InputFirstPin && FinishFirstPin){

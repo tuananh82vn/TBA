@@ -35,6 +35,14 @@ class DebtorInfo {
     
     var HistoryList : [PaymentTrackerRecordModel]
     var ScheduleList : [PaymentTrackerRecordModel]
+    var coDebtor : [CoDebtor]
+    
+    var coDebtorCode : [String]
+    var coFirstName : [String]
+    var coLastName : [String]
+    var coMobileNumbers : [String]
+    var coDriverLicenses : [String]
+    
     var client : Client
     var IsSuccess : Bool
     var Errors : [Error]
@@ -64,7 +72,16 @@ class DebtorInfo {
         ArrangementType = ""
         HistoryList = [PaymentTrackerRecordModel]()
         ScheduleList = [PaymentTrackerRecordModel]()
+        coDebtor = [CoDebtor]()
         client = Client()
+        
+        coDebtorCode = [String]()
+        coFirstName = [String]()
+        coLastName = [String]()
+        coMobileNumbers = [String]()
+        coDriverLicenses = [String]()
+
+        
         IsSuccess = false
         Errors = [Error]()
     }

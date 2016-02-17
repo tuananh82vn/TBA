@@ -22,6 +22,24 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
     
+    var validate1 : Bool = true
+    
+    var validate2 : Bool = true
+    
+    var validate3 : Bool = true
+    
+    var validate4 : Bool = true
+    
+    var validate5 : Bool = true
+    
+    var validate6 : Bool = true
+    
+    var IsCheckingDone : Bool = true
+    
+    var GlobalMainQueue: dispatch_queue_t {
+        return dispatch_get_main_queue()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,7 +140,8 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             if (value.length <= 0)
             {
                 dataSource["Amount"].errorMessage = "Please input amount"
-                self.isFormValidate = false
+                self.validate1 = false
+                return self.validate1
             }
 
             let floatValue = value.floatValue
@@ -130,8 +149,12 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             if (floatValue <= 0)
             {
                 dataSource["Amount"].errorMessage = "Amount can not less than or equal 0"
-                self.isFormValidate = false
+                self.validate1 = false
+                return self.validate1
+
             }
+            
+            self.validate1 = true
         }
         else
         if (propery.name == "NameOnCard") {
@@ -140,8 +163,13 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             if (value.length <= 0)
             {
-                self.isFormValidate = false
+                self.validate2 = false
+                return self.validate2
+
             }
+            
+            self.validate2 = true
+
 
         }
         else
@@ -151,8 +179,32 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             if (value.length <= 0)
             {
-                self.isFormValidate = false
+                self.validate3 = false
+                return self.validate3
+
             }
+            else
+            {
+                
+                let v = CreditCardValidator()
+                
+                if v.validateString(value) {
+                    
+                    self.validate3 = true
+                    
+                }
+                else
+                {
+                    
+                    self.dataSource["CardNumber"].errorMessage = "Card Number is not valid"
+                    self.validate3 = false
+                    
+                }
+                
+                return self.validate3
+
+            }
+            
         }
         else
         if (propery.name == "Cvv") {
@@ -160,16 +212,22 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             let value = propery.valueCandidate.description
             if (value.length <= 0)
             {
-                self.isFormValidate = false
+                self.validate4 = false
+                return self.validate4
             }
             
+            self.validate4 = true
+            
         }
-        return self.isFormValidate
+        return true
     }
 
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
+        
         self.dataForm1.commit()
+
+        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4
         
         if(!self.isFormValidate){
             
@@ -209,6 +267,12 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         }
         
         var PaymentType = 0
+        
+//        1: Pay In Full
+//        2: Pay In 3 Part
+//        3: Pay In Installment
+//        4: Pay Other Amount
+//        5: Pay Next Instalment
 
         if(LocalStore.accessMakePaymentInFull()){
             PaymentType = 1
@@ -216,8 +280,10 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         else if(LocalStore.accessMakePaymentIn3Part()){
             PaymentType = 2
         }
-        else
-        {
+        else if(LocalStore.accessMakePaymentInstallment()){
+            PaymentType = 3
+        }
+        else if(LocalStore.accessMakePaymentOtherAmount()){
             PaymentType = 4
         }
         

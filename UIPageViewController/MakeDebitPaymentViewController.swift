@@ -32,6 +32,10 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         if(LocalStore.accessMakePaymentInFull()){
             bankInfo.Amount = LocalStore.accessTotalOutstanding()
         }
+        
+        if(LocalStore.accessMakePaymentIn3Part()){
+            bankInfo.Amount = LocalStore.accessFirstAmountOfInstalment()
+        }
 
         
         dataSource.sourceObject = bankInfo
@@ -202,7 +206,26 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         bankObject.Bsb2             = self.dataSource["Bsb2"].valueCandidate as! String
 
 
-        var PaymentType = 1
+        var PaymentType = 0
+        
+        //        1: Pay In Full
+        //        2: Pay In 3 Part
+        //        3: Pay In Installment
+        //        4: Pay Other Amount
+        //        5: Pay Next Instalment
+        
+        if(LocalStore.accessMakePaymentInFull()){
+            PaymentType = 1
+        }
+        else if(LocalStore.accessMakePaymentIn3Part()){
+            PaymentType = 2
+        }
+        else if(LocalStore.accessMakePaymentInstallment()){
+            PaymentType = 3
+        }
+        else if(LocalStore.accessMakePaymentOtherAmount()){
+            PaymentType = 4
+        }
 
         
         WebApiService.MakeDebitPayment(bankObject, PaymentType: PaymentType){ objectReturn in

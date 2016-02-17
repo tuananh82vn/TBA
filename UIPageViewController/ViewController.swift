@@ -27,9 +27,8 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         
         
-        if let temp = LocalStore.accessIsPinSetup() {
             
-            if(temp == "true"){
+            if(LocalStore.accessIsPinSetup()){
                 self.IsPinSetup = true
                 self.viewControler = ["PinLoginViewController"]
             }
@@ -38,13 +37,6 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
                 //disable moving view - because if view animate - keyboard will disapear
                 self.pageViewController.dataSource = self
             }
-        }
-        else
-        {
-            //disable moving view - because if view animate - keyboard will disapear
-            self.pageViewController.dataSource = self
-            
-        }
         
 
 

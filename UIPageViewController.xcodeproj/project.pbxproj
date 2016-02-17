@@ -49,6 +49,11 @@
 		C797D62F1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */; };
 		C797D6311C717F5D0083CD88 /* PayInInstalmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6301C717F5D0083CD88 /* PayInInstalmentViewController.swift */; };
 		C797D6331C7182F90083CD88 /* PayInInstalment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6321C7182F90083CD88 /* PayInInstalment.swift */; };
+		C797D6351C72AB0F0083CD88 /* SetPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6341C72AB0F0083CD88 /* SetPayment.swift */; };
+		C797D6371C72CCA30083CD88 /* VerifyCoDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6361C72CCA30083CD88 /* VerifyCoDebtorViewController.swift */; };
+		C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6381C72D0DC0083CD88 /* CoDebtor.swift */; };
+		C797D63B1C7404A80083CD88 /* CreditCardValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */; };
+		C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */; };
 		C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */; };
 		C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */; };
 		C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */; };
@@ -143,6 +148,11 @@
 		C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebtorPaymentInstallment.swift; sourceTree = "<group>"; };
 		C797D6301C717F5D0083CD88 /* PayInInstalmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayInInstalmentViewController.swift; sourceTree = "<group>"; };
 		C797D6321C7182F90083CD88 /* PayInInstalment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayInInstalment.swift; sourceTree = "<group>"; };
+		C797D6341C72AB0F0083CD88 /* SetPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPayment.swift; sourceTree = "<group>"; };
+		C797D6361C72CCA30083CD88 /* VerifyCoDebtorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyCoDebtorViewController.swift; sourceTree = "<group>"; };
+		C797D6381C72D0DC0083CD88 /* CoDebtor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoDebtor.swift; sourceTree = "<group>"; };
+		C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidationType.swift; sourceTree = "<group>"; };
+		C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidator.swift; sourceTree = "<group>"; };
 		C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInfo.swift; sourceTree = "<group>"; };
 		C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReturnModel.swift; sourceTree = "<group>"; };
 		C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCallback.swift; sourceTree = "<group>"; };
@@ -310,6 +320,7 @@
 				C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */,
 				C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */,
 				C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */,
+				C797D6361C72CCA30083CD88 /* VerifyCoDebtorViewController.swift */,
 				C7813B671BEC950600876860 /* BlankViewController.swift */,
 				C7813B631BEC7FD300876860 /* HomeViewController.swift */,
 				C7F92A141C18FC9000AE9AAB /* PaymentMethodViewController.swift */,
@@ -338,6 +349,8 @@
 		C7ABFCC11BEB0451009BCE1E /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */,
+				C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */,
 				C783D05F1C100A1A00AE7265 /* SwiftyJSON.swift */,
 				C783D05D1C1009E200AE7265 /* LocalStore.swift */,
 				C7E6B0211BF07A1C00D60EC1 /* LoremIpsumGenerator.swift */,
@@ -350,6 +363,7 @@
 				C7E351C41C167A6400315A47 /* String.swift */,
 				C797D62A1C6C5CC80083CD88 /* DateExtension.swift */,
 				C797D62C1C6D79960083CD88 /* NumberExtension.swift */,
+				C797D6341C72AB0F0083CD88 /* SetPayment.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -381,6 +395,7 @@
 				C797D6221C6C43E10083CD88 /* Client.swift */,
 				C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */,
 				C797D6321C7182F90083CD88 /* PayInInstalment.swift */,
+				C797D6381C72D0DC0083CD88 /* CoDebtor.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -563,7 +578,10 @@
 				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
 				C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */,
 				C7A216081C1E90DE008A03A7 /* UpdateBankAccountViewController.swift in Sources */,
+				C797D63B1C7404A80083CD88 /* CreditCardValidationType.swift in Sources */,
+				C797D6371C72CCA30083CD88 /* VerifyCoDebtorViewController.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
+				C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */,
 				C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */,
 				C797D62B1C6C5CC80083CD88 /* DateExtension.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
@@ -595,6 +613,7 @@
 				C797D6211C6C405C0083CD88 /* InstalmentSumaryViewController.swift in Sources */,
 				C797D62D1C6D79960083CD88 /* NumberExtension.swift in Sources */,
 				C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */,
+				C797D6351C72AB0F0083CD88 /* SetPayment.swift in Sources */,
 				C7E6357D1BEC5E1D002D8438 /* MakeCreditPaymentViewController.swift in Sources */,
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,
 				C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */,
@@ -605,6 +624,7 @@
 				C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */,
 				C7E6B0201BF079EA00D60EC1 /* PaymentTracker2ViewController.swift in Sources */,
 				C7A216021C1E7E7C008A03A7 /* SetupPaymentViewController.swift in Sources */,
+				C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */,
 				C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */,
 				C7E6B01E1BF06A3F00D60EC1 /* Serializable.swift in Sources */,
 				C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */,

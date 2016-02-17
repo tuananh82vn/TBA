@@ -21,16 +21,7 @@ class View2Controller: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        UIPageControl.appearance().currentPage = 1
-//        UIPageControl.appearance().updateCurrentPageDisplay()
-//        println(UIPageControl.appearance().currentPage)
-        
-        
-//        if (LocalStore.accessRefNumber()?.length > 0){
-//            self.tf_DebtCode.text = LocalStore.accessRefNumber()
-//        }
-        
-        self.tf_DebtCode.text = "706327641"
+        self.tf_DebtCode.text = "705854975"
         
         // Show button get net code
         UIView.animateWithDuration(2.0, animations: { () -> Void in
