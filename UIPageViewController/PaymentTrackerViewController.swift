@@ -10,7 +10,9 @@ import UIKit
 
 class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
 
+    
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
 
     var paymentTrackerRecord = [PaymentTrackerRecordModel]()

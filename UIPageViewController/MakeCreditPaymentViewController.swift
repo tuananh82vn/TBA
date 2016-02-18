@@ -16,11 +16,12 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
     let cardInfo = CardInfo()
     var paymentReturn = PaymentReturnModel()
     
-    var isFormValidate : Bool = true
 
     var dataForm1 = TKDataForm()
     
     var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
+    
+    var isFormValidate : Bool = true
     
     var validate1 : Bool = true
     
@@ -34,11 +35,6 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     var validate6 : Bool = true
     
-    var IsCheckingDone : Bool = true
-    
-    var GlobalMainQueue: dispatch_queue_t {
-        return dispatch_get_main_queue()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,9 +127,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
-        self.isFormValidate = true
 
-        
         if (propery.name == "Amount") {
             
             let value = propery.valueCandidate.description

@@ -20,6 +20,7 @@ struct WebApiService {
         case GetPersonalInformationDetail
         case SendFeedback
         case ArrangeDetail
+        case DeferPayment
 
         var description: String {
             switch self {
@@ -37,6 +38,7 @@ struct WebApiService {
                 case .GetPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
                 case .SendFeedback: return "/Api/SendFeedback"
                 case .ArrangeDetail: return "/Api/GetArrangeDetails"
+                case .DeferPayment : return "/Api/DeferPayment"
             }
         }
     }
@@ -388,6 +390,18 @@ struct WebApiService {
                 
                 if let MaxNoPay = jsonObject["MaxNoPay"].int {
                     JsonReturn.MaxNoPay = MaxNoPay
+                }
+                
+                if let TotalRemainingDefer = jsonObject["TotalRemainingDefer"].int {
+                    JsonReturn.TotalRemainingDefer = TotalRemainingDefer
+                }
+                
+                if let TotalUsedDefer = jsonObject["TotalUsedDefer"].int {
+                    JsonReturn.TotalUsedDefer = TotalUsedDefer
+                }
+                
+                if let TotalDefer = jsonObject["TotalDefer"].int {
+                    JsonReturn.TotalDefer = TotalDefer
                 }
                 
                 if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].double {
@@ -891,11 +905,6 @@ struct WebApiService {
                         
                         if let ExpireDate = jsonObject["ExpiryDate"].string {
                             
-//                            let components: NSDateComponents = NSDateComponents()
-//                            components.setValue(1, forComponent: NSCalendarUnit.Day);
-                            
-//                            JsonReturn.card.ExpiryDate  = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: ExpireDate.dateFromString("MMyyyy"), options: NSCalendarOptions(rawValue: 0))!
-                            
                               JsonReturn.card.ExpiryDate  = ExpireDate.dateFromString("MMyyyy")
 
                         }
@@ -1124,6 +1133,53 @@ struct WebApiService {
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
                 "Subject" : object.Subject,
                 "Content" : object.Content
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
+    static func SendDeferPayment(object: DeferPayment, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.DeferPayment.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "InstalDate" : object.InstalDate,
+                "Amount" : object.Amount
             ]
         ]
         

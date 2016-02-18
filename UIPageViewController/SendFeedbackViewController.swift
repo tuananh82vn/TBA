@@ -73,14 +73,7 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
                 
                 if(temp1.IsSuccess)
                 {
-                    // create the alert
-                    let alert = UIAlertController(title: "Done", message: "Thank you for your feedback.", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
                 }
                 else
                 {
@@ -121,14 +114,13 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToNotice" {
+            
+            let controller = segue.destinationViewController as! FinishViewController
+            controller.message = "Your feedback has been sent successfully."
+            
+        }
     }
-    */
 
 }

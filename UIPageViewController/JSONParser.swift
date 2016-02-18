@@ -107,6 +107,9 @@ struct JSONParser {
         
         Object.Amount = story["HistInstalAmount"] as? String ?? ""
         
+        Object.Defer = story["HistDeferredAmount"] as? String ?? ""
+
+        
         return Object
     }
     

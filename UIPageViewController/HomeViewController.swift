@@ -309,6 +309,10 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     }
 
     @IBAction func btDefer_Clicked(sender: AnyObject) {
+        
+        let instalmentInfoViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DeferPaymentViewController") as! DeferPaymentViewController
+        
+        self.navigationController!.pushViewController(instalmentInfoViewController, animated: true)
     }
     
     @IBAction func btInstalment_Clicked(sender: AnyObject) {

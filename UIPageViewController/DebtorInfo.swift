@@ -43,6 +43,10 @@ class DebtorInfo {
     var coMobileNumbers : [String]
     var coDriverLicenses : [String]
     
+    var TotalRemainingDefer : Int
+    var TotalUsedDefer : Int
+    var TotalDefer : Int
+    
     var client : Client
     var IsSuccess : Bool
     var Errors : [Error]
@@ -81,6 +85,9 @@ class DebtorInfo {
         coMobileNumbers = [String]()
         coDriverLicenses = [String]()
 
+        TotalRemainingDefer = 0
+        TotalUsedDefer = 0
+        TotalDefer = 0
         
         IsSuccess = false
         Errors = [Error]()

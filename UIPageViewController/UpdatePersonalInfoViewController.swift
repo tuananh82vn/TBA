@@ -243,7 +243,12 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+        if segue.identifier == "GoToNotice" {
+            
+            let controller = segue.destinationViewController as! FinishViewController
+            controller.message = "Your personal information has been updated successfully."
+            
+        }
     }
     
 }

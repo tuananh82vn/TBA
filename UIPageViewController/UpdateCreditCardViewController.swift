@@ -136,14 +136,8 @@ class UpdateCreditCardViewController: TKDataFormViewController {
                 
                 if(temp1.IsSuccess)
                 {
-                    // create the alert
-                    let alert = UIAlertController(title: "Done", message: "Update done", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+
                 }
                 else
                 {
@@ -173,7 +167,12 @@ class UpdateCreditCardViewController: TKDataFormViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        if segue.identifier == "GoToNotice" {
+            
+            let controller = segue.destinationViewController as! FinishViewController
+            controller.message = "Your credit card has been updated successfully."
+            
+        }
     }
 
 }

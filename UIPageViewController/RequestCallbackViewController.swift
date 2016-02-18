@@ -8,7 +8,8 @@
 
 import UIKit
 
-class RequestCallbackViewController: TKDataFormViewController {
+class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
+
 
     let dataSource = TKDataFormEntityDataSource()
     
@@ -17,14 +18,33 @@ class RequestCallbackViewController: TKDataFormViewController {
 
     @IBOutlet weak var subView: UIView!
     
+    var isFormValidate : Bool = true
+    
+    var validate1 : Bool = true
+    
+    var validate2 : Bool = true
+    
+    var validate3 : Bool = true
+    
+    var validate4 : Bool = true
+    
+    var validate5 : Bool = true
+    
+    var validate6 : Bool = true
+    
+    var dataForm1 = TKDataForm()
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
         dataSource.sourceObject = requestCallBack
-        
-        
         
         dataSource["Name"].hintText = "Name"
         dataSource["Name"].errorMessage = "Please fill in your name"
@@ -60,24 +80,31 @@ class RequestCallbackViewController: TKDataFormViewController {
         dataSource["Notes"].image = UIImage(named: "notes")
         
         
-        
-        self.dataForm.dataSource = dataSource
-        self.dataForm.commitMode = TKDataFormCommitMode.OnLostFocus
-        self.dataForm.validationMode = TKDataFormValidationMode.Manual
+        dataForm1 = TKDataForm(frame: self.subView.bounds)
+
+        dataForm1.dataSource = dataSource
+        dataForm1.delegate = self
+
+        dataForm1.commitMode = TKDataFormCommitMode.Manual
+        dataForm1.validationMode = TKDataFormValidationMode.Manual
 
 
-        self.dataForm.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
+        dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
         
-        dataForm.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
 
-        self.subView.addSubview(dataForm)
+        self.subView.addSubview(dataForm1)
         
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,84 +116,108 @@ class RequestCallbackViewController: TKDataFormViewController {
         super.viewWillLayoutSubviews()
     }
     
-    override func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         if propery.name == "Name" {
-            return (propery.valueCandidate as! NSString).length > 0
+            
+            let value = propery.valueCandidate.description
+
+            if(value.length <= 0)
+            {
+                self.validate1 = false
+                return self.validate1
+            }
+            
+            self.validate1 = true
         }
-        if propery.name == "Phone" {
-            return (propery.valueCandidate as! NSString).length > 0
+        
+        if propery.name == "Phone"
+        {
+            let value = propery.valueCandidate.description
+
+            if(value.length <= 0)
+            {
+                self.validate2 = false
+                return self.validate2
+            }
+            self.validate2 = true
         }
-        return propery.isValid
+        
+        if propery.name == "Date"
+        {
+            let value = propery.valueCandidate as! NSDate
+            
+
+            let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+            
+            if(value.isLessThanDate(firstDate)){
+                dataSource["Date"].errorMessage = "Date must not be less than today"
+                self.validate3 = false
+                return self.validate3
+            }
+            
+            self.validate3 = true
+        }
+        
+        return true
+        
     }
     
-    override func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
-        
-//        editor.style.textLabelOffset = UIOffsetMake(10, 0)
-//        editor.style.separatorLeadingSpace = 40
-//        editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
-//        
-//        if ["Date", "Name", "Phone"].contains(property.name) {
-//            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-//            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-//            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
-//            editor.style.editorOffset = UIOffsetMake(10, 0)
-//        }
-//        
-//        
-//        if property.name == "Name" {
-//            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
-//            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
-//        }
-//        
-//        if property.name == "Phone" {
-//            editor.style.feedbackLabelOffset = UIOffsetMake(10, 0)
-//            editor.feedbackLabel.font = UIFont(name: "Verdana-Italic", size: 10)
-//        }
-        
+    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
 
     }
     
-    override func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
-//        groupView.titleView.titleLabel.textColor = UIColor.lightGrayColor()
-//        groupView.titleView.titleLabel.font = UIFont.systemFontOfSize(13)
-//        groupView.titleView.style.insets = UIEdgeInsetsMake(0, 10, 0, 0)
-//        if groupIndex == 1 {
-//            groupView.editorsContainer.backgroundColor = UIColor.clearColor()
-//        }
+    func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
+
     }
 
 
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
+        self.dataForm1.commit()
         
-        view.showLoading()
+        self.isFormValidate = self.validate1 && self.validate2 && self.validate3
         
-        var requestObject = RequestCallBack()
-        
-        requestObject.Notes         = self.dataSource["Notes"].valueCandidate as! String
-        requestObject.Phone         = self.dataSource["Phone"].valueCandidate as! String
-        requestObject.Name          = self.dataSource["Name"].valueCandidate as! String
-        requestObject.Date          = self.dataSource["Date"].valueCandidate as! NSDate
-        requestObject.TimeFrom      = self.dataSource["TimeFrom"].valueCandidate as! NSDate
-        requestObject.TimeTo        = self.dataSource["TimeTo"].valueCandidate as! NSDate
-        
-        
-        WebApiService.RequestCallback(requestObject){ objectReturn in
+        if(self.isFormValidate){
+            view.showLoading()
             
-            self.view.hideLoading();
+            let requestObject = RequestCallBack()
             
-            if let temp1 = objectReturn
-            {
+            requestObject.Notes         = self.dataSource["Notes"].valueCandidate as! String
+            requestObject.Phone         = self.dataSource["Phone"].valueCandidate as! String
+            requestObject.Name          = self.dataSource["Name"].valueCandidate as! String
+            requestObject.Date          = self.dataSource["Date"].valueCandidate as! NSDate
+            requestObject.TimeFrom      = self.dataSource["TimeFrom"].valueCandidate as! NSDate
+            requestObject.TimeTo        = self.dataSource["TimeTo"].valueCandidate as! NSDate
+            
+            
+            WebApiService.RequestCallback(requestObject){ objectReturn in
                 
-                if(temp1.IsSuccess)
+                self.view.hideLoading();
+                
+                if let temp1 = objectReturn
                 {
-                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                    
+                    if(temp1.IsSuccess)
+                    {
+                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                    }
+                    else
+                    {
+                        
+                        // create the alert
+                        let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add an action (button)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 }
                 else
                 {
-                    
                     // create the alert
-                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
                     
                     // add an action (button)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -175,82 +226,19 @@ class RequestCallbackViewController: TKDataFormViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             }
-            else
-            {
-                // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                
-                // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+
         }
 
-
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToNotice" {
+            
+            let controller = segue.destinationViewController as! FinishViewController
+            controller.message = "Callback request successfully submited. One of our friendly operators will call you on the day and time you have requested."
+        
+        }
     }
 
 
 }
-
-
-
-//class CallEditor: TKDataFormPhoneEditor {
-//    
-//    let actionButton = UIButton()
-//    
-//    override init(property: TKEntityProperty, owner: TKDataForm) {
-//        super.init(property: property, owner: owner)
-//    }
-//    
-//    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        
-//        actionButton.setTitle("Enter your number", forState: UIControlState.Normal)
-//        actionButton.setTitleColor(UIColor.init(hex: "#357d89"), forState: UIControlState.Normal)
-//        
-//        self.addSubview(actionButton)
-//        self.gridLayout.addArrangedView(actionButton)
-//        let btnDef = self.gridLayout.definitionForView(actionButton)
-//        btnDef.row = 0
-//        btnDef.column = 3
-//        self.gridLayout.setWidth(actionButton.sizeThatFits(CGSizeZero).width, forColumn: 3)
-//    }
-//    
-//    override init(property: TKEntityProperty) {
-//        super.init(property: property)
-//    }
-//    
-//    required convenience init(coder aDecoder: NSCoder) {
-//        self.init(frame: CGRectZero)
-//    }
-//}
-
-//class TimeEditor: TKDataFormTimePickerEditor {
-//    
-//    let actionButton = UIButton()
-//    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        
-//        actionButton.setTitle("From", forState: UIControlState.Normal)
-//        actionButton.setTitleColor(UIColor(red: 0.780, green: 0.2, blue: 0.233, alpha: 1.0), forState: UIControlState.Normal)
-//        self.addSubview(actionButton)
-//        self.gridLayout.addArrangedView(actionButton)
-//        let btnDef = self.gridLayout.definitionForView(actionButton)
-//        btnDef.row = 0
-//        btnDef.column = 3
-//        self.gridLayout.setWidth(actionButton.sizeThatFits(CGSizeZero).width, forColumn: 3)
-//    }
-//    
-//    override init(property: TKEntityProperty) {
-//        super.init(property: property)
-//    }
-//    
-//    required convenience init(coder aDecoder: NSCoder) {
-//        self.init(frame: CGRectZero)
-//    }
-//}
-

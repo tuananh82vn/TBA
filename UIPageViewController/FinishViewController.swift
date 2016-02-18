@@ -8,11 +8,15 @@
 
 import UIKit
 
-class FinishCallbackViewController: UIViewController {
+class FinishViewController: UIViewController {
 
+    
+    var message = ""
+    
+    @IBOutlet weak var lbMessage: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        lbMessage.text = message
         // Do any additional setup after loading the view.
     }
 

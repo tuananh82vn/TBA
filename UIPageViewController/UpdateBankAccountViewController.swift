@@ -244,7 +244,12 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        if segue.identifier == "GoToNotice" {
+            
+            let controller = segue.destinationViewController as! FinishViewController
+            controller.message = "Your bank account has been updated successfully."
+            
+        }
     }
 
 }

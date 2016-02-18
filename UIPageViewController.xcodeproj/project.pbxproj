@@ -37,9 +37,6 @@
 		C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0631C111AB200AE7265 /* JSONParser.swift */; };
 		C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */; };
 		C797D60D1C6309950083CD88 /* ArrangeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D60C1C6309950083CD88 /* ArrangeDetails.swift */; };
-		C797D6151C680C090083CD88 /* FinishUpdateContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6141C680C090083CD88 /* FinishUpdateContactViewController.swift */; };
-		C797D6171C680E690083CD88 /* FinishUpdateBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6161C680E690083CD88 /* FinishUpdateBankAccountViewController.swift */; };
-		C797D6191C680E890083CD88 /* FinishUpdateCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6181C680E890083CD88 /* FinishUpdateCreditCardViewController.swift */; };
 		C797D61B1C6951EB0083CD88 /* TelerikUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C797D61A1C6951EA0083CD88 /* TelerikUI.framework */; };
 		C797D61D1C69981A0083CD88 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C797D61C1C69981A0083CD88 /* Reveal.framework */; };
 		C797D6211C6C405C0083CD88 /* InstalmentSumaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */; };
@@ -54,10 +51,13 @@
 		C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6381C72D0DC0083CD88 /* CoDebtor.swift */; };
 		C797D63B1C7404A80083CD88 /* CreditCardValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */; };
 		C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */; };
+		C797D63F1C7533990083CD88 /* DeferPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63E1C7533990083CD88 /* DeferPaymentViewController.swift */; };
+		C797D6411C75568D0083CD88 /* DeferPaymentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6401C75568D0083CD88 /* DeferPaymentViewCell.swift */; };
+		C797D6431C7589780083CD88 /* DeferPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6421C7589780083CD88 /* DeferPayment.swift */; };
 		C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */; };
 		C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */; };
 		C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */; };
-		C7A216001C1E74CE008A03A7 /* FinishCallbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FF1C1E74CE008A03A7 /* FinishCallbackViewController.swift */; };
+		C7A216001C1E74CE008A03A7 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */; };
 		C7A216021C1E7E7C008A03A7 /* SetupPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A216011C1E7E7C008A03A7 /* SetupPaymentViewController.swift */; };
 		C7A216041C1E80EB008A03A7 /* ThreePartPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A216031C1E80EB008A03A7 /* ThreePartPayment.swift */; };
 		C7A216061C1E90CA008A03A7 /* UpdateCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A216051C1E90CA008A03A7 /* UpdateCreditCardViewController.swift */; };
@@ -136,9 +136,6 @@
 		C783D0631C111AB200AE7265 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentInfoViewController.swift; sourceTree = "<group>"; };
 		C797D60C1C6309950083CD88 /* ArrangeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangeDetails.swift; sourceTree = "<group>"; };
-		C797D6141C680C090083CD88 /* FinishUpdateContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishUpdateContactViewController.swift; sourceTree = "<group>"; };
-		C797D6161C680E690083CD88 /* FinishUpdateBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishUpdateBankAccountViewController.swift; sourceTree = "<group>"; };
-		C797D6181C680E890083CD88 /* FinishUpdateCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishUpdateCreditCardViewController.swift; sourceTree = "<group>"; };
 		C797D61A1C6951EA0083CD88 /* TelerikUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TelerikUI.framework; path = "../../Documents/Telerik/UI for iOS Q1 2016/TelerikUI.framework"; sourceTree = "<group>"; };
 		C797D61C1C69981A0083CD88 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentSumaryViewController.swift; sourceTree = "<group>"; };
@@ -153,10 +150,13 @@
 		C797D6381C72D0DC0083CD88 /* CoDebtor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoDebtor.swift; sourceTree = "<group>"; };
 		C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidationType.swift; sourceTree = "<group>"; };
 		C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidator.swift; sourceTree = "<group>"; };
+		C797D63E1C7533990083CD88 /* DeferPaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeferPaymentViewController.swift; sourceTree = "<group>"; };
+		C797D6401C75568D0083CD88 /* DeferPaymentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeferPaymentViewCell.swift; sourceTree = "<group>"; };
+		C797D6421C7589780083CD88 /* DeferPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeferPayment.swift; sourceTree = "<group>"; };
 		C7A215F91C1AAAC1008A03A7 /* BankInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInfo.swift; sourceTree = "<group>"; };
 		C7A215FB1C1AAAF0008A03A7 /* PaymentReturnModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReturnModel.swift; sourceTree = "<group>"; };
 		C7A215FD1C1E6609008A03A7 /* RequestCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCallback.swift; sourceTree = "<group>"; };
-		C7A215FF1C1E74CE008A03A7 /* FinishCallbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishCallbackViewController.swift; sourceTree = "<group>"; };
+		C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 		C7A216011C1E7E7C008A03A7 /* SetupPaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupPaymentViewController.swift; sourceTree = "<group>"; };
 		C7A216031C1E80EB008A03A7 /* ThreePartPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreePartPayment.swift; sourceTree = "<group>"; };
 		C7A216051C1E90CA008A03A7 /* UpdateCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateCreditCardViewController.swift; sourceTree = "<group>"; };
@@ -329,19 +329,17 @@
 				C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */,
 				C7E6B0071BF0548E00D60EC1 /* PaymentTrackerViewController.swift */,
 				C7E6B01F1BF079EA00D60EC1 /* PaymentTracker2ViewController.swift */,
+				C797D63E1C7533990083CD88 /* DeferPaymentViewController.swift */,
 				C7E6B0251BF1933A00D60EC1 /* RequestCallbackViewController.swift */,
 				C7F92A181C1928FD00AE9AAB /* SummaryViewController.swift */,
-				C7A215FF1C1E74CE008A03A7 /* FinishCallbackViewController.swift */,
 				C7A216011C1E7E7C008A03A7 /* SetupPaymentViewController.swift */,
 				C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */,
 				C797D6301C717F5D0083CD88 /* PayInInstalmentViewController.swift */,
 				C7A216051C1E90CA008A03A7 /* UpdateCreditCardViewController.swift */,
 				C7A216071C1E90DE008A03A7 /* UpdateBankAccountViewController.swift */,
-				C797D6161C680E690083CD88 /* FinishUpdateBankAccountViewController.swift */,
 				C7A216091C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift */,
-				C797D6141C680C090083CD88 /* FinishUpdateContactViewController.swift */,
 				C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */,
-				C797D6181C680E890083CD88 /* FinishUpdateCreditCardViewController.swift */,
+				C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -373,6 +371,7 @@
 			children = (
 				C7E6B0161BF0662E00D60EC1 /* PaymentTrackerViewCell.swift */,
 				C7E6B0231BF15AA900D60EC1 /* CustomTelrikViewCell.swift */,
+				C797D6401C75568D0083CD88 /* DeferPaymentViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -396,6 +395,7 @@
 				C797D62E1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift */,
 				C797D6321C7182F90083CD88 /* PayInInstalment.swift */,
 				C797D6381C72D0DC0083CD88 /* CoDebtor.swift */,
+				C797D6421C7589780083CD88 /* DeferPayment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -567,7 +567,6 @@
 				66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */,
 				C797D62F1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift in Sources */,
 				C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */,
-				C797D6151C680C090083CD88 /* FinishUpdateContactViewController.swift in Sources */,
 				C797D6231C6C43E10083CD88 /* Client.swift in Sources */,
 				C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */,
 				C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */,
@@ -586,21 +585,22 @@
 				C797D62B1C6C5CC80083CD88 /* DateExtension.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
-				C797D6171C680E690083CD88 /* FinishUpdateBankAccountViewController.swift in Sources */,
+				C797D63F1C7533990083CD88 /* DeferPaymentViewController.swift in Sources */,
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
 				C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */,
 				C797D6311C717F5D0083CD88 /* PayInInstalmentViewController.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
+				C797D6431C7589780083CD88 /* DeferPayment.swift in Sources */,
 				C7E351C51C167A6400315A47 /* String.swift in Sources */,
 				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
 				C7A216041C1E80EB008A03A7 /* ThreePartPayment.swift in Sources */,
-				C797D6191C680E890083CD88 /* FinishUpdateCreditCardViewController.swift in Sources */,
 				C7A216061C1E90CA008A03A7 /* UpdateCreditCardViewController.swift in Sources */,
+				C797D6411C75568D0083CD88 /* DeferPaymentViewCell.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
 				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
-				C7A216001C1E74CE008A03A7 /* FinishCallbackViewController.swift in Sources */,
+				C7A216001C1E74CE008A03A7 /* FinishViewController.swift in Sources */,
 				C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */,
 				C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */,
 				78E75F421AC5FC48001A93F1 /* AppDelegate.swift in Sources */,
