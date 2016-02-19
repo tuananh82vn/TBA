@@ -41,7 +41,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         sectionPrimary.addItemWithTitle("Provide Feedback",image: UIImage(named: "info")!)
         
-        let sectionLabels = self.sideDrawer.addSectionWithTitle("Setting")
+        let sectionLabels = self.sideDrawer.addSectionWithTitle("Settings")
         
         if(!LocalStore.accessIsExistingArrangement()!){
             

@@ -61,15 +61,11 @@ class PaymentMethodViewController: UIViewController {
         }
         else
         {
-            
             // create the alert
-            let alert = UIAlertController(title: "Warning", message: "Please select payment method", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = SCLAlertView()
+            alert.hideWhenBackgroundViewIsTapped = true
+            alert.showError("Error", subTitle:"Please select payment method.")
             
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            
-            // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
         }
         
     }
@@ -78,10 +74,20 @@ class PaymentMethodViewController: UIViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToMakeCreditPayment" {
 
             let makeCreditPaymentViewController = segue.destinationViewController as! MakeCreditPaymentViewController
             
             makeCreditPaymentViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
+            
+        }
+        else
+            if segue.identifier == "GoToMakeDebitPayment" {
+                let makeCreditPaymentViewController = segue.destinationViewController as! MakeDebitPaymentViewController
+                
+                makeCreditPaymentViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
+        }
+
     }
 
     

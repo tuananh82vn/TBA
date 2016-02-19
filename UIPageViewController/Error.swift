@@ -22,11 +22,13 @@ class JsonReturnModel {
     var Item : String
     var Errors : [Error]
     var IsSuccess : Bool
+
     
     init() {
         Item = ""
         Errors = [Error]()
         IsSuccess = false
+
     }
 }
 

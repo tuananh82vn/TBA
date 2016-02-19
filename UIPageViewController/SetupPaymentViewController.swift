@@ -368,14 +368,13 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         if(totalAmount != LocalStore.accessTotalOutstanding()){
             
+
             // create the alert
-            let alert = UIAlertController(title: "Error", message: "Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = SCLAlertView()
+            alert.hideWhenBackgroundViewIsTapped = true
+            alert.showError("Error", subTitle:"Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")")
             
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             
-            // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
@@ -438,9 +437,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         }
     }
     
-//    override func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
-//    }
-    
+
 
 
 }

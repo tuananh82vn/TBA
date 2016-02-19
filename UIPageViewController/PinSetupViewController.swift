@@ -91,9 +91,10 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
             }
             else
             {
+                let alert = SCLAlertView()
+                alert.hideWhenBackgroundViewIsTapped = true
+                alert.showError("Error", subTitle:"Pin not match - try again.")
                 
-                TelerikAlert.ShowAlert(self.view, title: "Error", message: "Pin not match - try again.", style: "Error")
-
                 reset()
             }
 

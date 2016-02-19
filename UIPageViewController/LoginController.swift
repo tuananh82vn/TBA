@@ -118,6 +118,8 @@ class LoginController: UIViewController {
                 // create the alert
                 let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 
+                
+                
                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     

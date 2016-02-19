@@ -18,10 +18,11 @@ class View2Controller: BaseViewController {
     @IBOutlet weak var bt_Continue: UIButton!
     @IBOutlet weak var bt_GetNetCode: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tf_DebtCode.text = "705854975"
+        self.tf_DebtCode.text = ""
         
         // Show button get net code
         UIView.animateWithDuration(2.0, animations: { () -> Void in
@@ -40,6 +41,16 @@ class View2Controller: BaseViewController {
 
     }
     
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("someSelector"), userInfo: nil, repeats: false)
+    }
+    
+    func someSelector() {
+        self.tf_DebtCode.becomeFirstResponder()
+    }
+    
     //Calls this function when the tap is recognized.
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -53,7 +64,16 @@ class View2Controller: BaseViewController {
     
     @IBAction func GetNetCodeClicked(sender: AnyObject) {
 
-        doGetNetCode()
+        if(self.tf_DebtCode.text!.length > 9 || self.tf_DebtCode.text!.length < 9)
+        {
+            let alert = SCLAlertView()
+            alert.hideWhenBackgroundViewIsTapped = true
+            alert.showError("Error", subTitle:"Please enter correct reference number")
+        }
+        else
+        {
+            doGetNetCode()
+        }
     }
     
     @IBAction func ContinueClicked(sender: AnyObject) {
@@ -75,8 +95,9 @@ class View2Controller: BaseViewController {
                 }
                 else
                 {
-                    
-                    TelerikAlert.ShowAlert(self.view, title: "Error", message: "Invalid Netcode", style: "Error")
+                    let alert = SCLAlertView()
+                    alert.hideWhenBackgroundViewIsTapped = true
+                    alert.showError("Error", subTitle:"Invalid Netcode")
 
                     self.bt_GetNetCode.enabled = true
                     //
@@ -86,32 +107,7 @@ class View2Controller: BaseViewController {
             }
         }
  
-        //Get Debtor Information
-//        self.view.showLoading();
-//        
-//        WebApiService.GetDebtorInfo(self.tf_DebtCode.text!) { objectReturn in
-//            
-//            if let temp1 = objectReturn
-//            {
-//                self.view.hideLoading();
-//                
-//                if(temp1.IsSuccess)
-//                {
-//                    
-//                    LocalStore.setRefNumber(temp1.ReferenceNumber)
-//                    LocalStore.setNextPaymentInstallmentAmount(temp1.NextPaymentInstallmentAmount)
-//                    LocalStore.setTotalOutstanding(temp1.TotalOutstanding.description)
-//
-//                    self.performSegueWithIdentifier("GoToBlank", sender: nil)
-//                    
-//                }
-//                else
-//                {
-//                    
-//                }
-//                
-//            }
-//        }
+
     }
     
     func doGetNetCode(){
@@ -131,31 +127,38 @@ class View2Controller: BaseViewController {
                         {
                         
 
-                        
                             if(temp1.IsSuccess)
                             {
-                                TelerikAlert.ShowAlert(self.view, title: "Success", message: temp1.Errors[0].ErrorMessage, style: "Positive")
-                                            
-                                //disable button get net code
-                                self.bt_GetNetCode.backgroundColor = UIColor.grayColor()
-                                self.bt_GetNetCode.enabled = false
-                                            
+                                
+                                let alert = SCLAlertView()
+                                alert.hideWhenBackgroundViewIsTapped = true
+                                alert.showNotice("", subTitle:temp1.Errors[0].ErrorMessage)
+                                
+                                
+                                self.bt_GetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
+                                
                                 //Enable button continue
                                 self.bt_Continue.enabled = true
                                 self.bt_Continue.alpha = 1
                                             
                             
-                               self.tf_Netcode.becomeFirstResponder()
+                                self.tf_Netcode.becomeFirstResponder()
+                                
 
                             }
                             else
                             {
-                                TelerikAlert.ShowAlert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, style: "Error")
+                                let alert = SCLAlertView()
+                                alert.hideWhenBackgroundViewIsTapped = true
+                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                                
                             }
                         }
                         else
                         {
-                            TelerikAlert.ShowAlert(self.view, title: "Error", message: "Server not found.", style: "Error")
+                            let alert = SCLAlertView()
+                            alert.hideWhenBackgroundViewIsTapped = true
+                            alert.showError("Error", subTitle:"Server not found.")
                         }
                     }
                 }
@@ -163,13 +166,13 @@ class View2Controller: BaseViewController {
                 {
                     
                     self.view.hideLoading();
-
-                    TelerikAlert.ShowAlert(self.view, title: "Warning", message: "No connections are available.", style: "Warning")
-
+                    
+                    let alert = SCLAlertView()
+                    alert.hideWhenBackgroundViewIsTapped = true
+                    alert.showWarning("Error", subTitle:"No connections are available.")
+                    
                 }
         })
     }
-
-
 
 }

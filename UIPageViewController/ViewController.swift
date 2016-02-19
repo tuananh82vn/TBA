@@ -25,8 +25,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
 
         
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
-        
-        
+
             
             if(LocalStore.accessIsPinSetup()){
                 self.IsPinSetup = true
@@ -47,7 +46,6 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
 
         self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
 
-        
         self.pageViewController.view.frame = CGRectMake(0, 30, self.view.frame.width, self.view.frame.size.height - 60)
         
         self.addChildViewController(self.pageViewController)

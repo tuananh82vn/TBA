@@ -78,11 +78,31 @@ class SummaryViewController: UIViewController {
                     
                     let enteredText = theTextFields[0].text
                     
-                    //Pay Other Amount
-//                    self?.debtorInfo.PaymentType = 4
                     
+                    var PaymentType = 0
+                    
+                    //        1: Pay In Full
+                    //        2: Pay In 3 Part
+                    //        3: Pay In Installment
+                    //        4: Pay Other Amount
+                    //        5: Pay Next Instalment
+                    
+                    if(LocalStore.accessMakePaymentInFull()){
+                        PaymentType = 1
+                    }
+                    else if(LocalStore.accessMakePaymentIn3Part()){
+                        PaymentType = 2
+                    }
+                    else if(LocalStore.accessMakePaymentInstallment()){
+                        PaymentType = 3
+                    }
+                    else if(LocalStore.accessMakePaymentOtherAmount()){
+                        PaymentType = 4
+                    }
+
+
                     //Pay In Full
-                    self?.debtorInfo.PaymentType = 1
+                    self?.debtorInfo.PaymentType = PaymentType
                     
                     self?.debtorInfo.EmailAddress = enteredText!
                     
@@ -103,37 +123,25 @@ class SummaryViewController: UIViewController {
                             if(temp1.IsSuccess)
                             {
                                 // create the alert
-                                let alert = UIAlertController(title: "Done", message: "Email sent", preferredStyle: UIAlertControllerStyle.Alert)
-                                
-                                // add an action (button)
-                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                                
-                                // show the alert
-                                self!.presentViewController(alert, animated: true, completion: nil)
+                                let alert = SCLAlertView()
+                                alert.hideWhenBackgroundViewIsTapped = true
+                                alert.showInfo("Error", subTitle:"Email sent.")
                             }
                             else
                             {
                                 
                                 // create the alert
-                                let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-                                
-                                // add an action (button)
-                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                                
-                                // show the alert
-                                self!.presentViewController(alert, animated: true, completion: nil)
+                                let alert = SCLAlertView()
+                                alert.hideWhenBackgroundViewIsTapped = true
+                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
                             }
                         }
                         else
                         {
                             // create the alert
-                            let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                            
-                            // add an action (button)
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                            
-                            // show the alert
-                            self!.presentViewController(alert, animated: true, completion: nil)
+                            let alert = SCLAlertView()
+                            alert.hideWhenBackgroundViewIsTapped = true
+                            alert.showError("Error", subTitle:"Server not found.")
                         }
                     }
                 }
@@ -144,14 +152,6 @@ class SummaryViewController: UIViewController {
             animated: true,
             completion: nil)
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -72,12 +72,10 @@ class VerifyCoDebtorViewController: UIViewController {
                 }
                 else
                 {
-                    
-                    TelerikAlert.ShowAlert(self.view, title: "Error", message: "Invalid Netcode", style: "Error")
-                    
-                    self.btGetNetCode.enabled = true
-                    //
-                    self.btGetNetCode.backgroundColor = UIColor.init(hex: "#30a742")
+
+                    let alert = SCLAlertView()
+                    alert.hideWhenBackgroundViewIsTapped = true
+                    alert.showError("Error", subTitle:"Invalid Netcode.")
                 }
                 
             }
@@ -103,11 +101,13 @@ class VerifyCoDebtorViewController: UIViewController {
 
                         if(temp1.IsSuccess)
                         {
-                            TelerikAlert.ShowAlert(self.view, title: "Success", message: temp1.Errors[0].ErrorMessage, style: "Positive")
+                            let alert = SCLAlertView()
+                            alert.hideWhenBackgroundViewIsTapped = true
+                            alert.showInfo("", subTitle:temp1.Errors[0].ErrorMessage)
                             
-                            //disable button get net code
-                            self.btGetNetCode.backgroundColor = UIColor.grayColor()
-                            self.btGetNetCode.enabled = false
+
+                            self.btGetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
+
                             
                             //Enable button continue
                             self.bt_Continue.enabled = true
@@ -119,12 +119,20 @@ class VerifyCoDebtorViewController: UIViewController {
                         }
                         else
                         {
-                            TelerikAlert.ShowAlert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, style: "Error")
+                            
+                            let alert = SCLAlertView()
+                            alert.hideWhenBackgroundViewIsTapped = true
+                            alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                            
                         }
                     }
                     else
                     {
-                        TelerikAlert.ShowAlert(self.view, title: "Error", message: "Server not found.", style: "Error")
+                        
+                        let alert = SCLAlertView()
+                        alert.hideWhenBackgroundViewIsTapped = true
+                        alert.showError("Error", subTitle:"Server not found.")
+                        
                     }
                 }
             }
@@ -133,8 +141,9 @@ class VerifyCoDebtorViewController: UIViewController {
                 
                 self.view.hideLoading();
                 
-                TelerikAlert.ShowAlert(self.view, title: "Warning", message: "No connections are available.", style: "Warning")
-                
+                let alert = SCLAlertView()
+                alert.hideWhenBackgroundViewIsTapped = true
+                alert.showWarning("Warning", subTitle:"No Internet connection.")
             }
         })
     }

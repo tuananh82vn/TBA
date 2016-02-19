@@ -27,7 +27,7 @@ struct TelerikAlert {
         alert.style.titleColor = UIColor.whiteColor()
         alert.style.messageColor = UIColor.whiteColor()
         alert.style.cornerRadius = 0
-        alert.style.showAnimation = TKAlertAnimation.SlideFromTop
+        alert.style.showAnimation = TKAlertAnimation.SlideFromLeft
         alert.style.dismissAnimation = TKAlertAnimation.SlideFromTop
         alert.style.backgroundStyle = TKAlertBackgroundStyle.None
         

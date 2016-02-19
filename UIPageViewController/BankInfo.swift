@@ -17,5 +17,7 @@ class BankInfo: NSObject {
     var Bsb1 = ""
     var Bsb2 = ""
     var AccountNumber = ""
+    var DebtorPaymentInstallment = ""
+
     
 }

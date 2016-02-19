@@ -15,11 +15,27 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
     let dataSource = TKDataFormEntityDataSource()
     var paymentReturn = PaymentReturnModel()
     
+    var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
+
+    
     let bankInfo = BankInfo()
     
     var dataForm1 = TKDataForm()
     
     var isFormValidate : Bool = true
+    
+    var validate1 : Bool = true
+    
+    var validate2 : Bool = true
+    
+    var validate3 : Bool = true
+    
+    var validate4 : Bool = true
+    
+    var validate5 : Bool = true
+    
+    var validate6 : Bool = true
+    
 
 
     override func viewDidLoad() {
@@ -52,7 +68,6 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         dataSource["Bsb1"].hintText = "Bsb1"
         dataSource["Bsb1"].editorClass = TKDataFormPhoneEditor.self
-        dataSource["Bsb1"].errorMessage = "Please input Bsb 1"
         dataSource["Bsb1"].index = 2
         
         dataSource["Bsb2"].hintText = "Bsb2"
@@ -63,6 +78,9 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource["AccountNumber"].hintText = "Account Number"
         dataSource["AccountNumber"].editorClass = TKDataFormPhoneEditor.self
         dataSource["AccountNumber"].index = 4
+        
+        dataSource["DebtorPaymentInstallment"].hidden = true
+
 
         
         dataForm1 = TKDataForm(frame: self.subView.bounds)
@@ -102,9 +120,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
-        self.isFormValidate = true
 
-        
         if (propery.name == "Amount") {
             
             let value = propery.valueCandidate.description
@@ -112,7 +128,8 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
             if (value.length <= 0)
             {
                 dataSource["Amount"].errorMessage = "Please input amount"
-                self.isFormValidate = false
+                self.validate1 = false
+                return self.validate1
             }
             
             let floatValue = value.floatValue
@@ -120,8 +137,11 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
             if (floatValue <= 0)
             {
                 dataSource["Amount"].errorMessage = "Amount can not less than or equal 0"
-                self.isFormValidate = false
+                self.validate1 = false
+                return self.validate1
             }
+            
+            self.validate1 = true
             
         }
         else
@@ -131,9 +151,14 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 
                 if (value.length <= 0)
                 {
-                    dataSource["AccountName"].errorMessage = "Please input Account Name"
-                    self.isFormValidate = false
+                    dataSource["AccountName"].errorMessage = "Please enter 'Account Name'"
+                    self.validate2 = false
+                    return self.validate2
                 }
+                
+                
+                
+                self.validate2 = true
                 
             }
         else
@@ -143,14 +168,19 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 
                 if (value.length <= 0)
                 {
-                    self.isFormValidate = false
+                    dataSource["Bsb1"].errorMessage = "Please input Bsb 1"
+                    self.validate3 = false
+                    return self.validate3
                 }
                 else
-                    if (value.length > 3)
+                    if (value.length > 3 || value.length < 3)
                     {
-                        dataSource["Bsb1"].errorMessage = "Bsb 1 is maximum 3 number in lenght"
-                        self.isFormValidate = false
+                        dataSource["Bsb1"].errorMessage = "The 'BSB' number 1 is invalid"
+                        self.validate3 = false
+                        return self.validate3
                     }
+                
+                self.validate3 = true
                 
             }
             else
@@ -160,14 +190,20 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                     
                     if (value.length <= 0)
                     {
-                        self.isFormValidate = false
+                        
+                        dataSource["Bsb2"].errorMessage = "Please input Bsb 2"
+                        self.validate4 = false
+                        return self.validate4
                     }
                     else
-                        if (value.length > 3)
+                        if (value.length > 3 || value.length < 3)
                         {
-                            dataSource["Bsb2"].errorMessage = "Bsb 2 is maximum 3 number in lenght"
-                            self.isFormValidate = false
+                            dataSource["Bsb2"].errorMessage = "The 'BSB' number 2 is invalid"
+                            self.validate4 = false
+                            return self.validate4
                         }
+                    
+                    self.validate4 = true
                 }
                 else
                     if (propery.name == "AccountNumber") {
@@ -176,19 +212,31 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                         
                         if (value.length <= 0)
                         {
-                            dataSource["AccountNumber"].errorMessage = "Please input Account Number"
-                            self.isFormValidate = false
+                            dataSource["AccountNumber"].errorMessage = "Please enter 'Account Number'"
+                            self.validate5 = false
+                            return self.validate5
                         }
+                        else
+                            if (value.length > 15 || value.length < 5)
+                            {
+                                dataSource["AccountNumber"].errorMessage = "'Account Number' should be from 5 to 15 numeric characters in lenght"
+                                self.validate5 = false
+                                return self.validate5
+                            }
+                        
+                        self.validate5 = true
                         
                     }
 
-        return isFormValidate
+        return true
    }
     
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
         
         self.dataForm1.commit()
+        
+        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5
         
         if(!self.isFormValidate){
             
@@ -206,6 +254,24 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         bankObject.Bsb2             = self.dataSource["Bsb2"].valueCandidate as! String
 
 
+        if(LocalStore.accessMakePaymentIn3Part() || LocalStore.accessMakePaymentInstallment()) {
+            
+            let jsonCompatibleArray = DebtorPaymentInstallmentList.map { model in
+                return [
+                    "PaymentDate":model.PaymentDate,
+                    "Amount":model.Amount
+                ]
+            }
+            
+            let data = try?  NSJSONSerialization.dataWithJSONObject(jsonCompatibleArray, options: NSJSONWritingOptions(rawValue:0))
+            
+            if let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            {
+                bankObject.DebtorPaymentInstallment = jsonString as String
+            }
+            
+        }
+        
         var PaymentType = 0
         
         //        1: Pay In Full
@@ -245,25 +311,17 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 {
                     
                     // create the alert
-                    let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    let alert = SCLAlertView()
+                    alert.hideWhenBackgroundViewIsTapped = true
+                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
                 }
             }
             else
             {
                 // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                
-                // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = SCLAlertView()
+                alert.hideWhenBackgroundViewIsTapped = true
+                alert.showError("Error", subTitle:"Server not found.")
             }
         }
         

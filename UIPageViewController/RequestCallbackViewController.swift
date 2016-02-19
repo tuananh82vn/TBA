@@ -205,25 +205,17 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                     {
                         
                         // create the alert
-                        let alert = UIAlertController(title: "Error", message: temp1.Errors[0].ErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-                        
-                        // add an action (button)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                        
-                        // show the alert
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        let alert = SCLAlertView()
+                        alert.hideWhenBackgroundViewIsTapped = true
+                        alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
                     }
                 }
                 else
                 {
                     // create the alert
-                    let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    let alert = SCLAlertView()
+                    alert.hideWhenBackgroundViewIsTapped = true
+                    alert.showError("Error", subTitle:"Server not found.")
                 }
             }
 

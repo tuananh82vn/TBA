@@ -66,16 +66,13 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
 //    }
     
     @IBAction func btForgotten_Clicked(sender: AnyObject) {
-                
         
 
-            
         
-        let optionMenu = UIAlertController(title: nil, message: "The app will be reseted , you will need to setup and verify it again. Continue ?", preferredStyle: .Alert)
-        
-        let logoutAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            
+        let alert = SCLAlertView()
+        alert.hideWhenBackgroundViewIsTapped = true
+
+        alert.addButton("Yes"){
             //Reset Setting
             LocalStore.setIsPinSetup(false);
             LocalStore.setIsCoBorrowersSelected(false)
@@ -90,22 +87,11 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
             let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
             
             self.presentViewController(vc, animated: true, completion: nil)
-        })
-        
-        let cancelAction = UIAlertAction(title: "No", style: .Cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-
+        }
+        alert.addButton("No") {
             self.tf_Pin0.becomeFirstResponder()
-
-        })
-        
-        
-        optionMenu.addAction(logoutAction)
-        optionMenu.addAction(cancelAction)
-        
-        // 5
-        self.presentViewController(optionMenu, animated: true, completion: nil)
-
+        }
+        alert.showWarning("", subTitle: "The app will be reseted , you will need to setup and verify it again. Continue ?")
         
         
     }
@@ -125,14 +111,12 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
             else
             {
                 
-                // create the alert
-                let alert = UIAlertController(title: "Incorrect PIN", message: "Your PIN is incorrect. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+
                 
-                // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                let alert = SCLAlertView()
+                alert.hideWhenBackgroundViewIsTapped = true
+                alert.showError("Error", subTitle:"Your PIN is incorrect. Please try again.")
                 
-                // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
                 
                 reset()
             }
