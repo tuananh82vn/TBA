@@ -80,7 +80,7 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
             
                 self.paymentTrackerRecord = self.ScheduleList
                 
-                if(self.paymentTrackerRecord.count == 0){
+                if(self.ScheduleList.count == 0){
                     self.tableView.hidden = true
                 }
                 else
@@ -93,7 +93,7 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
             
                 self.paymentTrackerRecord = self.HistoryList
                 
-                if(self.paymentTrackerRecord.count == 0){
+                if(self.HistoryList.count == 0){
                     self.tableView.hidden = true
                 }
                 else

@@ -16,9 +16,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     var paymentTrackerRecord = [PaymentTrackerRecordModel]()
     
     var HistoryList = [PaymentTrackerRecordModel]()
-    
-    var ScheduleList = [PaymentTrackerRecordModel]()
-    
+        
     var selectedIndex = -1
     
     var TotalDefer = 0
@@ -27,14 +25,14 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     
     var TotalNewUsed = 0
 
+    @IBOutlet weak var lb_Message: UILabel!
     
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        
-        
+
         listView = TKListView(frame: self.subView.bounds)
         
         listView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
@@ -65,8 +63,6 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                 if(temp1.IsSuccess)
                 {
                     self.HistoryList = temp1.HistoryList
-
-                    self.ScheduleList = temp1.ScheduleList
                     
                     self.TotalDefer = temp1.TotalDefer
                     
@@ -74,7 +70,21 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                     
                     self.TotalNewUsed = temp1.TotalUsedDefer
 
-                    self.paymentTrackerRecord = self.ScheduleList
+                    self.paymentTrackerRecord = self.HistoryList
+                    
+                    if(self.paymentTrackerRecord.count > 0)
+                    {
+                        
+                        self.lb_Message.hidden = true
+                        self.btDefer.hidden = true
+                        //self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
+                    }
+                    else
+                    {
+                        self.btDefer.hidden = false
+
+                        self.lb_Message.hidden = false
+                    }
                     
                     self.listView.reloadData()
                 }
@@ -101,32 +111,6 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
         
     }
     
-    @IBAction func SegmentButton_Clicked(sender: AnyObject) {
-        
-        switch segmentedControl.selectedSegmentIndex
-        {
-        case 0:
-            
-            self.paymentTrackerRecord = self.ScheduleList
-            
-            self.listView.allowsCellSwipe = true
-
-            self.listView.reloadData()
-            
-        case 1:
-            
-            self.paymentTrackerRecord = self.HistoryList
-            
-            self.listView.allowsCellSwipe = false
-            
-            self.listView.reloadData()
-
-        default:
-            
-            break;
-        }
-        
-    }
     
     func btDefer_Clicked() {
         
@@ -134,15 +118,29 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             
             if(self.paymentTrackerRecord[self.selectedIndex].Defer == "")
             {
+                if(self.TotalDefer == self.TotalNewUsed){
+                    
+                    JLToast.makeText("No more deferred alow.", duration: JLToastDelay.ShortDelay).show()
 
-                self.TotalNewUsed = self.TotalNewUsed + 1
+                }
+                else
+                {
+                    
+                    self.TotalNewUsed = self.TotalNewUsed + 1
                 
-                self.paymentTrackerRecord[self.selectedIndex].Defer = "Deferred"
+                    self.paymentTrackerRecord[self.selectedIndex].Defer = "Deferred"
             
-                self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
-     
-                self.listView.reloadData()
+                    self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
+                    
+                    self.btDefer.hidden = false
+
+                    self.listView.reloadData()
+                }
                 
+            }
+            else
+            {
+                JLToast.makeText("This payment is already deferred.", duration: JLToastDelay.ShortDelay).show()
             }
         }
         
@@ -243,11 +241,12 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     
 
     
-    @IBAction func btDefer_Clicked(sender: UIButton) {
+    @IBAction func btDefer_Clicked(sender: UIButton)
+    {
         
-        
-        for payment in self.paymentTrackerRecord
-        {
+        if(self.paymentTrackerRecord.count > 0){
+            for payment in self.paymentTrackerRecord
+            {
         
             if(payment.Defer == "Deferred")
             {
@@ -290,7 +289,19 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                 }
             }
             
+            }
         }
+        else{
+        
+            SetPayment.SetPayment(4)
+            
+            self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+            
+        }
+        
+        
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

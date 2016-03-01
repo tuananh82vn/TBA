@@ -55,8 +55,15 @@ class SelectDebtorController: UIViewController {
 
     @IBAction func bt_ContinueClicked(sender: AnyObject) {
         
-        self.performSegueWithIdentifier("GoToVerify", sender: nil)
+        if(self.debtorList[self.selectDebtor].Mobile == "No Number")
+        {
+            self.performSegueWithIdentifier("GoToVerifyDetail", sender: nil)
 
+        }
+        else
+        {
+            self.performSegueWithIdentifier("GoToVerify", sender: nil)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -64,6 +71,12 @@ class SelectDebtorController: UIViewController {
             
             let controller = segue.destinationViewController as! VerifyCoDebtorViewController
             controller.selectedDebtor = self.debtorList[self.selectDebtor]
+        }
+        else
+            if segue.identifier == "GoToVerifyDetail" {
+                
+                let controller = segue.destinationViewController as! VerifyDetailCoDebtorViewController
+                controller.selectedDebtor = self.debtorList[self.selectDebtor]
         }
     }
     

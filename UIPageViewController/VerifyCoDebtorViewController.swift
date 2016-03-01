@@ -32,6 +32,9 @@ class VerifyCoDebtorViewController: UIViewController {
             self.bt_Continue.alpha = 0
             self.bt_Continue.enabled = false
         })
+        
+        self.addDoneButtonOnKeyboard(self.tf_NetCode)
+        
 
         // Do any additional setup after loading the view.
     }
@@ -65,10 +68,22 @@ class VerifyCoDebtorViewController: UIViewController {
                 if(temp1.IsSuccess)
                 {
                     LocalStore.setIsCoBorrowersSelected(true)
+                    
                     LocalStore.setDebtorCodeSelected(self.selectedDebtor.DebtorCode)
+                    
+                    if(self.selectedDebtor.DebtorCode == LocalStore.accessArrangementDebtor())
+                    {
+                        LocalStore.setIsArrangementUnderThisDebtor(true)
+                    }
+                    else
+                    {
+                        LocalStore.setIsArrangementUnderThisDebtor(false)
+
+                    }
+                    
                     LocalStore.setDRCode(self.selectedDebtor.DebtorCode)
 
-                    self.performSegueWithIdentifier("GoToBlank", sender: nil)
+                    self.performSegueWithIdentifier("GoToSetupPin", sender: nil)
                 }
                 else
                 {
@@ -148,5 +163,29 @@ class VerifyCoDebtorViewController: UIViewController {
         })
     }
 
-    
+    func addDoneButtonOnKeyboard(view: UIView?)
+    {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        doneToolbar.barStyle = UIBarStyle.Default
+        doneToolbar.translucent = false
+        doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        
+        var items = [AnyObject]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items as? [UIBarButtonItem]
+        
+        
+        doneToolbar.sizeToFit()
+        
+        if let accessorizedView = view as? UITextField {
+            accessorizedView.inputAccessoryView = doneToolbar
+        }
+        
+    }
 }

@@ -148,6 +148,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
             let dateEditor = editor as! TKDataFormDatePickerEditor
             dateEditor.editorValueLabel.layer.borderColor = UIColor(red:0.784, green:0.780, blue:0.800, alpha:1.00).CGColor
         }
+        
         editor.editor.layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).CGColor
     }
     

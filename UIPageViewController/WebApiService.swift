@@ -21,6 +21,7 @@ struct WebApiService {
         case SendFeedback
         case ArrangeDetail
         case DeferPayment
+        case GetDebtorAdditionalInfor
 
         var description: String {
             switch self {
@@ -29,6 +30,8 @@ struct WebApiService {
                 case .GetNetCodeVerify: return "/Api/GetNetCodeVerify"
                 case .VerifyNetCode: return "/Api/VerifyNetCode"
                 case .GetDebtorInfo: return "/Api/GetDebtorInfo"
+                case .GetDebtorAdditionalInfor: return "/Api/GetDebtorAdditionalInfor"
+
                 case .ValidateCreditCard: return "/Api/ValidateCreditCard"
                 case .MakeCreditCardPayment: return "/Api/MakeCreditCardPayment"
                 case .MakeDebitPayment: return "/Api/MakeDebitPayment"
@@ -425,6 +428,10 @@ struct WebApiService {
                     JsonReturn.MerchantId = MerchantId
                 }
                 
+                if let ArrangementDebtor = jsonObject["ArrangementDebtor"].string {
+                    JsonReturn.ArrangementDebtor = ArrangementDebtor
+                }
+                
                 if let IsExistingArrangement = jsonObject["IsExistingArrangement"].bool {
                     JsonReturn.IsExistingArrangement = IsExistingArrangement
                 }
@@ -500,6 +507,7 @@ struct WebApiService {
                     JsonReturn.coDriverLicenses = coDriverLicenseNumberList
                 }
                 
+                
                 if(JsonReturn.IsCoBorrowers){
                     
                     for var index = 0; index < JsonReturn.coDebtorCode.count; ++index {
@@ -513,6 +521,7 @@ struct WebApiService {
                         if(coDebtor.Mobile == "")
                         {
                             coDebtor.Mobile = "No Number"
+                            coDebtor.MarkMobile = "No Number"
                         }
                         else{
                             
@@ -554,6 +563,63 @@ struct WebApiService {
             
         }
     }
+    
+    static func GetDebtorAdditonalInfo(ReferenceNumber: String, DebtorCode : String, response : (objectReturn : DebtorInfo?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorAdditionalInfor.description
+        
+        let JsonReturn = DebtorInfo()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber,
+                "DebtorCode" : DebtorCode
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                }
+                
+                if let DateOfBirths = jsonObject["DateOfBirths"].string {
+                    
+                    JsonReturn.DateOfBirths = DateOfBirths
+                }
+                
+                if let PostCode = jsonObject["PostCodes"].string {
+                    
+                    JsonReturn.PostCode = PostCode
+                }
+                
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
     
     static func GetArrangmentDetail(ReferenceNumber: String, response : (objectReturn : ArrangeDetails?) -> ()) {
         

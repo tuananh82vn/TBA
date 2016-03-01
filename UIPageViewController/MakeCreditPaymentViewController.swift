@@ -53,7 +53,9 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource.sourceObject = cardInfo
         
         dataSource["Amount"].hintText = "Amount To Pay"
-        dataSource["Amount"].editorClass = TKDataFormNumberEditor.self
+        dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
+        
+//        dataSource["Amount"].editorClass = TKDataFormNumberEditor.self
         
         if(LocalStore.accessMakePaymentInFull()){
             dataSource["Amount"].readOnly = true
@@ -162,6 +164,41 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
 
             }
             
+            let whitespace = NSCharacterSet.whitespaceCharacterSet()
+            
+            let range = value.description.rangeOfCharacterFromSet(whitespace)
+            
+            // range will be nil if no whitespace is found
+            if let test = range {
+                
+                let fullNameArr = value.description.characters.split{$0 == " "}.map(String.init)
+                
+                for (var index = 0; index < fullNameArr.count; index++)
+                {
+                    var fistname = fullNameArr[index] // First
+                    
+                    let decimalCharacters = NSCharacterSet.decimalDigitCharacterSet()
+                    
+                    let decimalRange1 = fistname.rangeOfCharacterFromSet(decimalCharacters, options: NSStringCompareOptions(), range: nil)
+                    
+                    if decimalRange1 != nil {
+                        
+                        dataSource["NameOnCard"].errorMessage = "Invalid 'Name On Card'"
+                        self.validate2 = false
+                        return self.validate2
+                    }
+                    
+                }
+                
+            }
+            else {
+                
+                dataSource["NameOnCard"].errorMessage = "Invalid 'Name On Card'"
+                self.validate2 = false
+                return self.validate2
+            }
+
+            
             self.validate2 = true
 
 
@@ -210,8 +247,34 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
                 return self.validate4
             }
             
+            if (value.length < 3 || value.length > 3 )
+            {
+                dataSource["Cvv"].errorMessage = "Invalid CVV"
+
+                self.validate4 = false
+                return self.validate4
+            }
+            
             self.validate4 = true
             
+        }
+        else
+            if (propery.name == "ExpiryDate") {
+                
+                let value = propery.valueCandidate as! NSDate
+                
+
+                let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+                
+                if(value.isLessThanDate(firstDate)){
+                    dataSource["ExpiryDate"].errorMessage = "Expire month must be greater than this month"
+                    self.validate5 = false
+                    return self.validate5
+                }
+
+                
+                self.validate5 = true
+                
         }
         return true
     }
@@ -221,7 +284,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         self.dataForm1.commit()
 
-        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4
+        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5
         
         if(!self.isFormValidate){
             

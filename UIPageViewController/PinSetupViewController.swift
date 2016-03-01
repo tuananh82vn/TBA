@@ -42,6 +42,8 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
         tf_Pin0.addTarget(self, action: "tf_Pin0DidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
         InputFirstPin = true
+        
+        self.addDoneButtonOnKeyboard(tf_Pin0)
 
         // Do any additional setup after loading the view.
     }
@@ -227,6 +229,32 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func addDoneButtonOnKeyboard(view: UIView?)
+    {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        doneToolbar.barStyle = UIBarStyle.Default
+        doneToolbar.translucent = false
+        doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        
+        var items = [AnyObject]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items as? [UIBarButtonItem]
+        
+        
+        doneToolbar.sizeToFit()
+        
+        if let accessorizedView = view as? UITextField {
+            accessorizedView.inputAccessoryView = doneToolbar
+        }
+        
     }
     
 

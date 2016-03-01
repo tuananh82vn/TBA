@@ -3,6 +3,10 @@ import UIKit
 
 struct LocalStore {
     
+    private static let ArrangementDebtor = "ArrangementDebtor";
+
+    private static let IsArrangementUnderThisDebtor = "IsArrangementUnderThisDebtor";
+
     private static let MakePaymentInFull = "MakePaymentInFull"
     
     private static let MakePaymentIn3Part = "MakePaymentIn3Part";
@@ -45,8 +49,6 @@ struct LocalStore {
     
     private static let IsCoBorrowersSelected = "IsCoBorrowersSelected";
     
-    private static let IsArrangementUnderThisDebtor = "IsArrangementUnderThisDebtor";
-
     private static let IsAllowMonthlyInstallment = "IsAllowMonthlyInstallment";
     
     private static let DebtorCodeSelected = "DebtorCodeSelected";
@@ -128,6 +130,21 @@ struct LocalStore {
     }
     
     //----------------------------------------------------------------------------//
+    static func setIsArrangementUnderThisDebtor(token: Bool) {
+        userDefaults.setObject(token, forKey: IsArrangementUnderThisDebtor)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteIsArrangementUnderThisDebtor() {
+        userDefaults.removeObjectForKey(IsArrangementUnderThisDebtor)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsArrangementUnderThisDebtor() -> Bool {
+        return userDefaults.boolForKey(IsArrangementUnderThisDebtor)
+    }
+    
+    //----------------------------------------------------------------------------//
     static func setMakePaymentInstallment(token: Bool) {
         userDefaults.setObject(token, forKey: MakePaymentInstallment)
         userDefaults.synchronize()
@@ -172,7 +189,20 @@ struct LocalStore {
         return userDefaults.boolForKey(MakePaymentInFull)
     }
     
+    //----------------------------------------------------------------------------//
+    static func setArrangementDebtor(token: String) {
+        userDefaults.setObject(token, forKey: ArrangementDebtor)
+        userDefaults.synchronize()
+    }
     
+    static func deleteArrangementDebtor() {
+        userDefaults.removeObjectForKey(ArrangementDebtor)
+        userDefaults.synchronize()
+    }
+    
+    static func accessArrangementDebtor() -> String {
+        return userDefaults.stringForKey(ArrangementDebtor)!
+    }
     //----------------------------------------------------------------------------//
     static func setDeviceName(token: String) {
         userDefaults.setObject(token, forKey: DeviceName)
@@ -414,21 +444,7 @@ struct LocalStore {
         return userDefaults.boolForKey(IsCoBorrowersSelected)
     }
     
-    //----------------------------------------------------------------------------//
     
-    static func setIsArrangementUnderThisDebtor(token: Bool) {
-        userDefaults.setObject(token, forKey: IsArrangementUnderThisDebtor)
-        userDefaults.synchronize()
-    }
-    
-    static func deleteIsArrangementUnderThisDebtor() {
-        userDefaults.removeObjectForKey(IsArrangementUnderThisDebtor)
-        userDefaults.synchronize()
-    }
-    
-    static func accessIsArrangementUnderThisDebtor() -> Bool? {
-        return userDefaults.boolForKey(IsArrangementUnderThisDebtor)
-    }
     
     //----------------------------------------------------------------------------//
     

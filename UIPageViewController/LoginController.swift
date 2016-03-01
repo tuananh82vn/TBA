@@ -81,29 +81,17 @@ class LoginController: UIViewController {
                     LocalStore.setThreePartDateDurationDays(temp1.client.ThreePartDateDurationDays)
 
                     self.reset()
-                    if(temp1.IsCoBorrowers){
-                        if(!LocalStore.accessIsCoBorrowersSelected()!){
-                            
-                            self.debtorList = temp1.coDebtor
-                            
-                            self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
-                        }
-                        else
-                        {
-                            
-                            let DrCode = LocalStore.accessDebtorCodeSelected()!
-                            LocalStore.setDRCode(DrCode)
 
-                            self.performSegueWithIdentifier("GoToBlank", sender: nil)
-                        }
+                    if let DrCode = LocalStore.accessDebtorCodeSelected()
+                    {
                     }
                     else
                     {
-                        
                         LocalStore.setDRCode(temp1.DRCode)
-
-                        self.performSegueWithIdentifier("GoToBlank", sender: nil)
                     }
+
+                    self.performSegueWithIdentifier("GoToBlank", sender: nil)
+
                     
                 }
                 else

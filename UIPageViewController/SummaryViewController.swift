@@ -76,8 +76,11 @@ class SummaryViewController: UIViewController {
                     
                     let theTextFields = textFields as [UITextField]
                     
-                    let enteredText = theTextFields[0].text
+                    if let enteredText = theTextFields[0].text
+                    {
                     
+                    if(enteredText.isEmailAddress())
+                    {
                     
                     var PaymentType = 0
                     
@@ -104,7 +107,7 @@ class SummaryViewController: UIViewController {
                     //Pay In Full
                     self?.debtorInfo.PaymentType = PaymentType
                     
-                    self?.debtorInfo.EmailAddress = enteredText!
+                    self?.debtorInfo.EmailAddress = enteredText
                     
                     self?.debtorInfo.CurrentPaymentId = self!.paymentReturn.PaymentId
                     
@@ -125,7 +128,7 @@ class SummaryViewController: UIViewController {
                                 // create the alert
                                 let alert = SCLAlertView()
                                 alert.hideWhenBackgroundViewIsTapped = true
-                                alert.showInfo("Error", subTitle:"Email sent.")
+                                alert.showInfo("Error", subTitle:"Invoice has been sent to " + enteredText)
                             }
                             else
                             {
@@ -144,6 +147,16 @@ class SummaryViewController: UIViewController {
                             alert.showError("Error", subTitle:"Server not found.")
                         }
                     }
+                    }
+                    else
+                    {
+                        // create the alert
+                        let alert = SCLAlertView()
+                        alert.hideWhenBackgroundViewIsTapped = true
+                        alert.showError("Error", subTitle: enteredText + " is not a valid email.")
+                    }
+                }
+                    
                 }
             })
         

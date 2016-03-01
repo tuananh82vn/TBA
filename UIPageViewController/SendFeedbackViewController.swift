@@ -23,21 +23,28 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         // Do any additional setup after loading the view.
         
         
-        let toolbar = UIToolbar()
-        toolbar.bounds = CGRectMake(0, 0, 320, 50)
-        toolbar.sizeToFit()
-        toolbar.barStyle = UIBarStyle.Default
-        toolbar.items = [
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: nil, action: "handleDone:")
-        ]
+//        let toolbar = UIToolbar()
+//        toolbar.bounds = CGRectMake(0, 0, 320, 50)
+//        toolbar.sizeToFit()
+//        toolbar.barStyle = UIBarStyle.Default
+//        toolbar.items = [
+//            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+//            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: nil, action: "handleDone:")
+//        ]
+//        
+//        self.tf_Subject.inputAccessoryView = toolbar
+//
+//        self.tf_Content.inputAccessoryView = toolbar
         
-        self.tf_Content.inputAccessoryView = toolbar
+        self.addDoneButtonOnKeyboard(tf_Subject)
+        self.addDoneButtonOnKeyboard(tf_Content)
+        
+        tf_Subject.becomeFirstResponder()
     }
     
-    func handleDone(sender:UIButton) {
-        self.tf_Content.resignFirstResponder()
-    }
+//    func handleDone(sender:UIButton) {
+//        self.tf_Content.resignFirstResponder()
+//    }
     
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -50,11 +57,12 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         {
             tf_Content.becomeFirstResponder()
         }
-        
+
         return true
     }
 
-    
+
+
     func DoSend(){
         
         self.view.showLoading();
@@ -115,6 +123,36 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
             controller.message = "Your feedback has been sent successfully."
             
         }
+    }
+    
+    func addDoneButtonOnKeyboard(view: UIView?)
+    {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        doneToolbar.barStyle = UIBarStyle.Default
+        doneToolbar.translucent = false
+        doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        
+        var items = [AnyObject]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items as? [UIBarButtonItem]
+        
+        
+        doneToolbar.sizeToFit()
+        
+        if let accessorizedView = view as? UITextField {
+            accessorizedView.inputAccessoryView = doneToolbar
+        }
+        
+        if let accessorizedView = view as? UITextView {
+            accessorizedView.inputAccessoryView = doneToolbar
+        }
+        
     }
 
 }

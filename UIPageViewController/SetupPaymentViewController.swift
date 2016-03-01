@@ -54,9 +54,10 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         InitData()
         
 
-        
         dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
+        
         dataForm1.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
+        
         dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
         
         self.subView.addSubview(dataForm1)
@@ -318,7 +319,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
         
         editor.style.textLabelOffset = UIOffsetMake(10, 0)
+        
         editor.style.separatorLeadingSpace = 40
+        
         editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
         
         if ["FirstDate", "SecondDate", "ThirdDate"].contains(property.name) {

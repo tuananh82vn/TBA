@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import PhoneNumberKit
+
 
 class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
 
@@ -48,15 +50,15 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         
         dataSource["Name"].hintText = "Name"
         dataSource["Name"].errorMessage = "Please fill in your name"
-        dataSource["Name"].image = UIImage(named: "guest-name")
+//        dataSource["Name"].image = UIImage(named: "guest-name")
         
         dataSource["Phone"].hintText = "Number"
         dataSource["Phone"].errorMessage = "Please fill in your number"
-        dataSource["Phone"].image = UIImage(named: "phone")
+//        dataSource["Phone"].image = UIImage(named: "phone")
         dataSource["Phone"].editorClass = TKDataFormPhoneEditor.self
         
 
-        dataSource["Date"].image = UIImage(named: "calendar-1")
+//        dataSource["Date"].image = UIImage(named: "calendar-1")
         dataSource["Date"].hintText = "Date"
         
 
@@ -64,20 +66,20 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         TimeFormatter.dateFormat = "h:mm a";
         
 
-        dataSource["TimeFrom"].image = UIImage(named: "time")
+//        dataSource["TimeFrom"].image = UIImage(named: "time")
         dataSource["TimeFrom"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["TimeFrom"].hintText = "From"
         dataSource["TimeFrom"].formatter = TimeFormatter
 
         
-        dataSource["TimeTo"].image = UIImage(named: "time")
+//        dataSource["TimeTo"].image = UIImage(named: "time")
         dataSource["TimeTo"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["TimeTo"].hintText = "To"
         dataSource["TimeTo"].formatter = TimeFormatter
 
 
         dataSource["Notes"].hintText = "Notes"
-        dataSource["Notes"].image = UIImage(named: "notes")
+//        dataSource["Notes"].image = UIImage(named: "notes")
         
         
         dataForm1 = TKDataForm(frame: self.subView.bounds)
@@ -139,6 +141,15 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                 self.validate2 = false
                 return self.validate2
             }
+            
+            if(!value.isPhoneNumber()){
+                
+                dataSource["Phone"].errorMessage = "Invalid Phone Number"
+
+                self.validate2 = false
+                return self.validate2
+            }
+
             self.validate2 = true
         }
         

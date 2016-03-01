@@ -19,7 +19,6 @@ class PaymentMethodViewController: UIViewController {
     
     var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
 
-    
     @IBOutlet weak var bt_Method: UIButton!
     
     override func viewDidLoad() {
@@ -33,19 +32,19 @@ class PaymentMethodViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func bt_MethodSelected(sender: AnyObject) {
-        
-        ActionSheetStringPicker.showPickerWithTitle("Select", rows: paymentList as [AnyObject] , initialSelection: 0, doneBlock: {
-            picker, value, index in
-            
-            self.selectMethod = value
-            self.bt_Method.setTitle((index as! String), forState: .Normal)
-            
-            return
-            
-            }, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
-        
-    }
+//    @IBAction func bt_MethodSelected(sender: AnyObject) {
+//        
+//        ActionSheetStringPicker.showPickerWithTitle("Select", rows: paymentList as [AnyObject] , initialSelection: 0, doneBlock: {
+//            picker, value, index in
+//            
+//            self.selectMethod = value
+//            self.bt_Method.setTitle((index as! String), forState: .Normal)
+//            
+//            return
+//            
+//            }, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
+//        
+//    }
     
     @IBAction func bt_ContinueClicked(sender: AnyObject) {
         

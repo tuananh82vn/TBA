@@ -18,7 +18,9 @@ class View2Controller: BaseViewController {
     @IBOutlet weak var bt_Continue: UIButton!
     @IBOutlet weak var bt_GetNetCode: UIButton!
     
-    
+    @IBOutlet weak var lb_netcode: UILabel!
+    var debtorList = [CoDebtor]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +39,15 @@ class View2Controller: BaseViewController {
         UIView.animateWithDuration(2.0, animations: { () -> Void in
             self.bt_Continue.alpha = 0
             self.bt_Continue.enabled = false
+            self.tf_Netcode.enabled = false
+            self.tf_Netcode.alpha = 0
+            
+            self.lb_netcode.alpha = 0
+            
         })
+        
+        self.addDoneButtonOnKeyboard(tf_DebtCode)
+        self.addDoneButtonOnKeyboard(tf_Netcode)
 
     }
     
@@ -78,8 +88,8 @@ class View2Controller: BaseViewController {
     
     @IBAction func ContinueClicked(sender: AnyObject) {
 
- 
         self.view.showLoading();
+        
         
         WebApiService.verifyNetCode(self.tf_DebtCode.text!, Netcode: self.tf_Netcode.text!) { objectReturn in
 
@@ -106,6 +116,8 @@ class View2Controller: BaseViewController {
                 
             }
         }
+            
+    
  
 
     }
@@ -118,47 +130,85 @@ class View2Controller: BaseViewController {
             
                 if (internet)
                 {
-
-                     WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
-
-                        self.view.hideLoading();
+                    
+                    //check Is Co-Borrower
+                    WebApiService.GetDebtorInfo(self.tf_DebtCode.text!) { objectReturn in
                         
                         if let temp1 = objectReturn
                         {
-                        
-
                             if(temp1.IsSuccess)
                             {
-                                
-                                let alert = SCLAlertView()
-                                alert.hideWhenBackgroundViewIsTapped = true
-                                alert.showNotice("", subTitle:temp1.Errors[0].ErrorMessage)
-                                
-                                
-                                self.bt_GetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
-                                
-                                //Enable button continue
-                                self.bt_Continue.enabled = true
-                                self.bt_Continue.alpha = 1
+                                self.debtorList = temp1.coDebtor
+                                LocalStore.setIsCoBorrowers(temp1.IsCoBorrowers)
+                                LocalStore.setArrangementDebtor(temp1.ArrangementDebtor)
+                                LocalStore.setIsArrangementUnderThisDebtor(true)
+    
+                                if(LocalStore.accessIsCoBorrowers()!){
+                                    
+                                    
+                                    LocalStore.setRefNumber(self.tf_DebtCode.text!)
+                                    
+                                    self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
+                                    
+                                }
+                                else
+                                {
+                                    
+                                    //Get net code
+                                    WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
+                                        
+                                        self.view.hideLoading();
+                                        
+                                        if let temp1 = objectReturn
+                                        {
                                             
-                            
-                                self.tf_Netcode.becomeFirstResponder()
+                                            if(temp1.IsSuccess)
+                                            {
+                                                
+                                                let alert = SCLAlertView()
+                                                alert.hideWhenBackgroundViewIsTapped = true
+                                                alert.showNotice("", subTitle:temp1.Errors[0].ErrorMessage)
+                                                
+                                                //Enable net code
+                                                self.tf_Netcode.enabled = true
+                                                self.tf_Netcode.alpha = 1
+                                                
+                                                self.lb_netcode.alpha = 1
+                                                
+                                                self.bt_GetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
+                                                
+                                                //Enable button continue
+                                                self.bt_Continue.enabled = true
+                                                self.bt_Continue.alpha = 1
+                                                
+                                                
+                                                self.tf_Netcode.becomeFirstResponder()
+                                                
+                                                
+                                            }
+                                            else
+                                            {
+                                                let alert = SCLAlertView()
+                                                alert.hideWhenBackgroundViewIsTapped = true
+                                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                                                
+                                            }
+                                            
+                                            
+                                            
+                                        }
+                                        else
+                                        {
+                                            let alert = SCLAlertView()
+                                            alert.hideWhenBackgroundViewIsTapped = true
+                                            alert.showError("Error", subTitle:"Server not found.")
+                                        }
+                                    }
                                 
-
-                            }
-                            else
-                            {
-                                let alert = SCLAlertView()
-                                alert.hideWhenBackgroundViewIsTapped = true
-                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                                }
+                                
                                 
                             }
-                        }
-                        else
-                        {
-                            let alert = SCLAlertView()
-                            alert.hideWhenBackgroundViewIsTapped = true
-                            alert.showError("Error", subTitle:"Server not found.")
                         }
                     }
                 }
@@ -174,5 +224,42 @@ class View2Controller: BaseViewController {
                 }
         })
     }
+    
+    func addDoneButtonOnKeyboard(view: UIView?)
+    {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        doneToolbar.barStyle = UIBarStyle.Default
+        doneToolbar.translucent = false
+        doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        
+        var items = [AnyObject]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items as? [UIBarButtonItem]
+        
+        
+        doneToolbar.sizeToFit()
+        
+        if let accessorizedView = view as? UITextField {
+            accessorizedView.inputAccessoryView = doneToolbar
+        }
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToDebtorSelect" {
+            
+            let controller = segue.destinationViewController as! SelectDebtorController
+            controller.debtorList = self.debtorList
+        }
+    }
+    
+
+
 
 }

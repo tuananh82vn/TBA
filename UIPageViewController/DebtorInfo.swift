@@ -27,7 +27,10 @@ class DebtorInfo {
     var IsExistingArrangement : Bool
     var IsAllowMonthlyInstallment : Bool
     var IsCoBorrowers : Bool
+    var IsArrangementUnderThisDebtor : Bool
     var ArrangementType: String
+    var ArrangementDebtor: String
+
     var MaxNoPay : Int
     var MinimumWeeklyOutstanding : Double
     var MinimumFortnightlyOutstanding : Double
@@ -50,6 +53,10 @@ class DebtorInfo {
     var client : Client
     var IsSuccess : Bool
     var Errors : [Error]
+    
+    var DateOfBirths : String
+    var PostCode : String
+
     
     init() {
         Name = ""
@@ -74,6 +81,9 @@ class DebtorInfo {
         MinimumFortnightlyOutstanding = 0
         MinimumMonthlyOustanding = 0
         ArrangementType = ""
+        ArrangementDebtor = ""
+        IsArrangementUnderThisDebtor = false
+
         HistoryList = [PaymentTrackerRecordModel]()
         ScheduleList = [PaymentTrackerRecordModel]()
         coDebtor = [CoDebtor]()
@@ -91,6 +101,10 @@ class DebtorInfo {
         
         IsSuccess = false
         Errors = [Error]()
+        
+        DateOfBirths = ""
+        PostCode = ""
+        
     }
     
 }

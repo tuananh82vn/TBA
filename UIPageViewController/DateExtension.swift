@@ -11,6 +11,16 @@ import Foundation
 
 extension NSDate {
     
+    
+    convenience
+    init(dateString:String) {
+        let dateStringFormatter = NSDateFormatter()
+        dateStringFormatter.dateFormat = "yyyyMMdd"
+        dateStringFormatter.timeZone = NSTimeZone(name: "GMT")
+        let d = dateStringFormatter.dateFromString(dateString)!
+        self.init(timeInterval:0, sinceDate:d)
+    }
+    
     func formattedWith(format:String) -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = format

@@ -113,7 +113,27 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 30 , 0, 0)
       
         }
-            
+        else if(iphone == "iPhone 6s" || iphone == "iPhone 6" ){
+                
+                self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+                self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+                self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 50, 0, 0)
+                
+                
+                self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+                self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 50, 0, 0)
+                self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+                
+                self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
+                self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
+                self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
+                
+                self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 0 , 0, 0)
+                self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -10 , 0, 0)
+                self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 20 , 0, 0)
+
+                
+        }
         else if(iphone == "iPhone 5" || iphone == "iPhone 5s"  )
         {
             self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
@@ -135,7 +155,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
 
         }
         
-        else if(iphone == "iPhone 4s" || iphone == "Simulator")
+        else if(iphone == "iPhone 4s" )
         {
             self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 40, 0, 0)
             self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 40, 0, 0)
@@ -155,6 +175,28 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40,  15 , 0, 0)
 
         }
+        
+        else if(iphone == "Simulator")
+        {
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 50, 0, 0)
+            
+            
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+            
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
+            
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 0 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 20 , 0, 0)
+            
+        }
+
         
     }
     
@@ -272,16 +314,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
                     }
                 }
                 
-                
-                if(indexPath.row == 0 ){
-                    
-                    
-                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
-                    
-                    self.navigationController!.pushViewController(view, animated: true)
-                    
-                }
-                
             }
             else
             {
@@ -324,9 +356,20 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     @IBAction func btTracker_Clicked(sender: AnyObject) {
         
-        let paymentTrackerViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTrackerViewController") as! PaymentTrackerViewController
+        if(LocalStore.accessIsArrangementUnderThisDebtor()){
+            
+            let paymentTrackerViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PaymentTrackerViewController") as! PaymentTrackerViewController
         
-        self.navigationController!.pushViewController(paymentTrackerViewController, animated: true)
+            self.navigationController!.pushViewController(paymentTrackerViewController, animated: true)
+            
+        }
+        else
+        {
+            // create the alert
+            let alert = SCLAlertView()
+            alert.hideWhenBackgroundViewIsTapped = true
+            alert.showError("Error", subTitle:"This debtor doesn't have permission to view arrangement.")
+        }
     }
     
     @IBAction func btPayment_Clicked(sender: AnyObject) {

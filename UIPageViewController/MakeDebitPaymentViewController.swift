@@ -57,7 +57,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource.sourceObject = bankInfo
         
         dataSource["Amount"].hintText = "Amount To Pay"
-        dataSource["Amount"].editorClass = TKDataFormNumberEditor.self
+        dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
         dataSource["Amount"].readOnly = true
         dataSource["Amount"].index = 0
         
@@ -141,6 +141,8 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 return self.validate1
             }
             
+
+            
             self.validate1 = true
             
         }
@@ -156,10 +158,41 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                     return self.validate2
                 }
                 
+                let whitespace = NSCharacterSet.whitespaceCharacterSet()
                 
+                let range = value.description.rangeOfCharacterFromSet(whitespace)
                 
+                // range will be nil if no whitespace is found
+                if let test = range {
+                    
+                    let fullNameArr = value.description.characters.split{$0 == " "}.map(String.init)
+                    
+                    for (var index = 0; index < fullNameArr.count; index++)
+                    {
+                        var fistname = fullNameArr[index] // First
+                        
+                        let decimalCharacters = NSCharacterSet.decimalDigitCharacterSet()
+                        
+                        let decimalRange1 = fistname.rangeOfCharacterFromSet(decimalCharacters, options: NSStringCompareOptions(), range: nil)
+                        
+                        if decimalRange1 != nil {
+                            
+                            dataSource["AccountName"].errorMessage = "Invalid 'Account Name'"
+                            self.validate2 = false
+                            return self.validate2
+                        }
+
+                    }
+                    
+                }
+                else {
+                    
+                    dataSource["AccountName"].errorMessage = "Invalid 'Account Name'"
+                    self.validate2 = false
+                    return self.validate2
+                }
+
                 self.validate2 = true
-                
             }
         else
             if (propery.name == "Bsb1") {

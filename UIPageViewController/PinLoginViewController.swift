@@ -18,6 +18,8 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
     @IBOutlet weak var tf_Pin1: UITextField!
     
     
+    @IBOutlet weak var view_OnTop: UIView!
+    
     var pageIndex : Int = 1
     var position : Int = 1;
     
@@ -33,22 +35,38 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         
         super.viewDidLoad()
         
+        self.addDoneButtonOnKeyboard(tf_Pin0)
+        
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false) //or animated: false
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
+
+        
+        InputFirstPin = true
+
+        
+        let gesture = UITapGestureRecognizer(target: self, action: "view_OnTop_Clicked:")
+        self.view_OnTop.addGestureRecognizer(gesture)
+
+        
         tf_Pin0.delegate = self;
         
         tf_Pin0.addTarget(self, action: "tf_Pin0DidChange:", forControlEvents: UIControlEvents.EditingChanged)
-        
-        InputFirstPin = true
-        
         tf_Pin0.becomeFirstResponder()
+
         
 //        //Handle auto hide keyboard
 //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
 //        view.addGestureRecognizer(tap)
 
+    }
+    
+    func view_OnTop_Clicked(sender:UITapGestureRecognizer){
+        
+        self.reset()
+        
+        tf_Pin0.becomeFirstResponder()
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -67,11 +85,12 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
     
     @IBAction func btForgotten_Clicked(sender: AnyObject) {
         
+        view.endEditing(true)
 
-        
         let alert = SCLAlertView()
         alert.hideWhenBackgroundViewIsTapped = true
-
+        alert.showCloseButton = false
+        
         alert.addButton("Yes"){
             //Reset Setting
             LocalStore.setIsPinSetup(false);
@@ -110,9 +129,6 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
             }
             else
             {
-                
-
-                
                 let alert = SCLAlertView()
                 alert.hideWhenBackgroundViewIsTapped = true
                 alert.showError("Error", subTitle:"Your PIN is incorrect. Please try again.")
@@ -141,6 +157,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         position = 1
         
         FinishFirstPin  = false
+        
         InputFirstPin  = true
     }
     
@@ -240,6 +257,30 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         // Dispose of any resources that can be recreated.
     }
     
-    
+    func addDoneButtonOnKeyboard(view: UIView?)
+    {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        doneToolbar.barStyle = UIBarStyle.Default
+        doneToolbar.translucent = false
+        doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
+
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        
+        var items = [AnyObject]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items as? [UIBarButtonItem]
+        
+        
+        doneToolbar.sizeToFit()
+        
+        if let accessorizedView = view as? UITextField {
+            accessorizedView.inputAccessoryView = doneToolbar
+        }
+        
+    }
     
 }
