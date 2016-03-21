@@ -144,58 +144,37 @@ class View2Controller: BaseViewController {
                                 LocalStore.setIsArrangementUnderThisDebtor(true)
     
                                 if(LocalStore.accessIsCoBorrowers()!){
-                                    
-                                    
                                     LocalStore.setRefNumber(self.tf_DebtCode.text!)
-                                    
                                     self.performSegueWithIdentifier("GoToDebtorSelect", sender: nil)
-                                    
                                 }
                                 else
                                 {
-                                    
                                     //Get net code
                                     WebApiService.getNetCode(self.tf_DebtCode.text!){ objectReturn in
-                                        
                                         self.view.hideLoading();
-                                        
                                         if let temp1 = objectReturn
                                         {
-                                            
                                             if(temp1.IsSuccess)
                                             {
-                                                
                                                 let alert = SCLAlertView()
                                                 alert.hideWhenBackgroundViewIsTapped = true
                                                 alert.showNotice("", subTitle:temp1.Errors[0].ErrorMessage)
-                                                
                                                 //Enable net code
                                                 self.tf_Netcode.enabled = true
                                                 self.tf_Netcode.alpha = 1
-                                                
                                                 self.lb_netcode.alpha = 1
-                                                
                                                 self.bt_GetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
-                                                
                                                 //Enable button continue
                                                 self.bt_Continue.enabled = true
                                                 self.bt_Continue.alpha = 1
-                                                
-                                                
                                                 self.tf_Netcode.becomeFirstResponder()
-                                                
-                                                
                                             }
                                             else
                                             {
                                                 let alert = SCLAlertView()
                                                 alert.hideWhenBackgroundViewIsTapped = true
                                                 alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
-                                                
                                             }
-                                            
-                                            
-                                            
                                         }
                                         else
                                         {
@@ -204,10 +183,14 @@ class View2Controller: BaseViewController {
                                             alert.showError("Error", subTitle:"Server not found.")
                                         }
                                     }
-                                
                                 }
-                                
-                                
+                            }
+                            else
+                            {
+                                self.view.hideLoading();
+                                let alert = SCLAlertView()
+                                alert.hideWhenBackgroundViewIsTapped = true
+                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
                             }
                         }
                     }

@@ -538,11 +538,13 @@ struct WebApiService {
                 }
                 
                 
-                if let Errors = jsonObject["Errors"].arrayObject {
+                if let Errors = jsonObject["Error"].string {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let er = Error()
                     
-                    JsonReturn.Errors = ErrorsReturn
+                    er.ErrorMessage = Errors
+                    
+                    JsonReturn.Errors.append(er)
                     
                 }
                 
