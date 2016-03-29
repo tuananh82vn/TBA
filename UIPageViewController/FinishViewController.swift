@@ -17,6 +17,11 @@ class FinishViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         lbMessage.text = message
+        
+        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false) //or animated: false
+        
+        self.navigationItem.setHidesBackButton(true, animated:true)
+        
         // Do any additional setup after loading the view.
     }
 

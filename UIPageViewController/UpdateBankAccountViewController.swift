@@ -23,7 +23,6 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         
         view.addGestureRecognizer(tap)
 
-        
         initData()
         
     }
@@ -40,7 +39,8 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                 {
 
                 
-                if(temp1.IsSuccess){
+                if(temp1.IsSuccess)
+                {
                     self.bankInfo = temp1.bank
                 
                     self.dataSource.sourceObject = self.bankInfo
@@ -73,40 +73,18 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                 }
                 else
                 {
-                    // create the alert
-                    let alert = UIAlertController(title: "Error", message: temp1.Errors, preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-                        UIAlertAction in
-                        
-                        self.navigationController?.popViewControllerAnimated(true)
-                        
-                    }
-                    
-                    alert.addAction(okAction)
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+
+                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
+
                 }
                     
                 
             }
             else
             {
-                // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-                    UIAlertAction in
-                    
-                    self.navigationController?.popViewControllerAnimated(true)
-                    
-                }
-                
-                alert.addAction(okAction)
-                
-                // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+
+                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
             }
         }
         
@@ -217,19 +195,15 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                 }
                 else
                 {
-                    
-                    // create the alert
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:temp1.Errors)
+                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
+
                 }
             }
             else
             {
-                // create the alert
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Server not found.")
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
             }
         }
         

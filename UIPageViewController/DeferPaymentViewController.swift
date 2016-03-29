@@ -24,6 +24,8 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     var TotalUsed = 0
     
     var TotalNewUsed = 0
+    
+    var OrginTotalNewUsed = 0
 
     @IBOutlet weak var lb_Message: UILabel!
     
@@ -69,15 +71,16 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                     self.TotalUsed = temp1.TotalUsedDefer
                     
                     self.TotalNewUsed = temp1.TotalUsedDefer
+                    
+                    self.OrginTotalNewUsed = self.TotalNewUsed
 
                     self.paymentTrackerRecord = self.HistoryList
                     
                     if(self.paymentTrackerRecord.count > 0)
                     {
-                        
                         self.lb_Message.hidden = true
                         self.btDefer.hidden = true
-                        //self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
+
                     }
                     else
                     {
@@ -116,7 +119,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
         
         if(self.selectedIndex >= 0){
             
-            if(self.paymentTrackerRecord[self.selectedIndex].Defer == "")
+            if(self.paymentTrackerRecord[self.selectedIndex].Defer == "" || self.paymentTrackerRecord[self.selectedIndex].Defer == "0.00")
             {
                 if(self.TotalDefer == self.TotalNewUsed){
                     
@@ -161,8 +164,13 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             
                 self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
             
+                
+                if(self.TotalNewUsed == self.OrginTotalNewUsed ){
+                    self.btDefer.hidden = true
+                }
+                
                 self.listView.reloadData()
-            
+
             }
         }
         
@@ -247,51 +255,46 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
         if(self.paymentTrackerRecord.count > 0){
             for payment in self.paymentTrackerRecord
             {
-        
-            if(payment.Defer == "Deferred")
-            {
-                
-                view.showLoading()
-
-                let requestObject = DeferPayment()
-        
-                requestObject.InstalDate        = payment.DueDate
-                requestObject.Amount            = payment.Amount
-        
-        
-                WebApiService.SendDeferPayment(requestObject){ objectReturn in
-            
-                self.view.hideLoading();
-            
-                if let temp1 = objectReturn
+                if(payment.Defer == "Deferred")
                 {
-                
-                    if(temp1.IsSuccess)
-                    {
-                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
-                    }
-                    else
-                    {
                     
-                        // create the alert
-                        let alert = SCLAlertView()
-                        alert.hideWhenBackgroundViewIsTapped = true
-                        alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                    view.showLoading()
+                    
+                    let requestObject = DeferPayment()
+                    
+                    requestObject.InstalDate        = payment.DueDate
+                    requestObject.Amount            = payment.Amount
+                    
+                    
+                    WebApiService.SendDeferPayment(requestObject){ objectReturn in
+                        
+                        self.view.hideLoading();
+                        
+                        if let temp1 = objectReturn
+                        {
+                            
+                            if(temp1.IsSuccess)
+                            {
+                                self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                            }
+                            else
+                            {
+                                LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                                
+                            }
+                        }
+                        else
+                        {
+                            LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+                            
+                        }
                     }
                 }
-                else
-                {
-                    // create the alert
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:"Server not found.")
-                }
-                }
-            }
             
             }
         }
-        else{
+        else
+        {
         
             SetPayment.SetPayment(4)
             

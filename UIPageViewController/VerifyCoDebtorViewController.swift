@@ -88,9 +88,12 @@ class VerifyCoDebtorViewController: UIViewController {
                 else
                 {
 
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:"Invalid Netcode.")
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("Error", subTitle:"Invalid Netcode.")
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: "Invalid Netcode.", indexPath: 0)
+
                 }
                 
             }
@@ -116,12 +119,15 @@ class VerifyCoDebtorViewController: UIViewController {
 
                         if(temp1.IsSuccess)
                         {
-                            let alert = SCLAlertView()
-                            alert.hideWhenBackgroundViewIsTapped = true
-                            alert.showInfo("", subTitle:temp1.Errors[0].ErrorMessage)
+//                            let alert = SCLAlertView()
+//                            alert.hideWhenBackgroundViewIsTapped = true
+//                            alert.showInfo("", subTitle:temp1.Errors[0].ErrorMessage)
                             
+                            
+                            LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
 
-                            self.btGetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
+
+                            self.btGetNetCode.setTitle("Get your NetCode again?", forState: UIControlState.Normal)
 
                             
                             //Enable button continue
@@ -135,18 +141,24 @@ class VerifyCoDebtorViewController: UIViewController {
                         else
                         {
                             
-                            let alert = SCLAlertView()
-                            alert.hideWhenBackgroundViewIsTapped = true
-                            alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+//                            let alert = SCLAlertView()
+//                            alert.hideWhenBackgroundViewIsTapped = true
+//                            alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                            
+                            LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+
                             
                         }
                     }
                     else
                     {
                         
-                        let alert = SCLAlertView()
-                        alert.hideWhenBackgroundViewIsTapped = true
-                        alert.showError("Error", subTitle:"Server not found.")
+//                        let alert = SCLAlertView()
+//                        alert.hideWhenBackgroundViewIsTapped = true
+//                        alert.showError("Error", subTitle:"Server not found.")
+                        
+                        LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
                         
                     }
                 }
@@ -156,9 +168,11 @@ class VerifyCoDebtorViewController: UIViewController {
                 
                 self.view.hideLoading();
                 
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showWarning("Warning", subTitle:"No Internet connection.")
+//                let alert = SCLAlertView()
+//                alert.hideWhenBackgroundViewIsTapped = true
+//                alert.showWarning("Warning", subTitle:"No Internet connection.")
+                
+                LocalStore.Alert(self.view, title: "Error", message: "No Internet connection.", indexPath: 0)
             }
         })
     }

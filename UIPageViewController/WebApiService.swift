@@ -168,7 +168,7 @@ struct WebApiService {
         let parameters = [
             "Item": [
                 "ReferenceNumber": ReferenceNumber,
-                "MobileNumber": MobileNumber
+                "MobileNumbers": MobileNumber
             ]
         ]
         
@@ -969,7 +969,7 @@ struct WebApiService {
                         
                         if let CcNo = jsonObject["CcNo"].string {
                             
-                            JsonReturn.card.CardNumber = CcNo
+                            //JsonReturn.card.CardNumber = CcNo
                         }
                         
                         if let ExpireDate = jsonObject["ExpiryDate"].string {

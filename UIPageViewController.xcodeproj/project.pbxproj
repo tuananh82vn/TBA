@@ -77,7 +77,6 @@
 		C7B6B3761C76E389008D670C /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B6B3751C76E389008D670C /* SCLAlertView.swift */; };
 		C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */; };
 		C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351BE1C155A2600315A47 /* DeviceDetect.swift */; };
-		C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C01C165AB400315A47 /* TelerikAlert.swift */; };
 		C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C21C1660A500315A47 /* CardInfo.swift */; };
 		C7E351C51C167A6400315A47 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C41C167A6400315A47 /* String.swift */; };
 		C7E6357D1BEC5E1D002D8438 /* MakeCreditPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6357C1BEC5E1D002D8438 /* MakeCreditPaymentViewController.swift */; };
@@ -623,7 +622,6 @@
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
 				C77E1CF61C7ABB49004AAEFF /* VerifyDetailCoDebtorViewController.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
-				C7E351C11C165AB400315A47 /* TelerikAlert.swift in Sources */,
 				C797D6311C717F5D0083CD88 /* PayInInstalmentViewController.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
 				C797D6431C7589780083CD88 /* DeferPayment.swift in Sources */,

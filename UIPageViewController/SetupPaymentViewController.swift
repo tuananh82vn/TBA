@@ -373,11 +373,11 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             
 
             // create the alert
-            let alert = SCLAlertView()
-            alert.hideWhenBackgroundViewIsTapped = true
-            alert.showError("Error", subTitle:"Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")")
+//            let alert = SCLAlertView()
+//            alert.hideWhenBackgroundViewIsTapped = true
+//            alert.showError("Error", subTitle:"Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")")
             
-            
+            LocalStore.Alert(self.view, title: "Error", message: "Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")", indexPath: 0)
         }
         
         self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6

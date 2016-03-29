@@ -38,23 +38,13 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             sectionPrimary.addItemWithTitle("Setup Schedule Payment", image: UIImage(named: "instalment")!)
         }
 
-        
         sectionPrimary.addItemWithTitle("Provide Feedback",image: UIImage(named: "info")!)
         
         let sectionLabels = self.sideDrawer.addSectionWithTitle("Settings")
         
-        if(!LocalStore.accessIsExistingArrangement()!){
-            
-            if(LocalStore.accessIsExistingArrangementCC()!){
-                sectionLabels.addItemWithTitle("View / Update Credit Card Detail", image: UIImage(named: "creditcard")!)
-            }
-            
-            if(LocalStore.accessIsExistingArrangementDD()!){
-                sectionLabels.addItemWithTitle("View / Update Bank Account Detail", image: UIImage(named: "bank")!)
-            }
-        
-        }
+        sectionLabels.addItemWithTitle("View / Update Credit Card Detail", image: UIImage(named: "creditcard")!)
 
+        sectionLabels.addItemWithTitle("View / Update Bank Account Detail", image: UIImage(named: "bank")!)
         
         sectionLabels.addItemWithTitle("View / Update Personal Information", image: UIImage(named: "personal")!)
         
@@ -145,7 +135,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 45, 0, 0)
             self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
             
-            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(20, -10 , 0, 0)
             self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
             self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, -10 , 0, 0)
             
@@ -178,22 +168,22 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         else if(iphone == "Simulator")
         {
-            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
-            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
-            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 40, 0, 0)
             
             
-            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
-            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 50, 0, 0)
-            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 45, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
             
-            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
-            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
-            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -15 , 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, -10 , 0, 0)
             
-            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 0 , 0, 0)
-            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -10 , 0, 0)
-            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 20 , 0, 0)
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -15, 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 15 , 0, 0)
             
         }
 
@@ -270,62 +260,34 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         }
         else if(indexPath.section == 1 )
         {
-            
-            
-            if(!LocalStore.accessIsExistingArrangement()!){
-                
-                if(LocalStore.accessIsExistingArrangementCC()!){
-                    if(indexPath.row == 0 ){
+
+                if(indexPath.row == 0 ){
                         
                         
                         let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateCreditCardViewController") as! UpdateCreditCardViewController
                         
                         self.navigationController!.pushViewController(view, animated: true)
                         
-                    }
-                    
-                    if(indexPath.row == 1 ){
-                        
-                        
-                        let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
-                        
-                        self.navigationController!.pushViewController(view, animated: true)
-                        
-                    }
                 }
                 else
-                if(LocalStore.accessIsExistingArrangementDD()!){
-                    if(indexPath.row == 0 ){
-                        
-                        
+                if(indexPath.row == 1 ){
+                
+                
                         let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdateBankAccountViewController") as! UpdateBankAccountViewController
-                        
+                
                         self.navigationController!.pushViewController(view, animated: true)
-                        
-                    }
-                    
-                    if(indexPath.row == 1 ){
+                
+                }
+                else
+                if(indexPath.row == 2 ){
                         
                         
                         let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
                         
                         self.navigationController!.pushViewController(view, animated: true)
                         
-                    }
                 }
-                
-            }
-            else
-            {
-                if(indexPath.row == 0 ){
-                    
-                    
-                    let view = self.storyboard!.instantiateViewControllerWithIdentifier("UpdatePersonalInfoViewController") as! UpdatePersonalInfoViewController
-                    
-                    self.navigationController!.pushViewController(view, animated: true)
-                    
-                }
-            }
+
         }
     }
     
@@ -366,9 +328,12 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         else
         {
             // create the alert
-            let alert = SCLAlertView()
-            alert.hideWhenBackgroundViewIsTapped = true
-            alert.showError("Error", subTitle:"This debtor doesn't have permission to view arrangement.")
+//            let alert = SCLAlertView()
+//            alert.hideWhenBackgroundViewIsTapped = true
+//            alert.showError("Error", subTitle:"This debtor doesn't have permission to view arrangement.")
+            
+            LocalStore.Alert(self.view, title: "Error", message: "This debtor doesn't have permission to view arrangement.", indexPath: 0)
+
         }
     }
     

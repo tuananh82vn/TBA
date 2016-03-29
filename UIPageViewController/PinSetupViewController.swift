@@ -93,9 +93,12 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
             }
             else
             {
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Pin not match - try again.")
+//                let alert = SCLAlertView()
+//                alert.hideWhenBackgroundViewIsTapped = true
+//                alert.showError("Error", subTitle:"Pin not match - try again.")
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Pin not match - try again.", indexPath: 0)
+
                 
                 reset()
             }

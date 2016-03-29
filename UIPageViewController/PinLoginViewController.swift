@@ -37,6 +37,8 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         
         self.addDoneButtonOnKeyboard(tf_Pin0)
         
+        
+        //hide back button
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false) //or animated: false
         
         self.navigationItem.setHidesBackButton(true, animated:true)
@@ -93,6 +95,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         
         alert.addButton("Yes"){
             //Reset Setting
+            LocalStore.setDRCode("");
             LocalStore.setIsPinSetup(false);
             LocalStore.setIsCoBorrowersSelected(false)
             LocalStore.setPin("")
@@ -129,9 +132,12 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
             }
             else
             {
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Your PIN is incorrect. Please try again.")
+//                let alert = SCLAlertView()
+//                alert.hideWhenBackgroundViewIsTapped = true
+//                alert.showError("Error", subTitle:"Your PIN is incorrect. Please try again.")
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Your PIN is incorrect. Please try again.", indexPath: 0)
+
                 
                 
                 reset()

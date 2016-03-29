@@ -97,9 +97,11 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                 }
                 else
                 {
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
                     
                 }
                 
@@ -108,9 +110,12 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
             }
             else
             {
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Server not found.")
+//                let alert = SCLAlertView()
+//                alert.hideWhenBackgroundViewIsTapped = true
+//                alert.showError("Error", subTitle:"Server not found.")
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
             }
         }
 
@@ -223,24 +228,33 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                 }
                 else
                 {
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("", subTitle: errorMessage)
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("", subTitle: errorMessage)
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: errorMessage, indexPath: 0)
+
                 }
             }
             else
             {
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("", subTitle: errorMessage)
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("", subTitle: errorMessage)
+                
+                LocalStore.Alert(self.view, title: "Error", message: errorMessage, indexPath: 0)
+
             }
   
         }
         else
         {
-            let alert = SCLAlertView()
-            alert.hideWhenBackgroundViewIsTapped = true
-            alert.showError("", subTitle: errorMessage)
+//            let alert = SCLAlertView()
+//            alert.hideWhenBackgroundViewIsTapped = true
+//            alert.showError("", subTitle: errorMessage)
+            
+            LocalStore.Alert(self.view, title: "Error", message: errorMessage, indexPath: 0)
+
         }
 
     }

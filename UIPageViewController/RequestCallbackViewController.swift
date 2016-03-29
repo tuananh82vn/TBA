@@ -50,15 +50,11 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         
         dataSource["Name"].hintText = "Name"
         dataSource["Name"].errorMessage = "Please fill in your name"
-//        dataSource["Name"].image = UIImage(named: "guest-name")
         
         dataSource["Phone"].hintText = "Number"
         dataSource["Phone"].errorMessage = "Please fill in your number"
-//        dataSource["Phone"].image = UIImage(named: "phone")
         dataSource["Phone"].editorClass = TKDataFormPhoneEditor.self
         
-
-//        dataSource["Date"].image = UIImage(named: "calendar-1")
         dataSource["Date"].hintText = "Date"
         
 
@@ -66,21 +62,18 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         TimeFormatter.dateFormat = "h:mm a";
         
 
-//        dataSource["TimeFrom"].image = UIImage(named: "time")
         dataSource["TimeFrom"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["TimeFrom"].hintText = "From"
         dataSource["TimeFrom"].formatter = TimeFormatter
 
         
-//        dataSource["TimeTo"].image = UIImage(named: "time")
         dataSource["TimeTo"].editorClass = TKDataFormTimePickerEditor.self
         dataSource["TimeTo"].hintText = "To"
         dataSource["TimeTo"].formatter = TimeFormatter
 
 
         dataSource["Notes"].hintText = "Notes"
-//        dataSource["Notes"].image = UIImage(named: "notes")
-        
+        dataSource["Notes"].editorClass = TKDataFormMultilineTextEditor.self
         
         dataForm1 = TKDataForm(frame: self.subView.bounds)
 
@@ -216,17 +209,22 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                     {
                         
                         // create the alert
-                        let alert = SCLAlertView()
-                        alert.hideWhenBackgroundViewIsTapped = true
-                        alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+//                        let alert = SCLAlertView()
+//                        alert.hideWhenBackgroundViewIsTapped = true
+//                        alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                        
+                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
                     }
                 }
                 else
                 {
                     // create the alert
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:"Server not found.")
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("Error", subTitle:"Server not found.")
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
                 }
             }
 
@@ -238,7 +236,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Callback request successfully submited. One of our friendly operators will call you on the day and time you have requested."
+            controller.message = "Callback request successfully submitted. One of our friendly operators will call you on the day and time you have requested."
         
         }
     }

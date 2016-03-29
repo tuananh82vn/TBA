@@ -179,17 +179,23 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                 {
                     
                     // create the alert
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:temp1.Errors)
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("Error", subTitle:temp1.Errors)
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
+
                 }
             }
             else
             {
                 // create the alert
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Server not found.")
+//                let alert = SCLAlertView()
+//                alert.hideWhenBackgroundViewIsTapped = true
+//                alert.showError("Error", subTitle:"Server not found.")
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
             }
         }
         

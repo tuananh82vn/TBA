@@ -55,7 +55,6 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource["Amount"].hintText = "Amount To Pay"
         dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
         
-//        dataSource["Amount"].editorClass = TKDataFormNumberEditor.self
         
         if(LocalStore.accessMakePaymentInFull()){
             dataSource["Amount"].readOnly = true
@@ -148,6 +147,14 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
                 self.validate1 = false
                 return self.validate1
 
+            }
+            else
+                if (Double(floatValue.description) > LocalStore.accessTotalOutstanding())
+                {
+                    dataSource["Amount"].errorMessage = "Payment amount must less than outstanding amount"
+                    self.validate1 = false
+                    return self.validate1
+                    
             }
             
             self.validate1 = true
@@ -358,19 +365,15 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
                 else
                 {
                     
-                    // create the alert
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+
                 }
             }
             else
             {
                 
-                // create the alert
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Server not found.")
+                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
             }
         }
     }
@@ -380,6 +383,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             let controller = segue.destinationViewController as! SummaryViewController
             controller.paymentReturn = self.paymentReturn
+            controller.paymentMethod = 0
         }
     }
 

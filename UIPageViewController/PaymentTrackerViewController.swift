@@ -62,9 +62,11 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
             {
                 
                 // create the alert
-                let alert = SCLAlertView()
-                alert.hideWhenBackgroundViewIsTapped = true
-                alert.showError("Error", subTitle:"Server not found.")
+//                let alert = SCLAlertView()
+//                alert.hideWhenBackgroundViewIsTapped = true
+//                alert.showError("Error", subTitle:"Server not found.")
+                
+                  LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
                 
             }
         }

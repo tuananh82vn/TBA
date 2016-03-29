@@ -10,6 +10,7 @@ import UIKit
 
 class InstalmentInfoViewController: UIViewController , TKChartDelegate {
 
+    @IBOutlet weak var view_NoArrangement: UIView!
     
     @IBOutlet weak var pieChartView: UIView!
     
@@ -36,6 +37,11 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
     }
     
+    @IBAction func makePayment_Clicked(sender: AnyObject) {
+        SetPayment.SetPayment(4)
+        
+        self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+    }
     func loadData(){
         
         WebApiService.GetArrangmentDetail(LocalStore.accessRefNumber()!) { objectReturn in
@@ -44,6 +50,9 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             {
                 if(temp1.IsSuccess)
                 {
+                    
+                    self.view_NoArrangement.hidden = true
+                    
                     self.lbl_ArrangeAmount.text = "$"+temp1.ArrangeAmount.description
                     self.lbl_Frequency.text = temp1.Frequency
                     self.lbl_NextPayDate.text = temp1.NextInstalmentDate
@@ -59,20 +68,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 }
                 else
                 {
-                    // create the alert
-                    let alert = UIAlertController(title: "Error", message: temp1.Error, preferredStyle: UIAlertControllerStyle.Alert)
                     
-                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-                        UIAlertAction in
-                        
-                        self.navigationController?.popViewControllerAnimated(true)
-                        
-                    }
-                    
-                    alert.addAction(okAction)
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.view_NoArrangement.hidden = false
 
                 }
             }
@@ -105,8 +102,17 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
         let bounds = self.view_Chart.bounds
         
-        pieChart.frame = CGRectInset(CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height), 10, 10)
+        pieChart.frame = CGRectInset(CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - 20, bounds.size.height - 20), 10, 10)
+        
+        
+        if(LocalStore.accessDeviceName() == "iPhone 4s"){
+            
+            pieChart.frame = CGRectInset(CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - 20, bounds.size.height - 40), 10, 10)
+
+        }
+        
         pieChart.autoresizingMask = UIViewAutoresizing(rawValue:~UIViewAutoresizing.None.rawValue)
+        
         pieChart.delegate = self
         
         pieChart.allowAnimations = true
@@ -119,39 +125,64 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
         if let temp1 = LocalStore.accesssetTotalPaid()
         {
-            let point1 = TKChartDataPoint(name: "Paid", value: temp1.floatValue)
-            array.append(point1);
+            if(temp1.floatValue > 0 )
+            {
+                let point1 = TKChartDataPoint(name: "Paid", value: temp1.floatValue)
+                array.append(point1);
+            }
         }
         
-
-        let point2 =  TKChartDataPoint(name: "Remaining", value: LocalStore.accessTotalOutstanding())
-        array.append(point2);
- 
+        let temp2 = LocalStore.accessTotalOutstanding()
         
+        if(temp2 > 0 )
+        {
+            let point2 = TKChartDataPoint(name: "Remaining", value: temp2)
+            array.append(point2);
+        }
         
         if let temp3 = LocalStore.accesssetTotalOverDue()
         {
-            let point3 =  TKChartDataPoint(name: "Overdue", value: temp3.floatValue)
-            array.append(point3);
+            if(temp3.floatValue > 0 )
+            {
+                let point3 = TKChartDataPoint(name: "Overdue", value: temp3.floatValue)
+                array.append(point3);
+            }
         }
+        
+//        if let temp3 = LocalStore.accesssetTotalOverDue()
+//        {
+//            let point3 =  TKChartDataPoint(name: "Overdue", value: temp3.floatValue)
+//            array.append(point3);
+//        }
         
         let series = TKChartPieSeries(items:array)
         series.selectionMode = TKChartSeriesSelectionMode.DataPoint
         series.selectionAngle = -M_PI_2
-        series.expandRadius = 1.2
+        series.expandRadius = 1.3
         series.displayPercentage = false;
-        
+        series.adjustSizeToFit = true
         series.style.pointLabelStyle.textHidden = false;
         
         if(LocalStore.accessDeviceName() == "iPhone 6s Plus" || LocalStore.accessDeviceName() == "iPhone 6 Plus" ){
 
             series.style.pointLabelStyle.labelOffset = UIOffsetMake(10, 0)
         }
+        else if(LocalStore.accessDeviceName() == "iPhone 6s" || LocalStore.accessDeviceName() == "iPhone 6" ){
+            
+            series.style.pointLabelStyle.labelOffset = UIOffsetMake(10, 0)
+        }
         else if(LocalStore.accessDeviceName() == "iPhone 5" || LocalStore.accessDeviceName() == "iPhone 5s" ){
                 
                 series.style.pointLabelStyle.labelOffset = UIOffsetMake(5, 0)
         }
-        
+        else if(LocalStore.accessDeviceName() == "iPhone 4s"){
+            
+            series.style.pointLabelStyle.labelOffset = UIOffsetMake(5, 0)
+        }
+        else if(LocalStore.accessDeviceName() == "Simulator"){
+            
+            series.style.pointLabelStyle.labelOffset = UIOffsetMake(5, 0)
+        }
         
         series.labelDisplayMode = TKChartPieSeriesLabelDisplayMode.Outside
         

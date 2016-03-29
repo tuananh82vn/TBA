@@ -76,9 +76,12 @@ class View2Controller: BaseViewController {
 
         if(self.tf_DebtCode.text!.length > 9 || self.tf_DebtCode.text!.length < 9)
         {
-            let alert = SCLAlertView()
-            alert.hideWhenBackgroundViewIsTapped = true
-            alert.showError("Error", subTitle:"Please enter correct reference number")
+//            let alert = SCLAlertView()
+//            alert.hideWhenBackgroundViewIsTapped = true
+//            alert.showError("Error", subTitle:"Please enter correct reference number")
+            
+            LocalStore.Alert(self.view, title: "Error", message: "Please enter correct reference number", indexPath: 0)
+
         }
         else
         {
@@ -105,9 +108,12 @@ class View2Controller: BaseViewController {
                 }
                 else
                 {
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showError("Error", subTitle:"Invalid Netcode")
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showError("Error", subTitle:"Invalid Netcode")
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: "Invalid Netcode", indexPath: 0)
+
 
                     self.bt_GetNetCode.enabled = true
                     //
@@ -156,14 +162,17 @@ class View2Controller: BaseViewController {
                                         {
                                             if(temp1.IsSuccess)
                                             {
-                                                let alert = SCLAlertView()
-                                                alert.hideWhenBackgroundViewIsTapped = true
-                                                alert.showNotice("", subTitle:temp1.Errors[0].ErrorMessage)
+//                                                let alert = SCLAlertView()
+//                                                alert.hideWhenBackgroundViewIsTapped = true
+//                                                alert.showNotice("", subTitle:temp1.Errors[0].ErrorMessage)
+                                                
+                                                LocalStore.Alert(self.view, title: "Notice", message: temp1.Errors[0].ErrorMessage, indexPath: 3)
+
                                                 //Enable net code
                                                 self.tf_Netcode.enabled = true
                                                 self.tf_Netcode.alpha = 1
                                                 self.lb_netcode.alpha = 1
-                                                self.bt_GetNetCode.setTitle("Get your NetCode again ?", forState: UIControlState.Normal)
+                                                self.bt_GetNetCode.setTitle("Get your NetCode again?", forState: UIControlState.Normal)
                                                 //Enable button continue
                                                 self.bt_Continue.enabled = true
                                                 self.bt_Continue.alpha = 1
@@ -171,16 +180,21 @@ class View2Controller: BaseViewController {
                                             }
                                             else
                                             {
-                                                let alert = SCLAlertView()
-                                                alert.hideWhenBackgroundViewIsTapped = true
-                                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+//                                                let alert = SCLAlertView()
+//                                                alert.hideWhenBackgroundViewIsTapped = true
+//                                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                                                
+                                                LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
                                             }
                                         }
                                         else
                                         {
-                                            let alert = SCLAlertView()
-                                            alert.hideWhenBackgroundViewIsTapped = true
-                                            alert.showError("Error", subTitle:"Server not found.")
+//                                            let alert = SCLAlertView()
+//                                            alert.hideWhenBackgroundViewIsTapped = true
+//                                            alert.showError("Error", subTitle:"Server not found.")
+                                            
+                                            LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+
                                         }
                                     }
                                 }
@@ -188,9 +202,13 @@ class View2Controller: BaseViewController {
                             else
                             {
                                 self.view.hideLoading();
-                                let alert = SCLAlertView()
-                                alert.hideWhenBackgroundViewIsTapped = true
-                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                                
+//                                let alert = SCLAlertView()
+//                                alert.hideWhenBackgroundViewIsTapped = true
+//                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+                                
+                                LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+
                             }
                         }
                     }
@@ -200,9 +218,12 @@ class View2Controller: BaseViewController {
                     
                     self.view.hideLoading();
                     
-                    let alert = SCLAlertView()
-                    alert.hideWhenBackgroundViewIsTapped = true
-                    alert.showWarning("Error", subTitle:"No connections are available.")
+//                    let alert = SCLAlertView()
+//                    alert.hideWhenBackgroundViewIsTapped = true
+//                    alert.showWarning("Error", subTitle:"No connections are available.")
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: "No connections are available.", indexPath: 0)
+
                     
                 }
         })
