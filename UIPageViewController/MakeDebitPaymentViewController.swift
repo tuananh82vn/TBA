@@ -252,7 +252,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                         else
                             if (value.length > 15 || value.length < 5)
                             {
-                                dataSource["AccountNumber"].errorMessage = "'Account Number' should be from 5 to 15 numeric characters in lenght"
+                                dataSource["AccountNumber"].errorMessage = "'Account Number' should be from 5 to 15 numeric characters in length"
                                 self.validate5 = false
                                 return self.validate5
                             }

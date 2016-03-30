@@ -29,7 +29,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
 
     var FirstPin : String = "";
     
-
+    var numberOfIncorrect = 0;
     
     override func viewDidLoad() {
         
@@ -66,7 +66,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
     
     func view_OnTop_Clicked(sender:UITapGestureRecognizer){
         
-        self.reset()
+        self.resetText()
         
         tf_Pin0.becomeFirstResponder()
     }
@@ -94,21 +94,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         alert.showCloseButton = false
         
         alert.addButton("Yes"){
-            //Reset Setting
-            LocalStore.setDRCode("");
-            LocalStore.setIsPinSetup(false);
-            LocalStore.setIsCoBorrowersSelected(false)
-            LocalStore.setPin("")
-            LocalStore.setRefNumber("")
-            LocalStore.setIsArrangementUnderThisDebtor(false)
-            LocalStore.setDebtorCodeSelected("")
-            
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-            
-            self.presentViewController(vc, animated: true, completion: nil)
+            self.resetDevice()
         }
         alert.addButton("No") {
             self.tf_Pin0.becomeFirstResponder()
@@ -118,7 +104,24 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         
     }
     
+    func resetDevice(){
+        //Reset Setting
+        LocalStore.setDRCode("");
+        LocalStore.setIsPinSetup(false);
+        LocalStore.setIsCoBorrowersSelected(false)
+        LocalStore.setPin("")
+        LocalStore.setRefNumber("")
+        LocalStore.setIsArrangementUnderThisDebtor(false)
+        LocalStore.setDebtorCodeSelected("")
+        
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+        
+        self.presentViewController(vc, animated: true, completion: nil)
 
+    }
     
     func tf_Pin0DidChange(textField: UITextField) {
         if(InputFirstPin && FinishFirstPin){
@@ -132,22 +135,27 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
             }
             else
             {
-//                let alert = SCLAlertView()
-//                alert.hideWhenBackgroundViewIsTapped = true
-//                alert.showError("Error", subTitle:"Your PIN is incorrect. Please try again.")
                 
-                LocalStore.Alert(self.view, title: "Error", message: "Your PIN is incorrect. Please try again.", indexPath: 0)
+                numberOfIncorrect  = numberOfIncorrect + 1
+                if(numberOfIncorrect == 10)
+                {
+                    LocalStore.Alert(self.view, title: "Error", message: "App has been reseted after 10 attempts.", indexPath: 0)
 
+                    self.resetDevice()
+                }
+                else
+                {
+                    LocalStore.Alert(self.view, title: "Error", message: "Your PIN is incorrect. Please try again.", indexPath: 0)
                 
-                
-                reset()
+                    self.resetText()
+                }
             }
             
         }
 
     }
     
-    func reset(){
+    func resetText(){
         
         
         tf_Pin0.text = ""

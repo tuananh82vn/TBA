@@ -123,7 +123,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             {
                 if(self.TotalDefer == self.TotalNewUsed){
                     
-                    JLToast.makeText("No more deferred alow.", duration: JLToastDelay.ShortDelay).show()
+                    JLToast.makeText("No more deferred allow.", duration: JLToastDelay.ShortDelay).show()
 
                 }
                 else
@@ -199,7 +199,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
 
     func listView(listView: TKListView, didFinishSwipeCell cell: TKListViewCell, atIndexPath indexPath: NSIndexPath, withOffset offset: CGPoint) {
         
-        print("Swiped cell at indexPath: %d", indexPath.row)
+//        print("Swiped cell at indexPath: %d", indexPath.row)
         
         self.selectedIndex = indexPath.row
         
