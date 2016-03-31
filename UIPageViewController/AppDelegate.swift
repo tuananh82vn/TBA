@@ -16,7 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("applicationDidTimout:"), name: TimerUIApplication.ApplicationDidTimoutNotification, object: nil)
+//        
+//        UIApplication.sharedApplication().idleTimerDisabled = false
+
+
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         pageControl.currentPageIndicatorTintColor = UIColor.greenColor()
@@ -48,6 +52,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    // The callback for when the timeout was fired.
+//    func applicationDidTimout(notification: NSNotification) {
+//        
+//        print("time out")
+//    }
     
 //    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
 //        application.registerForRemoteNotifications()

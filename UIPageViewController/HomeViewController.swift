@@ -126,22 +126,22 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         }
         else if(iphone == "iPhone 5" || iphone == "iPhone 5s"  )
         {
-            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-17, 45, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-17, 40, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-17, 40, 0, 0)
             
             
-            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-17, 45, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-17, 40, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-17, 40, 0, 0)
             
-            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(20, -10 , 0, 0)
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
             self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
             self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, -10 , 0, 0)
             
             self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, -5 , 0, 0)
-            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -15 , 0, 0)
-            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 15 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -17 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 13 , 0, 0)
 
         }
         
@@ -292,6 +292,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     }
     
     @IBAction func btInbox_Clicked(sender: AnyObject) {
+        JLToast.makeText("Coming up ...", duration: JLToastDelay.ShortDelay).show()
     }
     
     @IBAction func btCallback_Clicked(sender: AnyObject) {
@@ -327,10 +328,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         }
         else
         {
-            // create the alert
-//            let alert = SCLAlertView()
-//            alert.hideWhenBackgroundViewIsTapped = true
-//            alert.showError("Error", subTitle:"This debtor doesn't have permission to view arrangement.")
             
             LocalStore.Alert(self.view, title: "Error", message: "This debtor doesn't have permission to view arrangement.", indexPath: 0)
 
@@ -353,9 +350,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         let logoutAction = UIAlertAction(title: "Log off", style: UIAlertActionStyle.Destructive, handler: {
             (alert: UIAlertAction!) -> Void in
             
-                    let pinLoginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PinLoginViewController") as! PinLoginViewController
-            
-                    self.navigationController!.pushViewController(pinLoginViewController, animated: true)
+
+                self.Logout()
             
         })
 
@@ -371,6 +367,14 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         self.presentViewController(optionMenu, animated: true, completion: nil)
         
 
+        
+    }
+    
+    func Logout(){
+        
+        let pinLoginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PinLoginViewController") as! PinLoginViewController
+        
+        self.navigationController!.pushViewController(pinLoginViewController, animated: false)
         
     }
     override func didReceiveMemoryWarning() {

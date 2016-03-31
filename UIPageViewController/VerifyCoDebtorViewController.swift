@@ -12,6 +12,7 @@ class VerifyCoDebtorViewController: UIViewController {
 
     var selectedDebtor = CoDebtor()
     
+    @IBOutlet weak var lb_netcode: UILabel!
     @IBOutlet weak var bt_Continue: UIButton!
     @IBOutlet weak var tf_NetCode: UITextField!
     @IBOutlet weak var btGetNetCode: UIButton!
@@ -28,10 +29,17 @@ class VerifyCoDebtorViewController: UIViewController {
         view.addGestureRecognizer(tap)
         
         // Hide button cotinue.
-        UIView.animateWithDuration(2.0, animations: { () -> Void in
+        //UIView.animateWithDuration(2.0, animations: { () -> Void in
             self.bt_Continue.alpha = 0
             self.bt_Continue.enabled = false
-        })
+        
+        
+            self.tf_NetCode.alpha = 0
+            self.tf_NetCode.enabled = false
+        
+            self.lb_netcode.alpha = 0
+            self.lb_netcode.enabled = false
+        //})
         
         self.addDoneButtonOnKeyboard(self.tf_NetCode)
         
@@ -119,12 +127,9 @@ class VerifyCoDebtorViewController: UIViewController {
 
                         if(temp1.IsSuccess)
                         {
-//                            let alert = SCLAlertView()
-//                            alert.hideWhenBackgroundViewIsTapped = true
-//                            alert.showInfo("", subTitle:temp1.Errors[0].ErrorMessage)
                             
                             
-                            LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                            LocalStore.Alert(self.view, title: "Notice", message: temp1.Errors[0].ErrorMessage, indexPath: 3)
 
 
                             self.btGetNetCode.setTitle("Get your NetCode again?", forState: UIControlState.Normal)
@@ -134,6 +139,11 @@ class VerifyCoDebtorViewController: UIViewController {
                             self.bt_Continue.enabled = true
                             self.bt_Continue.alpha = 1
                             
+                            self.tf_NetCode.alpha = 1
+                            self.tf_NetCode.enabled = true
+                            
+                            self.lb_netcode.alpha = 1
+                            self.lb_netcode.enabled = true
                             
                             self.tf_NetCode.becomeFirstResponder()
                             

@@ -17,7 +17,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="a38-Ua-Zxc">
-                    <rect key="frame" x="52" y="199" width="378" height="81"/>
+                    <rect key="frame" x="20" y="199" width="441" height="81"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -25,7 +25,7 @@
                 <constraint firstItem="a38-Ua-Zxc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="DzD-l3-nEC"/>
                 <constraint firstItem="a38-Ua-Zxc" firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="Opi-iI-FiK"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="SkV-c3-f76"/>
-                <constraint firstItem="a38-Ua-Zxc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="52" id="WHg-EJ-4TR"/>
+                <constraint firstItem="a38-Ua-Zxc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="WHg-EJ-4TR"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="res-Mk-xmz"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ruI-dT-qJi"/>
             </constraints>

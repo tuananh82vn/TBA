@@ -12,6 +12,9 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
 
     @IBOutlet weak var tf_Subject: UITextField!
     @IBOutlet weak var tf_Content: UITextView!
+    
+    var isValidate : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,9 +45,6 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         tf_Subject.becomeFirstResponder()
     }
     
-//    func handleDone(sender:UIButton) {
-//        self.tf_Content.resignFirstResponder()
-//    }
     
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -61,51 +61,62 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         return true
     }
 
+    func checkValidate()
+    {
+        isValidate = true
 
+        if(self.tf_Subject.text?.length == 0)
+        {
+            LocalStore.Alert(self.view, title: "Error", message: "Please enter subject.", indexPath: 0)
+            tf_Subject.becomeFirstResponder()
+            isValidate = false
+        }
+        else
+            if(self.tf_Content.text?.length == 0)
+            {
+                LocalStore.Alert(self.view, title: "Error", message: "Please enter content.", indexPath: 0)
+                tf_Content.becomeFirstResponder()
+                isValidate = false
+        }
+        
+    }
 
     func DoSend(){
         
-        self.view.showLoading();
+        checkValidate()
         
-        var objectInfo = Feedback()
+        if(self.isValidate){
         
-        objectInfo.Subject      = self.tf_Subject.text!
-        objectInfo.Content      = self.tf_Content.text
-
-        WebApiService.SendFeedback(objectInfo){ objectReturn in
+            self.view.showLoading();
             
-            self.view.hideLoading();
+            var objectInfo = Feedback()
             
-            if let temp1 = objectReturn
-            {
+            objectInfo.Subject      = self.tf_Subject.text!
+            objectInfo.Content      = self.tf_Content.text
+            
+            WebApiService.SendFeedback(objectInfo){ objectReturn in
                 
-                if(temp1.IsSuccess)
+                self.view.hideLoading();
+                
+                if let temp1 = objectReturn
                 {
-                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                    
+                    if(temp1.IsSuccess)
+                    {
+                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                    }
+                    else
+                    {
+                        
+                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                    }
                 }
                 else
                 {
                     
+                    LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
                     
-                    // create the alert
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
-                    
-                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
-
-
                 }
-            }
-            else
-            {
-                // create the alert
-//                let alert = SCLAlertView()
-//                alert.hideWhenBackgroundViewIsTapped = true
-//                alert.showError("Error", subTitle:"Server not found.")
-                
-                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
-
             }
         }
 

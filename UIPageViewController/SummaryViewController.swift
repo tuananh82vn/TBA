@@ -113,8 +113,9 @@ class SummaryViewController: UIViewController {
                     self?.debtorInfo.ClientName = self!.paymentReturn.ClientName
                     
                     self?.debtorInfo.Name = self!.paymentReturn.Name
-                    
 
+                    self?.debtorInfo.PaymentMethod = self!.paymentMethod
+                        
                     WebApiService.emailReceipt(self!.debtorInfo){ objectReturn in
                         
                         self!.view.hideLoading();
@@ -124,10 +125,7 @@ class SummaryViewController: UIViewController {
                             
                             if(temp1.IsSuccess)
                             {
-                                // create the alert
-//                                let alert = SCLAlertView()
-//                                alert.hideWhenBackgroundViewIsTapped = true
-//                                alert.showInfo("Error", subTitle:"Invoice has been sent to " + enteredText)
+
                                 if(self!.paymentMethod == 0){
                                     LocalStore.Alert(self!.view, title: "Notice", message: "Receipt has been sent to " + enteredText, indexPath: 3)
                                 }
@@ -139,22 +137,13 @@ class SummaryViewController: UIViewController {
                             else
                             {
                                 
-                                // create the alert
-//                                let alert = SCLAlertView()
-//                                alert.hideWhenBackgroundViewIsTapped = true
-//                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
-                                
                                 LocalStore.Alert(self!.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
 
                             }
                         }
                         else
                         {
-                            // create the alert
-//                            let alert = SCLAlertView()
-//                            alert.hideWhenBackgroundViewIsTapped = true
-//                            alert.showError("Error", subTitle:"Server not found.")
-                            
+
                             LocalStore.Alert(self!.view, title: "Error", message: "Server not found.", indexPath: 0)
 
                         }
@@ -162,10 +151,6 @@ class SummaryViewController: UIViewController {
                     }
                     else
                     {
-                        // create the alert
-//                        let alert = SCLAlertView()
-//                        alert.hideWhenBackgroundViewIsTapped = true
-//                        alert.showError("Error", subTitle: enteredText + " is not a valid email.")
                         
                         LocalStore.Alert(self!.view, title: "Error", message: "Please enter a valid email.", indexPath: 0)
 
@@ -181,5 +166,10 @@ class SummaryViewController: UIViewController {
             completion: nil)
     }
 
+    @IBAction func savetoInbox_Clicked(sender: AnyObject) {
+        
+        JLToast.makeText("Coming up ...", duration: JLToastDelay.ShortDelay).show()
+
+    }
 
 }

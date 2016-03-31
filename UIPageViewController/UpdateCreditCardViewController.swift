@@ -24,6 +24,9 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
     
     var validate2 : Bool = true
     
+    var isError : Bool = false
+    
+    @IBOutlet weak var bt_Continue: UIButton!
     
     
     override func viewDidLoad() {
@@ -53,6 +56,11 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
 
                 if(temp1.IsSuccess)
                 {
+                    
+                    self.isError = false
+                    self.bt_Continue.setTitle("Continue", forState: UIControlState.Normal)
+
+                    
                     self.paymentInfo.CardNumber = temp1.card.CardNumber
                     self.paymentInfo.ExpiryDate = temp1.card.ExpiryDate
                 
@@ -86,6 +94,9 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                 else
                 {
                     LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
+                    self.isError = true
+                    self.bt_Continue.setTitle("Make a Payment", forState: UIControlState.Normal)
+                    
 
                 }
             }
@@ -179,47 +190,58 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
     
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
+        if(!self.isError){
         
-        self.dataForm1.commit()
-        
-        self.isFormValidate = self.validate1 && self.validate2
-        
-        if(!self.isFormValidate){
+            self.dataForm1.commit()
             
-            return
-        }
-        
-        self.view.showLoading();
-        
-        let paymentInfo = PaymentInfo()
-        
-        paymentInfo.card.CardNumber         = self.dataSource["CardNumber"].valueCandidate as! String
-        paymentInfo.card.ExpiryDate         = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
-
-        paymentInfo.RecType = "CC"
-        
-        WebApiService.SetPaymentInfo(paymentInfo){ objectReturn in
+            self.isFormValidate = self.validate1 && self.validate2
             
-            self.view.hideLoading();
-            
-            if let temp1 = objectReturn
-            {
+            if(!self.isFormValidate){
                 
-                if(temp1.IsSuccess)
+                return
+            }
+            
+            self.view.showLoading();
+            
+            let paymentInfo = PaymentInfo()
+            
+            paymentInfo.card.CardNumber         = self.dataSource["CardNumber"].valueCandidate as! String
+            paymentInfo.card.ExpiryDate         = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
+            
+            paymentInfo.RecType = "CC"
+            
+            WebApiService.SetPaymentInfo(paymentInfo){ objectReturn in
+                
+                self.view.hideLoading();
+                
+                if let temp1 = objectReturn
                 {
-                    self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                    
+                    if(temp1.IsSuccess)
+                    {
+                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                    }
+                    else
+                    {
+                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
+                    }
                 }
                 else
                 {
-                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+                    
                 }
             }
-            else
-            {
-                
-                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+            
+        }
+        else
+        {
+            
+            SetPayment.SetPayment(4)
 
-            }
+            self.performSegueWithIdentifier("GoToCreditCard", sender: nil)
+
         }
     }
     

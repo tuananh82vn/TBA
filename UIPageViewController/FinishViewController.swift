@@ -31,6 +31,10 @@ class FinishViewController: UIViewController {
     }
     
     @IBAction func btFinish_Clicked(sender: AnyObject) {
+        
+        self.navigationController?.viewControllers.removeAll()
+        
+        
         self.performSegueWithIdentifier("GoToHomepage", sender: nil)
 
     }

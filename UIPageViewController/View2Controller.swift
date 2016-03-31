@@ -36,7 +36,7 @@ class View2Controller: BaseViewController {
         view.addGestureRecognizer(tap)
         
         // Hide button cotinue.
-        UIView.animateWithDuration(2.0, animations: { () -> Void in
+        //UIView.animateWithDuration(2.0, animations: { () -> Void in
             self.bt_Continue.alpha = 0
             self.bt_Continue.enabled = false
             self.tf_Netcode.enabled = false
@@ -44,7 +44,7 @@ class View2Controller: BaseViewController {
             
             self.lb_netcode.alpha = 0
             
-        })
+        //})
         
         self.addDoneButtonOnKeyboard(tf_DebtCode)
         self.addDoneButtonOnKeyboard(tf_Netcode)
@@ -189,9 +189,6 @@ class View2Controller: BaseViewController {
                                         }
                                         else
                                         {
-//                                            let alert = SCLAlertView()
-//                                            alert.hideWhenBackgroundViewIsTapped = true
-//                                            alert.showError("Error", subTitle:"Server not found.")
                                             
                                             LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
 
@@ -203,10 +200,6 @@ class View2Controller: BaseViewController {
                             {
                                 self.view.hideLoading();
                                 
-//                                let alert = SCLAlertView()
-//                                alert.hideWhenBackgroundViewIsTapped = true
-//                                alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
-                                
                                 LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
 
                             }
@@ -217,10 +210,6 @@ class View2Controller: BaseViewController {
                 {
                     
                     self.view.hideLoading();
-                    
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showWarning("Error", subTitle:"No connections are available.")
                     
                     LocalStore.Alert(self.view, title: "Error", message: "No connections are available.", indexPath: 0)
 

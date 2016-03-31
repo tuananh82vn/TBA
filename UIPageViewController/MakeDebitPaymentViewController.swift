@@ -342,22 +342,13 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 }
                 else
                 {
-                    
-                    // create the alert
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
-                    
+
                     LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
 
                 }
             }
             else
             {
-                // create the alert
-//                let alert = SCLAlertView()
-//                alert.hideWhenBackgroundViewIsTapped = true
-//                alert.showError("Error", subTitle:"Server not found.")
                 
                 LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
 
@@ -371,7 +362,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             let controller = segue.destinationViewController as! SummaryViewController
             controller.paymentReturn = self.paymentReturn
-            controller.paymentMethod = 1
+            controller.paymentMethod = 2
         }
     }
     

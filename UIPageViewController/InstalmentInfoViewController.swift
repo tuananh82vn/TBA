@@ -52,6 +52,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 {
                     
                     self.view_NoArrangement.hidden = true
+                    self.view_NoArrangement.userInteractionEnabled = false
                     
                     self.lbl_ArrangeAmount.text = "$"+temp1.ArrangeAmount.description
                     self.lbl_Frequency.text = temp1.Frequency
@@ -68,7 +69,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 }
                 else
                 {
-                    
+                    self.view_NoArrangement.userInteractionEnabled = true
+
                     self.view_NoArrangement.hidden = false
 
                 }
@@ -149,6 +151,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             }
         }
         
+        
+
 //        if let temp3 = LocalStore.accesssetTotalOverDue()
 //        {
 //            let point3 =  TKChartDataPoint(name: "Overdue", value: temp3.floatValue)
@@ -158,9 +162,18 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         let series = TKChartPieSeries(items:array)
         series.selectionMode = TKChartSeriesSelectionMode.DataPoint
         series.selectionAngle = -M_PI_2
-        series.expandRadius = 1.3
+        
+//        if(array.count > 1) {
+//            series.expandRadius = 1.3
+//            series.adjustSizeToFit = true
+//        }
+//        else
+//        {
+            series.expandRadius = 1.3
+            series.adjustSizeToFit = true
+        //}
+        
         series.displayPercentage = false;
-        series.adjustSizeToFit = true
         series.style.pointLabelStyle.textHidden = false;
         
         if(LocalStore.accessDeviceName() == "iPhone 6s Plus" || LocalStore.accessDeviceName() == "iPhone 6 Plus" ){
@@ -173,7 +186,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         }
         else if(LocalStore.accessDeviceName() == "iPhone 5" || LocalStore.accessDeviceName() == "iPhone 5s" ){
                 
-                series.style.pointLabelStyle.labelOffset = UIOffsetMake(5, 0)
+                series.style.pointLabelStyle.labelOffset = UIOffsetMake(7, 0)
         }
         else if(LocalStore.accessDeviceName() == "iPhone 4s"){
             

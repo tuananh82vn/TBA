@@ -151,7 +151,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             else
                 if (Double(floatValue.description) > LocalStore.accessTotalOutstanding())
                 {
-                    dataSource["Amount"].errorMessage = "Payment amount must less than outstanding amount"
+                    dataSource["Amount"].errorMessage = "Payment amount must be less than outstanding amount"
                     self.validate1 = false
                     return self.validate1
                     
@@ -383,7 +383,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             let controller = segue.destinationViewController as! SummaryViewController
             controller.paymentReturn = self.paymentReturn
-            controller.paymentMethod = 0
+            controller.paymentMethod = 1
         }
     }
 

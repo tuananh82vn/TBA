@@ -311,7 +311,8 @@ struct WebApiService {
                 "CurrentPaymentId": debtorInfo.CurrentPaymentId,
                 "ClientName" : debtorInfo.ClientName,
                 "PaymentType" : debtorInfo.PaymentType,
-                "EmailAddress" : debtorInfo.EmailAddress
+                "EmailAddress" : debtorInfo.EmailAddress,
+                "PaymentMethod" : debtorInfo.PaymentMethod
             ]
         ]
         
@@ -985,6 +986,26 @@ struct WebApiService {
                         if let Bsb = jsonObject["BsbNo"].string {
                             
                             JsonReturn.bank.Bsb = Bsb
+                            
+                            if(Bsb.length > 0)
+                            {
+                                
+                                let needle: Character = "-"
+                                if let idx = JsonReturn.bank.Bsb.characters.indexOf(needle) {
+                                    let pos = JsonReturn.bank.Bsb.startIndex.distanceTo(idx)
+                                    JsonReturn.bank.Bsb1 = (Bsb as NSString).substringToIndex(pos)
+                                    JsonReturn.bank.Bsb2 = (Bsb as NSString).substringFromIndex(pos+1)
+                                }
+                                else {
+                                    JsonReturn.bank.Bsb1 = (Bsb as NSString).substringToIndex(3)
+                                    JsonReturn.bank.Bsb2 = (Bsb as NSString).substringFromIndex(3)
+                                }
+                                
+                                
+
+
+                            }
+                            
                         }
                         if let AccountNo = jsonObject["AccountNo"].string {
                             
