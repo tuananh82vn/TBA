@@ -13,9 +13,9 @@ class BankInfo: NSObject {
     
     var Amount = Double()
     var AccountName = ""
-    var Bsb = ""
-    var Bsb1 = ""
-    var Bsb2 = ""
+    var BSB = ""
+    var BSB1 = ""
+    var BSB2 = ""
     var AccountNumber = ""
     var DebtorPaymentInstallment = ""
 

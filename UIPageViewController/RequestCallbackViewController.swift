@@ -16,6 +16,8 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     let dataSource = TKDataFormEntityDataSource()
     
     let requestCallBack = RequestCallBack()
+    
+    var alignmentMode: String = ""
 
 
     @IBOutlet weak var subView: UIView!
@@ -49,10 +51,10 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         dataSource.sourceObject = requestCallBack
         
         dataSource["Name"].hintText = "Name"
-        dataSource["Name"].errorMessage = "Please fill in your name"
+        dataSource["Name"].errorMessage = "Please enter your name"
         
         dataSource["Phone"].hintText = "Number"
-        dataSource["Phone"].errorMessage = "Please fill in your number"
+        dataSource["Phone"].errorMessage = "Please enter your number"
         dataSource["Phone"].editorClass = TKDataFormPhoneEditor.self
         
         dataSource["Date"].hintText = "Date"
@@ -137,7 +139,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
             
             if(!value.isPhoneNumber()){
                 
-                dataSource["Phone"].errorMessage = "Invalid Phone Number"
+                dataSource["Phone"].errorMessage = "Phone Number is not valid"
 
                 self.validate2 = false
                 return self.validate2
@@ -154,7 +156,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
             let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
             
             if(value.isLessThanDate(firstDate)){
-                dataSource["Date"].errorMessage = "Date must not be less than today"
+                dataSource["Date"].errorMessage = "Date must not be earlier than today"
                 self.validate3 = false
                 return self.validate3
             }
@@ -167,11 +169,22 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     }
     
     func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
-
+        if (property.name == "Notes") {
+            let textEditor = editor as! TKDataFormMultilineTextEditor
+            textEditor.style
+        }
     }
     
     func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
 
+    }
+    
+    func dataForm(dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, atIndex editorIndex: UInt) -> CGFloat {
+        if gorupIndex == 0 && editorIndex == 5 {
+            return 100
+        }
+        
+        return 30
     }
 
 
@@ -207,21 +220,13 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                     }
                     else
                     {
-                        
-                        // create the alert
-//                        let alert = SCLAlertView()
-//                        alert.hideWhenBackgroundViewIsTapped = true
-//                        alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
+
                         
                         LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
                     }
                 }
                 else
                 {
-                    // create the alert
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showError("Error", subTitle:"Server not found.")
                     
                     LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
 
@@ -236,7 +241,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Callback request successfully submitted. One of our friendly operators will call you on the day and time you have requested."
+            controller.message = "Callback request successfully submitted. One of our friendly operators will call you on the day and time you have requested"
         
         }
     }

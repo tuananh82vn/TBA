@@ -10,7 +10,6 @@ import UIKit
 
 class PaymentTrackerViewCell: UITableViewCell {
 
-    @IBOutlet weak var lb_Remaining: UILabel!
     @IBOutlet weak var img_Status: UIImageView!
     @IBOutlet weak var lb_Amount: UILabel!
     @IBOutlet weak var lb_DueDate: UILabel!

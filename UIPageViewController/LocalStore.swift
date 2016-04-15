@@ -235,7 +235,7 @@ struct LocalStore {
     
     //----------------------------------------------------------------------------//
     
-    static func setNextPaymentInstallment(token: String) {
+    static func setNextPaymentInstallment(token: Double) {
         userDefaults.setObject(token, forKey: NextPaymentInstallment)
         userDefaults.synchronize()
     }
@@ -245,8 +245,8 @@ struct LocalStore {
         userDefaults.synchronize()
     }
     
-    static func accessNextPaymentInstallment() -> String? {
-        return userDefaults.stringForKey(NextPaymentInstallment)
+    static func accessNextPaymentInstallment() -> Double {
+        return userDefaults.doubleForKey(NextPaymentInstallment)
     }
     
     //----------------------------------------------------------------------------//
@@ -589,7 +589,7 @@ struct LocalStore {
         
         let alert = TKAlert()
         
-        alert.customFrame = CGRectMake(0, 0, view.frame.size.width, 160)
+        alert.customFrame = CGRectMake(0, 20, view.frame.size.width, 160)
         alert.style.contentSeparatorWidth = 0
         alert.style.titleColor = UIColor.whiteColor()
         alert.style.messageColor = UIColor.whiteColor()

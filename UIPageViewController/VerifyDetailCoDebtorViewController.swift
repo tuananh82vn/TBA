@@ -32,7 +32,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
     
     var validate3 : Bool = true
     
-    var errorMessage = "We could not verify your detail. Please enter verification detail exactly as printed on your letter or contact Recoveries Corp on 03 8627 0600."
+    var errorMessage = "We could not verify your details. Please enter your verification details exactly as printed on your letter, or contact RecoveriesCorp on 03 8627 0600"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,10 +97,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                 }
                 else
                 {
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showError("Error", subTitle:temp1.Errors[0].ErrorMessage)
-                    
+
                     LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
                     
                 }
@@ -110,9 +107,6 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
             }
             else
             {
-//                let alert = SCLAlertView()
-//                alert.hideWhenBackgroundViewIsTapped = true
-//                alert.showError("Error", subTitle:"Server not found.")
                 
                 LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
 
@@ -139,7 +133,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
             let value = propery.valueCandidate.description
             if (value.length <= 0)
             {
-                dataSource["FullName"].errorMessage = "Please input full name"
+                dataSource["FullName"].errorMessage = "Please enter your full name"
                 self.validate1 = false
                 return self.validate1
             }
@@ -156,7 +150,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                         
                         if (value.length <= 0)
                         {
-                            dataSource["PostCode"].errorMessage = "Please input postcode"
+                            dataSource["PostCode"].errorMessage = "Please enter postcode"
 
                             self.validate2 = false
                             return self.validate2
@@ -228,9 +222,6 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                 }
                 else
                 {
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showError("", subTitle: errorMessage)
                     
                     LocalStore.Alert(self.view, title: "Error", message: errorMessage, indexPath: 0)
 
@@ -238,9 +229,6 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
             }
             else
             {
-//                    let alert = SCLAlertView()
-//                    alert.hideWhenBackgroundViewIsTapped = true
-//                    alert.showError("", subTitle: errorMessage)
                 
                 LocalStore.Alert(self.view, title: "Error", message: errorMessage, indexPath: 0)
 
@@ -249,9 +237,6 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
         }
         else
         {
-//            let alert = SCLAlertView()
-//            alert.hideWhenBackgroundViewIsTapped = true
-//            alert.showError("", subTitle: errorMessage)
             
             LocalStore.Alert(self.view, title: "Error", message: errorMessage, indexPath: 0)
 

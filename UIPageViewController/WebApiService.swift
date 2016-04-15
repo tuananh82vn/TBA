@@ -22,6 +22,7 @@ struct WebApiService {
         case ArrangeDetail
         case DeferPayment
         case GetDebtorAdditionalInfor
+        case GetDebtorPaymentHistory
 
         var description: String {
             switch self {
@@ -42,6 +43,8 @@ struct WebApiService {
                 case .SendFeedback: return "/Api/SendFeedback"
                 case .ArrangeDetail: return "/Api/GetArrangeDetails"
                 case .DeferPayment : return "/Api/DeferPayment"
+                case .GetDebtorPaymentHistory : return "/Api/GetDebtorPaymentHistory"
+
             }
         }
     }
@@ -453,21 +456,21 @@ struct WebApiService {
                     JsonReturn.IsAllowMonthlyInstallment = IsAllowMonthlyInstallment
                 }
                 
-                if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
-                    
-                    let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
-                    
-                    JsonReturn.HistoryList = HistoryList
-                    
-                }
-                
-                if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
-                    
-                    let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
-                    
-                    JsonReturn.ScheduleList = ScheduleList
-                    
-                }
+//                if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
+//                    
+//                    let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+//                    
+//                    JsonReturn.HistoryList = HistoryList
+//                    
+//                }
+//                
+//                if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
+//                    
+//                    let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+//                    
+//                    JsonReturn.ScheduleList = ScheduleList
+//                    
+//                }
                 
                 if let coDebtorCode = jsonObject["CoDebtorCode"].arrayObject {
                     
@@ -566,6 +569,69 @@ struct WebApiService {
             
         }
     }
+    
+    
+    static func GetDebtorPaymentHistory(ReferenceNumber: String, response : (objectReturn : DebtorInfo?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorPaymentHistory.description
+        
+        let JsonReturn = DebtorInfo()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                }
+                
+                 if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
+                
+                       let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                
+                        JsonReturn.HistoryList = HistoryList
+                
+                 }
+                
+                 if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
+                
+                       let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                
+                       JsonReturn.ScheduleList = ScheduleList
+                
+                 }
+                
+                if let Errors = jsonObject["Error"].string {
+                    
+                    let er = Error()
+                    
+                    er.ErrorMessage = Errors
+                    
+                    JsonReturn.Errors.append(er)
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+    
     
     static func GetDebtorAdditonalInfo(ReferenceNumber: String, DebtorCode : String, response : (objectReturn : DebtorInfo?) -> ()) {
         
@@ -704,12 +770,12 @@ struct WebApiService {
         
         let calendar = NSCalendar.currentCalendar()
         
-        let componentsYear = calendar.components(NSCalendarUnit.Year, fromDate: cardObject.ExpiryDate)
-        let year =  componentsYear.year
-        
-        
-        let componentsMonth = calendar.components(NSCalendarUnit.Month, fromDate: cardObject.ExpiryDate)
-        let month =  componentsMonth.month
+//        let componentsYear = calendar.components(NSCalendarUnit.Year, fromDate: cardObject.ExpiryDate)
+//        let year =  componentsYear.year
+//        
+//        
+//        let componentsMonth = calendar.components(NSCalendarUnit.Month, fromDate: cardObject.ExpiryDate)
+//        let month =  componentsMonth.month
         
         //Visa
         if(cardObject.CardType == 0 ){
@@ -726,8 +792,8 @@ struct WebApiService {
                 "CardType": cardObject.CardType,
                 "NameOnCard" : cardObject.NameOnCard,
                 "CreditCardNumber": cardObject.CardNumber,
-                "CreditCardExpiryYear": year.description,
-                "CreditCardExpiryMonth": month.description,
+                "CreditCardExpiryYear": cardObject.ExpiryYear,
+                "CreditCardExpiryMonth": cardObject.ExpiryMonth,
                 "CreditCardCVV": cardObject.Cvv,
                 "PaymentType": PaymentType,
                 "PaymentMethod": "1",
@@ -819,8 +885,8 @@ struct WebApiService {
                 "Amount": cardObject.Amount,
                 "DirectDebitAccountName" : cardObject.AccountName,
                 "DirectDebitAccountNumber": cardObject.AccountNumber,
-                "DirectDebitBSB1": cardObject.Bsb1,
-                "DirectDebitBSB2": cardObject.Bsb2,
+                "DirectDebitBSB1": cardObject.BSB1,
+                "DirectDebitBSB2": cardObject.BSB2,
                 "PaymentType": PaymentType,
                 "PaymentMethod": "2"
             ]
@@ -970,12 +1036,16 @@ struct WebApiService {
                         
                         if let CcNo = jsonObject["CcNo"].string {
                             
-                            //JsonReturn.card.CardNumber = CcNo
+                            JsonReturn.card.CardNumber = CcNo
                         }
                         
                         if let ExpireDate = jsonObject["ExpiryDate"].string {
-                            
-                              JsonReturn.card.ExpiryDate  = ExpireDate.dateFromString("MMyyyy")
+
+                                let yyear : Int? = Int((ExpireDate as NSString).substringFromIndex(2))
+                                let mmonth : Int? = Int((ExpireDate as NSString).substringToIndex(2))
+
+                                JsonReturn.card.ExpiryYear  =  yyear!
+                                JsonReturn.card.ExpiryMonth  = mmonth!
 
                         }
                     }
@@ -983,22 +1053,22 @@ struct WebApiService {
                     {
                         JsonReturn.bank = BankInfo()
                         
-                        if let Bsb = jsonObject["BsbNo"].string {
+                        if let BSB = jsonObject["BsbNo"].string {
                             
-                            JsonReturn.bank.Bsb = Bsb
+                            JsonReturn.bank.BSB = BSB
                             
-                            if(Bsb.length > 0)
+                            if(BSB.length > 0)
                             {
                                 
                                 let needle: Character = "-"
-                                if let idx = JsonReturn.bank.Bsb.characters.indexOf(needle) {
-                                    let pos = JsonReturn.bank.Bsb.startIndex.distanceTo(idx)
-                                    JsonReturn.bank.Bsb1 = (Bsb as NSString).substringToIndex(pos)
-                                    JsonReturn.bank.Bsb2 = (Bsb as NSString).substringFromIndex(pos+1)
+                                if let idx = JsonReturn.bank.BSB.characters.indexOf(needle) {
+                                    let pos = JsonReturn.bank.BSB.startIndex.distanceTo(idx)
+                                    JsonReturn.bank.BSB1 = (BSB as NSString).substringToIndex(pos)
+                                    JsonReturn.bank.BSB2 = (BSB as NSString).substringFromIndex(pos+1)
                                 }
                                 else {
-                                    JsonReturn.bank.Bsb1 = (Bsb as NSString).substringToIndex(3)
-                                    JsonReturn.bank.Bsb2 = (Bsb as NSString).substringFromIndex(3)
+                                    JsonReturn.bank.BSB1 = (BSB as NSString).substringToIndex(3)
+                                    JsonReturn.bank.BSB2 = (BSB as NSString).substringFromIndex(3)
                                 }
                                 
                                 
@@ -1049,14 +1119,28 @@ struct WebApiService {
         
         let JsonReturn = PaymentInfo()
         
+        let month = paymentInfo.card.ExpiryMonth
+        
+        var monthString = ""
+        
+        if(month < 10)
+        {
+            monthString = "0" + month.description
+        }
+        else
+        {
+            monthString = month.description
+
+        }
+        
         let parameters = [
             "Item": [
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
                 "Action": "U",
                 "RecType": paymentInfo.RecType,
                 "CcNo" : paymentInfo.card.CardNumber,
-                "ExpiryDate" : paymentInfo.card.ExpiryDate.formattedWith("MMyyyy"),
-                "BsbNo" : paymentInfo.bank.Bsb,
+                "ExpiryDate" : monthString + paymentInfo.card.ExpiryYear.description,
+                "BsbNo" : paymentInfo.bank.BSB,
                 "AccountNo" : paymentInfo.bank.AccountNumber,
                 "AccountName" : paymentInfo.bank.AccountName
             ]

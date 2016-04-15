@@ -60,12 +60,8 @@ class PaymentMethodViewController: UIViewController {
         }
         else
         {
-            // create the alert
-//            let alert = SCLAlertView()
-//            alert.hideWhenBackgroundViewIsTapped = true
-//            alert.showError("Error", subTitle:"Please select payment method.")
             
-            LocalStore.Alert(self.view, title: "Error", message: "Please select payment method.", indexPath: 0)
+            LocalStore.Alert(self.view, title: "Error", message: "Please select payment method", indexPath: 0)
 
             
         }

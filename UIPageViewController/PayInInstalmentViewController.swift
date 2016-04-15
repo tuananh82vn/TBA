@@ -36,13 +36,18 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
+        //Format number
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .CurrencyStyle
+        
+        
         if(LocalStore.accessIsAllowMonthlyInstallment()!){
         
-                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly or monthly payment schedule to meet your obligation in paying the amount of " + LocalStore.accessTotalOutstanding().description + " ?"
+                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly or monthly payment schedule to meet your obligation in paying the amount of " + formatter.stringFromNumber(LocalStore.accessTotalOutstanding())! + " ?"
         }
         else
         {
-                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly payment schedule to meet your obligation in paying the amount of " + LocalStore.accessTotalOutstanding().description + " ?"
+                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly payment schedule to meet your obligation in paying the amount of " + formatter.stringFromNumber(LocalStore.accessTotalOutstanding())! + " ?"
         }
         
         self.subView.hidden = true
@@ -159,7 +164,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
             let value = propery.valueCandidate.description
             if (value.length <= 0)
             {
-                dataSource["InstalmentAmount"].errorMessage = "Please enter payment instalment."
+                dataSource["InstalmentAmount"].errorMessage = "Please enter payment instalment"
                 self.validate1 = false
                 return self.validate1
                 
@@ -214,7 +219,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
 
                 
                 if(value.isGreaterThanDate(Maxdate) || value.isLessThanDate(firstDate)){
-                    dataSource["FirstInstalmentDate"].errorMessage = "1st payment date must be valid within next 30 days."
+                    dataSource["FirstInstalmentDate"].errorMessage = "1st payment date must be valid within next 30 days"
                     self.validate2 = false
                     return self.validate2
                     

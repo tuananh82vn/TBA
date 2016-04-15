@@ -19,6 +19,8 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var lb_Date: UILabel!
     @IBOutlet weak var lb_Name: UILabel!
     
+    @IBOutlet weak var lbl_TitleReceipt: UILabel!
+    
     var paymentReturn = PaymentReturnModel()
     var debtorInfo = DebtorInfo()
     var paymentMethod = 0
@@ -30,16 +32,38 @@ class SummaryViewController: UIViewController {
 
         self.navigationItem.setHidesBackButton(true, animated:true)
         
-
-            
+        
+        
             self.lb_Transaction.text    = self.paymentReturn.TransactionDescription
             self.lb_Receipt.text        = self.paymentReturn.ReceiptNumber
             self.lb_Amount.text         = self.paymentReturn.Amount
             self.lb_Time.text           = self.paymentReturn.Time
             self.lb_Date.text           = self.paymentReturn.Date
             self.lb_Name.text           = self.paymentReturn.Name
-            self.lb_RefNumber.text  = "Your Payment has been processed for you account with Reference Number " + LocalStore.accessRefNumber()! + ". Please be aware, payments will appear on your statement as payment for 'Recoveriescorp'"
+            self.lb_RefNumber.text  = "Your payment has been processed against your account with Reference Number " + LocalStore.accessRefNumber()! + ". Please be aware, payments will appear on your statement as payment to 'Recoveriescorp'"
 
+        
+        if(self.paymentMethod == 0){
+            
+            self.title = "Receipt"
+            
+            self.lbl_TitleReceipt.text = "Receipt Details"
+            
+            
+            self.lb_RefNumber.hidden = false
+            self.lb_Transaction.hidden = false
+        }
+        else
+        {
+            self.lbl_TitleReceipt.text = "Payment Summary"
+
+            self.title = "Payment Summary"
+            
+            self.lb_RefNumber.hidden = true
+            self.lb_Transaction.hidden = true
+            
+        }
+        
 
     }
     
@@ -131,7 +155,7 @@ class SummaryViewController: UIViewController {
                                 }
                                 else
                                 {
-                                    LocalStore.Alert(self!.view, title: "Notice", message: "Payment summary has been sent to " + enteredText, indexPath: 3)
+                                    LocalStore.Alert(self!.view, title: "Notice", message: "Payment Summary has been sent to " + enteredText, indexPath: 3)
                                 }
                             }
                             else
@@ -152,7 +176,7 @@ class SummaryViewController: UIViewController {
                     else
                     {
                         
-                        LocalStore.Alert(self!.view, title: "Error", message: "Please enter a valid email.", indexPath: 0)
+                        LocalStore.Alert(self!.view, title: "Error", message: "Please enter a valid email address", indexPath: 0)
 
                     }
                 }

@@ -9,7 +9,7 @@ class LoginController: UIViewController {
     
     @IBOutlet weak var lbl_Label: UILabel!
     
-    var textDisplay : [String] = ["Thank you for waiting...", "We are logging you into system...", "It will take few seconds..."]
+    var textDisplay : [String] = ["Thank you for waiting...", "We are logging you into the system...", "It will take a few seconds..."]
     
     var timer2 = NSTimer()
     
@@ -64,7 +64,7 @@ class LoginController: UIViewController {
                 {
                     LocalStore.setTotalOutstanding(temp1.TotalOutstanding)
                     
-                    LocalStore.setNextPaymentInstallment(temp1.NextPaymentInstallment.description)
+                    LocalStore.setNextPaymentInstallment(temp1.NextPaymentInstallment)
                     LocalStore.setIsExistingArrangement(temp1.IsExistingArrangement)
                     LocalStore.setIsExistingArrangementCC(temp1.IsExistingArrangementCC)
                     LocalStore.setIsExistingArrangementDD(temp1.IsExistingArrangementDD)

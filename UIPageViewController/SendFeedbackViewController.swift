@@ -67,14 +67,14 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
 
         if(self.tf_Subject.text?.length == 0)
         {
-            LocalStore.Alert(self.view, title: "Error", message: "Please enter subject.", indexPath: 0)
+            LocalStore.Alert(self.view, title: "Error", message: "Please enter subject", indexPath: 0)
             tf_Subject.becomeFirstResponder()
             isValidate = false
         }
         else
             if(self.tf_Content.text?.length == 0)
             {
-                LocalStore.Alert(self.view, title: "Error", message: "Please enter content.", indexPath: 0)
+                LocalStore.Alert(self.view, title: "Error", message: "Please enter content", indexPath: 0)
                 tf_Content.becomeFirstResponder()
                 isValidate = false
         }
@@ -137,7 +137,7 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Your feedback has been sent successfully."
+            controller.message = "Your feedback has been sent successfully"
             
         }
     }

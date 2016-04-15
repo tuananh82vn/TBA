@@ -24,6 +24,8 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
     
     var validate2 : Bool = true
     
+    var validate3 : Bool = true
+    
     var isError : Bool = false
     
     @IBOutlet weak var bt_Continue: UIButton!
@@ -62,22 +64,21 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
 
                     
                     self.paymentInfo.CardNumber = temp1.card.CardNumber
-                    self.paymentInfo.ExpiryDate = temp1.card.ExpiryDate
-                
-                
+                    self.paymentInfo.ExpiryMonth = temp1.card.ExpiryMonth
+                    self.paymentInfo.ExpiryYear = temp1.card.ExpiryYear
+
                     self.dataSource.sourceObject = self.paymentInfo
                 
 
                     self.dataSource["CardNumber"].hintText = "Card Number"
                     self.dataSource["CardNumber"].editorClass = TKDataFormPhoneEditor.self
                 
-                    let DateFormatter = NSDateFormatter()
-                    DateFormatter.dateFormat = "MM/yyyy";
-                
-                    self.dataSource["ExpiryDate"].editorClass = TKDataFormDatePickerEditor.self
-                    self.dataSource["ExpiryDate"].formatter = DateFormatter
-                
-                
+                    self.dataSource["ExpiryMonth"].editorClass = TKDataFormNumberEditor.self
+                    self.dataSource["ExpiryMonth"].hintText = "MM"
+
+                    self.dataSource["ExpiryYear"].editorClass = TKDataFormNumberEditor.self
+                    self.dataSource["ExpiryYear"].hintText = "yyyy"
+
                     self.dataForm1 = TKDataForm(frame: self.subView.bounds)
                     self.dataForm1.delegate = self
                     self.dataForm1.dataSource = self.dataSource
@@ -95,9 +96,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                 {
                     LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
                     self.isError = true
-                    self.bt_Continue.setTitle("Make a Payment", forState: UIControlState.Normal)
-                    
-
+                    self.bt_Continue.setTitle("Finish", forState: UIControlState.Normal)
                 }
             }
             else
@@ -165,24 +164,73 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                         
                     }
                 }
-                else
-                    if (propery.name == "ExpiryDate") {
-                        
-                        let value = propery.valueCandidate as! NSDate
-                        
-                        
-                        let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
-                        
-                        if(value.isLessThanDate(firstDate)){
-                            dataSource["ExpiryDate"].errorMessage = "Expire month must be greater than current month"
-                            self.validate2 = false
-                            return self.validate2
-                        }
-                        
-                        
-                        self.validate2 = true
-
+        if (propery.name == "ExpiryMonth") {
+            
+            
+            let monthValue = propery.valueCandidate as! Int
+            let yearValue = self.dataSource["ExpiryYear"].valueCandidate as! Int
+            
+            let date = NSDate()
+            let calendar = NSCalendar.currentCalendar()
+            let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+            
+            let currentYear =  components.year
+            let currentMonth = components.month
+            
+            if(yearValue < currentYear){
+                dataSource["ExpiryYear"].errorMessage = "Expire year must be later than or equal this year"
+                self.validate2 = false
+                return self.validate2
+            }
+            else if(yearValue == currentYear)
+            {
+                if(monthValue < currentMonth){
+                    dataSource["ExpiryMonth"].errorMessage = "Expire month must be later than or equal this month"
+                    self.validate2 = false
+                    return self.validate2
                 }
+                else if(monthValue > 12)
+                {
+                    dataSource["ExpiryMonth"].errorMessage = "Invalid month"
+                    self.validate2 = false
+                    return self.validate2
+                }
+            }
+            else if(yearValue > currentYear)
+            {
+                if(monthValue > 12)
+                {
+                    dataSource["ExpiryMonth"].errorMessage = "Invalid month"
+                    self.validate2 = false
+                    return self.validate2
+                }
+            }
+            
+            self.validate2 = true
+        }
+        else
+            if (propery.name == "ExpiryYear") {
+                
+                let yearValue = propery.valueCandidate as! Int
+                
+                let date = NSDate()
+                let calendar = NSCalendar.currentCalendar()
+                let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+                
+                let currentYear =  components.year
+                
+                if(yearValue < currentYear){
+                    dataSource["ExpiryYear"].errorMessage = "Expire year must be later than or equal this year"
+                    dataSource["ExpiryMonth"].errorMessage = ""
+                    
+                    self.validate3 = false
+                    return self.validate3
+                }
+                
+                self.validate3 = true
+                
+                
+        }
 
 
         return true
@@ -194,7 +242,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
         
             self.dataForm1.commit()
             
-            self.isFormValidate = self.validate1 && self.validate2
+            self.isFormValidate = self.validate1 && self.validate2 && self.validate3
             
             if(!self.isFormValidate){
                 
@@ -206,7 +254,10 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
             let paymentInfo = PaymentInfo()
             
             paymentInfo.card.CardNumber         = self.dataSource["CardNumber"].valueCandidate as! String
-            paymentInfo.card.ExpiryDate         = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
+            
+            paymentInfo.card.ExpiryMonth     = self.dataSource["ExpiryMonth"].valueCandidate as! Int
+            
+            paymentInfo.card.ExpiryYear     = self.dataSource["ExpiryYear"].valueCandidate as! Int
             
             paymentInfo.RecType = "CC"
             
@@ -237,10 +288,8 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
         }
         else
         {
-            
-            SetPayment.SetPayment(4)
-
-            self.performSegueWithIdentifier("GoToCreditCard", sender: nil)
+    
+            navigationController?.popViewControllerAnimated(true)
 
         }
     }
@@ -249,7 +298,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Your credit card has been updated successfully."
+            controller.message = "Your credit card has been updated successfully"
             
         }
     }

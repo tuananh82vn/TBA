@@ -33,6 +33,9 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
         super.viewDidLoad()
         
+        self.view_NoArrangement.hidden = true
+        self.view_NoArrangement.userInteractionEnabled = false
+        
         loadData()
         
     }
@@ -51,15 +54,20 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 if(temp1.IsSuccess)
                 {
                     
+                    
+                    //Format number
+                    let formatter = NSNumberFormatter()
+                    formatter.numberStyle = .CurrencyStyle
+                    
                     self.view_NoArrangement.hidden = true
                     self.view_NoArrangement.userInteractionEnabled = false
                     
-                    self.lbl_ArrangeAmount.text = "$"+temp1.ArrangeAmount.description
+                    self.lbl_ArrangeAmount.text =  formatter.stringFromNumber(temp1.ArrangeAmount)
                     self.lbl_Frequency.text = temp1.Frequency
                     self.lbl_NextPayDate.text = temp1.NextInstalmentDate
-                    self.lbl_Overdue.text = "$"+temp1.OverdueAmount.description
-                    self.lbl_Paid.text = "$"+temp1.PaidAmount.description
-                    self.lbl_Remaining.text = "$"+temp1.LeftToPay.description
+                    self.lbl_Overdue.text = formatter.stringFromNumber(temp1.OverdueAmount)
+                    self.lbl_Paid.text = formatter.stringFromNumber(temp1.PaidAmount)
+                    self.lbl_Remaining.text = formatter.stringFromNumber(temp1.LeftToPay)
                     self.lbl_Status.text = temp1.Status
                     
                     LocalStore.setTotalPaid(temp1.PaidAmount.description)
@@ -78,7 +86,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             else
             {
                 // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error", message: "Server not found", preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
                     UIAlertAction in

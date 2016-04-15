@@ -142,7 +142,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let value = propery.valueCandidate.description
             if (value.length <= 0)
             {
-                dataSource["FirstAmount"].errorMessage = "Please enter 1st payment instalment."
+                dataSource["FirstAmount"].errorMessage = "Please enter 1st payment instalment"
                 self.validate1 = false
                 return self.validate1
 
@@ -152,7 +152,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             
             if (floatValue < 10)
             {
-                dataSource["FirstAmount"].errorMessage = "1st payment should be greater than or equal to $10."
+                dataSource["FirstAmount"].errorMessage = "1st payment should be greater than or equal to $10"
                 self.validate1 = false
                 return self.validate1
             }
@@ -168,7 +168,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let Maxdate = NSDate().addDays(7)
                 
                 if(value.isGreaterThanDate(Maxdate)){
-                    dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next seven days."
+                    dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next 7 days"
                     self.validate2 = false
                     return self.validate2
 
@@ -177,7 +177,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
                 
                 if(value.isLessThanDate(firstDate)){
-                    dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next seven days."
+                    dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next 7 days"
                     self.validate2 = false
                     return self.validate2
                 }
@@ -190,7 +190,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let value = propery.valueCandidate.description
             if (value.length <= 0)
             {
-                dataSource["SecondAmount"].errorMessage = "Please enter 2nd payment instalment."
+                dataSource["SecondAmount"].errorMessage = "Please enter 2nd payment instalment"
                 self.validate3 = false
                 return self.validate3
                 
@@ -200,7 +200,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             
             if (floatValue < 10)
             {
-                dataSource["SecondAmount"].errorMessage = "2nd payment should be greater than or equal to $10."
+                dataSource["SecondAmount"].errorMessage = "2nd payment should be greater than or equal to $10"
                 self.validate3 = false
                 return self.validate3
             }
@@ -219,19 +219,19 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let Maxdate = firstDate.addDays(14)
 
                 if(value.isLessThanDate(firstDate)){
-                    dataSource["SecondDate"].errorMessage = "2nd payment date must be greater than 1st instalment date."
+                    dataSource["SecondDate"].errorMessage = "2nd payment date must be later than 1st instalment date"
                     self.validate4 = false
                     return self.validate4
                 }
                 
                 if(value.equalToDate(firstDate)){
-                    dataSource["SecondDate"].errorMessage = "2nd payment date must be greater than 1st instalment date."
+                    dataSource["SecondDate"].errorMessage = "2nd payment date must be later than 1st instalment date"
                     self.validate4 = false
                     return self.validate4
                 }
                 
                 if(value.isGreaterThanDate(Maxdate)){
-                    dataSource["SecondDate"].errorMessage = "Maximum between 2 payments is 14 days"
+                    dataSource["SecondDate"].errorMessage = "Maximum time between two payments is 14 days"
                     self.validate4 = false
                     return self.validate4
                     
@@ -247,7 +247,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let value = propery.valueCandidate.description
                 if (value.length <= 0)
                 {
-                    dataSource["ThirdAmount"].errorMessage = "Please enter 3rd payment instalment."
+                    dataSource["ThirdAmount"].errorMessage = "Please enter 3rd payment instalment"
                     self.validate5 = false
                     return self.validate5
                     
@@ -257,7 +257,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
                 if (floatValue < 10)
                 {
-                    dataSource["ThirdAmount"].errorMessage = "3rd payment should be greater than or equal to $10."
+                    dataSource["ThirdAmount"].errorMessage = "3rd payment should be greater than or equal to $10.00"
                     self.validate5 = false
                     return self.validate5
                 }
@@ -276,13 +276,13 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                     let Maxdate = secondDate.addDays(14)
                     
                     if(value.isLessThanDate(secondDate)){
-                        dataSource["ThirdDate"].errorMessage = "3rd payment date must be greater than 2nd instalment date."
+                        dataSource["ThirdDate"].errorMessage = "3rd payment date must be after the 2nd instalment date"
                         self.validate6 = false
                         return self.validate6
                     }
                     
                     if(value.equalToDate(secondDate)){
-                        dataSource["ThirdDate"].errorMessage = "3rd payment date must be greater than 2nd instalment date."
+                        dataSource["ThirdDate"].errorMessage = "3rd payment date must be after the 2nd instalment date"
                         self.validate6 = false
                         return self.validate6
                     }
@@ -371,13 +371,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         if(totalAmount != LocalStore.accessTotalOutstanding()){
             
-
-            // create the alert
-//            let alert = SCLAlertView()
-//            alert.hideWhenBackgroundViewIsTapped = true
-//            alert.showError("Error", subTitle:"Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")")
+            //Format number
             
-            LocalStore.Alert(self.view, title: "Error", message: "Invalid total 'Instalment Amount' ($" + LocalStore.accessTotalOutstanding().description + ")", indexPath: 0)
+            LocalStore.Alert(self.view, title: "Error", message: "Instalment Amount total is not valid", indexPath: 0)
         }
         
         self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6

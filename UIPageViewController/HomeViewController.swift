@@ -12,6 +12,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     @IBOutlet weak var lbl_outstanding: UILabel!
     @IBOutlet weak var lbl_nextinstalment: UILabel!
     
+    @IBOutlet weak var lbl_labelNextInstalment: UILabel!
     @IBOutlet weak var view_Chart: UIView!
     
     
@@ -63,11 +64,26 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         //----------------------------------------------------//
 
 
-        setupButton(LocalStore.accessDeviceName());
+        setupButton(LocalStore.accessDeviceName())
         
-        self.lbl_refnumber.text = LocalStore.accessRefNumber();
-        self.lbl_outstanding.text = "$"+LocalStore.accessTotalOutstanding().description;
-        self.lbl_nextinstalment.text = "$"+LocalStore.accessNextPaymentInstallment()!
+        self.lbl_refnumber.text = LocalStore.accessRefNumber()
+        
+        //Format number
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .CurrencyStyle
+
+        self.lbl_outstanding.text = formatter.stringFromNumber(LocalStore.accessTotalOutstanding())
+        if(LocalStore.accessNextPaymentInstallment() > 0 ){
+            self.lbl_labelNextInstalment.hidden = false
+            self.lbl_nextinstalment.text = formatter.stringFromNumber(LocalStore.accessNextPaymentInstallment())
+        }
+        else
+        {
+            self.lbl_labelNextInstalment.hidden = true
+            self.lbl_nextinstalment.text = ""
+        }
+        
+        
         
         SetPayment.SetPayment(0)
         
@@ -328,9 +344,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         }
         else
         {
-            
-            LocalStore.Alert(self.view, title: "Error", message: "This debtor doesn't have permission to view arrangement.", indexPath: 0)
-
+            LocalStore.Alert(self.view, title: "Error", message: "You don't have permission to view this arrangement", indexPath: 0)
         }
     }
     

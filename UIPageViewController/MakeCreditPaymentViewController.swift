@@ -67,24 +67,23 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         
 
         dataSource["NameOnCard"].hintText = "Name On Card"
-        dataSource["NameOnCard"].errorMessage = "Please input name"
+        dataSource["NameOnCard"].errorMessage = "Please enter name"
 
         dataSource["CardNumber"].hintText = "Card Number"
         dataSource["CardNumber"].editorClass = TKDataFormPhoneEditor.self
-        dataSource["CardNumber"].errorMessage = "Please input card number"
+        dataSource["CardNumber"].errorMessage = "Please enter card number"
 
         dataSource["Cvv"].hintText = "Card Security Code"
-        dataSource["Cvv"].editorClass = TKDataFormPhoneEditor.self
-        dataSource["Cvv"].errorMessage = "Please input CVV"
+        dataSource["Cvv"].editorClass = TKDataFormNumberEditor.self
+        dataSource["Cvv"].errorMessage = "Please enter CVV"
+        dataSource["Cvv"].displayName = "CVV"
 
         dataSource["DebtorPaymentInstallment"].hidden = true
+        dataSource["ExpiryDate"].hidden = true
+
         
-        
-        let DateFormatter = NSDateFormatter()
-        DateFormatter.dateFormat = "MM/yyyy";
-        
-        dataSource["ExpiryDate"].editorClass = TKDataFormDatePickerEditor.self
-        dataSource["ExpiryDate"].formatter = DateFormatter
+        dataSource["ExpiryMonth"].editorClass = TKDataFormNumberEditor.self
+        dataSource["ExpiryYear"].editorClass = TKDataFormNumberEditor.self
 
         
         dataForm1 = TKDataForm(frame: self.subView.bounds)
@@ -143,7 +142,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             if (floatValue <= 10)
             {
-                dataSource["Amount"].errorMessage = "Payment amount is less than minimum required"
+                dataSource["Amount"].errorMessage = "Payment amount is less than the minimum required"
                 self.validate1 = false
                 return self.validate1
 
@@ -151,7 +150,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             else
                 if (Double(floatValue.description) > LocalStore.accessTotalOutstanding())
                 {
-                    dataSource["Amount"].errorMessage = "Payment amount must be less than outstanding amount"
+                    dataSource["Amount"].errorMessage = "Payment amount must be less than the outstanding amount"
                     self.validate1 = false
                     return self.validate1
                     
@@ -190,7 +189,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
                     
                     if decimalRange1 != nil {
                         
-                        dataSource["NameOnCard"].errorMessage = "Invalid 'Name On Card'"
+                        dataSource["NameOnCard"].errorMessage = "Name On Card is not valid"
                         self.validate2 = false
                         return self.validate2
                     }
@@ -200,7 +199,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             }
             else {
                 
-                dataSource["NameOnCard"].errorMessage = "Invalid 'Name On Card'"
+                dataSource["NameOnCard"].errorMessage = "Name On Card is not valid"
                 self.validate2 = false
                 return self.validate2
             }
@@ -266,22 +265,72 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
         }
         else
-            if (propery.name == "ExpiryDate") {
+            if (propery.name == "ExpiryMonth") {
                 
-                let value = propery.valueCandidate as! NSDate
                 
+                let monthValue = propery.valueCandidate as! Int
+                let yearValue = self.dataSource["ExpiryYear"].valueCandidate as! Int
+                
+                let date = NSDate()
+                let calendar = NSCalendar.currentCalendar()
+                let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+                
+                let currentYear =  components.year
+                let currentMonth = components.month
 
-                let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
-                
-                if(value.isLessThanDate(firstDate)){
-                    dataSource["ExpiryDate"].errorMessage = "Expire month must be greater than this month"
+                if(yearValue < currentYear){
+                    dataSource["ExpiryYear"].errorMessage = "Expire year must be later than or equal this year"
                     self.validate5 = false
                     return self.validate5
                 }
-
+                else if(yearValue == currentYear)
+                {
+                    if(monthValue < currentMonth){
+                        dataSource["ExpiryMonth"].errorMessage = "Expiry month must be later than this month"
+                        self.validate5 = false
+                        return self.validate5
+                    }
+                    else if(monthValue > 12)
+                    {
+                        dataSource["ExpiryMonth"].errorMessage = "Expiry Month is not valid"
+                        self.validate5 = false
+                        return self.validate5
+                    }
+                }
+                else if(yearValue > currentYear)
+                {
+                    if(monthValue > 12)
+                    {
+                        dataSource["ExpiryMonth"].errorMessage = "Expiry Month is not valid"
+                        self.validate5 = false
+                        return self.validate5
+                    }
+                }
                 
                 self.validate5 = true
-                
+        }
+            else
+                if (propery.name == "ExpiryYear") {
+                    
+                    let yearValue = propery.valueCandidate as! Int
+                    
+                    let date = NSDate()
+                    let calendar = NSCalendar.currentCalendar()
+                    let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+                    
+                    let currentYear =  components.year
+                    
+                    if(yearValue < currentYear){
+                        dataSource["ExpiryYear"].errorMessage = "Expire year must be later than or equal this year"
+                        dataSource["ExpiryMonth"].errorMessage = ""
+
+                        self.validate6 = false
+                        return self.validate6
+                    }
+                    
+                    self.validate6 = true
+
+
         }
         return true
     }
@@ -291,7 +340,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         self.dataForm1.commit()
 
-        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5
+        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
         
         if(!self.isFormValidate){
             
@@ -304,8 +353,11 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         cardObject.Amount       = self.dataSource["Amount"].valueCandidate.doubleValue
         cardObject.CardNumber   = self.dataSource["CardNumber"].valueCandidate as! String
-        cardObject.ExpiryDate   = self.dataSource["ExpiryDate"].valueCandidate as! NSDate
-        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
+        
+        cardObject.ExpiryMonth     = self.dataSource["ExpiryMonth"].valueCandidate as! Int
+        cardObject.ExpiryYear     = self.dataSource["ExpiryYear"].valueCandidate as! Int
+
+        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! Int
         cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
         cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
         

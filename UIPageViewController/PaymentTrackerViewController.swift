@@ -27,14 +27,12 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         super.viewDidLoad()
         
         initData()
-                
 
-        // Do any additional setup after loading the view.
     }
     
     func initData(){
         
-        WebApiService.GetDebtorInfo(LocalStore.accessRefNumber()!) { objectReturn in
+        WebApiService.GetDebtorPaymentHistory(LocalStore.accessRefNumber()!) { objectReturn in
             
             if let temp1 = objectReturn
             {
@@ -57,14 +55,14 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                     self.tableView.reloadData()
 
                 }
+                else
+                {
+                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+
+                }
             }
             else
             {
-                
-                // create the alert
-//                let alert = SCLAlertView()
-//                alert.hideWhenBackgroundViewIsTapped = true
-//                alert.showError("Error", subTitle:"Server not found.")
                 
                   LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
                 
@@ -113,7 +111,6 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
@@ -127,10 +124,51 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         
         let cell1 = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! PaymentTrackerViewCell
         
-        cell1.lb_Amount.text = "$ " + self.paymentTrackerRecord[indexPath.row].Amount
+        
+        //Format number
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .CurrencyStyle
+        
+        cell1.lb_Amount.text = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
         
         cell1.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
         
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
+        let DueDate = dateFormatter.dateFromString(self.paymentTrackerRecord[indexPath.row].DueDate)
+        
+        let CurrentDate = NSDate()
+        
+        let Amount = self.paymentTrackerRecord[indexPath.row].Amount.doubleValue
+        
+        if( segmentedControl.selectedSegmentIndex == 0 )
+        {
+                if(DueDate!.isLessThanDate(CurrentDate)){
+                
+                    cell1.img_Status.image = UIImage(named: "circle_red")
+                }
+                else
+                {
+                    cell1.img_Status.image = nil
+                }
+        }
+        else
+        {
+                if(Amount <= 0){
+                    
+                    cell1.img_Status.image = UIImage(named: "circle_red")
+                }
+                else if(Amount < LocalStore.accessNextPaymentInstallment())
+                {
+                    cell1.img_Status.image = UIImage(named: "circle_red")
+                }
+                else
+                {
+                    cell1.img_Status.image = UIImage(named: "circle_blue")
+                }
+        }
+
         
         return cell1
         

@@ -63,18 +63,20 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                         self.dataSource.sourceObject = self.bankInfo
                         
                         self.dataSource["Amount"].hidden = true
-                        self.dataSource["Bsb"].hidden = true
+                        self.dataSource["BSB"].hidden = true
                         self.dataSource["DebtorPaymentInstallment"].hidden = true
 
                         
                         self.dataSource["AccountName"].index = 0
                         
-                        self.dataSource["Bsb1"].editorClass = TKDataFormPhoneEditor.self
-                        self.dataSource["Bsb1"].index = 1
-                        
-                        self.dataSource["Bsb2"].editorClass = TKDataFormPhoneEditor.self
-                        self.dataSource["Bsb2"].index = 2
-                        
+                        self.dataSource["BSB1"].editorClass = TKDataFormPhoneEditor.self
+                        self.dataSource["BSB1"].index = 1
+                        self.dataSource["BSB1"].displayName = "BSB 1"
+
+                        self.dataSource["BSB2"].editorClass = TKDataFormPhoneEditor.self
+                        self.dataSource["BSB2"].index = 2
+                        self.dataSource["BSB2"].displayName = "BSB 2"
+
                         self.dataSource["AccountNumber"].editorClass = TKDataFormPhoneEditor.self
                         self.dataSource["AccountNumber"].index = 3
                         
@@ -98,7 +100,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                         
                         LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
                         self.isError = true
-                        self.bt_Continue.setTitle("Make a Payment", forState: UIControlState.Normal)
+                        self.bt_Continue.setTitle("Finish", forState: UIControlState.Normal)
                     }
                     
                 
@@ -123,15 +125,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
-        
-    }
     
-    func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {
-    }
-    
-    func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
-    }
     
     func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
@@ -142,7 +136,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
             
             if (value.length <= 0)
             {
-                dataSource["AccountName"].errorMessage = "Please enter 'Account Name'"
+                dataSource["AccountName"].errorMessage = "Please enter Account Name"
                 self.validate2 = false
                 return self.validate2
             }
@@ -166,7 +160,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                     
                     if decimalRange1 != nil {
                         
-                        dataSource["AccountName"].errorMessage = "Invalid 'Account Name'"
+                        dataSource["AccountName"].errorMessage = "Account Name is not valid"
                         self.validate2 = false
                         return self.validate2
                     }
@@ -176,7 +170,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
             }
             else {
                 
-                dataSource["AccountName"].errorMessage = "Invalid 'Account Name'"
+                dataSource["AccountName"].errorMessage = "Account Name is not valid"
                 self.validate2 = false
                 return self.validate2
             }
@@ -184,20 +178,20 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
             self.validate2 = true
         }
         else
-            if (propery.name == "Bsb1") {
+            if (propery.name == "BSB1") {
                 
                 let value = propery.valueCandidate as! NSString
                 
                 if (value.length <= 0)
                 {
-                    dataSource["Bsb1"].errorMessage = "Please input Bsb 1"
+                    dataSource["BSB1"].errorMessage = "Please enter BSB 1"
                     self.validate3 = false
                     return self.validate3
                 }
                 else
                     if (value.length > 3 || value.length < 3)
                     {
-                        dataSource["Bsb1"].errorMessage = "The 'BSB' number 1 is invalid"
+                        dataSource["BSB1"].errorMessage = "The BSB number 1 is not valid"
                         self.validate3 = false
                         return self.validate3
                 }
@@ -206,21 +200,21 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                 
             }
             else
-                if (propery.name == "Bsb2") {
+                if (propery.name == "BSB2") {
                     
                     let value = propery.valueCandidate as! NSString
                     
                     if (value.length <= 0)
                     {
                         
-                        dataSource["Bsb2"].errorMessage = "Please input Bsb 2"
+                        dataSource["BSB2"].errorMessage = "Please entter BSB 2"
                         self.validate4 = false
                         return self.validate4
                     }
                     else
                         if (value.length > 3 || value.length < 3)
                         {
-                            dataSource["Bsb2"].errorMessage = "The 'BSB' number 2 is invalid"
+                            dataSource["BSB2"].errorMessage = "The BSB number 2 is not valid"
                             self.validate4 = false
                             return self.validate4
                     }
@@ -234,14 +228,14 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                         
                         if (value.length <= 0)
                         {
-                            dataSource["AccountNumber"].errorMessage = "Please enter 'Account Number'"
+                            dataSource["AccountNumber"].errorMessage = "Please enter Account Number"
                             self.validate5 = false
                             return self.validate5
                         }
                         else
                             if (value.length > 15 || value.length < 5)
                             {
-                                dataSource["AccountNumber"].errorMessage = "'Account Number' should be from 5 to 15 numeric characters in length"
+                                dataSource["AccountNumber"].errorMessage = "Account Number should be from 5 to 15 numeric characters in length"
                                 self.validate5 = false
                                 return self.validate5
                         }
@@ -273,7 +267,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
             
             paymentInfo.bank.AccountName        = self.dataSource["AccountName"].valueCandidate.description
             paymentInfo.bank.AccountNumber      = self.dataSource["AccountNumber"].valueCandidate.description
-            paymentInfo.bank.Bsb                = self.dataSource["Bsb1"].valueCandidate.description + self.dataSource["Bsb2"].valueCandidate.description
+            paymentInfo.bank.BSB                = self.dataSource["BSB1"].valueCandidate.description + self.dataSource["BSB2"].valueCandidate.description
             
             paymentInfo.RecType = "DD"
             
@@ -307,9 +301,8 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         else
         {
             
-            SetPayment.SetPayment(4)
-            
-            self.performSegueWithIdentifier("GoToCreditCard", sender: nil)
+            navigationController?.popViewControllerAnimated(true)
+
             
         }
         
@@ -319,7 +312,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Your bank account has been updated successfully."
+            controller.message = "Your bank account has been updated successfully"
             
         }
     }

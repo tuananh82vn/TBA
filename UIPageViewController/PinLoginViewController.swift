@@ -99,7 +99,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         alert.addButton("No") {
             self.tf_Pin0.becomeFirstResponder()
         }
-        alert.showWarning("", subTitle: "The app will be reseted , you will need to setup and verify it again. Continue ?")
+        alert.showWarning("", subTitle: "Recoveriesconnect will be reset - you will need to verify and set up again. Continue?")
         
         
     }
@@ -139,13 +139,13 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
                 numberOfIncorrect  = numberOfIncorrect + 1
                 if(numberOfIncorrect == 10)
                 {
-                    LocalStore.Alert(self.view, title: "Error", message: "App has been reseted after 10 attempts.", indexPath: 0)
+                    LocalStore.Alert(self.view, title: "Error", message: "10 failed PIN attempts - recoveriesconnect has been reset", indexPath: 0)
 
                     self.resetDevice()
                 }
                 else
                 {
-                    LocalStore.Alert(self.view, title: "Error", message: "Your PIN is incorrect. Please try again.", indexPath: 0)
+                    LocalStore.Alert(self.view, title: "Error", message: "Entered PIN is incorrect - please try again", indexPath: 0)
                 
                     self.resetText()
                 }

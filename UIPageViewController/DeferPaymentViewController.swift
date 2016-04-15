@@ -122,8 +122,8 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             if(self.paymentTrackerRecord[self.selectedIndex].Defer == "" || self.paymentTrackerRecord[self.selectedIndex].Defer == "0.00")
             {
                 if(self.TotalDefer == self.TotalNewUsed){
-                    
-                    JLToast.makeText("No more deferred allow.", duration: JLToastDelay.ShortDelay).show()
+
+                    LocalStore.Alert(self.view, title: "Error", message: "No more deferrals allowed", indexPath: 0)
 
                 }
                 else
@@ -143,7 +143,8 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             }
             else
             {
-                JLToast.makeText("This payment is already deferred.", duration: JLToastDelay.ShortDelay).show()
+                LocalStore.Alert(self.view, title: "Error", message: "This payment is already deferred", indexPath: 0)
+
             }
         }
         
@@ -315,7 +316,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Your defer payment has been setup successfully."
+            controller.message = "Your defer payment has been setup successfully"
             
         }
     }
