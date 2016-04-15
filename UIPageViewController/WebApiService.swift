@@ -456,21 +456,21 @@ struct WebApiService {
                     JsonReturn.IsAllowMonthlyInstallment = IsAllowMonthlyInstallment
                 }
                 
-//                if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
-//                    
-//                    let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
-//                    
-//                    JsonReturn.HistoryList = HistoryList
-//                    
-//                }
-//                
-//                if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
-//                    
-//                    let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
-//                    
-//                    JsonReturn.ScheduleList = ScheduleList
-//                    
-//                }
+                if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
+                    
+                    let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                    
+                    JsonReturn.HistoryList = HistoryList
+                    
+                }
+
+                if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
+                    
+                    let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                    
+                    JsonReturn.ScheduleList = ScheduleList
+                    
+                }
                 
                 if let coDebtorCode = jsonObject["CoDebtorCode"].arrayObject {
                     

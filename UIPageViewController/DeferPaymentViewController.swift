@@ -29,7 +29,6 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
 
     @IBOutlet weak var lb_Message: UILabel!
     
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -64,7 +63,31 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             {
                 if(temp1.IsSuccess)
                 {
-                    self.HistoryList = temp1.HistoryList
+                    
+                    
+                    //Do filtering
+                    for historyItem in temp1.HistoryList {
+                        
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "dd/MM/yyyy"
+                        
+                        let DueDate = dateFormatter.dateFromString(historyItem.DueDate)
+                        
+                        let CurrentDate = NSDate()
+                        
+                        if(DueDate!.isLessThanDate(CurrentDate)){
+                        
+                            if(historyItem.Defer.doubleValue > 0 )
+                            {
+                                self.HistoryList.append(historyItem)
+                            }
+                        }
+                        else
+                        {
+                            self.HistoryList.append(historyItem)
+                        }
+                        
+                    }
                     
                     self.TotalDefer = temp1.TotalDefer
                     
@@ -199,9 +222,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     
 
     func listView(listView: TKListView, didFinishSwipeCell cell: TKListViewCell, atIndexPath indexPath: NSIndexPath, withOffset offset: CGPoint) {
-        
-//        print("Swiped cell at indexPath: %d", indexPath.row)
-        
+                
         self.selectedIndex = indexPath.row
         
         
@@ -219,9 +240,26 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
         
         let cell = listView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! DeferPaymentViewCell
         
-        cell.lb_Amount.text = "$ " + self.paymentTrackerRecord[indexPath.row].Amount
+        
+        
+        //Format number
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .CurrencyStyle
+
+        cell.lb_Amount.text = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
         cell.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
         cell.lb_Defer.text = self.paymentTrackerRecord[indexPath.row].Defer
+        
+        if(self.paymentTrackerRecord[indexPath.row].Defer.doubleValue > 0  || self.paymentTrackerRecord[indexPath.row].Defer == "Deferred") {
+            cell.img_Status.image = UIImage(named: "circle_red")
+        }
+        else
+        {
+            cell.img_Status.image = UIImage(named: "circle_blue")
+        }
+        
+        
+        
         
         if(cell.swipeBackgroundView.subviews.count == 0){
             let size = cell.frame.size
