@@ -23,7 +23,10 @@ struct WebApiService {
         case DeferPayment
         case GetDebtorAdditionalInfor
         case GetDebtorPaymentHistory
-
+        case GetWelcomeMessage
+        case SendAppDetails
+        case GetInboxItems
+        
         var description: String {
             switch self {
                 case .Verify: return "/Api/Verify"
@@ -44,7 +47,9 @@ struct WebApiService {
                 case .ArrangeDetail: return "/Api/GetArrangeDetails"
                 case .DeferPayment : return "/Api/DeferPayment"
                 case .GetDebtorPaymentHistory : return "/Api/GetDebtorPaymentHistory"
-
+                case .GetWelcomeMessage: return "/Api/GetWelcomeMessage"
+                case .SendAppDetails: return "/Api/SendAppDetails"
+                case .GetInboxItems: return "/Api/GetInboxItems"
             }
         }
     }
@@ -209,6 +214,41 @@ struct WebApiService {
         
     }
     
+    static func getWelcomeMessage(response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetWelcomeMessage.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+
+        
+        
+        Alamofire.request(.POST, urlString, parameters: nil, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
     static func verifyNetCode(ReferenceNumber: String, Netcode: String, response : (objectReturn : JsonReturnModel?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.VerifyNetCode.description
@@ -570,7 +610,58 @@ struct WebApiService {
         }
     }
     
-    
+    static func GetInboxItems(ReferenceNumber: String, response : (objectReturn : InboxItemList?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetInboxItems.description
+        
+        let JsonReturn = InboxItemList()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                }
+                
+                if let tempHistoryList = jsonObject["InboxList"].arrayObject {
+                    
+                    let HistoryList = JSONParser.parseInboxList(tempHistoryList)
+                    
+                    JsonReturn.InboxList = HistoryList
+                    
+                }
+
+                if let Errors = jsonObject["Error"].string {
+                    
+                    let er = Error()
+                    
+                    er.ErrorMessage = Errors
+                    
+                    JsonReturn.Errors.append(er)
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
     static func GetDebtorPaymentHistory(ReferenceNumber: String, response : (objectReturn : DebtorInfo?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorPaymentHistory.description
@@ -1389,5 +1480,53 @@ struct WebApiService {
             
         }
     }
+    
+    static func sendAppDetail(ReferenceNumber: String, PinNumber: String, DeviceToken: String, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SendAppDetails.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber,
+                "PinNumber": PinNumber,
+                "DeviceToken": DeviceToken
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
 
 }

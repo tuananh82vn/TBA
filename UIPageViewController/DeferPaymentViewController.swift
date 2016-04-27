@@ -6,9 +6,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     @IBOutlet weak var subView: UIView!
     
     @IBOutlet weak var btDefer: UIButton!
-    
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    
+
     var listView = TKListView()
     
     let dataSource = TKDataSource()

@@ -77,6 +77,10 @@
 		C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */; };
 		C7B6B3761C76E389008D670C /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B6B3751C76E389008D670C /* SCLAlertView.swift */; };
 		C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */; };
+		C7BB33BE1CD0424F00BEFA31 /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */; };
+		C7BB33C01CD0466500BEFA31 /* InboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */; };
+		C7BB33C21CD047C300BEFA31 /* InboxItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33C11CD047C300BEFA31 /* InboxItemViewCell.swift */; };
+		C7BB33C41CD0743C00BEFA31 /* ThirdParty in Resources */ = {isa = PBXBuildFile; fileRef = C7BB33C31CD0743C00BEFA31 /* ThirdParty */; };
 		C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351BE1C155A2600315A47 /* DeviceDetect.swift */; };
 		C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C21C1660A500315A47 /* CardInfo.swift */; };
 		C7E351C51C167A6400315A47 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C41C167A6400315A47 /* String.swift */; };
@@ -183,6 +187,10 @@
 		C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		C7B6B3751C76E389008D670C /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDebtorController.swift; sourceTree = "<group>"; };
+		C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItem.swift; sourceTree = "<group>"; };
+		C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxViewController.swift; sourceTree = "<group>"; };
+		C7BB33C11CD047C300BEFA31 /* InboxItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItemViewCell.swift; sourceTree = "<group>"; };
+		C7BB33C31CD0743C00BEFA31 /* ThirdParty */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThirdParty; sourceTree = "<group>"; };
 		C7E351BE1C155A2600315A47 /* DeviceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetect.swift; sourceTree = "<group>"; };
 		C7E351C21C1660A500315A47 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
 		C7E351C41C167A6400315A47 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -258,6 +266,7 @@
 				C783D0651C111B8000AE7265 /* UIControl */,
 				C7ABFCC11BEB0451009BCE1E /* Utility */,
 				C783D05A1C0FFC7400AE7265 /* Services */,
+				C7BB33C31CD0743C00BEFA31 /* ThirdParty */,
 				78E75F3F1AC5FC48001A93F1 /* Supporting Files */,
 			);
 			path = UIPageViewController;
@@ -364,6 +373,7 @@
 				C7A216091C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift */,
 				C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */,
 				C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */,
+				C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -399,6 +409,7 @@
 				C7E6B0161BF0662E00D60EC1 /* PaymentTrackerViewCell.swift */,
 				C7E6B0231BF15AA900D60EC1 /* CustomTelrikViewCell.swift */,
 				C797D6401C75568D0083CD88 /* DeferPaymentViewCell.swift */,
+				C7BB33C11CD047C300BEFA31 /* InboxItemViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -424,6 +435,7 @@
 				C797D6381C72D0DC0083CD88 /* CoDebtor.swift */,
 				C797D6421C7589780083CD88 /* DeferPayment.swift */,
 				C77E1CF71C7ACF00004AAEFF /* DebtorDetail.swift */,
+				C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -492,6 +504,11 @@
 					78E75F3B1AC5FC48001A93F1 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = DENR28CDY6;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					78E75F501AC5FC48001A93F1 = {
 						CreatedOnToolsVersion = 6.2;
@@ -524,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E75F471AC5FC48001A93F1 /* Main.storyboard in Resources */,
+				C7BB33C41CD0743C00BEFA31 /* ThirdParty in Resources */,
 				78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */,
 				78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */,
 			);
@@ -608,6 +626,7 @@
 				C797D63B1C7404A80083CD88 /* CreditCardValidationType.swift in Sources */,
 				C798DD481CBF58B2002F3E7E /* MyPhoneEditor.swift in Sources */,
 				C77E1CF41C7AAE03004AAEFF /* JLToastWindow.swift in Sources */,
+				C7BB33BE1CD0424F00BEFA31 /* InboxItem.swift in Sources */,
 				C797D6371C72CCA30083CD88 /* VerifyCoDebtorViewController.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
 				C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */,
@@ -618,6 +637,7 @@
 				C797D63F1C7533990083CD88 /* DeferPaymentViewController.swift in Sources */,
 				C77E1CF81C7ACF00004AAEFF /* DebtorDetail.swift in Sources */,
 				C77E1CF11C7AAE03004AAEFF /* JLToast.swift in Sources */,
+				C7BB33C21CD047C300BEFA31 /* InboxItemViewCell.swift in Sources */,
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
 				C77E1CF61C7ABB49004AAEFF /* VerifyDetailCoDebtorViewController.swift in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
@@ -630,6 +650,7 @@
 				C7A216041C1E80EB008A03A7 /* ThreePartPayment.swift in Sources */,
 				C7A216061C1E90CA008A03A7 /* UpdateCreditCardViewController.swift in Sources */,
 				C797D6411C75568D0083CD88 /* DeferPaymentViewCell.swift in Sources */,
+				C7BB33C01CD0466500BEFA31 /* InboxViewController.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
 				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,

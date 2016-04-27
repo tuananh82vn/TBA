@@ -308,7 +308,11 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     }
     
     @IBAction func btInbox_Clicked(sender: AnyObject) {
-        JLToast.makeText("Coming up ...", duration: JLToastDelay.ShortDelay).show()
+//        JLToast.makeText("Coming up ...", duration: JLToastDelay.ShortDelay).show()
+        
+        let requestCallBackController = self.storyboard!.instantiateViewControllerWithIdentifier("InboxViewController") as! InboxViewController
+        
+        self.navigationController!.pushViewController(requestCallBackController, animated: true)
     }
     
     @IBAction func btCallback_Clicked(sender: AnyObject) {

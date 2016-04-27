@@ -59,6 +59,27 @@ struct JSONParser {
         return ErrorArray
     }
     
+    static func parseInboxList(story: NSArray) -> [InboxItem] {
+        
+        var ErrorArray = [InboxItem]()
+        
+        if let Items = story as Array? {
+            
+            for var index = 0; index < Items.count; ++index {
+                
+                if let Item = Items[index] as? NSDictionary {
+                    
+                    let temp = JSONParser.parseObjectInboxItem(Item as NSDictionary)
+                    
+                    ErrorArray.append(temp)
+                }
+            }
+        }
+        
+        return ErrorArray
+    }
+
+    
     static func parseSchedulePaymentTracker(story: NSArray) -> [PaymentTrackerRecordModel] {
         
         var ErrorArray = [PaymentTrackerRecordModel]()
@@ -97,6 +118,19 @@ struct JSONParser {
         return CoDebtorCodeArray
     }
     
+    static func parseObjectInboxItem(story: NSDictionary) -> InboxItem {
+        
+        let Object =  InboxItem()
+        
+        Object.Date = story["Date"] as? String ?? ""
+        
+        Object.MessageNo = story["MessageNo"] as? String ?? ""
+        
+        Object.Type = story["Type"] as? String ?? ""
+        
+        
+        return Object
+    }
 
     
     static func parseObjectHistoryPaymentTracker(story: NSDictionary) -> PaymentTrackerRecordModel {

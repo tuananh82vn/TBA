@@ -3,6 +3,8 @@ import UIKit
 
 struct LocalStore {
     
+    private static let DeviceToken = "DeviceToken";
+    
     private static let ArrangementDebtor = "ArrangementDebtor";
 
     private static let IsArrangementUnderThisDebtor = "IsArrangementUnderThisDebtor";
@@ -66,6 +68,21 @@ struct LocalStore {
     private static let FortnightAmount = "FortnightAmount"
     
     private static let MonthlyAmount = "MonthlyAmount"
+    
+    //----------------------------------------------------------------------------//
+    static func setDeviceToken(token: String) {
+        userDefaults.setObject(token, forKey: DeviceToken)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteDeviceToken() {
+        userDefaults.removeObjectForKey(DeviceToken)
+        userDefaults.synchronize()
+    }
+    
+    static func accessDeviceToken() -> String {
+        return userDefaults.stringForKey(DeviceToken)!
+    }
 
     //----------------------------------------------------------------------------//
     

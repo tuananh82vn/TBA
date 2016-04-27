@@ -338,52 +338,52 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         if(mySwitch.on) {
             
-        self.dataForm1.commit()
-        
-        var totalAmount : Double =  0
-        
-        if(LocalStore.accessMaxNoPay()==2)
-        {
-            totalAmount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue + self.dataSource["SecondAmount"].valueCandidate.description.doubleValue
-
-        }
-        else
-        {
-            let amount1String = self.dataSource["FirstAmount"].valueCandidate.description
+            self.dataForm1.commit()
             
-            let amount1Number = amount1String.doubleValue
+            var totalAmount : Double =  0
             
-            let amount2String = self.dataSource["SecondAmount"].valueCandidate.description
+            if(LocalStore.accessMaxNoPay()==2)
+            {
+                totalAmount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue + self.dataSource["SecondAmount"].valueCandidate.description.doubleValue
+                
+            }
+            else
+            {
+                let amount1String = self.dataSource["FirstAmount"].valueCandidate.description
+                
+                let amount1Number = amount1String.doubleValue
+                
+                let amount2String = self.dataSource["SecondAmount"].valueCandidate.description
+                
+                let amount2Number = amount2String.doubleValue
+                
+                let amount3String = self.dataSource["ThirdAmount"].valueCandidate.description
+                
+                let amount3Number = amount3String.doubleValue
+                
+                totalAmount = amount1Number + amount2Number + amount3Number
+                
+                totalAmount = totalAmount.roundToPlaces(2)
+                
+            }
             
-            let amount2Number = amount2String.doubleValue
             
-            let amount3String = self.dataSource["ThirdAmount"].valueCandidate.description
             
-            let amount3Number = amount3String.doubleValue
+            if(totalAmount != LocalStore.accessTotalOutstanding()){
+                
+                //Format number
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Instalment Amount total is not valid", indexPath: 0)
+            }
             
-            totalAmount = amount1Number + amount2Number + amount3Number
+            self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
             
-            totalAmount = totalAmount.roundToPlaces(2)
-
-        }
-        
-        
-        
-        if(totalAmount != LocalStore.accessTotalOutstanding()){
-            
-            //Format number
-            
-            LocalStore.Alert(self.view, title: "Error", message: "Instalment Amount total is not valid", indexPath: 0)
-        }
-        
-        self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
-
-        if(self.isFormValidate){
-            
-            SetPayment.SetPayment(2)
-            
-            self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
-        }
+            if(self.isFormValidate){
+                
+                SetPayment.SetPayment(2)
+                
+                self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
+            }
             
         }
         else

@@ -171,8 +171,14 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
         if (property.name == "Notes") {
             let textEditor = editor as! TKDataFormMultilineTextEditor
-            textEditor.style
+            textEditor.textView.font = UIFont.systemFontOfSize(20)
         }
+//        else
+//            if (property.name == "Date") {
+//                let textEditor = editor as! TKDataFormDatePickerEditor
+//                textEditor.datePicker.setValue(UIColor.blueColor(), forKey: "textColor")
+//                textEditor.datePicker.datePickerMode = .Date
+//        }
     }
     
     func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {

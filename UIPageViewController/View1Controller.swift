@@ -18,10 +18,20 @@ class View1Controller: BaseViewController {
 
 //    weak var delegate: View1ControllerDelegate?
 
+    @IBOutlet weak var lb_welcomeMessage: UILabel!
     var pageIndex : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        WebApiService.getWelcomeMessage() { objectReturn in
+            
+            if let temp1 = objectReturn
+            {
+                self.lb_welcomeMessage.text = temp1.Errors[0].ErrorMessage
+            }
+        }
 
         // Do any additional setup after loading the view.
     }

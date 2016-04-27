@@ -88,7 +88,28 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
                 
                 LocalStore.setIsPinSetup(true)
                 
-                self.performSegueWithIdentifier("GoToLogin", sender: nil)
+                //Send App Detail to RCS
+                
+                WebApiService.sendAppDetail(LocalStore.accessRefNumber()!, PinNumber: self.FirstPin , DeviceToken:  LocalStore.accessDeviceToken()) { objectReturn in
+                    
+                    if let temp1 = objectReturn
+                    {
+                        self.view.hideLoading();
+                        
+                        if(temp1.IsSuccess)
+                        {
+                            self.performSegueWithIdentifier("GoToLogin", sender: nil)
+                        }
+                        else
+                        {
+
+                            LocalStore.Alert(self.view, title: "Error", message: "Server not found", indexPath: 0)
+                        }
+                        
+                    }
+                }
+
+                
 
             }
             else
