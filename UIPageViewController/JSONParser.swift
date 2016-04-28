@@ -122,13 +122,26 @@ struct JSONParser {
         
         let Object =  InboxItem()
         
-        Object.Date = story["Date"] as? String ?? ""
+        let tempDate = story["Date"] as? String ?? ""
         
-        Object.MessageNo = story["MessageNo"] as? String ?? ""
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.dateFromString(tempDate)
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+    
+        
+        Object.Date = dateFormatter.stringFromDate(date!)
+        
+        Object.MessageNo = Int32(story["MessageNo"] as? String ?? "0")!
         
         Object.Type = story["Type"] as? String ?? ""
         
         
+        Object.Status = "Unread"
+        
+        Object.Content = story["MessagePathText"] as? String ?? ""
+
         return Object
     }
 

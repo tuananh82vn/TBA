@@ -12,8 +12,15 @@ import Foundation
 class InboxItem: NSObject {
     
     var Date = ""
+    
     var Type = ""
-    var MessageNo = ""
+    
+    var Content = ""
+
+    var MessageNo : Int32 = 0
+    
+    var Status = ""
+    
     
 }
 

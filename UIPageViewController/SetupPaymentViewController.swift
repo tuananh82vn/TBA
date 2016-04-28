@@ -15,6 +15,8 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     @IBOutlet weak var mySwitch: UISwitch!
     @IBOutlet weak var subView: UIView!
     
+    @IBOutlet weak var btClear: UIButton!
+    
     let dataSource = TKDataFormEntityDataSource()
     
     var threePartPayment   = ThreePartPayment()
@@ -40,6 +42,8 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.btClear.hidden = true
 
         self.view.backgroundColor = UIColor.whiteColor()
         
@@ -80,7 +84,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
             threePartPayment.SecondAmount = round(totalAmount/3)
 
-            threePartPayment.ThirdAmount = (totalAmount - threePartPayment.FirstAmount - threePartPayment.SecondAmount).roundToPlaces(2)
+            threePartPayment.ThirdAmount = (totalAmount - threePartPayment.FirstAmount - threePartPayment.SecondAmount).roundWith2Decimal()
         }
         
         
@@ -308,7 +312,19 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             self.subView.hidden = false
             mySwitch.setOn(true, animated:true)
             self.btNext.setTitle("Next", forState: UIControlState.Normal)
+            
+            UIView.animateWithDuration(1.0, animations: { () -> Void in
+                self.btClear.hidden = false
+            
+            })
+
+            
         } else {
+            
+            UIView.animateWithDuration(1.0, animations: { () -> Void in
+                self.btClear.hidden = true
+            })
+            
             self.subView.hidden = true
             mySwitch.setOn(false, animated:true)
             self.btNext.setTitle("4 or More Payments", forState: UIControlState.Normal)
@@ -363,17 +379,20 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
                 totalAmount = amount1Number + amount2Number + amount3Number
                 
-                totalAmount = totalAmount.roundToPlaces(2)
+                totalAmount = totalAmount.roundWith2Decimal()
                 
             }
             
             
             
-            if(totalAmount != LocalStore.accessTotalOutstanding()){
+            if(totalAmount.roundWith2Decimal() != LocalStore.accessTotalOutstanding().roundWith2Decimal()){
                 
                 //Format number
                 
                 LocalStore.Alert(self.view, title: "Error", message: "Instalment Amount total is not valid", indexPath: 0)
+                
+                return
+                
             }
             
             self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
@@ -408,7 +427,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let firstPayment = PaymentTrackerRecordModel()
             
             firstPayment.DueDate = (self.dataSource["FirstDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue.roundToPlaces(2).description
+            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue.roundWith2Decimal().description
             
             self.ScheduleList.append(firstPayment)
 
@@ -416,7 +435,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let secondPayment = PaymentTrackerRecordModel()
             
             secondPayment.DueDate = (self.dataSource["SecondDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description.doubleValue.roundToPlaces(2).description
+            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description.doubleValue.roundWith2Decimal().description
 
             self.ScheduleList.append(secondPayment)
             
@@ -425,7 +444,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let thirdPayment = PaymentTrackerRecordModel()
                 
                 thirdPayment.DueDate = (self.dataSource["ThirdDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-                thirdPayment.Amount = self.dataSource["ThirdAmount"].valueCandidate.description.doubleValue.roundToPlaces(2).description
+                thirdPayment.Amount = self.dataSource["ThirdAmount"].valueCandidate.description.doubleValue.roundWith2Decimal().description
                 
                 self.ScheduleList.append(thirdPayment)
             }

@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("applicationDidTimout:"), name: TimerUIApplication.ApplicationDidTimoutNotification, object: nil)
 //        
 //        UIApplication.sharedApplication().idleTimerDisabled = false
+        LocalDatabase.copyFile("inbox.sqlite")
 
 
         let pageControl = UIPageControl.appearance()

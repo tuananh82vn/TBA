@@ -21,7 +21,8 @@ class DebtorInfo {
     var MerchantId : String
     var PaymentType : Int
     var PaymentMethod : Int
-
+    var FirstDebtorPaymentInstallmentId : Int
+    
     var CurrentPaymentId : Int
     var EmailAddress : String
     var IsExistingArrangementDD : Bool
@@ -72,7 +73,8 @@ class DebtorInfo {
         MerchantId = ""
         PaymentType = 0
         PaymentMethod = 0
-
+        FirstDebtorPaymentInstallmentId = 0
+        
         CurrentPaymentId = 0
         EmailAddress = ""
         IsExistingArrangementDD = false

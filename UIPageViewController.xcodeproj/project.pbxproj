@@ -80,7 +80,15 @@
 		C7BB33BE1CD0424F00BEFA31 /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */; };
 		C7BB33C01CD0466500BEFA31 /* InboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */; };
 		C7BB33C21CD047C300BEFA31 /* InboxItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33C11CD047C300BEFA31 /* InboxItemViewCell.swift */; };
-		C7BB33C41CD0743C00BEFA31 /* ThirdParty in Resources */ = {isa = PBXBuildFile; fileRef = C7BB33C31CD0743C00BEFA31 /* ThirdParty */; };
+		C7BB33C61CD0797600BEFA31 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BB33C51CD0797600BEFA31 /* libsqlite3.0.tbd */; };
+		C7BB33D21CD07A6300BEFA31 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33CC1CD07A6300BEFA31 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C7BB33D31CD07A6300BEFA31 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33CE1CD07A6300BEFA31 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C7BB33D41CD07A6300BEFA31 /* fmdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = C7BB33CF1CD07A6300BEFA31 /* fmdb.txt */; };
+		C7BB33D51CD07A6300BEFA31 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D11CD07A6300BEFA31 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C7BB33D71CD07C5800BEFA31 /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */; };
+		C7BB33DA1CD07D3200BEFA31 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */; };
+		C7BB33DE1CD0973600BEFA31 /* InboxItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */; };
+		C7BB33E01CD0A79F00BEFA31 /* inbox.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C7BB33DF1CD0A79F00BEFA31 /* inbox.sqlite */; };
 		C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351BE1C155A2600315A47 /* DeviceDetect.swift */; };
 		C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C21C1660A500315A47 /* CardInfo.swift */; };
 		C7E351C51C167A6400315A47 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C41C167A6400315A47 /* String.swift */; };
@@ -190,7 +198,18 @@
 		C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItem.swift; sourceTree = "<group>"; };
 		C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxViewController.swift; sourceTree = "<group>"; };
 		C7BB33C11CD047C300BEFA31 /* InboxItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItemViewCell.swift; sourceTree = "<group>"; };
-		C7BB33C31CD0743C00BEFA31 /* ThirdParty */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThirdParty; sourceTree = "<group>"; };
+		C7BB33C51CD0797600BEFA31 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		C7BB33CB1CD07A6300BEFA31 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		C7BB33CC1CD07A6300BEFA31 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		C7BB33CD1CD07A6300BEFA31 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		C7BB33CE1CD07A6300BEFA31 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		C7BB33CF1CD07A6300BEFA31 /* fmdb.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fmdb.txt; sourceTree = "<group>"; };
+		C7BB33D01CD07A6300BEFA31 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		C7BB33D11CD07A6300BEFA31 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
+		C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItemViewController.swift; sourceTree = "<group>"; };
+		C7BB33DF1CD0A79F00BEFA31 /* inbox.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = inbox.sqlite; sourceTree = "<group>"; };
 		C7E351BE1C155A2600315A47 /* DeviceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetect.swift; sourceTree = "<group>"; };
 		C7E351C21C1660A500315A47 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
 		C7E351C41C167A6400315A47 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -213,6 +232,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7BB33C61CD0797600BEFA31 /* libsqlite3.0.tbd in Frameworks */,
 				C77E1CEA1C7A8F91004AAEFF /* PhoneNumberKit.framework in Frameworks */,
 				C797D61B1C6951EB0083CD88 /* TelerikUI.framework in Frameworks */,
 				C781D3831C1A898E00E8832E /* Alamofire.framework in Frameworks */,
@@ -261,12 +281,13 @@
 				78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */,
 				78E75F411AC5FC48001A93F1 /* AppDelegate.swift */,
 				C7E6B0181BF068DD00D60EC1 /* Model */,
+				C7BB33D81CD07CA700BEFA31 /* LocalDatabase */,
 				C7ABFCBE1BEB00E7009BCE1E /* ViewController */,
 				C7E6B0151BF065A800D60EC1 /* Cell */,
 				C783D0651C111B8000AE7265 /* UIControl */,
 				C7ABFCC11BEB0451009BCE1E /* Utility */,
 				C783D05A1C0FFC7400AE7265 /* Services */,
-				C7BB33C31CD0743C00BEFA31 /* ThirdParty */,
+				C7BB33C91CD07A3F00BEFA31 /* ThirdParty */,
 				78E75F3F1AC5FC48001A93F1 /* Supporting Files */,
 			);
 			path = UIPageViewController;
@@ -302,6 +323,7 @@
 		A2F449B641C43B271AAD8CE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C7BB33C51CD0797600BEFA31 /* libsqlite3.0.tbd */,
 				C77E1CE91C7A8F91004AAEFF /* PhoneNumberKit.framework */,
 				C797D61A1C6951EA0083CD88 /* TelerikUI.framework */,
 				C781D3821C1A898E00E8832E /* Alamofire.framework */,
@@ -372,8 +394,9 @@
 				C7A216071C1E90DE008A03A7 /* UpdateBankAccountViewController.swift */,
 				C7A216091C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift */,
 				C718FB8D1C1FDBC200DC14F8 /* SendFeedbackViewController.swift */,
-				C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */,
 				C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */,
+				C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */,
+				C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -401,6 +424,38 @@
 				C797D6341C72AB0F0083CD88 /* SetPayment.swift */,
 			);
 			name = Utility;
+			sourceTree = "<group>";
+		};
+		C7BB33C91CD07A3F00BEFA31 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				C7BB33CA1CD07A4E00BEFA31 /* FMDB */,
+			);
+			name = ThirdParty;
+			sourceTree = "<group>";
+		};
+		C7BB33CA1CD07A4E00BEFA31 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				C7BB33CB1CD07A6300BEFA31 /* FMDatabase.h */,
+				C7BB33CC1CD07A6300BEFA31 /* FMDatabase.m */,
+				C7BB33CD1CD07A6300BEFA31 /* FMDatabaseAdditions.h */,
+				C7BB33CE1CD07A6300BEFA31 /* FMDatabaseAdditions.m */,
+				C7BB33CF1CD07A6300BEFA31 /* fmdb.txt */,
+				C7BB33D01CD07A6300BEFA31 /* FMResultSet.h */,
+				C7BB33D11CD07A6300BEFA31 /* FMResultSet.m */,
+			);
+			name = FMDB;
+			sourceTree = "<group>";
+		};
+		C7BB33D81CD07CA700BEFA31 /* LocalDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				C7BB33DF1CD0A79F00BEFA31 /* inbox.sqlite */,
+				C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */,
+				C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */,
+			);
+			name = LocalDatabase;
 			sourceTree = "<group>";
 		};
 		C7E6B0151BF065A800D60EC1 /* Cell */ = {
@@ -541,9 +596,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E75F471AC5FC48001A93F1 /* Main.storyboard in Resources */,
-				C7BB33C41CD0743C00BEFA31 /* ThirdParty in Resources */,
+				C7BB33E01CD0A79F00BEFA31 /* inbox.sqlite in Resources */,
 				78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */,
 				78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */,
+				C7BB33D41CD07A6300BEFA31 /* fmdb.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,10 +696,12 @@
 				C7BB33C21CD047C300BEFA31 /* InboxItemViewCell.swift in Sources */,
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,
 				C77E1CF61C7ABB49004AAEFF /* VerifyDetailCoDebtorViewController.swift in Sources */,
+				C7BB33D21CD07A6300BEFA31 /* FMDatabase.m in Sources */,
 				C7E6B0171BF0662E00D60EC1 /* PaymentTrackerViewCell.swift in Sources */,
 				C797D6311C717F5D0083CD88 /* PayInInstalmentViewController.swift in Sources */,
 				66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */,
 				C797D6431C7589780083CD88 /* DeferPayment.swift in Sources */,
+				C7BB33DE1CD0973600BEFA31 /* InboxItemViewController.swift in Sources */,
 				C7E351C51C167A6400315A47 /* String.swift in Sources */,
 				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
 				C77E1CF31C7AAE03004AAEFF /* JLToastView.swift in Sources */,
@@ -655,6 +713,8 @@
 				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
 				C77E1CF21C7AAE03004AAEFF /* JLToastCenter.swift in Sources */,
+				C7BB33D31CD07A6300BEFA31 /* FMDatabaseAdditions.m in Sources */,
+				C7BB33D51CD07A6300BEFA31 /* FMResultSet.m in Sources */,
 				C7A216001C1E74CE008A03A7 /* FinishViewController.swift in Sources */,
 				C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */,
 				C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */,
@@ -674,6 +734,7 @@
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,
 				C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */,
 				C7A2160A1C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift in Sources */,
+				C7BB33DA1CD07D3200BEFA31 /* ModelManager.swift in Sources */,
 				C783D05E1C1009E200AE7265 /* LocalStore.swift in Sources */,
 				C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */,
 				C7E6B0081BF0548E00D60EC1 /* PaymentTrackerViewController.swift in Sources */,
@@ -684,6 +745,7 @@
 				C7E6B01E1BF06A3F00D60EC1 /* Serializable.swift in Sources */,
 				C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */,
 				C7F92A151C18FC9000AE9AAB /* PaymentMethodViewController.swift in Sources */,
+				C7BB33D71CD07C5800BEFA31 /* LocalDatabase.swift in Sources */,
 				C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

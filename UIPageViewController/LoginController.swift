@@ -73,7 +73,8 @@ class LoginController: UIViewController {
                     LocalStore.setWeeklyAmount(temp1.MinimumWeeklyOutstanding)
                     LocalStore.setMonthlyAmount(temp1.MinimumMonthlyOustanding)
                     LocalStore.setFortnightAmount(temp1.MinimumFortnightlyOutstanding)
-                    
+                    LocalStore.setDRCode(temp1.DRCode)
+
                     if(temp1.MaxNoPay > 3 ){
                         temp1.MaxNoPay = 3
                     }
@@ -81,14 +82,7 @@ class LoginController: UIViewController {
                     LocalStore.setThreePartDateDurationDays(temp1.client.ThreePartDateDurationDays)
 
                     self.reset()
-
-                    if let DrCode = LocalStore.accessDebtorCodeSelected()
-                    {
-                    }
-                    else
-                    {
-                        LocalStore.setDRCode(temp1.DRCode)
-                    }
+                    
 
                     self.performSegueWithIdentifier("GoToBlank", sender: nil)
 

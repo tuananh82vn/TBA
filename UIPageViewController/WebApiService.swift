@@ -26,7 +26,10 @@ struct WebApiService {
         case GetWelcomeMessage
         case SendAppDetails
         case GetInboxItems
-        
+        case GetInboxItemMessage
+        case GetInboxItemDocument
+        case UpdateInboxItemMessage
+
         var description: String {
             switch self {
                 case .Verify: return "/Api/Verify"
@@ -50,6 +53,9 @@ struct WebApiService {
                 case .GetWelcomeMessage: return "/Api/GetWelcomeMessage"
                 case .SendAppDetails: return "/Api/SendAppDetails"
                 case .GetInboxItems: return "/Api/GetInboxItems"
+                case .GetInboxItemMessage: return "/Api/GetInboxItemMessage"
+                case .GetInboxItemDocument: return "/Api/GetInboxItemDocument"
+                case .UpdateInboxItemMessage: return "/Api/UpdateInboxItemMessage"
             }
         }
     }
@@ -392,8 +398,94 @@ struct WebApiService {
         }
     }
 
+    static func updateInboxItemMessage(ReferenceNumber:  String, MessageNo : String , Action : String, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.UpdateInboxItemMessage.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+                "ReferenceNumber": ReferenceNumber,
+                "MessageNo": MessageNo,
+                "Action" : Action
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
     
-    
+    static func getInboxItemDocument(ReferenceNumber:  String, DocumentPath : String, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetInboxItemDocument.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "ReferenceNumber": ReferenceNumber,
+            "DocumentPath" : DocumentPath
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
     
     static func GetDebtorInfo(ReferenceNumber: String, response : (objectReturn : DebtorInfo?) -> ()) {
         
@@ -428,12 +520,12 @@ struct WebApiService {
                     JsonReturn.AccountCode = ReferenceNumber
                 }
                 
-                if let DebtorCode = jsonObject["DebtorCode"].string {
-                    JsonReturn.DRCode = DebtorCode
+                if let DRCode = jsonObject["DebtorCode"].string {
+                    JsonReturn.DRCode = DRCode
                 }
 
                 if let TotalOutstanding = jsonObject["TotalOutstanding"].double {
-                    JsonReturn.TotalOutstanding = TotalOutstanding.roundToPlaces(2)
+                    JsonReturn.TotalOutstanding = TotalOutstanding.roundWith2Decimal()
                 }
                 
                 if let MaxNoPay = jsonObject["MaxNoPay"].int {
@@ -453,19 +545,19 @@ struct WebApiService {
                 }
                 
                 if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].double {
-                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment.roundToPlaces(2)
+                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment.roundWith2Decimal()
                 }
                 
                 if let MinimumMonthlyOustanding = jsonObject["MinimumMonthlyOustanding"].double {
-                    JsonReturn.MinimumMonthlyOustanding = MinimumMonthlyOustanding.roundToPlaces(2)
+                    JsonReturn.MinimumMonthlyOustanding = MinimumMonthlyOustanding.roundWith2Decimal()
                 }
                 
                 if let MinimumFortnightlyOutstanding = jsonObject["MinimumFortnightlyOutstanding"].double {
-                    JsonReturn.MinimumFortnightlyOutstanding = MinimumFortnightlyOutstanding.roundToPlaces(2)
+                    JsonReturn.MinimumFortnightlyOutstanding = MinimumFortnightlyOutstanding.roundWith2Decimal()
                 }
                 
                 if let MinimumWeeklyOutstanding = jsonObject["MinimumWeeklyOutstanding"].double {
-                    JsonReturn.MinimumWeeklyOutstanding = MinimumWeeklyOutstanding.roundToPlaces(2)
+                    JsonReturn.MinimumWeeklyOutstanding = MinimumWeeklyOutstanding.roundWith2Decimal()
                 }
                 
                 if let MerchantId = jsonObject["NTID"].string {
@@ -979,7 +1071,8 @@ struct WebApiService {
                 "DirectDebitBSB1": cardObject.BSB1,
                 "DirectDebitBSB2": cardObject.BSB2,
                 "PaymentType": PaymentType,
-                "PaymentMethod": "2"
+                "PaymentMethod": "2",
+                "DebtorPaymentInstallment" : cardObject.DebtorPaymentInstallment
             ]
         ]
         
@@ -1008,6 +1101,10 @@ struct WebApiService {
                     JsonReturn.PaymentId = PaymentId
                 }
                 
+                if let FirstDebtorPaymentInstallmentId = jsonObject["FirstDebtorPaymentInstallmentId"].int {
+                    
+                    JsonReturn.FirstDebtorPaymentInstallmentId = FirstDebtorPaymentInstallmentId
+                }
                 
                 if let Name = jsonObject["Name"].string {
                     
@@ -1527,6 +1624,37 @@ struct WebApiService {
             
         }
     }
-
+    
+    static func getInboxItemMessage(ReferenceNumber: String, MessageNo: String, response : (objectReturn : String?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetInboxItemMessage.description
+        
+        let JsonReturn = ""
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber,
+                "MessageNo": MessageNo
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                response (objectReturn : jsonObject.description)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
 
 }

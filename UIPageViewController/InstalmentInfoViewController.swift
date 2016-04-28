@@ -28,6 +28,11 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     @IBOutlet weak var view_Chart: UIView!
     
     var IsDisplayChart =  false
+    
+    var IsGreen = false
+    var IsBlue = false
+    var IsRed = false
+    
 
     override func viewDidLoad() {
         
@@ -139,6 +144,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             {
                 let point1 = TKChartDataPoint(name: "Paid", value: temp1.floatValue)
                 array.append(point1);
+                self.IsGreen = true
             }
         }
         
@@ -148,6 +154,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         {
             let point2 = TKChartDataPoint(name: "Remaining", value: temp2)
             array.append(point2);
+            self.IsBlue = true
+
         }
         
         if let temp3 = LocalStore.accesssetTotalOverDue()
@@ -156,6 +164,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             {
                 let point3 = TKChartDataPoint(name: "Overdue", value: temp3.floatValue)
                 array.append(point3);
+                self.IsRed = true
             }
         }
         
@@ -233,19 +242,76 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     
     func chart(chart: TKChart, paletteItemForSeries series: TKChartSeries, atIndex index: Int) -> TKChartPaletteItem? {
         
-        if index == 0 {
-            let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
-            return green
-        }
-        else if index == 1 {
-            let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
-            return blue
-        }
-        else if index == 2 {
-            let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
-            return red
-        }
         
+        if(self.IsGreen && self.IsBlue && self.IsRed)
+        {
+            if index == 0 {
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                return green
+            }
+            else if index == 1 {
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                return blue
+            }
+            else if index == 2 {
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                return red
+            }
+        }
+        else if(self.IsGreen && self.IsBlue)
+        {
+            if index == 0 {
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                return green
+            }
+            else if index == 1 {
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                return blue
+            }
+        }
+        else if(self.IsGreen && self.IsRed)
+        {
+            if index == 0 {
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                return green
+            }
+            else if index == 1 {
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                return red
+            }
+        }
+        else if(self.IsBlue && self.IsRed)
+        {
+            if index == 0 {
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                return blue
+            }
+            else if index == 1 {
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                return red
+            }
+        }
+        else if(self.IsGreen)
+        {
+            if index == 0 {
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                return green
+            }
+        }
+        else if(self.IsBlue)
+        {
+            if index == 0 {
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                return blue
+            }
+        }
+        else if(self.IsRed)
+        {
+            if index == 0 {
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                return red
+            }
+        }
         return nil
     }
     

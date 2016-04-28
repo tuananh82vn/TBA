@@ -22,6 +22,11 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+        
+        //Andy test
+        ModelManager.getInstance().deleteAllInboxItem()
+
         
         self.view.backgroundColor = UIColor.whiteColor()
         

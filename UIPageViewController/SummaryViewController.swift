@@ -21,6 +21,10 @@ class SummaryViewController: UIViewController {
     
     @IBOutlet weak var lbl_TitleReceipt: UILabel!
     
+    @IBOutlet weak var lb_text_receipt: UILabel!
+    
+    @IBOutlet weak var lb_text_transaction: UILabel!
+    
     var paymentReturn = PaymentReturnModel()
     var debtorInfo = DebtorInfo()
     var paymentMethod = 0
@@ -46,21 +50,23 @@ class SummaryViewController: UIViewController {
         if(self.paymentMethod == 0){
             
             self.title = "Receipt"
-            
             self.lbl_TitleReceipt.text = "Receipt Details"
-            
-            
-            self.lb_RefNumber.hidden = false
+
+            self.lb_Receipt.hidden = false
             self.lb_Transaction.hidden = false
+            self.lb_text_receipt.hidden = false
+            self.lb_text_transaction.hidden = false
+            
         }
         else
         {
-            self.lbl_TitleReceipt.text = "Payment Summary"
-
             self.title = "Payment Summary"
+            self.lbl_TitleReceipt.text = "Payment Summary"
             
-            self.lb_RefNumber.hidden = true
+            self.lb_Receipt.hidden = true
             self.lb_Transaction.hidden = true
+            self.lb_text_receipt.hidden = true
+            self.lb_text_transaction.hidden = true
             
         }
         
@@ -139,6 +145,8 @@ class SummaryViewController: UIViewController {
                     self?.debtorInfo.Name = self!.paymentReturn.Name
 
                     self?.debtorInfo.PaymentMethod = self!.paymentMethod
+                        
+                    self?.debtorInfo.FirstDebtorPaymentInstallmentId = self!.paymentReturn.FirstDebtorPaymentInstallmentId
                         
                     WebApiService.emailReceipt(self!.debtorInfo){ objectReturn in
                         

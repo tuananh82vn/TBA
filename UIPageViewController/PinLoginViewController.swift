@@ -105,6 +105,11 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
     }
     
     func resetDevice(){
+        
+        //Delete Local Database
+        
+        ModelManager.getInstance().deleteAllInboxItem()
+        
         //Reset Setting
         LocalStore.setDRCode("");
         LocalStore.setIsPinSetup(false);
