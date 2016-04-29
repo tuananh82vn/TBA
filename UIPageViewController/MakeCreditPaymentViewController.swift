@@ -74,7 +74,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource["CardNumber"].errorMessage = "Please enter card number"
 
         dataSource["Cvv"].hintText = "Card Security Code"
-        dataSource["Cvv"].editorClass = TKDataFormNumberEditor.self
+        dataSource["Cvv"].editorClass = TKDataFormPhoneEditor.self
         dataSource["Cvv"].errorMessage = "Please enter CVV"
         dataSource["Cvv"].displayName = "CVV"
 
@@ -357,7 +357,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         cardObject.ExpiryMonth     = self.dataSource["ExpiryMonth"].valueCandidate as! Int
         cardObject.ExpiryYear     = self.dataSource["ExpiryYear"].valueCandidate as! Int
 
-        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! Int
+        cardObject.Cvv          = self.dataSource["Cvv"].valueCandidate as! String
         cardObject.NameOnCard   = self.dataSource["NameOnCard"].valueCandidate as! String
         cardObject.CardType     = self.dataSource["CardType"].valueCandidate as! Int
         

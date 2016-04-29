@@ -27,14 +27,13 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
         GetInboxItemFromLocal()
         
         GetInboxItemFromRCS()
-        
-        
 
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.tableView.reloadData()
     }
     
@@ -63,6 +62,7 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
     
     func GetInboxItemFromLocal(){
         
+        //ModelManager.getInstance().deleteAllInboxItem()
         
         self.OldList = ModelManager.getInstance().getAllInboxItem()
 

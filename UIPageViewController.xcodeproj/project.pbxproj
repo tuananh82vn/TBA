@@ -17,6 +17,7 @@
 		78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F481AC5FC48001A93F1 /* Images.xcassets */; };
 		78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */; };
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
+		C715F92F1CD30F8200B8198A /* DownloadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715F92E1CD30F8200B8198A /* DownloadFile.swift */; };
 		C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */; };
 		C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */; };
 		C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */; };
@@ -88,7 +89,6 @@
 		C7BB33D71CD07C5800BEFA31 /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */; };
 		C7BB33DA1CD07D3200BEFA31 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */; };
 		C7BB33DE1CD0973600BEFA31 /* InboxItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */; };
-		C7BB33E01CD0A79F00BEFA31 /* inbox.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C7BB33DF1CD0A79F00BEFA31 /* inbox.sqlite */; };
 		C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351BE1C155A2600315A47 /* DeviceDetect.swift */; };
 		C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C21C1660A500315A47 /* CardInfo.swift */; };
 		C7E351C51C167A6400315A47 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C41C167A6400315A47 /* String.swift */; };
@@ -133,6 +133,7 @@
 		78E75F561AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewControllerTests.swift; sourceTree = "<group>"; };
 		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C715F92E1CD30F8200B8198A /* DownloadFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFile.swift; sourceTree = "<group>"; };
 		C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfo.swift; sourceTree = "<group>"; };
 		C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
 		C718FB8B1C1FDA5900DC14F8 /* Feedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -209,7 +210,7 @@
 		C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItemViewController.swift; sourceTree = "<group>"; };
-		C7BB33DF1CD0A79F00BEFA31 /* inbox.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = inbox.sqlite; sourceTree = "<group>"; };
+		C7DA8AD31CD34CD400C6E853 /* inbox.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = inbox.sqlite; sourceTree = "<group>"; };
 		C7E351BE1C155A2600315A47 /* DeviceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetect.swift; sourceTree = "<group>"; };
 		C7E351C21C1660A500315A47 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
 		C7E351C41C167A6400315A47 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -422,6 +423,7 @@
 				C797D62A1C6C5CC80083CD88 /* DateExtension.swift */,
 				C797D62C1C6D79960083CD88 /* NumberExtension.swift */,
 				C797D6341C72AB0F0083CD88 /* SetPayment.swift */,
+				C715F92E1CD30F8200B8198A /* DownloadFile.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -451,7 +453,7 @@
 		C7BB33D81CD07CA700BEFA31 /* LocalDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				C7BB33DF1CD0A79F00BEFA31 /* inbox.sqlite */,
+				C7DA8AD31CD34CD400C6E853 /* inbox.sqlite */,
 				C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */,
 				C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */,
 			);
@@ -596,7 +598,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E75F471AC5FC48001A93F1 /* Main.storyboard in Resources */,
-				C7BB33E01CD0A79F00BEFA31 /* inbox.sqlite in Resources */,
 				78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */,
 				78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */,
 				C7BB33D41CD07A6300BEFA31 /* fmdb.txt in Resources */,
@@ -692,6 +693,7 @@
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
 				C797D63F1C7533990083CD88 /* DeferPaymentViewController.swift in Sources */,
 				C77E1CF81C7ACF00004AAEFF /* DebtorDetail.swift in Sources */,
+				C715F92F1CD30F8200B8198A /* DownloadFile.swift in Sources */,
 				C77E1CF11C7AAE03004AAEFF /* JLToast.swift in Sources */,
 				C7BB33C21CD047C300BEFA31 /* InboxItemViewCell.swift in Sources */,
 				C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */,

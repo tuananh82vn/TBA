@@ -21,6 +21,9 @@ class InboxItem: NSObject {
     
     var Status = ""
     
+    var IsLocal = false
+    
+    var FileName = ""
     
 }
 

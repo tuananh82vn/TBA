@@ -16,7 +16,7 @@ class CardInfo: NSObject {
     var ExpiryMonth = 0
     var ExpiryYear  = 0
     var ExpiryDate  = ""
-    var Cvv = 0
+    var Cvv = ""
     var DebtorPaymentInstallment = ""
 
 }

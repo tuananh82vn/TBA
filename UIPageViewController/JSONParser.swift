@@ -141,6 +141,9 @@ struct JSONParser {
         Object.Status = "Unread"
         
         Object.Content = story["MessagePathText"] as? String ?? ""
+        
+        Object.IsLocal = false
+        
 
         return Object
     }

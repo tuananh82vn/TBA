@@ -29,6 +29,7 @@ struct WebApiService {
         case GetInboxItemMessage
         case GetInboxItemDocument
         case UpdateInboxItemMessage
+        case SaveInbox
 
         var description: String {
             switch self {
@@ -56,6 +57,8 @@ struct WebApiService {
                 case .GetInboxItemMessage: return "/Api/GetInboxItemMessage"
                 case .GetInboxItemDocument: return "/Api/GetInboxItemDocument"
                 case .UpdateInboxItemMessage: return "/Api/UpdateInboxItemMessage"
+                case .SaveInbox: return "/Api/SaveInbox"
+
             }
         }
     }
@@ -347,10 +350,59 @@ struct WebApiService {
         }
     }
 
-    
     static func emailReceipt(debtorInfo:  DebtorInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
         
         let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.EmailReceipt.description
+        
+        let JsonReturn = JsonReturnModel()
+        
+        let parameters = [
+            "Item": [
+                "Name": debtorInfo.Name,
+                "CurrentPaymentId": debtorInfo.CurrentPaymentId,
+                "ClientName" : debtorInfo.ClientName,
+                "PaymentType" : debtorInfo.PaymentType,
+                "EmailAddress" : debtorInfo.EmailAddress,
+                "PaymentMethod" : debtorInfo.PaymentMethod
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                    
+                }
+                
+                if let Errors = jsonObject["Errors"].arrayObject {
+                    
+                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    
+                    JsonReturn.Errors = ErrorsReturn
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
+    }
+
+    static func saveInbox(debtorInfo:  DebtorInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SaveInbox.description
         
         let JsonReturn = JsonReturnModel()
         

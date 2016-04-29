@@ -47,7 +47,7 @@ class SummaryViewController: UIViewController {
             self.lb_RefNumber.text  = "Your payment has been processed against your account with Reference Number " + LocalStore.accessRefNumber()! + ". Please be aware, payments will appear on your statement as payment to 'Recoveriescorp'"
 
         
-        if(self.paymentMethod == 0){
+        if(self.paymentMethod == 1){
             
             self.title = "Receipt"
             self.lbl_TitleReceipt.text = "Receipt Details"
@@ -199,8 +199,94 @@ class SummaryViewController: UIViewController {
     }
 
     @IBAction func savetoInbox_Clicked(sender: AnyObject) {
-        
-        JLToast.makeText("Coming up ...", duration: JLToastDelay.ShortDelay).show()
+                                       
+            var PaymentType = 0
+            
+            //        1: Pay In Full
+            //        2: Pay In 3 Part
+            //        3: Pay In Installment
+            //        4: Pay Other Amount
+            //        5: Pay Next Instalment
+            
+            if(LocalStore.accessMakePaymentInFull()){
+                PaymentType = 1
+            }
+            else if(LocalStore.accessMakePaymentIn3Part()){
+                PaymentType = 2
+            }
+            else if(LocalStore.accessMakePaymentInstallment()){
+                PaymentType = 3
+            }
+            else if(LocalStore.accessMakePaymentOtherAmount()){
+                PaymentType = 4
+            }
+            
+            self.debtorInfo.PaymentType = PaymentType
+            
+
+            self.debtorInfo.CurrentPaymentId = self.paymentReturn.PaymentId
+            
+            self.debtorInfo.ClientName = self.paymentReturn.ClientName
+            
+            self.debtorInfo.Name = self.paymentReturn.Name
+            
+            self.debtorInfo.PaymentMethod = self.paymentMethod
+            
+            self.debtorInfo.FirstDebtorPaymentInstallmentId = self.paymentReturn.FirstDebtorPaymentInstallmentId
+            
+            WebApiService.saveInbox(self.debtorInfo){ objectReturn in
+                
+                self.view.hideLoading();
+                
+                if let temp1 = objectReturn
+                {
+                    
+                    if(temp1.IsSuccess)
+                    {
+                        
+                        //Get the fiel Path from server
+                        let fromFilePath = temp1.Errors[0].ErrorMessage
+                        
+                        
+                        let rootPath = NSTemporaryDirectory()
+          
+                        let currentTime = Int32(NSDate().timeIntervalSince1970)
+                        
+                        let filename = currentTime.description + ".pdf"
+                        
+                        let toFilePath = (rootPath as NSString).stringByAppendingPathComponent(filename)
+
+                        
+                        //Download file into device with random name
+                        DownloadFile.getFile(fromFilePath, filePathReturn: toFilePath)
+                        
+                        
+                        //insert into local database
+                        var inboxDetail = InboxItem()
+                        inboxDetail.Content = toFilePath
+                        inboxDetail.Date = self.lb_Date.text!
+                        inboxDetail.Type = "D"
+                        inboxDetail.MessageNo = currentTime
+                        inboxDetail.Status = "Unread"
+                        inboxDetail.IsLocal = true
+                        inboxDetail.FileName = filename
+                        
+                        var results = ModelManager.getInstance().insertInboxItem(inboxDetail)
+                        
+                        if(results){
+                            LocalStore.Alert(self.view, title: "Notice", message: self.title! + " has been saved into Inbox.", indexPath: 3)
+                        }
+
+                    }
+                }
+                else
+                {
+                    
+                    LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+                    
+                }
+            }
+
 
     }
 
