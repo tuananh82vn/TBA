@@ -107,17 +107,39 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
     func resetDevice(){
         
         //Delete Local Database
-        
         ModelManager.getInstance().deleteAllInboxItem()
         
         //Reset Setting
-        LocalStore.setDRCode("");
-        LocalStore.setIsPinSetup(false);
-        LocalStore.setIsCoBorrowersSelected(false)
         LocalStore.setPin("")
+        LocalStore.setDRCode("")
+        LocalStore.setMaxNoPay(0)
+        LocalStore.setTotalPaid("")
+        LocalStore.setIsPinSetup(false)
+        LocalStore.setDeviceToken("")
+        LocalStore.setTotalOverDue("")
+        LocalStore.setWeeklyAmount(0)
+        LocalStore.setMonthlyAmount(0)
+        LocalStore.setFortnightAmount(0)
+        LocalStore.setTotalOutstanding(0)
+        LocalStore.setIsExistingArrangement(false)
+        LocalStore.setIsCoBorrowersSelected(false)
+        LocalStore.setIsArrangementUnderThisDebtor(false)
         LocalStore.setRefNumber("")
         LocalStore.setIsArrangementUnderThisDebtor(false)
         LocalStore.setDebtorCodeSelected("")
+        LocalStore.setIsCoBorrowers(false)
+        LocalStore.setArrangementDebtor("")
+        LocalStore.setThreePartDateDurationDays(0)
+        LocalStore.setIsAllowMonthlyInstallment(false)
+        LocalStore.setIsExistingArrangementDD(false)
+        LocalStore.setIsExistingArrangementCC(false)
+        LocalStore.setFirstAmountOfInstalment(0)
+        LocalStore.setNextPaymentInstallment(0)
+        LocalStore.setMakePaymentOtherAmount(false)
+        LocalStore.setMakePaymentInstallment(false)
+        LocalStore.setMakePaymentIn3Part(false)
+        LocalStore.setMakePaymentInFull(false)
+    
         
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

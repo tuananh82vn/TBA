@@ -7707,6 +7707,9 @@
                                 <color key="backgroundColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                             </webView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dBa-3v-znf">
+                                <rect key="frame" x="0.0" y="-2" width="150" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -7714,6 +7717,9 @@
                             <constraint firstItem="2M3-GK-Mvi" firstAttribute="trailing" secondItem="jaC-6U-cbe" secondAttribute="trailing" id="2qe-0k-L8U"/>
                             <constraint firstItem="jaC-6U-cbe" firstAttribute="top" secondItem="sC8-wa-QT6" secondAttribute="bottom" constant="33" id="3XC-Ut-w6o"/>
                             <constraint firstItem="jaC-6U-cbe" firstAttribute="leading" secondItem="5fG-bw-XKO" secondAttribute="leading" id="6wE-SJ-qse"/>
+                            <constraint firstItem="dBa-3v-znf" firstAttribute="centerY" secondItem="bVO-dQ-Fjj" secondAttribute="centerY" id="7Pa-Ai-fRd">
+                                <variation key="heightClass=regular-widthClass=compact" constant="44"/>
+                            </constraint>
                             <constraint firstItem="sC8-wa-QT6" firstAttribute="leading" secondItem="jaC-6U-cbe" secondAttribute="leading" id="CKQ-PR-HPx"/>
                             <constraint firstItem="5fG-bw-XKO" firstAttribute="top" secondItem="jaC-6U-cbe" secondAttribute="bottom" constant="8" symbolic="YES" id="COA-Vn-d0R"/>
                             <constraint firstItem="sC8-wa-QT6" firstAttribute="baseline" secondItem="2M3-GK-Mvi" secondAttribute="baseline" id="EQu-dV-X2i"/>
@@ -7728,6 +7734,8 @@
                             <constraint firstItem="5fG-bw-XKO" firstAttribute="leading" secondItem="dKT-fV-sJU" secondAttribute="leading" id="dLV-dH-x6G"/>
                             <constraint firstItem="f2M-f7-UHs" firstAttribute="trailing" secondItem="5fG-bw-XKO" secondAttribute="trailing" id="mul-y5-9V8"/>
                             <constraint firstItem="5fG-bw-XKO" firstAttribute="leading" secondItem="f2M-f7-UHs" secondAttribute="leading" id="nm8-Dl-Lv5"/>
+                            <constraint firstItem="dBa-3v-znf" firstAttribute="centerX" secondItem="bVO-dQ-Fjj" secondAttribute="centerX" id="nrC-h9-B8d"/>
+                            <constraint firstItem="dBa-3v-znf" firstAttribute="leading" secondItem="jaC-6U-cbe" secondAttribute="leading" id="qkq-qs-gHw"/>
                             <constraint firstItem="dKT-fV-sJU" firstAttribute="top" secondItem="f2M-f7-UHs" secondAttribute="bottom" constant="8" symbolic="YES" id="sCq-JK-tpP"/>
                             <constraint firstItem="jaC-6U-cbe" firstAttribute="trailing" secondItem="5fG-bw-XKO" secondAttribute="trailing" id="wiC-8f-Y3I"/>
                         </constraints>
@@ -7739,6 +7747,7 @@
                                 <exclude reference="5fG-bw-XKO"/>
                                 <exclude reference="jaC-6U-cbe"/>
                                 <exclude reference="f2M-f7-UHs"/>
+                                <exclude reference="dBa-3v-znf"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="CKQ-PR-HPx"/>
@@ -7758,6 +7767,9 @@
                                 <exclude reference="nm8-Dl-Lv5"/>
                                 <exclude reference="Uxe-Ua-L0u"/>
                                 <exclude reference="mul-y5-9V8"/>
+                                <exclude reference="7Pa-Ai-fRd"/>
+                                <exclude reference="nrC-h9-B8d"/>
+                                <exclude reference="qkq-qs-gHw"/>
                                 <exclude reference="0AJ-J8-ahM"/>
                                 <exclude reference="Yn4-2r-vyG"/>
                                 <exclude reference="sCq-JK-tpP"/>
@@ -7771,6 +7783,7 @@
                                 <include reference="5fG-bw-XKO"/>
                                 <include reference="jaC-6U-cbe"/>
                                 <include reference="f2M-f7-UHs"/>
+                                <include reference="dBa-3v-znf"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="CKQ-PR-HPx"/>
@@ -7790,6 +7803,9 @@
                                 <include reference="nm8-Dl-Lv5"/>
                                 <include reference="Uxe-Ua-L0u"/>
                                 <include reference="mul-y5-9V8"/>
+                                <include reference="7Pa-Ai-fRd"/>
+                                <include reference="nrC-h9-B8d"/>
+                                <include reference="qkq-qs-gHw"/>
                                 <include reference="0AJ-J8-ahM"/>
                                 <include reference="Yn4-2r-vyG"/>
                                 <include reference="sCq-JK-tpP"/>
@@ -7799,6 +7815,7 @@
                     <navigationItem key="navigationItem" title="Inbox" id="POr-9z-UNL"/>
                     <connections>
                         <outlet property="lb_Date" destination="2M3-GK-Mvi" id="SnN-vl-spo"/>
+                        <outlet property="progressVIew1" destination="dBa-3v-znf" id="tg0-rL-eIF"/>
                         <outlet property="tv_Content" destination="5fG-bw-XKO" id="Vyn-La-u7R"/>
                         <outlet property="webView" destination="f2M-f7-UHs" id="kR1-F7-Xuc"/>
                     </connections>

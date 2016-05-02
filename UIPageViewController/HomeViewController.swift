@@ -25,7 +25,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
 
         
         //Andy test
-        ModelManager.getInstance().deleteAllInboxItem()
+        //ModelManager.getInstance().deleteAllInboxItem()
 
         
         self.view.backgroundColor = UIColor.whiteColor()

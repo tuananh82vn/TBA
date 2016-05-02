@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class InboxItemViewController: UIViewController, UIWebViewDelegate {
 
@@ -20,16 +21,17 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var tv_Content: UITextView!
     
 
+    @IBOutlet weak var progressVIew1: UIProgressView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.lb_Date.text = self.inboxDetail.Date
         
-        
+        self.progressVIew1.hidden = true
+
         
         if(self.inboxDetail.Type == "T"){
-            
             
             self.webView.hidden = true
             
@@ -49,7 +51,7 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                     {
                         if(temp2.IsSuccess)
                         {
-                            print("Update message successful")
+                            print("Read message successful")
                         }
                         else
                         {
@@ -62,6 +64,8 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         }
         else
             if(self.inboxDetail.Type == "D"){
+                
+                self.view.showLoading()
                 
                 self.tv_Content.hidden = true
                 
@@ -80,9 +84,14 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                     webView.loadRequest(request)
                     
                     self.webView.delegate = self
+                    
+                    self.view.hideLoading()
                 }
                 else
                 {
+                    
+                    self.progressVIew1.hidden = false
+                    
                     WebApiService.getInboxItemDocument(LocalStore.accessRefNumber()!, DocumentPath: self.inboxDetail.Content) { objectReturn2 in
                         if let temp2 = objectReturn2
                         {
@@ -102,27 +111,9 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                                 
                                 
                                 //Download file into device with random name
-                                DownloadFile.getFile(fromFilePath, filePathReturn: toFilePath)
+                                self.getFile(fromFilePath, filePathReturn: toFilePath , fileName : filename)
                                 
-                                //insert into local database
-                                
-                                self.inboxDetail.IsLocal = true
-                                self.inboxDetail.Content = toFilePath
-                                
-                                
-                                let results = ModelManager.getInstance().updateInboxItem(self.inboxDetail)
-                                
-                                if(results){
-                                    
-                                    let url =  NSURL(fileURLWithPath: toFilePath)
-                                    
-                                    let request = NSURLRequest(URL: url)
-                                    
-                                    self.webView.loadRequest(request)
-                                    
-                                    self.webView.delegate = self
-                                }
-
+                               
                             }
                             else
                             {
@@ -164,6 +155,79 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    func getFile(filePath : String , filePathReturn : String, fileName : String){
+        
+        //println(filePathReturn)
+        
+        
+        let urlString = filePath
+        
+        
+        let urlStr : NSString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        //var remoteUrl : NSURL? = NSURL(string: urlStr as String)
+        
+        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
+            (temporaryURL, response) in
+            
+            
+            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+                
+                let localImageURL = NSURL(fileURLWithPath: filePathReturn)
+                
+                return localImageURL
+            }
+            
+            return temporaryURL
+        }
+        
+        Alamofire.download(.GET, urlStr.description, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                
+                print("bytesRead : ", bytesRead)
+                print("totalBytesRead : ", totalBytesRead)
+                print("totalBytesExpectedToRead : ", totalBytesExpectedToRead)
+
+                dispatch_async(dispatch_get_main_queue()) {
+
+                    
+                    let progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
+                    
+                    self.progressVIew1.progress = progress
+                    
+                    if totalBytesRead == totalBytesExpectedToRead {
+                        
+                        self.progressVIew1.hidden = true
+                    }
+                }
+
+            }
+            .response { response in
+                //insert into local database
+                
+                self.inboxDetail.IsLocal = true
+                self.inboxDetail.Content = filePathReturn
+                self.inboxDetail.FileName = fileName
+                
+                let results = ModelManager.getInstance().updateInboxItem(self.inboxDetail)
+                
+                if(results){
+                    
+                    let url =  NSURL(fileURLWithPath: filePathReturn)
+                    
+                    let request = NSURLRequest(URL: url)
+                    
+                    self.webView.loadRequest(request)
+                    
+                    self.webView.delegate = self
+                    
+                    self.view.hideLoading()
+
+                }
+
+        }
+        
+    }
 
 
     
@@ -172,7 +236,62 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func deleteMessage(){
+        
+        self.view.showLoading()
+        
+        //Delete from local database
+        ModelManager.getInstance().deleteInboxItem(self.inboxDetail)
+        
+        //Send to RCS
+        WebApiService.updateInboxItemMessage(LocalStore.accessRefNumber()!, MessageNo : self.inboxDetail.MessageNo.description, Action : "D") { objectReturn2 in
+            if let temp2 = objectReturn2
+            {
+                self.view.hideLoading()
+                
+                if(temp2.IsSuccess)
+                {
+                    
+                    if(self.inboxDetail.Type == "D")
+                    {
+                        FolderManager.DeleteFile(self.inboxDetail.Content)
+                    }
+                    
+                    print("Delete message successful")
+
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                else
+                {
+                    LocalStore.Alert(self.view, title: "Error", message: temp2.Errors[0].ErrorMessage, indexPath: 0)
+                    
+                }
+            }
+        }
+
+        
+
+
+
+    }
+    
     @IBAction func deleteButton_Clicked(sender: AnyObject) {
+        let optionMenu = UIAlertController(title: nil, message: "Are you sure to delete this message?", preferredStyle: .ActionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.deleteMessage()
+        })
+        
+        let cancelAction = UIAlertAction(title: "No", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+        
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
 
     /*

@@ -29,7 +29,7 @@ class ModelManager: NSObject {
 
         var isInserted = false
             
-        isInserted = sharedInstance.database!.executeUpdate("INSERT INTO inbox (Date, Type , MessageNo , Status, Content , IsLocal , FileName ) VALUES (?, ?, ? , ?, ? , ?)", withArgumentsInArray: [studentInfo.Date, studentInfo.Type, studentInfo.MessageNo.description, studentInfo.Status, studentInfo.Content, studentInfo.IsLocal, studentInfo.FileName])
+        isInserted = sharedInstance.database!.executeUpdate("INSERT INTO inbox (Date, Type , MessageNo , Status, Content , IsLocal , FileName1 ) VALUES (?, ?, ?, ?, ?, ?, ?)", withArgumentsInArray: [studentInfo.Date, studentInfo.Type, studentInfo.MessageNo.description, studentInfo.Status, studentInfo.Content, studentInfo.IsLocal, studentInfo.FileName])
         
         sharedInstance.database!.close()
         
@@ -38,7 +38,7 @@ class ModelManager: NSObject {
     
     func updateInboxItem(studentInfo: InboxItem) -> Bool {
         sharedInstance.database!.open()
-        let isUpdated = sharedInstance.database!.executeUpdate("UPDATE inbox SET Content=?, Status=?, IsLocal= ? , FileName = ? WHERE MessageNo=?", withArgumentsInArray: [studentInfo.Content,studentInfo.Status, studentInfo.MessageNo.description, studentInfo.IsLocal , studentInfo.FileName])
+        let isUpdated = sharedInstance.database!.executeUpdate("UPDATE inbox SET Content=?, Status=?, IsLocal=? , FileName1=? WHERE MessageNo=?", withArgumentsInArray: [studentInfo.Content,studentInfo.Status, studentInfo.IsLocal, studentInfo.FileName, studentInfo.MessageNo.description])
         sharedInstance.database!.close()
         return isUpdated
     }
@@ -74,7 +74,7 @@ class ModelManager: NSObject {
                 studentInfo.MessageNo = Int32(resultSet.stringForColumn("MessageNo"))!
                 studentInfo.Content = resultSet.stringForColumn("Content")
                 studentInfo.IsLocal = resultSet.boolForColumn("IsLocal")
-                studentInfo.FileName = resultSet.stringForColumn("FileName")
+                studentInfo.FileName = resultSet.stringForColumn("FileName1")
                 InboxList.append(studentInfo)
             }
         }

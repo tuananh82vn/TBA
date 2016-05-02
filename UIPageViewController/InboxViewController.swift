@@ -24,17 +24,18 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GetInboxItemFromLocal()
-        
-        GetInboxItemFromRCS()
-
+       
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.reloadData()
+        GetInboxItemFromLocal()
+        
+        GetInboxItemFromRCS()
+
+        //self.tableView.reloadData()
     }
     
     func SaveNewInboxIntoLocalDatabase(){

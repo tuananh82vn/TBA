@@ -144,7 +144,8 @@ struct JSONParser {
         
         Object.IsLocal = false
         
-
+        Object.FileName = ""
+        
         return Object
     }
 

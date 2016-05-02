@@ -28,6 +28,7 @@
 		C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3E1BEB249C007463FD /* EventKitUI.framework */; };
 		C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C451BEC220D007463FD /* UIColorExtension.swift */; };
 		C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C471BEC55AD007463FD /* RBResizer.swift */; };
+		C745F4851CD7206100EB7A35 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F4841CD7206100EB7A35 /* FolderManager.swift */; };
 		C77E1CEA1C7A8F91004AAEFF /* PhoneNumberKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E1CE91C7A8F91004AAEFF /* PhoneNumberKit.framework */; };
 		C77E1CF11C7AAE03004AAEFF /* JLToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E1CED1C7AAE03004AAEFF /* JLToast.swift */; };
 		C77E1CF21C7AAE03004AAEFF /* JLToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E1CEE1C7AAE03004AAEFF /* JLToastCenter.swift */; };
@@ -89,6 +90,7 @@
 		C7BB33D71CD07C5800BEFA31 /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */; };
 		C7BB33DA1CD07D3200BEFA31 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */; };
 		C7BB33DE1CD0973600BEFA31 /* InboxItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */; };
+		C7DA8ADA1CD3525A00C6E853 /* inbox.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C7DA8AD91CD3525A00C6E853 /* inbox.sqlite */; };
 		C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351BE1C155A2600315A47 /* DeviceDetect.swift */; };
 		C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C21C1660A500315A47 /* CardInfo.swift */; };
 		C7E351C51C167A6400315A47 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E351C41C167A6400315A47 /* String.swift */; };
@@ -145,6 +147,7 @@
 		C72C0C401BEB24C7007463FD /* UIPageViewController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIPageViewController-Bridging-Header.h"; sourceTree = "<group>"; };
 		C72C0C451BEC220D007463FD /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		C72C0C471BEC55AD007463FD /* RBResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBResizer.swift; sourceTree = "<group>"; };
+		C745F4841CD7206100EB7A35 /* FolderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		C77E1CE91C7A8F91004AAEFF /* PhoneNumberKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhoneNumberKit.framework; path = "Pods/../build/Debug-iphoneos/PhoneNumberKit.framework"; sourceTree = "<group>"; };
 		C77E1CEC1C7AAE03004AAEFF /* JLToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLToast.h; sourceTree = "<group>"; };
 		C77E1CED1C7AAE03004AAEFF /* JLToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLToast.swift; sourceTree = "<group>"; };
@@ -210,7 +213,7 @@
 		C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItemViewController.swift; sourceTree = "<group>"; };
-		C7DA8AD31CD34CD400C6E853 /* inbox.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = inbox.sqlite; sourceTree = "<group>"; };
+		C7DA8AD91CD3525A00C6E853 /* inbox.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = inbox.sqlite; sourceTree = "<group>"; };
 		C7E351BE1C155A2600315A47 /* DeviceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetect.swift; sourceTree = "<group>"; };
 		C7E351C21C1660A500315A47 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
 		C7E351C41C167A6400315A47 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 		78E75F3E1AC5FC48001A93F1 /* UIPageViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C7DA8AD91CD3525A00C6E853 /* inbox.sqlite */,
 				78E75F451AC5FC48001A93F1 /* Main.storyboard */,
 				78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */,
 				78E75F411AC5FC48001A93F1 /* AppDelegate.swift */,
@@ -405,6 +409,7 @@
 		C7ABFCC11BEB0451009BCE1E /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				C745F4841CD7206100EB7A35 /* FolderManager.swift */,
 				C798DD471CBF58B2002F3E7E /* MyPhoneEditor.swift */,
 				C77E1CEB1C7AADDF004AAEFF /* JLToast */,
 				C7B6B3751C76E389008D670C /* SCLAlertView.swift */,
@@ -453,7 +458,6 @@
 		C7BB33D81CD07CA700BEFA31 /* LocalDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				C7DA8AD31CD34CD400C6E853 /* inbox.sqlite */,
 				C7BB33D61CD07C5800BEFA31 /* LocalDatabase.swift */,
 				C7BB33D91CD07D3200BEFA31 /* ModelManager.swift */,
 			);
@@ -598,6 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E75F471AC5FC48001A93F1 /* Main.storyboard in Resources */,
+				C7DA8ADA1CD3525A00C6E853 /* inbox.sqlite in Resources */,
 				78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */,
 				78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */,
 				C7BB33D41CD07A6300BEFA31 /* fmdb.txt in Resources */,
@@ -675,6 +680,7 @@
 				C7A215FE1C1E6609008A03A7 /* RequestCallback.swift in Sources */,
 				C797D6331C7182F90083CD88 /* PayInInstalment.swift in Sources */,
 				C7ABFCC01BEB03BB009BCE1E /* LoginController.swift in Sources */,
+				C745F4851CD7206100EB7A35 /* FolderManager.swift in Sources */,
 				C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */,
 				C7813B681BEC950600876860 /* BlankViewController.swift in Sources */,
 				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
