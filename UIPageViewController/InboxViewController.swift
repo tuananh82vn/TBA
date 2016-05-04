@@ -95,8 +95,13 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
                 }
                 else
                 {
-                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
-                    
+                    if(temp1.Errors.count > 0){
+                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                    }
+                    else
+                    {
+                        LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                    }
                 }
             }
             else

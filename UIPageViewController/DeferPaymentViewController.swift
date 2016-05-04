@@ -116,18 +116,7 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
             else
             {
                 
-                // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-                    UIAlertAction in
-                    
-                }
-                
-                alert.addAction(okAction)
-                
-                // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                    LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
                 
             }
         }
@@ -316,7 +305,13 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                             }
                             else
                             {
-                                LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                                if(temp1.Errors.count > 0){
+                                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                                }
+                                else
+                                {
+                                    LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                                }
                                 
                             }
                         }

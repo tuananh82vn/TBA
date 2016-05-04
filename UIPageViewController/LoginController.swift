@@ -2,11 +2,8 @@ import UIKit
 
 class LoginController: UIViewController {
     
-    @IBOutlet weak var refreshButton: UIButton!
-
-    
     var timer: Timer!
-    
+        
     @IBOutlet weak var lbl_Label: UILabel!
     
     var textDisplay : [String] = ["Thank you for waiting...", "We are logging you into the system...", "It will take a few seconds..."]
@@ -16,24 +13,30 @@ class LoginController: UIViewController {
     var index = 0
     
     var debtorList = [CoDebtor]()
-
     
+    @IBOutlet weak var logo: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.refreshButton.rotate360Degrees(completionDelegate: self)
-        
+
         loadData()
 
     }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.logo.startRotating(completionDelegate: self)
+
+    }
+    
     
     func loadData(){
         
         
-        
         self.timer = Timer(duration: 10.0, completionHandler: {
             
-            self.reset()
+            self.timer.stop()
             
             // create the alert
             let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -48,13 +51,14 @@ class LoginController: UIViewController {
             
             // show the alert
             self.presentViewController(alert, animated: true, completion: nil)
-        
+            
         })
         
-        //Display text every 1 second
-        self.timer2 = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
-        
         self.timer.start()
+        
+        //Display text every 2 second
+        self.timer2 = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
+
         
         WebApiService.GetDebtorInfo(LocalStore.accessRefNumber()!) { objectReturn in
             
@@ -81,9 +85,12 @@ class LoginController: UIViewController {
                     LocalStore.setMaxNoPay(temp1.MaxNoPay)
                     LocalStore.setThreePartDateDurationDays(temp1.client.ThreePartDateDurationDays)
 
-                    self.reset()
+                    self.logo.stopRotating()
                     
-
+                    self.timer.stop()
+                    
+                    self.timer2.invalidate()
+                    
                     self.performSegueWithIdentifier("GoToBlank", sender: nil)
 
                     
@@ -95,7 +102,9 @@ class LoginController: UIViewController {
             }
             else
             {
-                self.reset()
+                self.timer2.invalidate()
+                
+                self.timer.stop()
                 
                 // create the alert
                 let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -129,14 +138,9 @@ class LoginController: UIViewController {
         }
     }
     
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-            self.refreshButton.rotate360Degrees(completionDelegate: self)
-    }
-    
-    func reset() {
-        self.timer.stop()
-        self.timer2.invalidate()
-    }
+//    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+//        self.logo.startRotating(completionDelegate: self)
+//    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToDebtorSelect" {

@@ -125,8 +125,15 @@ class VerifyCoDebtorViewController: UIViewController {
                         {
                             
                             
-                            LocalStore.Alert(self.view, title: "Notice", message: temp1.Errors[0].ErrorMessage, indexPath: 3)
-
+                            
+                            if(temp1.Errors.count > 0){
+                                LocalStore.Alert(self.view, title: "Notice", message: temp1.Errors[0].ErrorMessage, indexPath: 3)
+                            }
+                            else
+                            {
+                                LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                            }
+                            
 
                             self.btGetNetCode.setTitle("Get your NetCode again?", forState: UIControlState.Normal)
 
@@ -147,7 +154,13 @@ class VerifyCoDebtorViewController: UIViewController {
                         else
                         {
                             
-                            LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                            if(temp1.Errors.count > 0){
+                                LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                            }
+                            else
+                            {
+                                LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                            }
 
                             
                         }

@@ -27,7 +27,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         //Andy test
         //ModelManager.getInstance().deleteAllInboxItem()
 
-        
         self.view.backgroundColor = UIColor.whiteColor()
         
         
@@ -92,12 +91,31 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         SetPayment.SetPayment(0)
         
+        self.SendAppsDetail()
+        
     }
     
-    override func viewDidAppear(animated: Bool)
-    {
-        super.viewDidAppear(animated)
+    func SendAppsDetail(){
+        //Send App Detail to RCS
+        WebApiService.sendAppDetail(LocalStore.accessRefNumber()!, PinNumber: LocalStore.accessPin()! , DeviceToken:  LocalStore.accessDeviceToken()) { objectReturn in
+            
+            if let temp1 = objectReturn
+            {
+                self.view.hideLoading();
+                
+                if(temp1.IsSuccess)
+                {
+                    print("Apps detail sent")
+                    print("Token:" + LocalStore.accessDeviceToken())
+                }
+            }
+        }
     }
+    
+//    override func viewDidAppear(animated: Bool)
+//    {
+//        super.viewDidAppear(animated)
+//    }
     
     
     func setupButton(iphone : String){

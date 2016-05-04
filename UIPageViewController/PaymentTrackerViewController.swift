@@ -57,7 +57,13 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                 }
                 else
                 {
-                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                    if(temp1.Errors.count > 0){
+                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                    }
+                    else
+                    {
+                        LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                    }
 
                 }
             }
@@ -130,13 +136,19 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         formatter.numberStyle = .CurrencyStyle
         
         cell1.lb_Amount.text = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
+
+
         
-        cell1.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
+        var tempDate = self.paymentTrackerRecord[indexPath.row].DueDate
+        cell1.lb_DueDate.text = tempDate
+        
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
-        let DueDate = dateFormatter.dateFromString(self.paymentTrackerRecord[indexPath.row].DueDate)
+        let DueDate = dateFormatter.dateFromString(tempDate)
+
         
         let CurrentDate = NSDate()
         

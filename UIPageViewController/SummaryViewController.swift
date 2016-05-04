@@ -169,7 +169,13 @@ class SummaryViewController: UIViewController {
                             else
                             {
                                 
-                                LocalStore.Alert(self!.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                                if(temp1.Errors.count > 0){
+                                    LocalStore.Alert(self!.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                                }
+                                else
+                                {
+                                    LocalStore.Alert(self!.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                                }
 
                             }
                         }
@@ -244,9 +250,17 @@ class SummaryViewController: UIViewController {
                     if(temp1.IsSuccess)
                     {
                         
+                        var fromFilePath = ""
                         //Get the fiel Path from server
-                        let fromFilePath = temp1.Errors[0].ErrorMessage
-                        
+                        if(temp1.Errors.count > 0){
+                            fromFilePath = temp1.Errors[0].ErrorMessage
+                        }
+                        else
+                        {
+                            LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                            return
+                        }
+
                         
                         let rootPath = NSTemporaryDirectory()
           

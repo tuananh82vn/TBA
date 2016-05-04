@@ -61,6 +61,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
 //        //Handle auto hide keyboard
 //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
 //        view.addGestureRecognizer(tap)
+        
 
     }
     
@@ -115,7 +116,6 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         LocalStore.setMaxNoPay(0)
         LocalStore.setTotalPaid("")
         LocalStore.setIsPinSetup(false)
-        LocalStore.setDeviceToken("")
         LocalStore.setTotalOverDue("")
         LocalStore.setWeeklyAmount(0)
         LocalStore.setMonthlyAmount(0)

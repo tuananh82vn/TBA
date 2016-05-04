@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Synotive. All rights reserved.
 //
 import UIKit
-import Spring
 import Foundation
 
 public struct FolderManager {

@@ -27,11 +27,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.currentPageIndicatorTintColor = UIColor.greenColor()
         pageControl.backgroundColor = UIColor.whiteColor()
         
-        let pushSettings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Badge ,UIUserNotificationType.Sound ,UIUserNotificationType.Alert], categories: nil)
-        application.registerUserNotificationSettings(pushSettings)
+        LocalStore.setDeviceToken("")
+        
+        //Register for notification
+        registerForPushNotifications(application)
+        
+        if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+            
+            print("App open by click on push notification")
+            
+            let aps = notification["aps"] as! [String: AnyObject]
+            // If your app wasn’t running and the user launches it by tapping the push notification, the push notification is passed to your app in the launchOptions
+        }
+        
         return true
     }
 
+    func registerForPushNotifications(application: UIApplication) {
+        
+        var systemVersion = UIDevice.currentDevice().systemVersion;
+
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
+        application.registerForRemoteNotifications()
+    }
+    
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -59,9 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        print("time out")
 //    }
-    
+
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        application.registerForRemoteNotifications()
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
@@ -74,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         
-        print("Device Token:", tokenString)
+        //print("Device Token:", tokenString)
         
         LocalStore.setDeviceToken(tokenString)
         
@@ -87,6 +110,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LocalStore.setDeviceToken("")
     }
 
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+        print("Recived: \(userInfo)")
+        //Parsing userinfo:
+        var temp : NSDictionary = userInfo
+        if let info = userInfo["aps"] as? Dictionary<String, AnyObject>
+        {
+            var alertMsg = info["alert"] as! String
+//            var alert: UIAlertView!
+//            alert = UIAlertView(title: "", message: alertMsg, delegate: nil, cancelButtonTitle: "OK")
+//            alert.show()
+            
+            LocalStore.Alert((self.window?.rootViewController?.view)!, title: "Notice", message: alertMsg, indexPath: 3)
 
+        }
+        
+        
+
+    }
 }
 

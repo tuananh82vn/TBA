@@ -14,8 +14,9 @@ class BaseViewController: UIViewController {
     
     var rootViewController = ViewController()
     
-    var domain = "http://172.28.1.53:9999"
-    //var domain = "http://180.94.114.42:3333"
+    //var domain = "http://172.28.1.53:9999"
+    
+    var domain = "http://180.94.114.42:3333"
 
     
     override func viewDidLoad() {

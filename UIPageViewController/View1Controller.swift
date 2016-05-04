@@ -29,7 +29,9 @@ class View1Controller: BaseViewController {
             
             if let temp1 = objectReturn
             {
-                self.lb_welcomeMessage.text = temp1.Errors[0].ErrorMessage
+                if(temp1.Errors.count > 0){
+                    self.lb_welcomeMessage.text = temp1.Errors[0].ErrorMessage
+                }
             }
         }
 
