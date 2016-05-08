@@ -49,7 +49,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
             bankInfo.Amount = LocalStore.accessTotalOutstanding()
         }
         
-        if(LocalStore.accessMakePaymentIn3Part()){
+        if(LocalStore.accessMakePaymentIn3Part() || LocalStore.accessMakePaymentInstallment()){
             bankInfo.Amount = LocalStore.accessFirstAmountOfInstalment()
         }
 

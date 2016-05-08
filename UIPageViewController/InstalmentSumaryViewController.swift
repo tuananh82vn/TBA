@@ -51,9 +51,6 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
     
     @IBAction func btNext_Clicked(sender: AnyObject) {
         
-        LocalStore.setMakePaymentInFull(false)
-        
-        LocalStore.setMakePaymentIn3Part(true)
         
         LocalStore.setFirstAmountOfInstalment(ScheduleList[0].Amount.doubleValue)
         

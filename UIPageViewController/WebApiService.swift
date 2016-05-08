@@ -1005,12 +1005,6 @@ struct WebApiService {
         
         let calendar = NSCalendar.currentCalendar()
         
-//        let componentsYear = calendar.components(NSCalendarUnit.Year, fromDate: cardObject.ExpiryDate)
-//        let year =  componentsYear.year
-//        
-//        
-//        let componentsMonth = calendar.components(NSCalendarUnit.Month, fromDate: cardObject.ExpiryDate)
-//        let month =  componentsMonth.month
         
         //Visa
         if(cardObject.CardType == 0 ){
@@ -1032,7 +1026,8 @@ struct WebApiService {
                 "CreditCardCVV": cardObject.Cvv,
                 "PaymentType": PaymentType,
                 "PaymentMethod": "1",
-                "DebtorPaymentInstallment" : cardObject.DebtorPaymentInstallment
+                "DebtorPaymentInstallment" : cardObject.DebtorPaymentInstallment,
+                "InstalmentPaymentFrequency" : LocalStore.accessFrequency()
             ]
         ]
         
@@ -1124,7 +1119,9 @@ struct WebApiService {
                 "DirectDebitBSB2": cardObject.BSB2,
                 "PaymentType": PaymentType,
                 "PaymentMethod": "2",
-                "DebtorPaymentInstallment" : cardObject.DebtorPaymentInstallment
+                "DebtorPaymentInstallment" : cardObject.DebtorPaymentInstallment,
+                "InstalmentPaymentFrequency" : LocalStore.accessFrequency()
+
             ]
         ]
         

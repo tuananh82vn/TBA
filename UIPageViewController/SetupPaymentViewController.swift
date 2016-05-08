@@ -401,12 +401,16 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
                 SetPayment.SetPayment(2)
                 
+                LocalStore.setFrequency(0)
+
                 self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
             }
             
         }
         else
         {
+            SetPayment.SetPayment(3)
+            
             self.performSegueWithIdentifier("GoTo4Payment", sender: nil)
 
         }

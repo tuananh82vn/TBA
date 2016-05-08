@@ -322,6 +322,8 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
             
             let Frequency = self.dataSource["Frequency"].valueCandidate as! Int
             
+            LocalStore.setFrequency(Frequency+1)
+
             while ( totalAmount > paidAmount && installmentAmount > 0)
             {
                 let firstPayment = PaymentTrackerRecordModel()

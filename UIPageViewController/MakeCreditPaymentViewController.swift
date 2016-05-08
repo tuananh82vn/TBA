@@ -46,7 +46,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             cardInfo.Amount = LocalStore.accessTotalOutstanding()
         }
         
-        if(LocalStore.accessMakePaymentIn3Part()){
+        if(LocalStore.accessMakePaymentIn3Part() || LocalStore.accessMakePaymentInstallment()){
             cardInfo.Amount = LocalStore.accessFirstAmountOfInstalment()
         }
         
@@ -56,12 +56,10 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataSource["Amount"].editorClass = TKDataFormDecimalEditor.self
         
         
-        if(LocalStore.accessMakePaymentInFull()){
+        if(LocalStore.accessMakePaymentInFull() || LocalStore.accessMakePaymentIn3Part() || LocalStore.accessMakePaymentInstallment()){
             dataSource["Amount"].readOnly = true
         }
-        if(LocalStore.accessMakePaymentIn3Part()){
-            dataSource["Amount"].readOnly = true
-        }
+
         
         dataSource["CardType"].valuesProvider = [ "Visa", "Master" ]
         

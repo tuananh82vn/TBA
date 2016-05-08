@@ -91,6 +91,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         SetPayment.SetPayment(0)
         
+        LocalStore.setFrequency(0)
+
         self.SendAppsDetail()
         
     }

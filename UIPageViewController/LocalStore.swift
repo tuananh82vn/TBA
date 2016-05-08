@@ -55,11 +55,9 @@ struct LocalStore {
     
     private static let DebtorCodeSelected = "DebtorCodeSelected";
     
-
     private static let MaxNoPay = "MaxNoPay";
     
     private static let ThreePartDateDurationDays = "ThreePartDateDurationDays";
-    
     
     private static let FirstAmountOfInstalment = "FirstAmountOfInstalment"
 
@@ -68,6 +66,9 @@ struct LocalStore {
     private static let FortnightAmount = "FortnightAmount"
     
     private static let MonthlyAmount = "MonthlyAmount"
+    
+    private static let Frequency = "Frequency"
+
     
     //----------------------------------------------------------------------------//
     static func setDeviceToken(token: String) {
@@ -591,6 +592,25 @@ struct LocalStore {
         }
     }
     
+    //----------------------------------------------------------------------------//
+    
+    
+    static func setFrequency(token: Int) {
+        userDefaults.setObject(token, forKey: Frequency)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteFrequency() {
+        userDefaults.removeObjectForKey(Frequency)
+        userDefaults.synchronize()
+    }
+    
+    static func accessFrequency() -> Int {
+        return userDefaults.integerForKey(Frequency)
+    }
+    
+    //----------------------------------------------------------------------------//
+
     static func Alert(view : UIView, title : String , message : String , indexPath : Int) {
         
         

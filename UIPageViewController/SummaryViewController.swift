@@ -205,7 +205,9 @@ class SummaryViewController: UIViewController {
     }
 
     @IBAction func savetoInbox_Clicked(sender: AnyObject) {
-                                       
+        
+            self.view.showLoading();
+        
             var PaymentType = 0
             
             //        1: Pay In Full
@@ -242,7 +244,6 @@ class SummaryViewController: UIViewController {
             
             WebApiService.saveInbox(self.debtorInfo){ objectReturn in
                 
-                self.view.hideLoading();
                 
                 if let temp1 = objectReturn
                 {
@@ -287,8 +288,15 @@ class SummaryViewController: UIViewController {
                         
                         var results = ModelManager.getInstance().insertInboxItem(inboxDetail)
                         
+                        self.view.hideLoading();
+
                         if(results){
                             LocalStore.Alert(self.view, title: "Notice", message: self.title! + " has been saved into Inbox.", indexPath: 3)
+                        }
+                        else
+                        {
+                            LocalStore.Alert(self.view, title: "Error", message: "Error", indexPath: 0)
+
                         }
 
                     }
