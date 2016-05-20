@@ -39,8 +39,8 @@ class DebtorInfo {
     var MinimumFortnightlyOutstanding : Double
     var MinimumMonthlyOustanding : Double
     
-    var HistoryList : [PaymentTrackerRecordModel]
-    var ScheduleList : [PaymentTrackerRecordModel]
+    var HistoryInstalmentScheduleList : [PaymentTrackerRecordModel]
+    var InstalmentScheduleList : [PaymentTrackerRecordModel]
     var coDebtor : [CoDebtor]
     
     var coDebtorCode : [String]
@@ -90,8 +90,8 @@ class DebtorInfo {
         ArrangementDebtor = ""
         IsArrangementUnderThisDebtor = false
 
-        HistoryList = [PaymentTrackerRecordModel]()
-        ScheduleList = [PaymentTrackerRecordModel]()
+        HistoryInstalmentScheduleList = [PaymentTrackerRecordModel]()
+        InstalmentScheduleList = [PaymentTrackerRecordModel]()
         coDebtor = [CoDebtor]()
         client = Client()
         

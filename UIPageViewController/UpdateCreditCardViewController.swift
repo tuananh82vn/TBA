@@ -58,46 +58,35 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
 
                 if(temp1.IsSuccess)
                 {
-                    
-                    self.isError = false
-                    self.bt_Continue.setTitle("Continue", forState: UIControlState.Normal)
-
-                    
                     self.paymentInfo.CardNumber = temp1.card.CardNumber
                     self.paymentInfo.ExpiryMonth = temp1.card.ExpiryMonth
                     self.paymentInfo.ExpiryYear = temp1.card.ExpiryYear
-
-                    self.dataSource.sourceObject = self.paymentInfo
-                
-
-                    self.dataSource["CardNumber"].hintText = "Card Number"
-                    self.dataSource["CardNumber"].editorClass = TKDataFormPhoneEditor.self
-                
-                    self.dataSource["ExpiryMonth"].editorClass = TKDataFormNumberEditor.self
-                    self.dataSource["ExpiryMonth"].hintText = "MM"
-
-                    self.dataSource["ExpiryYear"].editorClass = TKDataFormNumberEditor.self
-                    self.dataSource["ExpiryYear"].hintText = "yyyy"
-
-                    self.dataForm1 = TKDataForm(frame: self.subView.bounds)
-                    self.dataForm1.delegate = self
-                    self.dataForm1.dataSource = self.dataSource
-                    self.dataForm1.backgroundColor = UIColor.whiteColor()
-                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-                
-                
-                
-                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                    self.dataForm1.validationMode = TKDataFormValidationMode.Manual
-                
-                    self.subView.addSubview(self.dataForm1)
                 }
-                else
-                {
-                    LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
-                    self.isError = true
-                    self.bt_Continue.setTitle("Finish", forState: UIControlState.Normal)
-                }
+                
+                self.dataSource.sourceObject = self.paymentInfo
+                
+                
+                self.dataSource["CardNumber"].hintText = "Card Number"
+                self.dataSource["CardNumber"].editorClass = TKDataFormPhoneEditor.self
+                
+                self.dataSource["ExpiryMonth"].editorClass = TKDataFormNumberEditor.self
+                self.dataSource["ExpiryMonth"].hintText = "MM"
+                
+                self.dataSource["ExpiryYear"].editorClass = TKDataFormNumberEditor.self
+                self.dataSource["ExpiryYear"].hintText = "yyyy"
+                
+                self.dataForm1 = TKDataForm(frame: self.subView.bounds)
+                self.dataForm1.delegate = self
+                self.dataForm1.dataSource = self.dataSource
+                self.dataForm1.backgroundColor = UIColor.whiteColor()
+                self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                
+                
+                
+                self.dataForm1.commitMode = TKDataFormCommitMode.Manual
+                self.dataForm1.validationMode = TKDataFormValidationMode.Manual
+                
+                self.subView.addSubview(self.dataForm1)
             }
             else
             {
@@ -238,7 +227,6 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
     
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
-        if(!self.isError){
         
             self.dataForm1.commit()
             
@@ -285,13 +273,6 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                 }
             }
             
-        }
-        else
-        {
-    
-            navigationController?.popViewControllerAnimated(true)
-
-        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

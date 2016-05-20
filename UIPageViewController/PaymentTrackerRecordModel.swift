@@ -12,11 +12,15 @@ class PaymentTrackerRecordModel : Serializable {
     
     var DueDate : String
     var Amount : String
+    var PayDate : String
+    var PayAmount : String
     var Defer : String
 
     override init() {
         DueDate = ""
         Amount = ""
+        PayDate = ""
+        PayAmount = ""
         Defer = ""
     }
 }

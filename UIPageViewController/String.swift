@@ -6,8 +6,8 @@
 //  Copyright © 2015 Vea Software. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import Foundation
 
 extension String {
     

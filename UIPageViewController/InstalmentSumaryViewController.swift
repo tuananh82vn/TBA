@@ -40,7 +40,12 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
         
         let cell1 = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! PaymentTrackerViewCell
         
-        cell1.lb_Amount.text = "$ " + self.ScheduleList[indexPath.row].Amount
+        
+        //Format number
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .CurrencyStyle
+        
+        cell1.lb_Amount.text = formatter.stringFromNumber(self.ScheduleList[indexPath.row].Amount.doubleValue)
         
         cell1.lb_DueDate.text = self.ScheduleList[indexPath.row].DueDate
         

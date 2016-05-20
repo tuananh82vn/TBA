@@ -1,16 +1,14 @@
 
 import UIKit
 
-class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKListViewDataSource {
+class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var subView: UIView!
     
     @IBOutlet weak var btDefer: UIButton!
 
-    var listView = TKListView()
+    @IBOutlet weak var tableView: UITableView!
     
-    let dataSource = TKDataSource()
-
     var paymentTrackerRecord = [PaymentTrackerRecordModel]()
     
     var HistoryList = [PaymentTrackerRecordModel]()
@@ -25,32 +23,16 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
     
     var OrginTotalNewUsed = 0
 
-    @IBOutlet weak var lb_Message: UILabel!
+    @IBOutlet weak var view_NoDefer: UIView!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-
-        listView = TKListView(frame: self.subView.bounds)
-        
-        listView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-        
-        listView.dataSource = self
-        listView.delegate = self
-        listView.allowsCellSwipe = true
-        listView.cellSwipeLimits = UIEdgeInsetsMake(0, 0, 0, 120)//how far the cell may swipe
-        listView.cellSwipeTreshold = 60 // the treshold after which the cell will autoswipe to the end and will not jump back to the
-        listView.registerClass(DeferPaymentViewCell.classForCoder(), forCellWithReuseIdentifier:"cell")
-
-        self.subView.addSubview(listView)
-
-        let layout = listView.layout as! TKListViewLinearLayout
-        layout.itemSize = CGSizeMake(100, 44)
         
         initData()
+        
 
-        // Do any additional setup after loading the view.
     }
     
     func initData(){
@@ -62,55 +44,47 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                 if(temp1.IsSuccess)
                 {
                     
-                    
                     //Do filtering
-                    for historyItem in temp1.HistoryList {
-                        
-                        let dateFormatter = NSDateFormatter()
-                        dateFormatter.dateFormat = "dd/MM/yyyy"
-                        
-                        let DueDate = dateFormatter.dateFromString(historyItem.DueDate)
-                        
-                        let CurrentDate = NSDate()
-                        
-                        if(DueDate!.isLessThanDate(CurrentDate)){
-                        
-                            if(historyItem.Defer.doubleValue > 0 )
-                            {
-                                self.HistoryList.append(historyItem)
-                            }
+                    for historyItem in temp1.HistoryInstalmentScheduleList {
+
+                        let DeferAmount = historyItem.Defer.doubleValue
+                        let PayAmount = historyItem.PayAmount.doubleValue
+                        let PayDate = historyItem.PayDate
+
+                        if(DeferAmount > 0)
+                        {
+                            
                         }
-                        else
+                        else if (PayAmount == 0 && PayDate == "")
                         {
                             self.HistoryList.append(historyItem)
                         }
                         
                     }
                     
+                    
                     self.TotalDefer = temp1.TotalDefer
                     
                     self.TotalUsed = temp1.TotalUsedDefer
-                    
-                    self.TotalNewUsed = temp1.TotalUsedDefer
-                    
-                    self.OrginTotalNewUsed = self.TotalNewUsed
 
                     self.paymentTrackerRecord = self.HistoryList
                     
                     if(self.paymentTrackerRecord.count > 0)
                     {
-                        self.lb_Message.hidden = true
-                        self.btDefer.hidden = true
+                        self.btDefer.setTitle("You used " + self.TotalUsed.description + " of " + self.TotalDefer.description, forState: UIControlState.Normal)
 
+                        self.view_NoDefer.hidden = true
+                        self.tableView.hidden = false
+                        self.tableView.reloadData()
                     }
                     else
                     {
-                        self.btDefer.hidden = false
+                        self.btDefer.setTitle("Schedule Callback", forState: UIControlState.Normal)
 
-                        self.lb_Message.hidden = false
+                        self.view_NoDefer.hidden = false
+                        self.tableView.hidden = true
                     }
                     
-                    self.listView.reloadData()
                 }
             }
             else
@@ -124,168 +98,70 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
         
     }
     
-    
-    func btDefer_Clicked() {
-        
-        if(self.selectedIndex >= 0){
-            
-            if(self.paymentTrackerRecord[self.selectedIndex].Defer == "" || self.paymentTrackerRecord[self.selectedIndex].Defer == "0.00")
-            {
-                if(self.TotalDefer == self.TotalNewUsed){
 
-                    LocalStore.Alert(self.view, title: "Error", message: "No more deferrals allowed", indexPath: 0)
-
-                }
-                else
-                {
-                    
-                    self.TotalNewUsed = self.TotalNewUsed + 1
-                
-                    self.paymentTrackerRecord[self.selectedIndex].Defer = "Deferred"
-            
-                    self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
-                    
-                    self.btDefer.hidden = false
-
-                    self.listView.reloadData()
-                }
-                
-            }
-            else
-            {
-                LocalStore.Alert(self.view, title: "Error", message: "This payment is already deferred", indexPath: 0)
-
-            }
-        }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        listView.endSwipe(true)
-
-    }
-    
-    func btUndo_Clicked() {
-        
-        if(self.selectedIndex >= 0){
-            
-            if(self.paymentTrackerRecord[self.selectedIndex].Defer == "Deferred")
-            {
-            
-                self.TotalNewUsed = self.TotalNewUsed - 1
-            
-                self.paymentTrackerRecord[self.selectedIndex].Defer = ""
-            
-                self.btDefer.setTitle("Used " + self.TotalNewUsed.description + " of " + self.TotalDefer.description + ". Submit ?", forState: UIControlState.Normal)
-            
-                
-                if(self.TotalNewUsed == self.OrginTotalNewUsed ){
-                    self.btDefer.hidden = true
-                }
-                
-                self.listView.reloadData()
-
-            }
-        }
-        
-        listView.endSwipe(true)
-        
-    }
-    
-    func animateButtonsInCell(cell: TKListViewCell, offset: CGPoint) {
-        if(offset.x > 0){
-            return
-        }
-        
-        let btDefer = cell.swipeBackgroundView.subviews[0] as! UIButton
-        
-        let btUndo = cell.swipeBackgroundView.subviews[1] as! UIButton
-        
-        let size = cell.frame.size
-
-        btDefer.frame = CGRectMake(size.width - 120, 0, 60, size.height)
-        
-        btUndo.frame = CGRectMake(size.width - 60, 0, 60, size.height)
-        
-        
-    }
-    
-
-    func listView(listView: TKListView, didFinishSwipeCell cell: TKListViewCell, atIndexPath indexPath: NSIndexPath, withOffset offset: CGPoint) {
-                
-        self.selectedIndex = indexPath.row
-        
-        
-    }
-
-    func listView(listView: TKListView, didSwipeCell cell: TKListViewCell, atIndexPath indexPath: NSIndexPath, withOffset offset: CGPoint) {
-        animateButtonsInCell(cell, offset: offset)
-    }
-    
-    func listView(listView: TKListView, numberOfItemsInSection section: Int) -> Int {
         return self.paymentTrackerRecord.count
+        
     }
     
-    func listView(listView: TKListView, cellForItemAtIndexPath indexPath: NSIndexPath) -> TKListViewCell? {
-        
-        let cell = listView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! DeferPaymentViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! DeferPaymentViewCell
+        
+        
+        cell.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
+
         
         //Format number
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
 
-        cell.lb_Amount.text = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
-        cell.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
-        cell.lb_Defer.text = self.paymentTrackerRecord[indexPath.row].Defer
-        
-        if(self.paymentTrackerRecord[indexPath.row].Defer.doubleValue > 0  || self.paymentTrackerRecord[indexPath.row].Defer == "Deferred") {
-            cell.img_Status.image = UIImage(named: "circle_red")
-        }
-        else
-        {
-            cell.img_Status.image = UIImage(named: "circle_blue")
-        }
-        
-        
-        
-        
-        if(cell.swipeBackgroundView.subviews.count == 0){
-            let size = cell.frame.size
-            let font = UIFont.systemFontOfSize(14)
-            
-            let btDefer = UIButton()
-            btDefer.frame = CGRectMake(size.width - 120, 0, 60, size.height)
-            btDefer.setTitle("Defer", forState: UIControlState.Normal)
-            btDefer.backgroundColor = UIColor.orangeColor()
-            btDefer.titleLabel?.font = font
-            btDefer.addTarget(self, action: "btDefer_Clicked", forControlEvents: UIControlEvents.TouchUpInside)
-            cell.swipeBackgroundView.addSubview(btDefer)
-            
-            let btUndo = UIButton()
-            btUndo.frame = CGRectMake(size.width - 60, 0, 60, size.height)
-            btUndo.setTitle("Undo", forState: UIControlState.Normal)
-            btUndo.backgroundColor = UIColor.redColor()
-            btUndo.titleLabel?.font = font
-            btUndo.addTarget(self, action: "btUndo_Clicked", forControlEvents: UIControlEvents.TouchUpInside)
-            cell.swipeBackgroundView.addSubview(btUndo)
-        }
-        
+        cell.lb_Amount.text  = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
+
         return cell
         
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.selectedIndex = indexPath.row
+        
+        if(self.TotalUsed ==  self.TotalDefer)
+        {
+            LocalStore.Alert(self.view, title: "Error", message: "You have deferred the maximum number of payments. Please schedule a callback from RecoveriesCorp", indexPath: 0)
 
-    
+            self.btDefer.setTitle("Schedule Callback", forState: UIControlState.Normal)
+        }
+        else
+        {
+            self.btDefer.setTitle("Defer this payment ?", forState: UIControlState.Normal)
+        }
+    }
+
     @IBAction func btDefer_Clicked(sender: UIButton)
     {
         
         if(self.paymentTrackerRecord.count > 0){
-            for payment in self.paymentTrackerRecord
+            
+            if(selectedIndex == -1)
             {
-                if(payment.Defer == "Deferred")
+                LocalStore.Alert(self.view, title: "Error", message: "Please select the payment you want to defer.", indexPath: 0)
+            }
+            else
+            {
+                if(self.TotalUsed ==  self.TotalDefer)
                 {
+                    self.performSegueWithIdentifier("GoToScheduleCallback", sender: nil)
+                }
+                else
+                {
+                
+                    var payment = self.paymentTrackerRecord[self.selectedIndex]
                     
-                    view.showLoading()
-                    
+                    self.view.showLoading()
+                        
                     let requestObject = DeferPayment()
                     
                     requestObject.InstalDate        = payment.DueDate
@@ -322,15 +198,12 @@ class DeferPaymentViewController: UIViewController  , TKListViewDelegate , TKLis
                         }
                     }
                 }
-            
             }
+
         }
         else
         {
-        
-            SetPayment.SetPayment(4)
-            
-            self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+            self.performSegueWithIdentifier("GoToScheduleCallback", sender: nil)
             
         }
         

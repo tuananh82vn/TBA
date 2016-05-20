@@ -158,6 +158,10 @@ struct JSONParser {
         
         Object.Amount = story["HistInstalAmount"] as? String ?? ""
         
+        Object.PayDate = story["HistPaymentDate"] as? String ?? ""
+        
+        Object.PayAmount = story["HistPaymentAmount"] as? String ?? ""
+        
         Object.Defer = story["HistDeferredAmount"] as? String ?? ""
 
         

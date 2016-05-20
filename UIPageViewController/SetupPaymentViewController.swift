@@ -73,18 +73,19 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         let totalAmount =  LocalStore.accessTotalOutstanding()
         
         if(LocalStore.accessMaxNoPay()==2){
+
+            threePartPayment.FirstAmount = round(totalAmount/2).formatWithDecimal(2)
+
+            threePartPayment.SecondAmount = (totalAmount - round(totalAmount/2)).formatWithDecimal(2)
             
-            threePartPayment.FirstAmount = round(totalAmount/2)
-            
-            threePartPayment.SecondAmount = totalAmount - threePartPayment.FirstAmount
         }
         else if(LocalStore.accessMaxNoPay()==3)
         {
-            threePartPayment.FirstAmount = round(totalAmount/3)
+            threePartPayment.FirstAmount = round(totalAmount/3).formatWithDecimal(2)
 
-            threePartPayment.SecondAmount = round(totalAmount/3)
+            threePartPayment.SecondAmount = round(totalAmount/3).formatWithDecimal(2)
 
-            threePartPayment.ThirdAmount = (totalAmount - threePartPayment.FirstAmount - threePartPayment.SecondAmount).roundWith2Decimal()
+            threePartPayment.ThirdAmount = (totalAmount - round(totalAmount/3) - round(totalAmount/3)).formatWithDecimal(2)
         }
         
         
@@ -96,7 +97,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         let FirstAmount = dataSource["FirstAmount"]
         FirstAmount.hintText = "First Amount"
-        FirstAmount.editorClass = TKDataFormDecimalEditor.self
+        FirstAmount.editorClass = TKDataFormPhoneEditor.self
         
         
         dataSource["FirstDate"].image = UIImage(named: "calendar-1")
@@ -104,7 +105,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         let SecondAmount = dataSource["SecondAmount"]
         SecondAmount.hintText = "Second Amount"
-        SecondAmount.editorClass = TKDataFormDecimalEditor.self
+        SecondAmount.editorClass = TKDataFormPhoneEditor.self
         
         
         dataSource["SecondDate"].image = UIImage(named: "calendar-1")
@@ -112,7 +113,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         let ThirdAmount = dataSource["ThirdAmount"]
         ThirdAmount.hintText = "Third Amount"
-        ThirdAmount.editorClass = TKDataFormDecimalEditor.self
+        ThirdAmount.editorClass = TKDataFormPhoneEditor.self
         
         dataSource["ThirdDate"].image = UIImage(named: "calendar-1")
         dataSource["ThirdDate"].hintText = "Third Date"
@@ -378,14 +379,12 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let amount3Number = amount3String.doubleValue
                 
                 totalAmount = amount1Number + amount2Number + amount3Number
-                
-                totalAmount = totalAmount.roundWith2Decimal()
-                
+ 
             }
             
             
             
-            if(totalAmount.roundWith2Decimal() != LocalStore.accessTotalOutstanding().roundWith2Decimal()){
+            if(totalAmount.formatWithDecimal(2) != LocalStore.accessTotalOutstanding().formatWithDecimal(2)){
                 
                 //Format number
                 
@@ -431,7 +430,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let firstPayment = PaymentTrackerRecordModel()
             
             firstPayment.DueDate = (self.dataSource["FirstDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue.roundWith2Decimal().description
+            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description
             
             self.ScheduleList.append(firstPayment)
 
@@ -439,7 +438,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             let secondPayment = PaymentTrackerRecordModel()
             
             secondPayment.DueDate = (self.dataSource["SecondDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description.doubleValue.roundWith2Decimal().description
+            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description
 
             self.ScheduleList.append(secondPayment)
             
@@ -448,7 +447,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 let thirdPayment = PaymentTrackerRecordModel()
                 
                 thirdPayment.DueDate = (self.dataSource["ThirdDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-                thirdPayment.Amount = self.dataSource["ThirdAmount"].valueCandidate.description.doubleValue.roundWith2Decimal().description
+                thirdPayment.Amount = self.dataSource["ThirdAmount"].valueCandidate.description
                 
                 self.ScheduleList.append(thirdPayment)
             }

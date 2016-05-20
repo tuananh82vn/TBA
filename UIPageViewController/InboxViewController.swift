@@ -18,7 +18,9 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
     
     var selectedInbox = InboxItem()
     
+    @IBOutlet weak var View_NoInbox: UIView!
     
+    @IBOutlet weak var View_Title: UIView!
     var FinalList = [InboxItem]()
     
     override func viewDidLoad() {
@@ -89,8 +91,21 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
 
                     //Display the lasest message first
                     self.FinalList.sortInPlace({ $0.MessageNo > $1.MessageNo })
+                    
+                    if(self.FinalList.count == 0){
+                        self.View_NoInbox.hidden = false
+                        self.tableView.hidden = true
+                        self.View_Title.hidden = true
 
-                    self.tableView.reloadData()
+                    }
+                    else
+                    {
+                        self.View_NoInbox.hidden = true
+                        self.tableView.hidden = false
+                        self.View_Title.hidden = false
+
+                        self.tableView.reloadData()
+                    }
                     
                 }
                 else

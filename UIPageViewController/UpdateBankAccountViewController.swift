@@ -54,54 +54,42 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                 
                     if(temp1.IsSuccess)
                     {
-                        
-                        self.isError = false
-                        self.bt_Continue.setTitle("Continue", forState: UIControlState.Normal)
-                        
                         self.bankInfo = temp1.bank
-                        
-                        self.dataSource.sourceObject = self.bankInfo
-                        
-                        self.dataSource["Amount"].hidden = true
-                        self.dataSource["BSB"].hidden = true
-                        self.dataSource["DebtorPaymentInstallment"].hidden = true
-
-                        
-                        self.dataSource["AccountName"].index = 0
-                        
-                        self.dataSource["BSB1"].editorClass = TKDataFormPhoneEditor.self
-                        self.dataSource["BSB1"].index = 1
-                        self.dataSource["BSB1"].displayName = "BSB 1"
-
-                        self.dataSource["BSB2"].editorClass = TKDataFormPhoneEditor.self
-                        self.dataSource["BSB2"].index = 2
-                        self.dataSource["BSB2"].displayName = "BSB 2"
-
-                        self.dataSource["AccountNumber"].editorClass = TKDataFormPhoneEditor.self
-                        self.dataSource["AccountNumber"].index = 3
-                        
-                        
-                        self.dataForm1 = TKDataForm(frame: self.subView.bounds)
-                        self.dataForm1.delegate = self
-                        self.dataForm1.dataSource = self.dataSource
-                        
-                        self.dataForm1.backgroundColor = UIColor.whiteColor()
-                        self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-                        
-                        self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                        self.dataForm1.validationMode = TKDataFormValidationMode.Manual
-                        
-                        self.subView.addSubview(self.dataForm1)
-                        
-
                     }
-                    else
-                    {
-                        
-                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
-                        self.isError = true
-                        self.bt_Continue.setTitle("Finish", forState: UIControlState.Normal)
-                    }
+
+                    
+                    self.dataSource.sourceObject = self.bankInfo
+                    
+                    self.dataSource["Amount"].hidden = true
+                    self.dataSource["BSB"].hidden = true
+                    self.dataSource["DebtorPaymentInstallment"].hidden = true
+                    
+                    
+                    self.dataSource["AccountName"].index = 0
+                    
+                    self.dataSource["BSB1"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["BSB1"].index = 1
+                    self.dataSource["BSB1"].displayName = "BSB 1"
+                    
+                    self.dataSource["BSB2"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["BSB2"].index = 2
+                    self.dataSource["BSB2"].displayName = "BSB 2"
+                    
+                    self.dataSource["AccountNumber"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["AccountNumber"].index = 3
+                    
+                    
+                    self.dataForm1 = TKDataForm(frame: self.subView.bounds)
+                    self.dataForm1.delegate = self
+                    self.dataForm1.dataSource = self.dataSource
+                    
+                    self.dataForm1.backgroundColor = UIColor.whiteColor()
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                    
+                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.Manual
+                    
+                    self.subView.addSubview(self.dataForm1)
                     
                 
             }
@@ -249,7 +237,6 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
     
     @IBAction func btContinue_Clicked(sender: AnyObject) {
         
-        if(!self.isError){
             
             self.dataForm1.commit()
             
@@ -296,15 +283,6 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                     
                 }
             }
-            
-        }
-        else
-        {
-            
-            navigationController?.popViewControllerAnimated(true)
-
-            
-        }
         
     }
     

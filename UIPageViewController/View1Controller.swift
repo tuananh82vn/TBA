@@ -24,7 +24,6 @@ class View1Controller: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         WebApiService.getWelcomeMessage() { objectReturn in
             
             if let temp1 = objectReturn

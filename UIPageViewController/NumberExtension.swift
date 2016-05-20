@@ -29,4 +29,26 @@ extension Double {
         
         return tempString.doubleValue
     }
+    
+    func roundToPlaces(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return round(self * divisor) / divisor
+    }
+    
+    func formatWithDecimal(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        return formatter.stringFromNumber(self) ?? "\(self)"
+    }
+}
+
+extension String {
+    func formatWithDecimal(fractionDigits:Int) -> NSNumber? {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        return formatter.numberFromString(self)
+    }
 }

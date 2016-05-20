@@ -17,10 +17,13 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
 
     var paymentTrackerRecord = [PaymentTrackerRecordModel]()
     
-    var HistoryList = [PaymentTrackerRecordModel]()
+    var HistoryInstalmentScheduleList = [PaymentTrackerRecordModel]()
 
-    var ScheduleList = [PaymentTrackerRecordModel]()
-
+    var InstalmentScheduleList = [PaymentTrackerRecordModel]()
+    
+    var circle_red = UIImage(named: "circle_red")
+    var circle_blue = UIImage(named: "circle_blue")
+    var circle_yellow = UIImage(named: "circle_yellow")
 
     override func viewDidLoad() {
         
@@ -38,11 +41,11 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
             {
                 if(temp1.IsSuccess)
                 {
-                    self.HistoryList = temp1.HistoryList
+                    self.HistoryInstalmentScheduleList = temp1.HistoryInstalmentScheduleList
                     
-                    self.ScheduleList = temp1.ScheduleList
+                    self.InstalmentScheduleList = temp1.InstalmentScheduleList
 
-                    self.paymentTrackerRecord = self.ScheduleList
+                    self.paymentTrackerRecord = self.InstalmentScheduleList
                     
                     if(self.paymentTrackerRecord.count == 0){
                         self.tableView.hidden = true
@@ -84,9 +87,9 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         {
             case 0:
             
-                self.paymentTrackerRecord = self.ScheduleList
+                self.paymentTrackerRecord = self.InstalmentScheduleList
                 
-                if(self.ScheduleList.count == 0){
+                if(self.InstalmentScheduleList.count == 0){
                     self.tableView.hidden = true
                 }
                 else
@@ -97,9 +100,9 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                 self.tableView.reloadData()
             case 1:
             
-                self.paymentTrackerRecord = self.HistoryList
+                self.paymentTrackerRecord = self.HistoryInstalmentScheduleList
                 
-                if(self.HistoryList.count == 0){
+                if(self.HistoryInstalmentScheduleList.count == 0){
                     self.tableView.hidden = true
                 }
                 else
@@ -151,33 +154,47 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
 
         
         let CurrentDate = NSDate()
-        
         let Amount = self.paymentTrackerRecord[indexPath.row].Amount.doubleValue
         
+        
+        //Schedule
         if( segmentedControl.selectedSegmentIndex == 0 )
         {
                 if(DueDate!.isLessThanDate(CurrentDate)){
                 
-                    cell1.img_Status.image = UIImage(named: "circle_red")
+                    cell1.img_Status.image = circle_red
                 }
                 else
                 {
                     cell1.img_Status.image = nil
                 }
         }
+        //History
         else
         {
+            
+                var PayAmount = self.paymentTrackerRecord[indexPath.row].PayAmount.doubleValue
+                var DeferAmount = self.paymentTrackerRecord[indexPath.row].Defer.doubleValue
+                var PayDate = self.paymentTrackerRecord[indexPath.row].PayDate
+            
                 if(Amount <= 0){
                     
-                    cell1.img_Status.image = UIImage(named: "circle_red")
+                    cell1.img_Status.image = circle_red
+                }
+                else if(DeferAmount > 0)
+                {
+                    cell1.img_Status.image = self.circle_yellow
+                }
+                else if (PayAmount == 0 && PayDate == ""){
+                    cell1.img_Status.image = circle_red
                 }
                 else if(Amount < LocalStore.accessNextPaymentInstallment())
                 {
-                    cell1.img_Status.image = UIImage(named: "circle_red")
+                    cell1.img_Status.image = circle_red
                 }
                 else
                 {
-                    cell1.img_Status.image = UIImage(named: "circle_blue")
+                    cell1.img_Status.image = self.circle_blue
                 }
         }
 

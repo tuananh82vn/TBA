@@ -77,6 +77,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         formatter.numberStyle = .CurrencyStyle
 
         self.lbl_outstanding.text = formatter.stringFromNumber(LocalStore.accessTotalOutstanding())
+        
         if(LocalStore.accessNextPaymentInstallment() > 0 ){
             self.lbl_labelNextInstalment.hidden = false
             self.lbl_nextinstalment.text = formatter.stringFromNumber(LocalStore.accessNextPaymentInstallment())

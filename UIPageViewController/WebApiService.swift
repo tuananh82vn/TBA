@@ -642,17 +642,17 @@ struct WebApiService {
                 
                 if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
                     
-                    let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                    let HistoryInstalmentScheduleList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
                     
-                    JsonReturn.HistoryList = HistoryList
+                    JsonReturn.HistoryInstalmentScheduleList = HistoryInstalmentScheduleList
                     
                 }
 
                 if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
                     
-                    let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                    let InstalmentScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
                     
-                    JsonReturn.ScheduleList = ScheduleList
+                    JsonReturn.InstalmentScheduleList = InstalmentScheduleList
                     
                 }
                 
@@ -833,17 +833,17 @@ struct WebApiService {
                 
                  if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
                 
-                       let HistoryList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                       let HistoryInstalmentScheduleList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
                 
-                        JsonReturn.HistoryList = HistoryList
+                        JsonReturn.HistoryInstalmentScheduleList = HistoryInstalmentScheduleList
                 
                  }
                 
                  if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
                 
-                       let ScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                       let InstalmentScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
                 
-                       JsonReturn.ScheduleList = ScheduleList
+                       JsonReturn.InstalmentScheduleList = InstalmentScheduleList
                 
                  }
                 
