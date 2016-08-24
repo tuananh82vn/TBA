@@ -269,10 +269,6 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
             }
         }
 
-        
-
-
-
     }
     
     @IBAction func deleteButton_Clicked(sender: AnyObject) {

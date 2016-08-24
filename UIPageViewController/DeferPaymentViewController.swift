@@ -117,6 +117,7 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
         //Format number
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
+        formatter.currencySymbol = "$"
 
         cell.lb_Amount.text  = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
 
@@ -220,7 +221,7 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
         if segue.identifier == "GoToNotice" {
             
             let controller = segue.destinationViewController as! FinishViewController
-            controller.message = "Your defer payment has been setup successfully"
+            controller.message = "You have successfully deferred this payment."
             
         }
     }

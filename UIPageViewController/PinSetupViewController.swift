@@ -46,6 +46,14 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
         self.addDoneButtonOnKeyboard(tf_Pin0)
 
         // Do any additional setup after loading the view.
+        
+        let gesture = UITapGestureRecognizer(target: self, action: "view_OnTop_Clicked:")
+        self.view1.addGestureRecognizer(gesture)
+    }
+    
+    func view_OnTop_Clicked(sender:UITapGestureRecognizer){
+        
+        tf_Pin0.becomeFirstResponder()
     }
     
     func tf_Pin0DidChange(textField: UITextField) {
@@ -81,14 +89,14 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
             self.SecondPin = tf_Pin0.text!
             
             if(self.FirstPin == self.SecondPin){
-                
-                
+
                 //Save Pin
                 LocalStore.setPin(self.FirstPin)
                 
                 LocalStore.setIsPinSetup(true)
                 
-                
+                WebApiService.sendActivityTracking("Setup Pin")
+
                 self.performSegueWithIdentifier("GoToLogin", sender: nil)
 
             }
@@ -97,13 +105,10 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
                 
                 LocalStore.Alert(self.view, title: "Error", message: "PIN does not match - please try again", indexPath: 0)
 
-                
                 reset()
             }
 
         }
-
-
     }
     
     func reset(){

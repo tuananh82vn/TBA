@@ -43,7 +43,9 @@ class View2Controller: BaseViewController {
             self.tf_Netcode.alpha = 0
             
             self.lb_netcode.alpha = 0
-            
+        
+            self.tf_Netcode.maxLength = 6;
+        
         //})
         
         self.addDoneButtonOnKeyboard(tf_DebtCode)
@@ -90,6 +92,14 @@ class View2Controller: BaseViewController {
 
         self.view.showLoading();
         
+        if(self.tf_Netcode.text?.length != 6 ){
+            
+            self.view.hideLoading();
+
+            LocalStore.Alert(self.view, title: "Error", message: "Invalid NetCode", indexPath: 0)
+        }
+        else
+        {
         
         WebApiService.verifyNetCode(self.tf_DebtCode.text!, Netcode: self.tf_Netcode.text!) { objectReturn in
 
@@ -117,10 +127,8 @@ class View2Controller: BaseViewController {
                 
             }
         }
-            
-    
- 
-
+        }
+        
     }
     
     func doGetNetCode(){

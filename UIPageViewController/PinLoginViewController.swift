@@ -119,21 +119,26 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         LocalStore.setTotalOverDue("")
         LocalStore.setWeeklyAmount(0)
         LocalStore.setMonthlyAmount(0)
+        
         LocalStore.setFortnightAmount(0)
         LocalStore.setTotalOutstanding(0)
         LocalStore.setIsExistingArrangement(false)
+        
         LocalStore.setIsCoBorrowersSelected(false)
         LocalStore.setIsArrangementUnderThisDebtor(false)
         LocalStore.setRefNumber("")
-        LocalStore.setIsArrangementUnderThisDebtor(false)
+        
         LocalStore.setDebtorCodeSelected("")
         LocalStore.setIsCoBorrowers(false)
+        
         LocalStore.setArrangementDebtor("")
         LocalStore.setThreePartDateDurationDays(0)
         LocalStore.setIsAllowMonthlyInstallment(false)
+        
         LocalStore.setIsExistingArrangementDD(false)
         LocalStore.setIsExistingArrangementCC(false)
         LocalStore.setFirstAmountOfInstalment(0)
+        
         LocalStore.setNextPaymentInstallment(0)
         LocalStore.setMakePaymentOtherAmount(false)
         LocalStore.setMakePaymentInstallment(false)

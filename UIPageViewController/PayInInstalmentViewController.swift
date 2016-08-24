@@ -42,7 +42,8 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         //Format number
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
-        
+        formatter.currencySymbol = "$"
+
         
         if(LocalStore.accessIsAllowMonthlyInstallment()!){
         

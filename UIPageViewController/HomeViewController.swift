@@ -75,6 +75,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         //Format number
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
+        formatter.currencySymbol = "$"
 
         self.lbl_outstanding.text = formatter.stringFromNumber(LocalStore.accessTotalOutstanding())
         

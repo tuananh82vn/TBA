@@ -29,6 +29,7 @@
 		C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C451BEC220D007463FD /* UIColorExtension.swift */; };
 		C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C471BEC55AD007463FD /* RBResizer.swift */; };
 		C745F4851CD7206100EB7A35 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F4841CD7206100EB7A35 /* FolderManager.swift */; };
+		C74903251D6D269D007A30B8 /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74903241D6D269D007A30B8 /* TextFieldExtension.swift */; };
 		C77E1CEA1C7A8F91004AAEFF /* PhoneNumberKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E1CE91C7A8F91004AAEFF /* PhoneNumberKit.framework */; };
 		C77E1CF11C7AAE03004AAEFF /* JLToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E1CED1C7AAE03004AAEFF /* JLToast.swift */; };
 		C77E1CF21C7AAE03004AAEFF /* JLToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E1CEE1C7AAE03004AAEFF /* JLToastCenter.swift */; };
@@ -148,6 +149,7 @@
 		C72C0C451BEC220D007463FD /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		C72C0C471BEC55AD007463FD /* RBResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBResizer.swift; sourceTree = "<group>"; };
 		C745F4841CD7206100EB7A35 /* FolderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
+		C74903241D6D269D007A30B8 /* TextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		C77E1CE91C7A8F91004AAEFF /* PhoneNumberKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhoneNumberKit.framework; path = "Pods/../build/Debug-iphoneos/PhoneNumberKit.framework"; sourceTree = "<group>"; };
 		C77E1CEC1C7AAE03004AAEFF /* JLToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLToast.h; sourceTree = "<group>"; };
 		C77E1CED1C7AAE03004AAEFF /* JLToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLToast.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				C797D62C1C6D79960083CD88 /* NumberExtension.swift */,
 				C797D6341C72AB0F0083CD88 /* SetPayment.swift */,
 				C715F92E1CD30F8200B8198A /* DownloadFile.swift */,
+				C74903241D6D269D007A30B8 /* TextFieldExtension.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				C7813B641BEC7FD300876860 /* HomeViewController.swift in Sources */,
 				66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */,
 				C797D62F1C6D9C6E0083CD88 /* DebtorPaymentInstallment.swift in Sources */,
+				C74903251D6D269D007A30B8 /* TextFieldExtension.swift in Sources */,
 				C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */,
 				C797D6231C6C43E10083CD88 /* Client.swift in Sources */,
 				C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */,

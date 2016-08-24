@@ -253,7 +253,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             if (value.length < 3 || value.length > 3 )
             {
-                dataSource["Cvv"].errorMessage = "Invalid CVV"
+                dataSource["Cvv"].errorMessage = "CVV is not valid"
 
                 self.validate4 = false
                 return self.validate4

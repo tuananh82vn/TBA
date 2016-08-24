@@ -63,7 +63,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                     //Format number
                     let formatter = NSNumberFormatter()
                     formatter.numberStyle = .CurrencyStyle
-                    
+                    formatter.currencySymbol = "$"
+
                     self.view_NoArrangement.hidden = true
                     self.view_NoArrangement.userInteractionEnabled = false
                     

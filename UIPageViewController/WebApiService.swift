@@ -30,6 +30,7 @@ struct WebApiService {
         case GetInboxItemDocument
         case UpdateInboxItemMessage
         case SaveInbox
+        case SendActivityTracking
 
         var description: String {
             switch self {
@@ -58,6 +59,7 @@ struct WebApiService {
                 case .GetInboxItemDocument: return "/Api/GetInboxItemDocument"
                 case .UpdateInboxItemMessage: return "/Api/UpdateInboxItemMessage"
                 case .SaveInbox: return "/Api/SaveInbox"
+                case .SendActivityTracking: return "/Api/SendActivityTracking"
 
             }
         }
@@ -1003,16 +1005,10 @@ struct WebApiService {
         
         let JsonReturn = PaymentReturnModel()
         
-        let calendar = NSCalendar.currentCalendar()
-        
-        
         //Visa
         if(cardObject.CardType == 0 ){
             cardObject.CardType = 2
         }
-
-        
-        
         
         let parameters = [
             "Item": [
@@ -1637,7 +1633,8 @@ struct WebApiService {
             "Item": [
                 "ReferenceNumber": ReferenceNumber,
                 "PinNumber": PinNumber,
-                "DeviceToken": DeviceToken
+                "DeviceToken": DeviceToken,
+                "DeviceType" : "Ios"
             ]
         ]
         
@@ -1705,5 +1702,19 @@ struct WebApiService {
             
         }
     }
+    
+    static func sendActivityTracking(Activity: String) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SendActivityTracking.description
+        
+        let parameters = [
+                "ReferenceNumber": LocalStore.accessRefNumber()!,
+                "From" : "Ios",
+                "Activity" : Activity
+        ]
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON)
+    }
+
 
 }

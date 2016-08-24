@@ -137,7 +137,8 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         //Format number
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
-        
+        formatter.currencySymbol = "$"
+
         cell1.lb_Amount.text = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
 
 
@@ -173,9 +174,9 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         else
         {
             
-                var PayAmount = self.paymentTrackerRecord[indexPath.row].PayAmount.doubleValue
-                var DeferAmount = self.paymentTrackerRecord[indexPath.row].Defer.doubleValue
-                var PayDate = self.paymentTrackerRecord[indexPath.row].PayDate
+                let PayAmount = self.paymentTrackerRecord[indexPath.row].PayAmount.doubleValue
+                let DeferAmount = self.paymentTrackerRecord[indexPath.row].Defer.doubleValue
+                let PayDate = self.paymentTrackerRecord[indexPath.row].PayDate
             
                 if(Amount <= 0){
                     

@@ -44,7 +44,8 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
         //Format number
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
-        
+        formatter.currencySymbol = "$"
+
         cell1.lb_Amount.text = formatter.stringFromNumber(self.ScheduleList[indexPath.row].Amount.doubleValue)
         
         cell1.lb_DueDate.text = self.ScheduleList[indexPath.row].DueDate
