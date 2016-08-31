@@ -267,6 +267,9 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                     
                     if(temp1.IsSuccess)
                     {
+                        
+                        WebApiService.sendActivityTracking("Update Bank Account")
+
                         self.performSegueWithIdentifier("GoToNotice", sender: nil)
                         
                     }

@@ -36,6 +36,9 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
         GetInboxItemFromLocal()
         
         GetInboxItemFromRCS()
+        
+        WebApiService.sendActivityTracking("Open Inbox")
+
 
         //self.tableView.reloadData()
     }
@@ -159,6 +162,12 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
         else
             if(Type == "D"){
                 TypeDescription = "Letter"
+        }
+        else if(Type == "R"){
+            TypeDescription = "Receipt"
+        }
+        else if(Type == "P"){
+                TypeDescription = "Payment"
         }
         
         cell1.lb_Type.text = TypeDescription

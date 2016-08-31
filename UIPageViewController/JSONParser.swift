@@ -78,6 +78,24 @@ struct JSONParser {
         
         return ErrorArray
     }
+    
+    static func parseCallbackList(story: NSArray) -> [String] {
+        
+        var ErrorArray = [String]()
+        
+        if let Items = story as Array? {
+            
+            for var index = 0; index < Items.count; ++index {
+                
+                if let Item = Items[index] as? String {
+                    
+                    ErrorArray.append(Item)
+                }
+            }
+        }
+        
+        return ErrorArray
+    }
 
     
     static func parseSchedulePaymentTracker(story: NSArray) -> [PaymentTrackerRecordModel] {

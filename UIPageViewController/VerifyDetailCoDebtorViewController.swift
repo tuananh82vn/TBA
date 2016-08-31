@@ -223,6 +223,9 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
 
                     LocalStore.setDRCode(self.selectedDebtor.DebtorCode)
                     
+                    WebApiService.sendActivityTracking("Verify Detail")
+
+                    
                     self.performSegueWithIdentifier("GoToSetupPin", sender: nil)
 
                 }

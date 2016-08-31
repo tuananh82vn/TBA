@@ -198,6 +198,9 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
                             
                         }
                     }
+                    
+                    WebApiService.sendActivityTracking("Defer")
+
                 }
             }
 

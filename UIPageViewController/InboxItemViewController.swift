@@ -61,9 +61,12 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                     }
                 }
             }
+            
+            WebApiService.sendActivityTracking("Open Inbox Message")
+
         }
         else
-            if(self.inboxDetail.Type == "D"){
+            if(self.inboxDetail.Type == "D" || self.inboxDetail.Type == "R" || self.inboxDetail.Type == "P"){
                 
                 self.view.showLoading()
                 
@@ -150,7 +153,8 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                     }
                     
                 }
-
+                
+                WebApiService.sendActivityTracking("Open Inbox Document")
 
         }
     }

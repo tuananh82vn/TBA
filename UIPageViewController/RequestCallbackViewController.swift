@@ -38,7 +38,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     
     var dataForm1 = TKDataForm()
 
-    
+    var CallbackSlot = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,50 +48,115 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        dataSource.sourceObject = requestCallBack
+        self.getCallbackSlot("",time: "", isInit: true);
+
+        WebApiService.sendActivityTracking("Open Schedule Callback")
+
+    }
+    
+    func getCallbackSlot(date : String, time : String, isInit : Bool){
         
-        dataSource["Name"].hintText = "Name"
-        dataSource["Name"].errorMessage = "Please enter your name"
+        self.view.showLoading()
+        var dateTmp = "";
+        var timeTmp = "";
         
-        dataSource["Phone"].hintText = "Number"
-        dataSource["Phone"].errorMessage = "Please enter your number"
-        dataSource["Phone"].editorClass = TKDataFormPhoneEditor.self
+        if(date.isEmpty)
+        {
+            dateTmp  = NSDate().formattedWith("yyyy/MM/dd")
+        }
+        else{
+            dateTmp = date
+        }
         
-        dataSource["Date"].hintText = "Date"
+        if(time.isEmpty){
+            timeTmp = NSDate().formattedWith("HH:mm:ss")
+        }
+        else
+        {
+            timeTmp = time
+        }
         
+    
+        WebApiService.GetCallBackTime(LocalStore.accessRefNumber()!,CallbackDate: dateTmp, CallbackTimeSlot: timeTmp) { objectReturn in
+            
+            if let temp1 = objectReturn
+            {
+                
+                self.view.hideLoading()
+                
+                if(temp1.IsSuccess){
+                    
+                    if(isInit)
+                    {
+                        self.dataSource.sourceObject = self.requestCallBack
+                    
+                        self.dataSource["Name"].hintText = "Name"
+                        self.dataSource["Name"].errorMessage = "Please enter your name"
+                    
+                        self.dataSource["Phone"].hintText = "Number"
+                        self.dataSource["Phone"].errorMessage = "Please enter your number"
+                        self.dataSource["Phone"].editorClass = TKDataFormPhoneEditor.self
+                    
+                        self.dataSource["Date"].hintText = "Date"
+                    
+                        self.dataSource["CallBackTimeSlot"].hintText = "Time"
+                        self.dataSource["CallBackTimeSlot"].errorMessage = "Please select time slot"
+                        
+                        self.dataSource["CallBackTimeSlotValue"].hidden = true
 
-        let TimeFormatter = NSDateFormatter()
-        TimeFormatter.dateFormat = "h:mm a";
-        
+                    }
+                
+                    self.CallbackSlot = temp1.CallbackSlot
+                    self.dataSource["CallBackTimeSlot"].valuesProvider = self.CallbackSlot
+                    
+                    if(isInit)
+                    {
+                    
+                    self.dataSource["CallBackTimeSlot"].editorClass = TKDataFormPickerViewEditor.self
+                    
+                    self.dataSource["Notes"].hintText = "Notes"
+                    self.dataSource["Notes"].editorClass = TKDataFormMultilineTextEditor.self
+                    
+                    self.dataForm1 = TKDataForm(frame: self.subView.bounds)
+                    
+                    self.dataForm1.dataSource = self.dataSource
+                    self.dataForm1.delegate = self
+                    
+                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.Immediate
+                    
+                    
+                    self.dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
+                    
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                    
+                    self.subView.addSubview(self.dataForm1)
+                        
+                    }
+                    
+                    if(!isInit){
+                     self.dataForm1.reloadData()
+                    }
+                }
+                else
+                {
+                    if(temp1.Errors.count > 0){
+                        LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
+                    }
+                    else
+                    {
+                        LocalStore.Alert(self.view, title: "Error", message: "Unexpected error.", indexPath: 0)
+                    }
+                }
+            }
+            else
+            {
+                
+                LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
+                
+            }
+        }
 
-        dataSource["TimeFrom"].editorClass = TKDataFormTimePickerEditor.self
-        dataSource["TimeFrom"].hintText = "From"
-        dataSource["TimeFrom"].formatter = TimeFormatter
-
-        
-        dataSource["TimeTo"].editorClass = TKDataFormTimePickerEditor.self
-        dataSource["TimeTo"].hintText = "To"
-        dataSource["TimeTo"].formatter = TimeFormatter
-
-
-        dataSource["Notes"].hintText = "Notes"
-        dataSource["Notes"].editorClass = TKDataFormMultilineTextEditor.self
-        
-        dataForm1 = TKDataForm(frame: self.subView.bounds)
-
-        dataForm1.dataSource = dataSource
-        dataForm1.delegate = self
-
-        dataForm1.commitMode = TKDataFormCommitMode.Manual
-        dataForm1.validationMode = TKDataFormValidationMode.Manual
-
-
-        dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
-        
-        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
-
-        self.subView.addSubview(dataForm1)
-        
     }
     
     func dismissKeyboard() {
@@ -160,6 +225,10 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                 self.validate3 = false
                 return self.validate3
             }
+            else
+            {
+                self.getCallbackSlot(value.formattedWith("yyyy/MM/dd"), time: "", isInit: false)
+            }
             
             self.validate3 = true
         }
@@ -209,8 +278,8 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
             requestObject.Phone         = self.dataSource["Phone"].valueCandidate as! String
             requestObject.Name          = self.dataSource["Name"].valueCandidate as! String
             requestObject.Date          = self.dataSource["Date"].valueCandidate as! NSDate
-            requestObject.TimeFrom      = self.dataSource["TimeFrom"].valueCandidate as! NSDate
-            requestObject.TimeTo        = self.dataSource["TimeTo"].valueCandidate as! NSDate
+            requestObject.CallBackTimeSlot      = self.dataSource["CallBackTimeSlot"].valueCandidate as! Int
+            requestObject.CallBackTimeSlotValue  = self.CallbackSlot[requestObject.CallBackTimeSlot]
             
             
             WebApiService.RequestCallback(requestObject){ objectReturn in

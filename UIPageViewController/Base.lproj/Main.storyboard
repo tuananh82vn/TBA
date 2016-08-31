@@ -3133,7 +3133,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ika-vu-EvS">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No current arrangement for this account. Would you like to make a payment now ?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ote-PH-0ZJ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have not made any payments on this arrangement. Would you like to make a payment now ?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ote-PH-0ZJ">
                                         <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="199" id="QjG-WO-OyQ"/>
@@ -3424,6 +3424,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Payment Tracker" id="7zQ-DO-JiI"/>
                     <connections>
+                        <outlet property="lb_NoPayment" destination="ote-PH-0ZJ" id="bgW-hm-X8o"/>
                         <outlet property="segmentedControl" destination="lTb-Ku-gkF" id="OLu-01-sqa"/>
                         <outlet property="tableView" destination="vx5-7S-iPI" id="FTA-mc-fys"/>
                         <segue destination="rsL-AF-9jV" kind="show" identifier="GoToMakeCreditPayment" id="MTn-Hc-xhF"/>
@@ -4529,31 +4530,31 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-zL-e3B">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-zL-e3B">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Adr-n0-xpb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Adr-n0-xpb">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wLW-Od-rf1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wLW-Od-rf1">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipt Number " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aYY-r5-sSi">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aYY-r5-sSi">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="J6i-Kv-fo0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="J6i-Kv-fo0">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.20784313730000001" green="0.49019607840000001" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -4798,12 +4799,18 @@
                     </view>
                     <navigationItem key="navigationItem" title="Receipt" id="S8b-Jm-udH"/>
                     <connections>
+                        <outlet property="bt_Email" destination="Lje-hW-mkW" id="gfU-Ma-XPA"/>
+                        <outlet property="bt_Save" destination="RTK-WA-pcb" id="J9p-2T-ky7"/>
                         <outlet property="lb_Amount" destination="wLW-Od-rf1" id="I4w-8w-Uyu"/>
                         <outlet property="lb_Date" destination="U6d-zL-e3B" id="SCb-iP-kyd"/>
                         <outlet property="lb_Name" destination="Bm8-JM-fr3" id="nH0-eR-p4d"/>
+                        <outlet property="lb_Notes" destination="JbU-Qv-Dn5" id="WSx-Et-Xk6"/>
                         <outlet property="lb_Receipt" destination="aYY-r5-sSi" id="2te-9a-mw9"/>
                         <outlet property="lb_RefNumber" destination="6Wh-AQ-MnR" id="yXV-zX-cdg"/>
                         <outlet property="lb_Time" destination="Adr-n0-xpb" id="gL6-JZ-qMT"/>
+                        <outlet property="lb_TitleAmount" destination="pdb-eN-ad4" id="GCN-HN-9Z1"/>
+                        <outlet property="lb_TitleDate" destination="SOi-09-F9t" id="aPK-Yr-TSG"/>
+                        <outlet property="lb_TitleTime" destination="1Mn-oP-nSz" id="3f3-yj-KaK"/>
                         <outlet property="lb_Transaction" destination="J6i-Kv-fo0" id="MBe-z8-b4j"/>
                         <outlet property="lb_text_receipt" destination="ohL-6P-DW6" id="RaA-Bb-ByN"/>
                         <outlet property="lb_text_transaction" destination="9YL-Yh-cGo" id="pZU-Yi-Zu0"/>
@@ -8019,14 +8026,14 @@
         <image name="menu" width="20" height="14"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rRx-EE-Kkp"/>
+        <segue reference="Nxf-xH-Gqm"/>
+        <segue reference="5cq-cx-gzt"/>
         <segue reference="0Vg-EL-cyn"/>
         <segue reference="fKk-uk-d07"/>
         <segue reference="zFt-Lg-Rud"/>
         <segue reference="8VT-uK-nCQ"/>
+        <segue reference="MTn-Hc-xhF"/>
         <segue reference="x4J-hl-Gvw"/>
         <segue reference="Zhg-ne-Ki5"/>
-        <segue reference="Nxf-xH-Gqm"/>
-        <segue reference="5cq-cx-gzt"/>
     </inferredMetricsTieBreakers>
 </document>

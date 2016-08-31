@@ -25,11 +25,15 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
     var circle_blue = UIImage(named: "circle_blue")
     var circle_yellow = UIImage(named: "circle_yellow")
 
+    @IBOutlet weak var lb_NoPayment: UILabel!
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         initData()
+        
+        WebApiService.sendActivityTracking("Open Payment Tracker")
+
 
     }
     
@@ -49,6 +53,7 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                     
                     if(self.paymentTrackerRecord.count == 0){
                         self.tableView.hidden = true
+                        self.lb_NoPayment.text = "No current arrangement for this account. Would you like to make a payment now ?"
                     }
                     else
                     {
@@ -91,6 +96,7 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                 
                 if(self.InstalmentScheduleList.count == 0){
                     self.tableView.hidden = true
+                    self.lb_NoPayment.text = "No current arrangement for this account. Would you like to make a payment now ?"
                 }
                 else
                 {
@@ -104,6 +110,8 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                 
                 if(self.HistoryInstalmentScheduleList.count == 0){
                     self.tableView.hidden = true
+                    self.lb_NoPayment.text = "You have not made any payments on this arrangement. Would you like to make a payment now ?"
+
                 }
                 else
                 {

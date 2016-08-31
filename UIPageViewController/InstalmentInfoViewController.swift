@@ -43,6 +43,9 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
         loadData()
         
+        WebApiService.sendActivityTracking("Open Instalment Info")
+
+        
     }
     
     @IBAction func makePayment_Clicked(sender: AnyObject) {

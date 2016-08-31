@@ -258,6 +258,9 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                     
                     if(temp1.IsSuccess)
                     {
+                        
+                        WebApiService.sendActivityTracking("Update Credit Card")
+
                         self.performSegueWithIdentifier("GoToNotice", sender: nil)
                     }
                     else

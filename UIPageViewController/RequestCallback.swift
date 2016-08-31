@@ -14,8 +14,9 @@ class RequestCallBack: NSObject {
     var Name = ""
     var Phone = ""
     var Date = NSDate()
-    var TimeFrom = NSDate()
-    var TimeTo = NSDate()
+    var CallBackTimeSlot = 0
     var Notes = ""
+    var CallBackTimeSlotValue = ""
+
     
 }

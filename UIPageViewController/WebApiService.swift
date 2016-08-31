@@ -31,7 +31,8 @@ struct WebApiService {
         case UpdateInboxItemMessage
         case SaveInbox
         case SendActivityTracking
-
+        case GetCallBackTime
+        
         var description: String {
             switch self {
                 case .Verify: return "/Api/Verify"
@@ -60,6 +61,7 @@ struct WebApiService {
                 case .UpdateInboxItemMessage: return "/Api/UpdateInboxItemMessage"
                 case .SaveInbox: return "/Api/SaveInbox"
                 case .SendActivityTracking: return "/Api/SendActivityTracking"
+                case .GetCallBackTime: return "/Api/GetCallBackTime"
 
             }
         }
@@ -1088,6 +1090,11 @@ struct WebApiService {
                     JsonReturn.TransactionDescription = TransactionDescription
                 }
                 
+                if let IsFuturePayment = jsonObject["IsFuturePayment"].bool {
+                    
+                    JsonReturn.IsFuturePayment = IsFuturePayment
+                }
+                
                 response (objectReturn : JsonReturn)
             }
             else
@@ -1175,6 +1182,11 @@ struct WebApiService {
                     
                     JsonReturn.Amount = Amount
                 }
+                
+                if let IsFuturePayment = jsonObject["IsFuturePayment"].bool {
+                    
+                    JsonReturn.IsFuturePayment = IsFuturePayment
+                }
 
                 response (objectReturn : JsonReturn)
             }
@@ -1198,8 +1210,7 @@ struct WebApiService {
                 "Number": request.Phone,
                 "Name": request.Name,
                 "Date" : request.Date.formattedWith("dd/MM/yyyy"),
-                "TimeFrom" : request.TimeFrom.formattedWith("HH:mm"),
-                "TimeTo" : request.TimeTo.formattedWith("HH:mm"),
+                "CallBackTimeSlot" : request.CallBackTimeSlotValue,
                 "Notes" : request.Notes
             ]
         ]
@@ -1714,6 +1725,61 @@ struct WebApiService {
         ]
         
         Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON)
+    }
+    
+    static func GetCallBackTime(ReferenceNumber: String, CallbackDate : String, CallbackTimeSlot : String, response : (objectReturn : CallBackItem?) -> ()) {
+        
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetCallBackTime.description
+        
+        let JsonReturn = CallBackItem()
+        
+        let parameters = [
+            "Item": [
+                "ReferenceNumber": ReferenceNumber,
+                "CallbackDate" : CallbackDate,
+                "CallbackTimeSlot" : CallbackTimeSlot
+            ]
+        ]
+        
+        
+        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+            json in
+            
+            if let jsonReturn1 = json.result.value {
+                
+                let jsonObject = JSON(jsonReturn1)
+                
+                if let IsSuccess = jsonObject["IsSuccess"].bool {
+                    
+                    JsonReturn.IsSuccess = IsSuccess
+                }
+                
+                if let temp = jsonObject["CallbackSlot"].arrayObject {
+                    
+                    let tempList = JSONParser.parseCallbackList(temp)
+                    
+                    JsonReturn.CallbackSlot = tempList
+                    
+                }
+                
+                if let Errors = jsonObject["Error"].string {
+                    
+                    let er = Error()
+                    
+                    er.ErrorMessage = Errors
+                    
+                    JsonReturn.Errors.append(er)
+                    
+                }
+                
+                response (objectReturn : JsonReturn)
+            }
+            else
+            {
+                response (objectReturn : nil)
+            }
+            
+        }
     }
 
 

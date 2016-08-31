@@ -398,6 +398,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             
             if(self.isFormValidate){
                 
+                WebApiService.sendActivityTracking("Setup 2 part")
+
+                
                 SetPayment.SetPayment(2)
                 
                 LocalStore.setFrequency(0)
@@ -408,6 +411,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         }
         else
         {
+            
+            WebApiService.sendActivityTracking("Setup 3 part")
+
             SetPayment.SetPayment(3)
             
             self.performSegueWithIdentifier("GoTo4Payment", sender: nil)

@@ -408,6 +408,8 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         
                 if(temp1.IsSuccess)
                 {
+                        WebApiService.sendActivityTracking("Make CC Payment")
+
                         self.paymentReturn = temp1
                     
                         self.performSegueWithIdentifier("GoToSummary", sender: nil)

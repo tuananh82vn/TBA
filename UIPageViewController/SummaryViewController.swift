@@ -22,9 +22,15 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var lbl_TitleReceipt: UILabel!
     
     @IBOutlet weak var lb_text_receipt: UILabel!
+    @IBOutlet weak var lb_Notes: UILabel!
     
+    @IBOutlet weak var lb_TitleTime: UILabel!
+    @IBOutlet weak var lb_TitleDate: UILabel!
     @IBOutlet weak var lb_text_transaction: UILabel!
     
+    @IBOutlet weak var lb_TitleAmount: UILabel!
+    @IBOutlet weak var bt_Save: UIButton!
+    @IBOutlet weak var bt_Email: UIButton!
     var paymentReturn = PaymentReturnModel()
     var debtorInfo = DebtorInfo()
     var paymentMethod = 0
@@ -37,7 +43,35 @@ class SummaryViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated:true)
         
         
-        
+        if(self.paymentReturn.IsFuturePayment){
+
+            self.lb_Name.text           = self.paymentReturn.Name
+
+            self.lb_RefNumber.text  = "Your payment will be processed according to the schedule in Payment Tracker section. Please be aware, payments will appear on your statement as payment to 'Recoveriescorp'"
+            
+            self.title = "Summary"
+            self.lbl_TitleReceipt.hidden = true
+            self.lb_TitleDate.hidden = true
+            self.lb_TitleTime.hidden = true
+            self.lb_TitleAmount.hidden = true
+            
+            self.lb_Receipt.hidden = true
+            self.lb_Transaction.hidden = true
+            self.lb_text_receipt.hidden = true
+            self.lb_text_transaction.hidden = true
+            self.lb_Date.hidden = true
+            self.lb_Time.hidden = true
+            self.lb_Amount.hidden = true
+
+            self.bt_Save.hidden = true
+            self.bt_Email.hidden = true
+            
+            self.lb_Notes.hidden = true
+
+            
+        }
+        else
+        {
             self.lb_Transaction.text    = self.paymentReturn.TransactionDescription
             self.lb_Receipt.text        = self.paymentReturn.ReceiptNumber
             self.lb_Amount.text         = self.paymentReturn.Amount
@@ -45,30 +79,33 @@ class SummaryViewController: UIViewController {
             self.lb_Date.text           = self.paymentReturn.Date
             self.lb_Name.text           = self.paymentReturn.Name
             self.lb_RefNumber.text  = "Your payment has been processed against your account with Reference Number " + LocalStore.accessRefNumber()! + ". Please be aware, payments will appear on your statement as payment to 'Recoveriescorp'"
+            
+            if(self.paymentMethod == 1){
+                
+                self.title = "Receipt"
+                self.lbl_TitleReceipt.text = "Receipt Details"
+                
+                self.lb_Receipt.hidden = false
+                self.lb_Transaction.hidden = false
+                self.lb_text_receipt.hidden = false
+                self.lb_text_transaction.hidden = false
+                
+            }
+            else
+            {
+                self.title = "Payment Summary"
+                self.lbl_TitleReceipt.text = "Payment Summary"
+                
+                self.lb_Receipt.hidden = true
+                self.lb_Transaction.hidden = true
+                self.lb_text_receipt.hidden = true
+                self.lb_text_transaction.hidden = true
+                
+            }
 
+        }
         
-        if(self.paymentMethod == 1){
-            
-            self.title = "Receipt"
-            self.lbl_TitleReceipt.text = "Receipt Details"
-
-            self.lb_Receipt.hidden = false
-            self.lb_Transaction.hidden = false
-            self.lb_text_receipt.hidden = false
-            self.lb_text_transaction.hidden = false
-            
-        }
-        else
-        {
-            self.title = "Payment Summary"
-            self.lbl_TitleReceipt.text = "Payment Summary"
-            
-            self.lb_Receipt.hidden = true
-            self.lb_Transaction.hidden = true
-            self.lb_text_receipt.hidden = true
-            self.lb_text_transaction.hidden = true
-            
-        }
+        
         
 
     }
@@ -280,7 +317,14 @@ class SummaryViewController: UIViewController {
                         var inboxDetail = InboxItem()
                         inboxDetail.Content = toFilePath
                         inboxDetail.Date = self.lb_Date.text!
-                        inboxDetail.Type = "D"
+                        if(self.paymentMethod == 1){
+                            inboxDetail.Type = "R"
+                        }
+                        else
+                        {
+                            inboxDetail.Type = "P"
+                        }
+                        
                         inboxDetail.MessageNo = currentTime
                         inboxDetail.Status = "Unread"
                         inboxDetail.IsLocal = true

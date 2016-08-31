@@ -20,7 +20,8 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
         super.viewDidLoad()
         
         self.tableView.reloadData()
-
+        
+        WebApiService.sendActivityTracking("Open Instalment Summary")
         // Do any additional setup after loading the view.
     }
 

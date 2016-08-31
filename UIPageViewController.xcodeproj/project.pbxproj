@@ -79,6 +79,7 @@
 		C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC21BEB0462009BCE1E /* Timer.swift */; };
 		C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */; };
 		C7B6B3761C76E389008D670C /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B6B3751C76E389008D670C /* SCLAlertView.swift */; };
+		C7B789391D6D385600B3E86B /* CallBackSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B789381D6D385600B3E86B /* CallBackSlot.swift */; };
 		C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */; };
 		C7BB33BE1CD0424F00BEFA31 /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */; };
 		C7BB33C01CD0466500BEFA31 /* InboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */; };
@@ -200,6 +201,7 @@
 		C7ABFCC21BEB0462009BCE1E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		C7B6B3751C76E389008D670C /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
+		C7B789381D6D385600B3E86B /* CallBackSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallBackSlot.swift; sourceTree = "<group>"; };
 		C7B931C11BEB0E2A00A63F55 /* SelectDebtorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDebtorController.swift; sourceTree = "<group>"; };
 		C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxItem.swift; sourceTree = "<group>"; };
 		C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxViewController.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				C797D6421C7589780083CD88 /* DeferPayment.swift */,
 				C77E1CF71C7ACF00004AAEFF /* DebtorDetail.swift */,
 				C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */,
+				C7B789381D6D385600B3E86B /* CallBackSlot.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				C7BB33BE1CD0424F00BEFA31 /* InboxItem.swift in Sources */,
 				C797D6371C72CCA30083CD88 /* VerifyCoDebtorViewController.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
+				C7B789391D6D385600B3E86B /* CallBackSlot.swift in Sources */,
 				C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */,
 				C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */,
 				C797D62B1C6C5CC80083CD88 /* DateExtension.swift in Sources */,

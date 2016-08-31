@@ -21,6 +21,7 @@ class PaymentReturnModel {
     var ReceiptNumber : String
     var TransactionDescription : String
     var FirstDebtorPaymentInstallmentId : Int
+    var IsFuturePayment : Bool
     
     var Errors : [Error]
     var IsSuccess : Bool
@@ -39,5 +40,6 @@ class PaymentReturnModel {
         
         Errors = [Error]()
         IsSuccess = false
+        IsFuturePayment = false
     }
 }

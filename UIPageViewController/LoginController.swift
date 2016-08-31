@@ -20,6 +20,9 @@ class LoginController: UIViewController {
         super.viewDidLoad()
 
         loadData()
+        
+        WebApiService.sendActivityTracking("Login")
+
 
     }
 

@@ -202,6 +202,8 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     
                     if(temp1.IsSuccess)
                     {
+                        WebApiService.sendActivityTracking("Update Personal Info")
+
                         self.performSegueWithIdentifier("GoToNotice", sender: nil)
                         
                     }

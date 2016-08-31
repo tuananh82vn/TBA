@@ -103,6 +103,8 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
                     
                     if(temp1.IsSuccess)
                     {
+                        WebApiService.sendActivityTracking("Send Feedback")
+
                         self.performSegueWithIdentifier("GoToNotice", sender: nil)
                     }
                     else
