@@ -13,7 +13,7 @@ class InboxItem: NSObject {
     
     var Date = ""
     
-    var Type = ""
+    var ItemType = ""
     
     var Content = ""
 

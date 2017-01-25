@@ -21,27 +21,27 @@ class CustomTelrikViewCell: TKListViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.img_Status.contentMode = UIViewContentMode.ScaleAspectFit
+        self.img_Status.contentMode = UIViewContentMode.scaleAspectFit
         
         self.lb_DueDate.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.lb_DueDate.font = UIFont(name:"HelveticaNeue", size:13)
-        self.lb_DueDate.textAlignment = NSTextAlignment.Left
+        self.lb_DueDate.textAlignment = NSTextAlignment.left
         
         self.lb_Amount.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.lb_Amount.font = UIFont(name:"HelveticaNeue", size:13)
-        self.lb_Amount.textAlignment = NSTextAlignment.Right
+        self.lb_Amount.textAlignment = NSTextAlignment.right
 
         self.lb_Remaining.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.lb_Remaining.font = UIFont(name:"HelveticaNeue", size:13)
-        self.lb_Remaining.textAlignment = NSTextAlignment.Right
+        self.lb_Remaining.textAlignment = NSTextAlignment.right
         
         self.lb_PaidDetail.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.lb_PaidDetail.font = UIFont(name:"HelveticaNeue", size:13)
-        self.lb_PaidDetail.textAlignment = NSTextAlignment.Left
+        self.lb_PaidDetail.textAlignment = NSTextAlignment.left
         
         self.lb_DeptCode.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.lb_DeptCode.font = UIFont(name:"HelveticaNeue", size:13)
-        self.lb_DeptCode.textAlignment = NSTextAlignment.Left
+        self.lb_DeptCode.textAlignment = NSTextAlignment.left
 
         
         self.contentView.addSubview(lb_DueDate)
@@ -52,7 +52,7 @@ class CustomTelrikViewCell: TKListViewCell {
         self.contentView.addSubview(lb_DeptCode)
 
         
-        (self.backgroundView as! TKView).backgroundColor = UIColor.whiteColor()
+        (self.backgroundView as! TKView).backgroundColor = UIColor.white
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -63,17 +63,17 @@ class CustomTelrikViewCell: TKListViewCell {
         
         super.layoutSubviews()
         
-        self.lb_DueDate.frame = CGRectMake(0, 10, 90, 20)
+        self.lb_DueDate.frame = CGRect(x: 0, y: 10, width: 90, height: 20)
         
-        self.lb_Amount.frame = CGRectMake(95, 10, 75, 20)
+        self.lb_Amount.frame = CGRect(x: 95, y: 10, width: 75, height: 20)
         
-        self.img_Status.frame = CGRectMake(175, 10, 80, 20)
+        self.img_Status.frame = CGRect(x: 175, y: 10, width: 80, height: 20)
         
-        self.lb_Remaining.frame = CGRectMake(260, 10, 100, 20)
+        self.lb_Remaining.frame = CGRect(x: 260, y: 10, width: 100, height: 20)
         
-        self.lb_PaidDetail.frame = CGRectMake(0, 40, 150, 20)
+        self.lb_PaidDetail.frame = CGRect(x: 0, y: 40, width: 150, height: 20)
         
-        self.lb_DeptCode.frame = CGRectMake(0, 60, 150, 20)
+        self.lb_DeptCode.frame = CGRect(x: 0, y: 60, width: 150, height: 20)
 
     }
 

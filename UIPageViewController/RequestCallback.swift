@@ -13,7 +13,7 @@ class RequestCallBack: NSObject {
     
     var Name = ""
     var Phone = ""
-    var Date = NSDate()
+    var Date = Foundation.Date()
     var CallBackTimeSlot = 0
     var Notes = ""
     var CallBackTimeSlotValue = ""

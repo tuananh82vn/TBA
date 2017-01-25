@@ -39,7 +39,7 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
         
         tf_Pin0.delegate = self;
         
-        tf_Pin0.addTarget(self, action: "tf_Pin0DidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        tf_Pin0.addTarget(self, action: #selector(PinSetupViewController.tf_Pin0DidChange(_:)), for: UIControlEvents.editingChanged)
         
         InputFirstPin = true
         
@@ -47,16 +47,16 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
 
         // Do any additional setup after loading the view.
         
-        let gesture = UITapGestureRecognizer(target: self, action: "view_OnTop_Clicked:")
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(PinSetupViewController.view_OnTop_Clicked(_:)))
         self.view1.addGestureRecognizer(gesture)
     }
     
-    func view_OnTop_Clicked(sender:UITapGestureRecognizer){
+    func view_OnTop_Clicked(_ sender:UITapGestureRecognizer){
         
         tf_Pin0.becomeFirstResponder()
     }
     
-    func tf_Pin0DidChange(textField: UITextField) {
+    func tf_Pin0DidChange(_ textField: UITextField) {
         if(InputFirstPin && FinishFirstPin){
             
             self.FirstPin = tf_Pin0.text!
@@ -97,7 +97,7 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
                 
                 WebApiService.sendActivityTracking("Setup Pin")
 
-                self.performSegueWithIdentifier("GoToLogin", sender: nil)
+                self.performSegue(withIdentifier: "GoToLogin", sender: nil)
 
             }
             else
@@ -137,9 +137,9 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
 
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        let  char = string.cStringUsingEncoding(NSUTF8StringEncoding)!
+        let  char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
         
         if (isBackSpace == -92) {
@@ -237,16 +237,16 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func addDoneButtonOnKeyboard(view: UIView?)
+    func addDoneButtonOnKeyboard(_ view: UIView?)
     {
         
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
-        doneToolbar.barStyle = UIBarStyle.Default
-        doneToolbar.translucent = false
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        doneToolbar.isTranslucent = false
         doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: view, action: #selector(UIResponder.resignFirstResponder))
         
         var items = [AnyObject]()
         items.append(flexSpace)

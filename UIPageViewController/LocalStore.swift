@@ -3,566 +3,566 @@ import UIKit
 
 struct LocalStore {
     
-    private static let DeviceToken = "DeviceToken";
+    fileprivate static let DeviceToken = "DeviceToken";
     
-    private static let ArrangementDebtor = "ArrangementDebtor";
+    fileprivate static let ArrangementDebtor = "ArrangementDebtor";
 
-    private static let IsArrangementUnderThisDebtor = "IsArrangementUnderThisDebtor";
+    fileprivate static let IsArrangementUnderThisDebtor = "IsArrangementUnderThisDebtor";
 
-    private static let MakePaymentInFull = "MakePaymentInFull"
+    fileprivate static let MakePaymentInFull = "MakePaymentInFull"
     
-    private static let MakePaymentIn3Part = "MakePaymentIn3Part";
+    fileprivate static let MakePaymentIn3Part = "MakePaymentIn3Part";
 
-    private static let MakePaymentInstallment = "MakePaymentInstallment";
+    fileprivate static let MakePaymentInstallment = "MakePaymentInstallment";
     
-    private static let MakePaymentOtherAmount = "MakePaymentOtherAmount";
+    fileprivate static let MakePaymentOtherAmount = "MakePaymentOtherAmount";
 
-    private static let DeviceName = "DeviceName"
+    fileprivate static let DeviceName = "DeviceName"
 
-    private static let RefNumber = "RefNumber"
+    fileprivate static let RefNumber = "RefNumber"
     
-    private static let Web_URL_API = "Web_URL_API"
+    fileprivate static let Web_URL_API = "Web_URL_API"
 
-    private static let RCS_URL_API = "RCS_URL_API"
+    fileprivate static let RCS_URL_API = "RCS_URL_API"
     
-    private static let Pin = "Pin"
+    fileprivate static let Pin = "Pin"
     
-    private static let IsPinSetup = "IsPinSetup"
+    fileprivate static let IsPinSetup = "IsPinSetup"
     
-    private static let TotalOutstanding = "TotalOutstanding"
+    fileprivate static let TotalOutstanding = "TotalOutstanding"
     
-    private static let TotalPaid = "TotalPaid"
+    fileprivate static let TotalPaid = "TotalPaid"
     
-    private static let TotalOverDue = "TotalOverDue"
+    fileprivate static let TotalOverDue = "TotalOverDue"
 
-    private static let DRCode = "DRCode"
+    fileprivate static let DRCode = "DRCode"
 
-    private static let NextPaymentInstallment = "NextPaymentInstallment"
+    fileprivate static let NextPaymentInstallment = "NextPaymentInstallment"
 
-    private static let userDefaults = NSUserDefaults.standardUserDefaults()
+    fileprivate static let userDefaults = UserDefaults.standard
     
-    private static let IsExistingArrangement = "IsExistingArrangement";
+    fileprivate static let IsExistingArrangement = "IsExistingArrangement";
     
-    private static let IsExistingArrangementCC = "IsExistingArrangementCC";
+    fileprivate static let IsExistingArrangementCC = "IsExistingArrangementCC";
 
-    private static let IsExistingArrangementDD = "IsExistingArrangementDD";
+    fileprivate static let IsExistingArrangementDD = "IsExistingArrangementDD";
 
-    private static let IsCoBorrowers = "IsCoBorrowers";
+    fileprivate static let IsCoBorrowers = "IsCoBorrowers";
     
-    private static let IsCoBorrowersSelected = "IsCoBorrowersSelected";
+    fileprivate static let IsCoBorrowersSelected = "IsCoBorrowersSelected";
     
-    private static let IsAllowMonthlyInstallment = "IsAllowMonthlyInstallment";
+    fileprivate static let IsAllowMonthlyInstallment = "IsAllowMonthlyInstallment";
     
-    private static let DebtorCodeSelected = "DebtorCodeSelected";
+    fileprivate static let DebtorCodeSelected = "DebtorCodeSelected";
     
-    private static let MaxNoPay = "MaxNoPay";
+    fileprivate static let MaxNoPay = "MaxNoPay";
     
-    private static let ThreePartDateDurationDays = "ThreePartDateDurationDays";
+    fileprivate static let ThreePartDateDurationDays = "ThreePartDateDurationDays";
     
-    private static let FirstAmountOfInstalment = "FirstAmountOfInstalment"
+    fileprivate static let FirstAmountOfInstalment = "FirstAmountOfInstalment"
 
-    private static let WeeklyAmount = "WeeklyAmount"
+    fileprivate static let WeeklyAmount = "WeeklyAmount"
     
-    private static let FortnightAmount = "FortnightAmount"
+    fileprivate static let FortnightAmount = "FortnightAmount"
     
-    private static let MonthlyAmount = "MonthlyAmount"
+    fileprivate static let MonthlyAmount = "MonthlyAmount"
     
-    private static let Frequency = "Frequency"
+    fileprivate static let Frequency = "Frequency"
 
     
     //----------------------------------------------------------------------------//
-    static func setDeviceToken(token: String) {
-        userDefaults.setObject(token, forKey: DeviceToken)
+    static func setDeviceToken(_ token: String) {
+        userDefaults.set(token, forKey: DeviceToken)
         userDefaults.synchronize()
     }
     
     static func deleteDeviceToken() {
-        userDefaults.removeObjectForKey(DeviceToken)
+        userDefaults.removeObject(forKey: DeviceToken)
         userDefaults.synchronize()
     }
     
     static func accessDeviceToken() -> String {
-        return userDefaults.stringForKey(DeviceToken)!
+        return userDefaults.string(forKey: DeviceToken)!
     }
 
     //----------------------------------------------------------------------------//
     
-    static func setMonthlyAmount(token: Double) {
-        userDefaults.setObject(token, forKey: MonthlyAmount)
+    static func setMonthlyAmount(_ token: Double) {
+        userDefaults.set(token, forKey: MonthlyAmount)
         userDefaults.synchronize()
     }
     
     static func deleteMonthlyAmount() {
-        userDefaults.removeObjectForKey(MonthlyAmount)
+        userDefaults.removeObject(forKey: MonthlyAmount)
         userDefaults.synchronize()
     }
     
     static func accessMonthlyAmount() -> Double {
-        return userDefaults.doubleForKey(MonthlyAmount)
+        return userDefaults.double(forKey: MonthlyAmount)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setFortnightAmount(token: Double) {
-        userDefaults.setObject(token, forKey: FortnightAmount)
+    static func setFortnightAmount(_ token: Double) {
+        userDefaults.set(token, forKey: FortnightAmount)
         userDefaults.synchronize()
     }
     
     static func deleteFortnightAmount() {
-        userDefaults.removeObjectForKey(FortnightAmount)
+        userDefaults.removeObject(forKey: FortnightAmount)
         userDefaults.synchronize()
     }
     
     static func accessFortnightAmount() -> Double {
-        return userDefaults.doubleForKey(FortnightAmount)
+        return userDefaults.double(forKey: FortnightAmount)
     }
     //----------------------------------------------------------------------------//
     
-    static func setWeeklyAmount(token: Double) {
-        userDefaults.setObject(token, forKey: WeeklyAmount)
+    static func setWeeklyAmount(_ token: Double) {
+        userDefaults.set(token, forKey: WeeklyAmount)
         userDefaults.synchronize()
     }
     
     static func deleteWeeklyAmount() {
-        userDefaults.removeObjectForKey(WeeklyAmount)
+        userDefaults.removeObject(forKey: WeeklyAmount)
         userDefaults.synchronize()
     }
     
     static func accessWeeklyAmount() -> Double {
-        return userDefaults.doubleForKey(WeeklyAmount)
+        return userDefaults.double(forKey: WeeklyAmount)
     }
     
     //----------------------------------------------------------------------------//
-    static func setMakePaymentIn3Part(token: Bool) {
-        userDefaults.setObject(token, forKey: MakePaymentIn3Part)
+    static func setMakePaymentIn3Part(_ token: Bool) {
+        userDefaults.set(token, forKey: MakePaymentIn3Part)
         userDefaults.synchronize()
     }
     
     static func deleteMakePaymentIn3Part() {
-        userDefaults.removeObjectForKey(MakePaymentIn3Part)
+        userDefaults.removeObject(forKey: MakePaymentIn3Part)
         userDefaults.synchronize()
     }
     
     static func accessMakePaymentIn3Part() -> Bool {
-        return userDefaults.boolForKey(MakePaymentIn3Part)
+        return userDefaults.bool(forKey: MakePaymentIn3Part)
     }
     
     //----------------------------------------------------------------------------//
-    static func setIsArrangementUnderThisDebtor(token: Bool) {
-        userDefaults.setObject(token, forKey: IsArrangementUnderThisDebtor)
+    static func setIsArrangementUnderThisDebtor(_ token: Bool) {
+        userDefaults.set(token, forKey: IsArrangementUnderThisDebtor)
         userDefaults.synchronize()
     }
     
     static func deleteIsArrangementUnderThisDebtor() {
-        userDefaults.removeObjectForKey(IsArrangementUnderThisDebtor)
+        userDefaults.removeObject(forKey: IsArrangementUnderThisDebtor)
         userDefaults.synchronize()
     }
     
     static func accessIsArrangementUnderThisDebtor() -> Bool {
-        return userDefaults.boolForKey(IsArrangementUnderThisDebtor)
+        return userDefaults.bool(forKey: IsArrangementUnderThisDebtor)
     }
     
     //----------------------------------------------------------------------------//
-    static func setMakePaymentInstallment(token: Bool) {
-        userDefaults.setObject(token, forKey: MakePaymentInstallment)
+    static func setMakePaymentInstallment(_ token: Bool) {
+        userDefaults.set(token, forKey: MakePaymentInstallment)
         userDefaults.synchronize()
     }
     
     static func deleteMakePaymentInstallment() {
-        userDefaults.removeObjectForKey(MakePaymentInstallment)
+        userDefaults.removeObject(forKey: MakePaymentInstallment)
         userDefaults.synchronize()
     }
     
     static func accessMakePaymentInstallment() -> Bool {
-        return userDefaults.boolForKey(MakePaymentInstallment)
+        return userDefaults.bool(forKey: MakePaymentInstallment)
     }
     //----------------------------------------------------------------------------//
-    static func setMakePaymentOtherAmount(token: Bool) {
-        userDefaults.setObject(token, forKey: MakePaymentOtherAmount)
+    static func setMakePaymentOtherAmount(_ token: Bool) {
+        userDefaults.set(token, forKey: MakePaymentOtherAmount)
         userDefaults.synchronize()
     }
     
     static func deleteMakePaymentOtherAmount() {
-        userDefaults.removeObjectForKey(MakePaymentOtherAmount)
+        userDefaults.removeObject(forKey: MakePaymentOtherAmount)
         userDefaults.synchronize()
     }
     
     static func accessMakePaymentOtherAmount() -> Bool {
-        return userDefaults.boolForKey(MakePaymentOtherAmount)
+        return userDefaults.bool(forKey: MakePaymentOtherAmount)
     }
     
 
     //----------------------------------------------------------------------------//
-    static func setMakePaymentInFull(token: Bool) {
-        userDefaults.setObject(token, forKey: MakePaymentInFull)
+    static func setMakePaymentInFull(_ token: Bool) {
+        userDefaults.set(token, forKey: MakePaymentInFull)
         userDefaults.synchronize()
     }
     
     static func deleteMakePaymentInFull() {
-        userDefaults.removeObjectForKey(MakePaymentInFull)
+        userDefaults.removeObject(forKey: MakePaymentInFull)
         userDefaults.synchronize()
     }
     
     static func accessMakePaymentInFull() -> Bool {
-        return userDefaults.boolForKey(MakePaymentInFull)
+        return userDefaults.bool(forKey: MakePaymentInFull)
     }
     
     //----------------------------------------------------------------------------//
-    static func setArrangementDebtor(token: String) {
-        userDefaults.setObject(token, forKey: ArrangementDebtor)
+    static func setArrangementDebtor(_ token: String) {
+        userDefaults.set(token, forKey: ArrangementDebtor)
         userDefaults.synchronize()
     }
     
     static func deleteArrangementDebtor() {
-        userDefaults.removeObjectForKey(ArrangementDebtor)
+        userDefaults.removeObject(forKey: ArrangementDebtor)
         userDefaults.synchronize()
     }
     
     static func accessArrangementDebtor() -> String {
-        return userDefaults.stringForKey(ArrangementDebtor)!
+        return userDefaults.string(forKey: ArrangementDebtor)!
     }
     //----------------------------------------------------------------------------//
-    static func setDeviceName(token: String) {
-        userDefaults.setObject(token, forKey: DeviceName)
+    static func setDeviceName(_ token: String) {
+        userDefaults.set(token, forKey: DeviceName)
         userDefaults.synchronize()
     }
     
     static func deleteDeviceName() {
-        userDefaults.removeObjectForKey(DeviceName)
+        userDefaults.removeObject(forKey: DeviceName)
         userDefaults.synchronize()
     }
     
     static func accessDeviceName() -> String {
-        return userDefaults.stringForKey(DeviceName)!
+        return userDefaults.string(forKey: DeviceName)!
     }
     
     //----------------------------------------------------------------------------//
-    static func setDRCode(token: String) {
-        userDefaults.setObject(token, forKey: DRCode)
+    static func setDRCode(_ token: String) {
+        userDefaults.set(token, forKey: DRCode)
         userDefaults.synchronize()
     }
     
     static func deleteDRCode() {
-        userDefaults.removeObjectForKey(DRCode)
+        userDefaults.removeObject(forKey: DRCode)
         userDefaults.synchronize()
     }
     
     static func accessDRCode() -> String? {
-        return userDefaults.stringForKey(DRCode)
+        return userDefaults.string(forKey: DRCode)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setNextPaymentInstallment(token: Double) {
-        userDefaults.setObject(token, forKey: NextPaymentInstallment)
+    static func setNextPaymentInstallment(_ token: Double) {
+        userDefaults.set(token, forKey: NextPaymentInstallment)
         userDefaults.synchronize()
     }
     
     static func deleteNextPaymentInstallment() {
-        userDefaults.removeObjectForKey(NextPaymentInstallment)
+        userDefaults.removeObject(forKey: NextPaymentInstallment)
         userDefaults.synchronize()
     }
     
     static func accessNextPaymentInstallment() -> Double {
-        return userDefaults.doubleForKey(NextPaymentInstallment)
+        return userDefaults.double(forKey: NextPaymentInstallment)
     }
     
     //----------------------------------------------------------------------------//
 
-    static func setTotalOutstanding(token: Double) {
-        userDefaults.setObject(token, forKey: TotalOutstanding)
+    static func setTotalOutstanding(_ token: Double) {
+        userDefaults.set(token, forKey: TotalOutstanding)
         userDefaults.synchronize()
     }
     
     static func deleteTotalOutstanding() {
-        userDefaults.removeObjectForKey(TotalOutstanding)
+        userDefaults.removeObject(forKey: TotalOutstanding)
         userDefaults.synchronize()
     }
     
     static func accessTotalOutstanding() -> Double {
-        return userDefaults.doubleForKey(TotalOutstanding)
+        return userDefaults.double(forKey: TotalOutstanding)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setFirstAmountOfInstalment(token: Double) {
-        userDefaults.setObject(token, forKey: FirstAmountOfInstalment)
+    static func setFirstAmountOfInstalment(_ token: Double) {
+        userDefaults.set(token, forKey: FirstAmountOfInstalment)
         userDefaults.synchronize()
     }
     
     static func deleteFirstAmountOfInstalment() {
-        userDefaults.removeObjectForKey(FirstAmountOfInstalment)
+        userDefaults.removeObject(forKey: FirstAmountOfInstalment)
         userDefaults.synchronize()
     }
     
     static func accessFirstAmountOfInstalment() -> Double {
-        return userDefaults.doubleForKey(FirstAmountOfInstalment)
+        return userDefaults.double(forKey: FirstAmountOfInstalment)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setTotalPaid(token: String) {
-        userDefaults.setObject(token, forKey: TotalPaid)
+    static func setTotalPaid(_ token: String) {
+        userDefaults.set(token, forKey: TotalPaid)
         userDefaults.synchronize()
     }
     
     static func deletesetTotalPaid() {
-        userDefaults.removeObjectForKey(TotalPaid)
+        userDefaults.removeObject(forKey: TotalPaid)
         userDefaults.synchronize()
     }
     
     static func accesssetTotalPaid() -> String? {
-        return userDefaults.stringForKey(TotalPaid)
+        return userDefaults.string(forKey: TotalPaid)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setTotalOverDue(token: String) {
-        userDefaults.setObject(token, forKey: TotalOverDue)
+    static func setTotalOverDue(_ token: String) {
+        userDefaults.set(token, forKey: TotalOverDue)
         userDefaults.synchronize()
     }
     
     static func deletesetTotalOverDue() {
-        userDefaults.removeObjectForKey(TotalOverDue)
+        userDefaults.removeObject(forKey: TotalOverDue)
         userDefaults.synchronize()
     }
     
     static func accesssetTotalOverDue() -> String? {
-        return userDefaults.stringForKey(TotalOverDue)
+        return userDefaults.string(forKey: TotalOverDue)
     }
     
     
     //----------------------------------------------------------------------------//
     
-    static func setRefNumber(token: String) {
-        userDefaults.setObject(token, forKey: RefNumber)
+    static func setRefNumber(_ token: String) {
+        userDefaults.set(token, forKey: RefNumber)
         userDefaults.synchronize()
     }
     
     static func deleteRefNumber() {
-        userDefaults.removeObjectForKey(RefNumber)
+        userDefaults.removeObject(forKey: RefNumber)
         userDefaults.synchronize()
     }
     
     static func accessRefNumber() -> String? {
-        return userDefaults.stringForKey(RefNumber)
+        return userDefaults.string(forKey: RefNumber)
     }
     
     
     //----------------------------------------------------------------------------//
     
-    static func setRCS_URL_API(token: String) {
-        userDefaults.setObject(token, forKey: RCS_URL_API)
+    static func setRCS_URL_API(_ token: String) {
+        userDefaults.set(token, forKey: RCS_URL_API)
         userDefaults.synchronize()
     }
     
     static func deleteRCS_URL_API() {
-        userDefaults.removeObjectForKey(RCS_URL_API)
+        userDefaults.removeObject(forKey: RCS_URL_API)
         userDefaults.synchronize()
     }
     
     static func accessRCS_URL_API() -> String? {
-        return userDefaults.stringForKey(RCS_URL_API)
+        return userDefaults.string(forKey: RCS_URL_API)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setWeb_URL_API(token: String) {
-        userDefaults.setObject(token, forKey: Web_URL_API)
+    static func setWeb_URL_API(_ token: String) {
+        userDefaults.set(token, forKey: Web_URL_API)
         userDefaults.synchronize()
     }
     
     static func deleteWeb_URL_API() {
-        userDefaults.removeObjectForKey(Web_URL_API)
+        userDefaults.removeObject(forKey: Web_URL_API)
         userDefaults.synchronize()
     }
     
     static func accessWeb_URL_API() -> String? {
-        return userDefaults.stringForKey(Web_URL_API)
+        return userDefaults.string(forKey: Web_URL_API)
     }
     
     //----------------------------------------------------------------------------//
 
-    static func setPin(token: String) {
-        userDefaults.setObject(token, forKey: Pin)
+    static func setPin(_ token: String) {
+        userDefaults.set(token, forKey: Pin)
         userDefaults.synchronize()
     }
     
     static func deletePin() {
-        userDefaults.removeObjectForKey(Pin)
+        userDefaults.removeObject(forKey: Pin)
         userDefaults.synchronize()
     }
     
     static func accessPin() -> String? {
-        return userDefaults.stringForKey(Pin)
+        return userDefaults.string(forKey: Pin)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setIsPinSetup(token: Bool) {
-        userDefaults.setObject(token, forKey: IsPinSetup)
+    static func setIsPinSetup(_ token: Bool) {
+        userDefaults.set(token, forKey: IsPinSetup)
         userDefaults.synchronize()
     }
     
     static func deleteIsPinSetup() {
-        userDefaults.removeObjectForKey(IsPinSetup)
+        userDefaults.removeObject(forKey: IsPinSetup)
         userDefaults.synchronize()
     }
     
     static func accessIsPinSetup() -> Bool {
-        return userDefaults.boolForKey(IsPinSetup)
+        return userDefaults.bool(forKey: IsPinSetup)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setDebtorCodeSelected(token: String) {
-        userDefaults.setObject(token, forKey: DebtorCodeSelected)
+    static func setDebtorCodeSelected(_ token: String) {
+        userDefaults.set(token, forKey: DebtorCodeSelected)
         userDefaults.synchronize()
     }
     
     static func deleteDebtorCodeSelected() {
-        userDefaults.removeObjectForKey(DebtorCodeSelected)
+        userDefaults.removeObject(forKey: DebtorCodeSelected)
         userDefaults.synchronize()
     }
     
     static func accessDebtorCodeSelected() -> String? {
-        return userDefaults.stringForKey(DebtorCodeSelected)
+        return userDefaults.string(forKey: DebtorCodeSelected)
     }
     
     //----------------------------------------------------------------------------//
     
-    static func setIsExistingArrangement(token: Bool) {
-        userDefaults.setObject(token, forKey: IsExistingArrangement)
+    static func setIsExistingArrangement(_ token: Bool) {
+        userDefaults.set(token, forKey: IsExistingArrangement)
         userDefaults.synchronize()
     }
     
     static func deleteIsExistingArrangement() {
-        userDefaults.removeObjectForKey(IsExistingArrangement)
+        userDefaults.removeObject(forKey: IsExistingArrangement)
         userDefaults.synchronize()
     }
     
     static func accessIsExistingArrangement() -> Bool? {
-        return userDefaults.boolForKey(IsExistingArrangement)
+        return userDefaults.bool(forKey: IsExistingArrangement)
     }
     
     
     //----------------------------------------------------------------------------//
     
-    static func setIsCoBorrowersSelected(token: Bool) {
-        userDefaults.setObject(token, forKey: IsCoBorrowersSelected)
+    static func setIsCoBorrowersSelected(_ token: Bool) {
+        userDefaults.set(token, forKey: IsCoBorrowersSelected)
         userDefaults.synchronize()
     }
     
     static func deleteIsCoBorrowersSelected() {
-        userDefaults.removeObjectForKey(IsCoBorrowersSelected)
+        userDefaults.removeObject(forKey: IsCoBorrowersSelected)
         userDefaults.synchronize()
     }
     
     static func accessIsCoBorrowersSelected() -> Bool? {
-        return userDefaults.boolForKey(IsCoBorrowersSelected)
+        return userDefaults.bool(forKey: IsCoBorrowersSelected)
     }
     
     
     
     //----------------------------------------------------------------------------//
     
-    static func setIsExistingArrangementCC(token: Bool) {
-        userDefaults.setObject(token, forKey: IsExistingArrangementCC)
+    static func setIsExistingArrangementCC(_ token: Bool) {
+        userDefaults.set(token, forKey: IsExistingArrangementCC)
         userDefaults.synchronize()
     }
     
     static func deleteIsExistingArrangementCC() {
-        userDefaults.removeObjectForKey(IsExistingArrangementCC)
+        userDefaults.removeObject(forKey: IsExistingArrangementCC)
         userDefaults.synchronize()
     }
     
     static func accessIsExistingArrangementCC() -> Bool? {
-        return userDefaults.boolForKey(IsExistingArrangementCC)
+        return userDefaults.bool(forKey: IsExistingArrangementCC)
     }
     
     //----------------------------------------------------------------------------//
     
     
-    static func setIsExistingArrangementDD(token: Bool) {
-        userDefaults.setObject(token, forKey: IsExistingArrangementDD)
+    static func setIsExistingArrangementDD(_ token: Bool) {
+        userDefaults.set(token, forKey: IsExistingArrangementDD)
         userDefaults.synchronize()
     }
     
     static func deleteIsExistingArrangementDD() {
-        userDefaults.removeObjectForKey(IsExistingArrangementDD)
+        userDefaults.removeObject(forKey: IsExistingArrangementDD)
         userDefaults.synchronize()
     }
     
     static func accessIsExistingArrangementDD() -> Bool? {
-        return userDefaults.boolForKey(IsExistingArrangementDD)
+        return userDefaults.bool(forKey: IsExistingArrangementDD)
     }
     
     //----------------------------------------------------------------------------//
     
     
-    static func setIsCoBorrowers(token: Bool) {
-        userDefaults.setObject(token, forKey: IsCoBorrowers)
+    static func setIsCoBorrowers(_ token: Bool) {
+        userDefaults.set(token, forKey: IsCoBorrowers)
         userDefaults.synchronize()
     }
     
     static func deleteIsCoBorrowers() {
-        userDefaults.removeObjectForKey(IsCoBorrowers)
+        userDefaults.removeObject(forKey: IsCoBorrowers)
         userDefaults.synchronize()
     }
     
     static func accessIsCoBorrowers() -> Bool? {
-        return userDefaults.boolForKey(IsCoBorrowers)
+        return userDefaults.bool(forKey: IsCoBorrowers)
     }
     
     //----------------------------------------------------------------------------//
     
     
-    static func setIsAllowMonthlyInstallment(token: Bool) {
-        userDefaults.setObject(token, forKey: IsAllowMonthlyInstallment)
+    static func setIsAllowMonthlyInstallment(_ token: Bool) {
+        userDefaults.set(token, forKey: IsAllowMonthlyInstallment)
         userDefaults.synchronize()
     }
     
     static func deleteIsAllowMonthlyInstallment() {
-        userDefaults.removeObjectForKey(IsAllowMonthlyInstallment)
+        userDefaults.removeObject(forKey: IsAllowMonthlyInstallment)
         userDefaults.synchronize()
     }
     
     static func accessIsAllowMonthlyInstallment() -> Bool? {
-        return userDefaults.boolForKey(IsAllowMonthlyInstallment)
+        return userDefaults.bool(forKey: IsAllowMonthlyInstallment)
     }
     
     //----------------------------------------------------------------------------//
     
     
-    static func setMaxNoPay(token: Int) {
-        userDefaults.setObject(token, forKey: MaxNoPay)
+    static func setMaxNoPay(_ token: Int) {
+        userDefaults.set(token, forKey: MaxNoPay)
         userDefaults.synchronize()
     }
     
     static func deleteMaxNoPay() {
-        userDefaults.removeObjectForKey(MaxNoPay)
+        userDefaults.removeObject(forKey: MaxNoPay)
         userDefaults.synchronize()
     }
     
     static func accessMaxNoPay() -> Int {
-        return userDefaults.integerForKey(MaxNoPay)
+        return userDefaults.integer(forKey: MaxNoPay)
     }
     
     //----------------------------------------------------------------------------//
     
     
-    static func setThreePartDateDurationDays(token: Int) {
-        userDefaults.setObject(token, forKey: ThreePartDateDurationDays)
+    static func setThreePartDateDurationDays(_ token: Int) {
+        userDefaults.set(token, forKey: ThreePartDateDurationDays)
         userDefaults.synchronize()
     }
     
     static func deleteThreePartDateDurationDays() {
-        userDefaults.removeObjectForKey(ThreePartDateDurationDays)
+        userDefaults.removeObject(forKey: ThreePartDateDurationDays)
         userDefaults.synchronize()
     }
     
     static func accessThreePartDateDurationDays() -> Int {
-        return userDefaults.integerForKey(ThreePartDateDurationDays)
+        return userDefaults.integer(forKey: ThreePartDateDurationDays)
     }
     
     //----------------------------------------------------------------------------//
@@ -570,24 +570,24 @@ struct LocalStore {
 
     // MARK: Helper
 
-    static private func arrayForKey(key: String, containsId id: Int) -> Bool {
-        let elements = userDefaults.arrayForKey(key) as? [Int] ?? []
+    static fileprivate func arrayForKey(_ key: String, containsId id: Int) -> Bool {
+        let elements = userDefaults.array(forKey: key) as? [Int] ?? []
         return elements.contains(id)
     }
 
-    static private func appendId(id: Int, toKey key: String) {
-        let elements = userDefaults.arrayForKey(key) as? [Int] ?? []
+    static fileprivate func appendId(_ id: Int, toKey key: String) {
+        let elements = userDefaults.array(forKey: key) as? [Int] ?? []
         if !elements.contains(id) {
-            userDefaults.setObject(elements + [id], forKey: key)
+            userDefaults.set(elements + [id], forKey: key)
             userDefaults.synchronize()
         }
     }
 
-    static private func removeId(id: Int, forKey key: String) {
-        var elements = userDefaults.arrayForKey(key) as? [Int] ?? []
-        if let index = elements.indexOf(id) {
-            elements.removeAtIndex(index)
-            userDefaults.setObject(elements, forKey: key)
+    static fileprivate func removeId(_ id: Int, forKey key: String) {
+        var elements = userDefaults.array(forKey: key) as? [Int] ?? []
+        if let index = elements.index(of: id) {
+            elements.remove(at: index)
+            userDefaults.set(elements, forKey: key)
             userDefaults.synchronize()
         }
     }
@@ -595,23 +595,23 @@ struct LocalStore {
     //----------------------------------------------------------------------------//
     
     
-    static func setFrequency(token: Int) {
-        userDefaults.setObject(token, forKey: Frequency)
+    static func setFrequency(_ token: Int) {
+        userDefaults.set(token, forKey: Frequency)
         userDefaults.synchronize()
     }
     
     static func deleteFrequency() {
-        userDefaults.removeObjectForKey(Frequency)
+        userDefaults.removeObject(forKey: Frequency)
         userDefaults.synchronize()
     }
     
     static func accessFrequency() -> Int {
-        return userDefaults.integerForKey(Frequency)
+        return userDefaults.integer(forKey: Frequency)
     }
     
     //----------------------------------------------------------------------------//
 
-    static func Alert(view : UIView, title : String , message : String , indexPath : Int) {
+    static func Alert(_ view : UIView, title : String , message : String , indexPath : Int) {
         
         
         //0 Error
@@ -626,17 +626,17 @@ struct LocalStore {
         
         let alert = TKAlert()
         
-        alert.customFrame = CGRectMake(0, 20, view.frame.size.width, 160)
+        alert.customFrame = CGRect(x: 0, y: 20, width: view.frame.size.width, height: 160)
         alert.style.contentSeparatorWidth = 0
-        alert.style.titleColor = UIColor.whiteColor()
-        alert.style.messageColor = UIColor.whiteColor()
+        alert.style.titleColor = UIColor.white
+        alert.style.messageColor = UIColor.white
         alert.style.cornerRadius = 0
-        alert.style.showAnimation = TKAlertAnimation.SlideFromTop
-        alert.style.dismissAnimation = TKAlertAnimation.SlideFromTop
-        alert.style.backgroundStyle = TKAlertBackgroundStyle.None
+        alert.style.showAnimation = TKAlertAnimation.slideFromTop
+        alert.style.dismissAnimation = TKAlertAnimation.slideFromTop
+        alert.style.backgroundStyle = TKAlertBackgroundStyle.none
         
-        alert.alertView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        alert.dismissMode = TKAlertDismissMode.Tap
+        alert.alertView.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        alert.dismissMode = TKAlertDismissMode.tap
         
         alert.title = title
         alert.message = message

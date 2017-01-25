@@ -9,30 +9,30 @@
 import Foundation
 
 
-extension NSDate {
+extension Date {
     
     
-    convenience
-    init(dateString:String) {
-        let dateStringFormatter = NSDateFormatter()
-        dateStringFormatter.dateFormat = "yyyyMMdd"
-        dateStringFormatter.timeZone = NSTimeZone(name: "GMT")
-        let d = dateStringFormatter.dateFromString(dateString)!
-        self.init(timeInterval:0, sinceDate:d)
-    }
     
-    func formattedWith(format:String) -> String {
-        let formatter = NSDateFormatter()
+//    init(dateString:String) {
+//        let dateStringFormatter = DateFormatter()
+//        dateStringFormatter.dateFormat = "yyyyMMdd"
+//        dateStringFormatter.timeZone = TimeZone(identifier: "GMT")
+//        let d = dateStringFormatter.date(from: dateString)!
+//        (self as NSDate).type(of:, init)(timeInterval:0, since:d)
+//    }
+    
+    func formattedWith(_ format:String) -> String {
+        let formatter = DateFormatter()
         formatter.dateFormat = format
-        return formatter.stringFromDate(self)
+        return formatter.string(from: self)
     }
     
-    func isGreaterThanDate(dateToCompare: NSDate) -> Bool {
+    func isGreaterThanDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isGreater = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending {
+        if self.compare(dateToCompare) == ComparisonResult.orderedDescending {
             isGreater = true
         }
         
@@ -40,12 +40,12 @@ extension NSDate {
         return isGreater
     }
     
-    func isLessThanDate(dateToCompare: NSDate) -> Bool {
+    func isLessThanDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isLess = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedAscending {
+        if self.compare(dateToCompare) == ComparisonResult.orderedAscending {
             isLess = true
         }
         
@@ -53,12 +53,12 @@ extension NSDate {
         return isLess
     }
     
-    func equalToDate(dateToCompare: NSDate) -> Bool {
+    func equalToDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isEqualTo = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedSame {
+        if self.compare(dateToCompare) == ComparisonResult.orderedSame {
             isEqualTo = true
         }
         
@@ -66,29 +66,29 @@ extension NSDate {
         return isEqualTo
     }
     
-    func addDays(daysToAdd: Int) -> NSDate {
+    func addDays(_ daysToAdd: Int) -> Date {
 
-        let components: NSDateComponents = NSDateComponents()
+        let components: DateComponents = DateComponents()
 
-        components.setValue(daysToAdd, forComponent: NSCalendarUnit.Day);
+        (components as NSDateComponents).setValue(daysToAdd, forComponent: NSCalendar.Unit.day);
         
-        return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
+        return (Calendar.current as NSCalendar).date(byAdding: components, to: self, options: NSCalendar.Options(rawValue: 0))!
         
     }
     
-    func addMonths(monthToAdd: Int) -> NSDate {
+    func addMonths(_ monthToAdd: Int) -> Date {
         
-        let components: NSDateComponents = NSDateComponents()
+        let components: DateComponents = DateComponents()
         
-        components.setValue(monthToAdd, forComponent: NSCalendarUnit.Month);
+        (components as NSDateComponents).setValue(monthToAdd, forComponent: NSCalendar.Unit.month);
         
-        return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
+        return (Calendar.current as NSCalendar).date(byAdding: components, to: self, options: NSCalendar.Options(rawValue: 0))!
         
     }
     
-    func addHours(hoursToAdd: Int) -> NSDate {
-        let secondsInHours: NSTimeInterval = Double(hoursToAdd) * 60 * 60
-        let dateWithHoursAdded: NSDate = self.dateByAddingTimeInterval(secondsInHours)
+    func addHours(_ hoursToAdd: Int) -> Date {
+        let secondsInHours: TimeInterval = Double(hoursToAdd) * 60 * 60
+        let dateWithHoursAdded: Date = self.addingTimeInterval(secondsInHours)
         
         //Return Result
         return dateWithHoursAdded

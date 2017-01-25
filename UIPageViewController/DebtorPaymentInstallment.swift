@@ -9,12 +9,8 @@
 import Foundation
 
 
-class DebtorPaymentInstallment : Serializable {
-    var PaymentDate : String
-    var Amount : Double
-    
-    override init() {
-        PaymentDate = ""
-        Amount = 0
-    }
+class DebtorPaymentInstallment {
+    var PaymentDate : String  = ""
+    var Amount : Double  = 0
+
 }

@@ -12,21 +12,22 @@ class LoremIpsumGenerator: NSObject {
     let words = ["lorem", "ipsum", "dolor", "sit", "amet", "consectetuer", "adipiscing", "elit", "integer", "in", "mi", "a", "mauris"]
     let rows = NSMutableDictionary()
     
-    func generateString(wordCount: NSInteger) -> NSString {
+    func generateString(_ wordCount: NSInteger) -> NSString {
         let randomString = NSMutableString()
-        for var i = 0; i < wordCount; ++i {
+        for i in 0 ..< wordCount
+        {
             let index : Int = Int(arc4random_uniform(UInt32(words.count)))
-            randomString.appendString(words[index])
-            randomString.appendString(" ")
+            randomString.append(words[index])
+            randomString.append(" ")
         }
         return randomString
     }
     
-    func randomString(wordCount: NSInteger, indexPath: NSIndexPath) -> NSString {
-        var text : NSString? = rows.objectForKey(indexPath) as? NSString
+    func randomString(_ wordCount: NSInteger, indexPath: IndexPath) -> NSString {
+        var text : NSString? = rows.object(forKey: indexPath) as? NSString
         if(text == nil){
           text = generateString(wordCount)
-          rows.setObject(text!, forKey: indexPath)
+          rows.setObject(text!, forKey: indexPath as NSCopying)
         }
         return text!
     }

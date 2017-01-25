@@ -35,26 +35,26 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.btNext.hidden = true
+        self.btNext.isHidden = true
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         //Format number
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .CurrencyStyle
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
         formatter.currencySymbol = "$"
 
         
         if(LocalStore.accessIsAllowMonthlyInstallment()!){
         
-                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly or monthly payment schedule to meet your obligation in paying the amount of " + formatter.stringFromNumber(LocalStore.accessTotalOutstanding())! + " ?"
+                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly or monthly payment schedule to meet your obligation in paying the amount of " + LocalStore.accessTotalOutstanding().formatAsCurrency() + " ?"
         }
         else
         {
-                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly payment schedule to meet your obligation in paying the amount of " + formatter.stringFromNumber(LocalStore.accessTotalOutstanding())! + " ?"
+                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly payment schedule to meet your obligation in paying the amount of " + LocalStore.accessTotalOutstanding().formatAsCurrency() + " ?"
         }
         
-        self.subView.hidden = true
+        self.subView.isHidden = true
         
         dataForm1 = TKDataForm(frame: self.subView.bounds)
         dataForm1.delegate = self
@@ -63,7 +63,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
 
         dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
         dataForm1.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
-        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
         
         self.subView.addSubview(dataForm1)
 
@@ -83,15 +83,15 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         }
         
         let InstalmentAmount = dataSource["InstalmentAmount"]
-        InstalmentAmount.hintText = "Instalment Amount"
-        InstalmentAmount.editorClass = TKDataFormDecimalEditor.self
+        InstalmentAmount?.hintText = "Instalment Amount"
+        InstalmentAmount?.editorClass = TKDataFormDecimalEditor.self
         
-        self.dataSource.addGroupWithName("", propertyNames: ["Frequency", "InstalmentAmount","FirstInstalmentDate"])
+        self.dataSource.addGroup(withName: "", propertyNames: ["Frequency", "InstalmentAmount","FirstInstalmentDate"])
 
         
         dataForm1.dataSource = dataSource
-        dataForm1.commitMode = TKDataFormCommitMode.Manual
-        dataForm1.validationMode = TKDataFormValidationMode.Manual
+        dataForm1.commitMode = TKDataFormCommitMode.manual
+        dataForm1.validationMode = TKDataFormValidationMode.manual
 
     }
     
@@ -99,16 +99,16 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func btNo_Clicked(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func btNo_Clicked(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btYes_Clicked(sender: AnyObject) {
-        self.subView.hidden = false
-        self.btNext.hidden = false
+    @IBAction func btYes_Clicked(_ sender: AnyObject) {
+        self.subView.isHidden = false
+        self.btNext.isHidden = false
     }
     
-    @IBAction func btNext_Clicked(sender: AnyObject) {
+    @IBAction func btNext_Clicked(_ sender: AnyObject) {
         
         self.dataForm1.commit()
 
@@ -118,23 +118,23 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
 
             SetPayment.SetPayment(3)
             
-            self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
+            self.performSegue(withIdentifier: "GoToInstalmentSumary", sender: nil)
         }
 
     }
     
-    @IBAction func btClear_Clicked(sender: AnyObject) {
+    @IBAction func btClear_Clicked(_ sender: AnyObject) {
     }
     
-    func dataForm(dataForm: TKDataForm, heightForHeaderInGroup groupIndex: UInt) -> CGFloat {
+    func dataForm(_ dataForm: TKDataForm, heightForHeaderInGroup groupIndex: UInt) -> CGFloat {
         return 40
     }
     
-    func dataForm(dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, atIndex editorIndex: UInt) -> CGFloat {
+    func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
         return 65
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         
         property.hintText = property.displayName
         
@@ -142,47 +142,47 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         
         if (property.name == "FirstInstalmentDate") {
                 let textEditor = editor as! TKDataFormDatePickerEditor
-                textEditor.datePicker.setValue(UIColor.blackColor(), forKey: "textColor")
-                textEditor.datePicker.datePickerMode = .Date
+                textEditor.datePicker.setValue(UIColor.black, forKey: "textColor")
+                textEditor.datePicker.datePickerMode = .date
         }
     }
 
-    func dataForm(dataForm: TKDataForm, didSelectEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, didSelect editor: TKDataFormEditor, for property: TKEntityProperty) {
         let borderColor = UIColor(red:0.000, green:0.478, blue:1.000, alpha:1.00)
         var layer = editor.editor.layer
         
-        if editor.isKindOfClass(TKDataFormDatePickerEditor) {
+        if editor.isKind(of: TKDataFormDatePickerEditor.self) {
             let dateEditor = editor as! TKDataFormDatePickerEditor
             layer = dateEditor.editorValueLabel.layer
         }
         
-        let currentBorderColor = UIColor(CGColor: layer.borderColor!)
-        layer.borderColor = borderColor.CGColor
+        let currentBorderColor = UIColor(cgColor: layer.borderColor!)
+        layer.borderColor = borderColor.cgColor
         let animate = CABasicAnimation(keyPath: "borderColor")
         animate.fromValue = currentBorderColor
         animate.toValue = borderColor
         animate.duration = 0.4
-        layer.addAnimation(animate, forKey: "borderColor")
+        layer.add(animate, forKey: "borderColor")
     }
     
-    func dataForm(dataForm: TKDataForm, didDeselectEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, didDeselect editor: TKDataFormEditor, for property: TKEntityProperty) {
         
 
         
-        if editor.isKindOfClass(TKDataFormDatePickerEditor) {
+        if editor.isKind(of: TKDataFormDatePickerEditor.self) {
             let dateEditor = editor as! TKDataFormDatePickerEditor
-            dateEditor.editorValueLabel.layer.borderColor = UIColor(red:0.784, green:0.780, blue:0.800, alpha:1.00).CGColor
+            dateEditor.editorValueLabel.layer.borderColor = UIColor(red:0.784, green:0.780, blue:0.800, alpha:1.00).cgColor
         }
         
-        editor.editor.layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).CGColor
+        editor.editor.layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
     }
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
         if (propery.name == "InstalmentAmount") {
             
-            let value = propery.valueCandidate.description
-            if (value.length <= 0)
+            let value = (propery.valueCandidate as AnyObject).description
+            if ((value?.length)! <= 0)
             {
                 dataSource["InstalmentAmount"].errorMessage = "Please enter payment instalment"
                 self.validate1 = false
@@ -190,13 +190,13 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                 
             }
             
-            let floatValue = value.doubleValue
+            let floatValue = value?.doubleValue
             
             
             let frequency = self.dataSource["Frequency"].valueCandidate as! Int
             
             if(frequency == 0 ){
-                if (floatValue < LocalStore.accessWeeklyAmount())
+                if (floatValue! < LocalStore.accessWeeklyAmount())
                 {
                     dataSource["InstalmentAmount"].errorMessage = "Payment does not meet your negotiated limit"
                     self.validate1 = false
@@ -205,7 +205,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
             }
             else
                 if(frequency == 1 ){
-                    if (floatValue < LocalStore.accessFortnightAmount())
+                    if (floatValue! < LocalStore.accessFortnightAmount())
                     {
                         dataSource["InstalmentAmount"].errorMessage = "Payment does not meet your negotiated limit"
                         self.validate1 = false
@@ -214,8 +214,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
             }
             else
                     if(frequency == 2 ){
-
-                        if (floatValue < LocalStore.accessMonthlyAmount())
+                        if (floatValue! < LocalStore.accessMonthlyAmount())
                         {
                             dataSource["InstalmentAmount"].errorMessage = "Payment does not meet your negotiated limit"
                             self.validate1 = false
@@ -231,11 +230,11 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         else
             if (propery.name == "FirstInstalmentDate") {
                 
-                let value = propery.valueCandidate as! NSDate
+                let value = propery.valueCandidate as! Date
                 
-                let Maxdate = NSDate().addDays(30)
+                let Maxdate = Date().addDays(30)
                 
-                let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+                let firstDate = Calendar.current.startOfDay(for: Date())
 
                 
                 if(value.isGreaterThanDate(Maxdate) || value.isLessThanDate(firstDate)){
@@ -253,71 +252,72 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     
     
     
-    func performTopAlignmentSettingsForEditor(editor: TKDataFormEditor, property: TKEntityProperty) {
+    func performTopAlignmentSettingsForEditor(_ editor: TKDataFormEditor, property: TKEntityProperty) {
         
         editor.style.separatorColor = nil
-        editor.textLabel.font = UIFont.systemFontOfSize(15)
+        editor.textLabel.font = UIFont.systemFont(ofSize: 15)
         editor.style.insets = UIEdgeInsetsMake(1, editor.style.insets.left, 5, editor.style.insets.right)
         
         
         let gridLayout = editor.gridLayout
-        let editorDef = gridLayout.definitionForView(editor.editor)
+        let editorDef = gridLayout.definition(for: editor.editor)
         editorDef?.row = 1
         editorDef?.column = 1
         
         if property.name == "FirstInstalmentDate" {
             let dateEditor = editor as! TKDataFormDatePickerEditor
-            let labelDef = gridLayout.definitionForView(dateEditor.editorValueLabel)
-            labelDef.row = 1
-            labelDef.column = 1
+            let labelDef = gridLayout.definition(for: dateEditor.editorValueLabel)
+            labelDef?.row = 1
+            labelDef?.column = 1
         }
         
-        let feedbackLabelDef = gridLayout.definitionForView(editor.feedbackLabel)
-        feedbackLabelDef.row = 2
-        feedbackLabelDef.column = 1
-        feedbackLabelDef.columnSpan = 1
+        let feedbackLabelDef = gridLayout.definition(for: editor.feedbackLabel)
+        feedbackLabelDef?.row = 2
+        feedbackLabelDef?.column = 1
+        feedbackLabelDef?.columnSpan = 1
         
         self.setEditorStyle(editor)
         
     }
     
-    func setEditorStyle(editor: TKDataFormEditor) {
+    func setEditorStyle(_ editor: TKDataFormEditor) {
         if editor.selected {
             return;
         }
         
         var layer = editor.editor.layer
         
-        if editor.isKindOfClass(TKDataFormDatePickerEditor) {
+        if editor.isKind(of: TKDataFormDatePickerEditor.self) {
             let dateEditor = editor as! TKDataFormDatePickerEditor
             layer = dateEditor.editorValueLabel.layer
             dateEditor.editorValueLabel.layer.borderWidth = 1.0
-            dateEditor.editorValueLabel.layer.borderColor = UIColor.grayColor().CGColor
+            dateEditor.editorValueLabel.layer.borderColor = UIColor.gray.cgColor
             dateEditor.showAccessoryImage = false
             dateEditor.editorValueLabel.textInsets = UIEdgeInsetsMake(0, 10, 0, 0)
         }
         else
-        if editor.isKindOfClass(TKDataFormTextFieldEditor) {
+        if editor.isKind(of: TKDataFormTextFieldEditor.self) {
             layer = editor.editor.layer;
             (editor.editor as! TKTextField).textInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         }
 
         
-        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).CGColor
+        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 4
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToInstalmentSumary" {
             
             
             self.ScheduleList.removeAll()
             
-            var installmentDate = self.dataSource["FirstInstalmentDate"].valueCandidate as! NSDate
+            var installmentDate = self.dataSource["FirstInstalmentDate"].valueCandidate as! Date
             
             var paidAmount : Double = 0
-            var amount = self.dataSource["InstalmentAmount"].valueCandidate.description.doubleValue.roundWith2Decimal()
+            var amount = (self.dataSource["InstalmentAmount"].valueCandidate as AnyObject).description.doubleValue.roundTo(places: 2)
+            
             var totalAmount = LocalStore.accessTotalOutstanding()
             var installmentAmount =  amount < totalAmount ? amount : totalAmount
             
@@ -343,7 +343,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                 }
                 else
                 {
-                    installmentAmount = (totalAmount - paidAmount).roundWith2Decimal()
+                    installmentAmount = (totalAmount - paidAmount).roundTo(places: 2)
                 }
                 
                 switch(Frequency){
@@ -369,13 +369,13 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                 var lastInstallment = self.ScheduleList[self.ScheduleList.count - 1].Amount.doubleValue
                 
                 if( lastInstallment < 10){
-                    self.ScheduleList.removeAtIndex(self.ScheduleList.count-1)
+                    self.ScheduleList.remove(at: self.ScheduleList.count-1)
                     self.ScheduleList[self.ScheduleList.count-1].Amount = (self.ScheduleList[self.ScheduleList.count-1].Amount.doubleValue + lastInstallment).description
                 }
             }
 
             
-            let instalmentSumaryViewController = segue.destinationViewController as! InstalmentSumaryViewController
+            let instalmentSumaryViewController = segue.destination as! InstalmentSumaryViewController
             
             instalmentSumaryViewController.ScheduleList = self.ScheduleList
         }

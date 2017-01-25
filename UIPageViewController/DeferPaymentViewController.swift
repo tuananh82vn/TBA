@@ -71,18 +71,18 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
                     
                     if(self.paymentTrackerRecord.count > 0)
                     {
-                        self.btDefer.setTitle("You used " + self.TotalUsed.description + " of " + self.TotalDefer.description, forState: UIControlState.Normal)
+                        self.btDefer.setTitle("You used " + self.TotalUsed.description + " of " + self.TotalDefer.description, for: UIControlState())
 
-                        self.view_NoDefer.hidden = true
-                        self.tableView.hidden = false
+                        self.view_NoDefer.isHidden = true
+                        self.tableView.isHidden = false
                         self.tableView.reloadData()
                     }
                     else
                     {
-                        self.btDefer.setTitle("Schedule Callback", forState: UIControlState.Normal)
+                        self.btDefer.setTitle("Schedule Callback", for: UIControlState())
 
-                        self.view_NoDefer.hidden = false
-                        self.tableView.hidden = true
+                        self.view_NoDefer.isHidden = false
+                        self.tableView.isHidden = true
                     }
                     
                 }
@@ -99,33 +99,29 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
     }
     
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.paymentTrackerRecord.count
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! DeferPaymentViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as! DeferPaymentViewCell
         
         
         cell.lb_DueDate.text = self.paymentTrackerRecord[indexPath.row].DueDate
 
-        
-        //Format number
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .CurrencyStyle
-        formatter.currencySymbol = "$"
 
-        cell.lb_Amount.text  = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
+
+        cell.lb_Amount.text  = self.paymentTrackerRecord[indexPath.row].Amount.doubleValue.formatAsCurrency()
 
         return cell
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.selectedIndex = indexPath.row
         
@@ -133,15 +129,15 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
         {
             LocalStore.Alert(self.view, title: "Error", message: "You have deferred the maximum number of payments. Please schedule a callback from RecoveriesCorp", indexPath: 0)
 
-            self.btDefer.setTitle("Schedule Callback", forState: UIControlState.Normal)
+            self.btDefer.setTitle("Schedule Callback", for: UIControlState())
         }
         else
         {
-            self.btDefer.setTitle("Defer this payment ?", forState: UIControlState.Normal)
+            self.btDefer.setTitle("Defer this payment ?", for: UIControlState())
         }
     }
 
-    @IBAction func btDefer_Clicked(sender: UIButton)
+    @IBAction func btDefer_Clicked(_ sender: UIButton)
     {
         
         if(self.paymentTrackerRecord.count > 0){
@@ -154,7 +150,7 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
             {
                 if(self.TotalUsed ==  self.TotalDefer)
                 {
-                    self.performSegueWithIdentifier("GoToScheduleCallback", sender: nil)
+                    self.performSegue(withIdentifier: "GoToScheduleCallback", sender: nil)
                 }
                 else
                 {
@@ -178,7 +174,7 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
                             
                             if(temp1.IsSuccess)
                             {
-                                self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                                self.performSegue(withIdentifier: "GoToNotice", sender: nil)
                             }
                             else
                             {
@@ -207,7 +203,7 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
         }
         else
         {
-            self.performSegueWithIdentifier("GoToScheduleCallback", sender: nil)
+            self.performSegue(withIdentifier: "GoToScheduleCallback", sender: nil)
             
         }
         
@@ -220,10 +216,10 @@ class DeferPaymentViewController: UIViewController  , UITableViewDelegate, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
             
-            let controller = segue.destinationViewController as! FinishViewController
+            let controller = segue.destination as! FinishViewController
             controller.message = "You have successfully deferred this payment."
             
         }

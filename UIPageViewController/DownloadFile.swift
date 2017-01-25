@@ -9,10 +9,9 @@
 import UIKit
 import Alamofire
 
-
 struct DownloadFile {
     
-    static func getFile(filePath : String , filePathReturn : String){
+    static func getFile(_ filePath : String , filePathReturn : String){
         
         //println(filePathReturn)
         
@@ -20,45 +19,32 @@ struct DownloadFile {
         let urlString = filePath
         
         
-        let urlStr : NSString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let urlStr : NSString = urlString.addingPercentEscapes(using: String.Encoding.utf8)! as NSString
         
-        //var remoteUrl : NSURL? = NSURL(string: urlStr as String)
+        var remoteUrl : NSURL? = NSURL(string: urlStr as String)
         
-        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
-            (temporaryURL, response) in
+        let FileName = String((remoteUrl?.lastPathComponent)!) as NSString
+        let pathExtension = FileName.pathExtension
+        
+        
+        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             
+            documentsURL.appendPathComponent((FileName as String) + "." + pathExtension)
             
-            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-                
-                let localImageURL = NSURL(fileURLWithPath: filePathReturn)
-                
-                return localImageURL
-            }
-            
-            return temporaryURL
+            return (documentsURL, [.removePreviousFile])
         }
         
-        Alamofire.download(.GET, urlStr.description, destination: destination)
-            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+        
+        Alamofire.download(urlStr.description, to: destination)
+            .downloadProgress(queue: DispatchQueue.global(qos: .utility))
+            {
+                progress in
+                print("Progress: \(progress.fractionCompleted)")
                 
-                print("bytesRead : ", bytesRead)
-                print("totalBytesRead : ", totalBytesRead)
-                print("totalBytesExpectedToRead : ", totalBytesExpectedToRead)
-                
-                //This closure is NOT called on the main queue for performance
-                //reasons. To update your ui, dispatch to the main queue.
-                dispatch_async(dispatch_get_main_queue()) {
-                    
-                    print("bytes Download : ", bytesRead)
-
-                    if totalBytesRead == totalBytesExpectedToRead {
-                         print("Download Done")
-                    }
-                }
             }
             .response { response in
-
+                
         }
-        
     }
 }

@@ -43,13 +43,13 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.btClear.hidden = true
+        self.btClear.isHidden = true
 
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         lbl_Question.text = "Can you pay the total amount in " + LocalStore.accessMaxNoPay().description + " payments within " + LocalStore.accessThreePartDateDurationDays().description + " days?"
         
-        self.subView.hidden = true
+        self.subView.isHidden = true
         
         dataForm1 = TKDataForm(frame: self.subView.bounds)
         dataForm1.delegate = self
@@ -62,7 +62,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         dataForm1.tintColor = UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0)
         
-        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
         
         self.subView.addSubview(dataForm1)
         
@@ -89,43 +89,43 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         }
         
         
-        threePartPayment.FirstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+        threePartPayment.FirstDate = Calendar.current.startOfDay(for: Date())
         threePartPayment.SecondDate = threePartPayment.FirstDate
         threePartPayment.ThirdDate = threePartPayment.FirstDate
         
         dataSource.sourceObject = threePartPayment
         
         let FirstAmount = dataSource["FirstAmount"]
-        FirstAmount.hintText = "First Amount"
-        FirstAmount.editorClass = TKDataFormPhoneEditor.self
+        FirstAmount?.hintText = "First Amount"
+        FirstAmount?.editorClass = TKDataFormPhoneEditor.self
         
         
         dataSource["FirstDate"].image = UIImage(named: "calendar-1")
         dataSource["FirstDate"].hintText = "First Date"
         
         let SecondAmount = dataSource["SecondAmount"]
-        SecondAmount.hintText = "Second Amount"
-        SecondAmount.editorClass = TKDataFormPhoneEditor.self
+        SecondAmount?.hintText = "Second Amount"
+        SecondAmount?.editorClass = TKDataFormPhoneEditor.self
         
         
         dataSource["SecondDate"].image = UIImage(named: "calendar-1")
         dataSource["SecondDate"].hintText = "Second Date"
         
         let ThirdAmount = dataSource["ThirdAmount"]
-        ThirdAmount.hintText = "Third Amount"
-        ThirdAmount.editorClass = TKDataFormPhoneEditor.self
+        ThirdAmount?.hintText = "Third Amount"
+        ThirdAmount?.editorClass = TKDataFormPhoneEditor.self
         
         dataSource["ThirdDate"].image = UIImage(named: "calendar-1")
         dataSource["ThirdDate"].hintText = "Third Date"
         
         if(LocalStore.accessMaxNoPay()==2){
-            ThirdAmount.hidden = true
+            ThirdAmount?.hidden = true
             dataSource["ThirdDate"].hidden = true
         }
         
         dataForm1.dataSource = dataSource
-        dataForm1.commitMode = TKDataFormCommitMode.Manual
-        dataForm1.validationMode = TKDataFormValidationMode.Manual
+        dataForm1.commitMode = TKDataFormCommitMode.manual
+        dataForm1.validationMode = TKDataFormValidationMode.manual
 
 
     }
@@ -139,13 +139,13 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         super.viewWillLayoutSubviews()
     }
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
         
         if (propery.name == "FirstAmount") {
             
-            let value = propery.valueCandidate.description
-            if (value.length <= 0)
+            let value = (propery.valueCandidate as AnyObject).description
+            if ((value?.length)! <= 0)
             {
                 dataSource["FirstAmount"].errorMessage = "Please enter 1st payment instalment"
                 self.validate1 = false
@@ -153,9 +153,10 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
             }
             
-            let floatValue = value.floatValue
+            let floatValue = value?.floatValue
+            let minValue : Float = 10.00
             
-            if (floatValue < 10)
+            if (floatValue! < minValue)
             {
                 dataSource["FirstAmount"].errorMessage = "1st payment should be greater than or equal to $10"
                 self.validate1 = false
@@ -168,9 +169,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         else
             if (propery.name == "FirstDate") {
 
-                let value = propery.valueCandidate as! NSDate
+                let value = propery.valueCandidate as! Date
                 
-                let Maxdate = NSDate().addDays(7)
+                let Maxdate = Date().addDays(7)
                 
                 if(value.isGreaterThanDate(Maxdate)){
                     dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next 7 days"
@@ -179,7 +180,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
                 }
                 
-                let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+                let firstDate = Calendar.current.startOfDay(for: Date())
                 
                 if(value.isLessThanDate(firstDate)){
                     dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next 7 days"
@@ -192,8 +193,8 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         else
         if (propery.name == "SecondAmount") {
             
-            let value = propery.valueCandidate.description
-            if (value.length <= 0)
+            let value = (propery.valueCandidate as AnyObject).description
+            if ((value?.length)! <= 0)
             {
                 dataSource["SecondAmount"].errorMessage = "Please enter 2nd payment instalment"
                 self.validate3 = false
@@ -201,9 +202,10 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
             }
             
-            let floatValue = value.floatValue
+            let floatValue = value?.floatValue
+            let minValue : Float  = 10.00
             
-            if (floatValue < 10)
+            if (floatValue! < minValue)
             {
                 dataSource["SecondAmount"].errorMessage = "2nd payment should be greater than or equal to $10"
                 self.validate3 = false
@@ -217,9 +219,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         else
             if (propery.name == "SecondDate") {
                 
-                let value = propery.valueCandidate as! NSDate
+                let value = propery.valueCandidate as! Date
                 
-                let firstDate = self.dataSource["FirstDate"].valueCandidate as! NSDate
+                let firstDate = self.dataSource["FirstDate"].valueCandidate as! Date
                 
                 let Maxdate = firstDate.addDays(14)
 
@@ -249,8 +251,8 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         {
             if (propery.name == "ThirdAmount") {
                 
-                let value = propery.valueCandidate.description
-                if (value.length <= 0)
+                let value = (propery.valueCandidate as AnyObject).description
+                if ((value?.length)! <= 0)
                 {
                     dataSource["ThirdAmount"].errorMessage = "Please enter 3rd payment instalment"
                     self.validate5 = false
@@ -258,9 +260,11 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                     
                 }
                 
-                let floatValue = value.floatValue
+                let floatValue = value?.floatValue
                 
-                if (floatValue < 10)
+                let minValue : Float = 10.00
+                
+                if (floatValue! < minValue)
                 {
                     dataSource["ThirdAmount"].errorMessage = "3rd payment should be greater than or equal to $10.00"
                     self.validate5 = false
@@ -274,9 +278,9 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             else
                 if (propery.name == "ThirdDate") {
                     
-                    let value = propery.valueCandidate as! NSDate
+                    let value = propery.valueCandidate as! Date
                     
-                    let secondDate = self.dataSource["SecondDate"].valueCandidate as! NSDate
+                    let secondDate = self.dataSource["SecondDate"].valueCandidate as! Date
                     
                     let Maxdate = secondDate.addDays(14)
                     
@@ -307,33 +311,33 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         return true
     }
     
-    @IBAction func switch_Changed(sender: AnyObject) {
+    @IBAction func switch_Changed(_ sender: AnyObject) {
         
-        if mySwitch.on {
-            self.subView.hidden = false
+        if mySwitch.isOn {
+            self.subView.isHidden = false
             mySwitch.setOn(true, animated:true)
-            self.btNext.setTitle("Next", forState: UIControlState.Normal)
+            self.btNext.setTitle("Next", for: UIControlState())
             
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.btClear.hidden = false
+            UIView.animate(withDuration: 1.0, animations: { () -> Void in
+                self.btClear.isHidden = false
             
             })
 
             
         } else {
             
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.btClear.hidden = true
+            UIView.animate(withDuration: 1.0, animations: { () -> Void in
+                self.btClear.isHidden = true
             })
             
-            self.subView.hidden = true
+            self.subView.isHidden = true
             mySwitch.setOn(false, animated:true)
-            self.btNext.setTitle("4 or More Payments", forState: UIControlState.Normal)
+            self.btNext.setTitle("4 or More Payments", for: UIControlState())
         }
         
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         
         editor.style.textLabelOffset = UIOffsetMake(10, 0)
         
@@ -342,18 +346,18 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         editor.style.accessoryArrowStroke = TKStroke(color: UIColor(red: 0.780, green: 0.2, blue: 0.223, alpha: 1.0))
         
         if ["FirstDate", "SecondDate", "ThirdDate"].contains(property.name) {
-            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.Hidden;
-            let titleDef = editor.gridLayout.definitionForView(editor.textLabel)
-            editor.gridLayout.setWidth(0, forColumn: titleDef.column.integerValue)
+            editor.style.textLabelDisplayMode = TKDataFormEditorTextLabelDisplayMode.hidden;
+            let titleDef = editor.gridLayout.definition(for: editor.textLabel)
+            editor.gridLayout.setWidth(0, forColumn: (titleDef?.column.intValue)!)
             editor.style.editorOffset = UIOffsetMake(10, 0)
         }
 
     }
     
-    @IBAction func btNext_Clicked(sender: AnyObject) {
+    @IBAction func btNext_Clicked(_ sender: AnyObject) {
         
         
-        if(mySwitch.on) {
+        if(mySwitch.isOn) {
             
             self.dataForm1.commit()
             
@@ -361,24 +365,26 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             
             if(LocalStore.accessMaxNoPay()==2)
             {
-                totalAmount = self.dataSource["FirstAmount"].valueCandidate.description.doubleValue + self.dataSource["SecondAmount"].valueCandidate.description.doubleValue
+                totalAmount = (self.dataSource["FirstAmount"].valueCandidate as AnyObject).description.doubleValue + (self.dataSource["SecondAmount"].valueCandidate as AnyObject).description.doubleValue
                 
             }
             else
             {
-                let amount1String = self.dataSource["FirstAmount"].valueCandidate.description
+                let amount1String = (self.dataSource["FirstAmount"].valueCandidate as AnyObject).description
                 
-                let amount1Number = amount1String.doubleValue
+                let amount1Number = amount1String?.doubleValue
                 
-                let amount2String = self.dataSource["SecondAmount"].valueCandidate.description
+                let amount2String = (self.dataSource["SecondAmount"].valueCandidate as AnyObject).description
                 
-                let amount2Number = amount2String.doubleValue
+                let amount2Number = amount2String?.doubleValue
                 
-                let amount3String = self.dataSource["ThirdAmount"].valueCandidate.description
+                let amount3String = (self.dataSource["ThirdAmount"].valueCandidate as AnyObject).description
                 
-                let amount3Number = amount3String.doubleValue
+                let amount3Number = amount3String?.doubleValue
                 
-                totalAmount = amount1Number + amount2Number + amount3Number
+                totalAmount = amount2Number! + amount3Number!
+                
+                totalAmount += amount1Number!
  
             }
             
@@ -405,7 +411,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
                 LocalStore.setFrequency(0)
 
-                self.performSegueWithIdentifier("GoToInstalmentSumary", sender: nil)
+                self.performSegue(withIdentifier: "GoToInstalmentSumary", sender: nil)
             }
             
         }
@@ -416,18 +422,18 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
             SetPayment.SetPayment(3)
             
-            self.performSegueWithIdentifier("GoTo4Payment", sender: nil)
+            self.performSegue(withIdentifier: "GoTo4Payment", sender: nil)
 
         }
 
     }
     
-    @IBAction func BtClear_Clicked(sender: AnyObject) {
+    @IBAction func BtClear_Clicked(_ sender: AnyObject) {
         
         self.InitData()
 
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToInstalmentSumary" {
 
             
@@ -435,16 +441,16 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             
             let firstPayment = PaymentTrackerRecordModel()
             
-            firstPayment.DueDate = (self.dataSource["FirstDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            firstPayment.Amount = self.dataSource["FirstAmount"].valueCandidate.description
+            firstPayment.DueDate = (self.dataSource["FirstDate"].valueCandidate as! Date).formattedWith("dd/MM/yyyy")
+            firstPayment.Amount = (self.dataSource["FirstAmount"].valueCandidate as AnyObject).description
             
             self.ScheduleList.append(firstPayment)
 
             
             let secondPayment = PaymentTrackerRecordModel()
             
-            secondPayment.DueDate = (self.dataSource["SecondDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-            secondPayment.Amount = self.dataSource["SecondAmount"].valueCandidate.description
+            secondPayment.DueDate = (self.dataSource["SecondDate"].valueCandidate as! Date).formattedWith("dd/MM/yyyy")
+            secondPayment.Amount = (self.dataSource["SecondAmount"].valueCandidate as AnyObject).description
 
             self.ScheduleList.append(secondPayment)
             
@@ -452,13 +458,13 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
             {
                 let thirdPayment = PaymentTrackerRecordModel()
                 
-                thirdPayment.DueDate = (self.dataSource["ThirdDate"].valueCandidate as! NSDate).formattedWith("dd/MM/yyyy")
-                thirdPayment.Amount = self.dataSource["ThirdAmount"].valueCandidate.description
+                thirdPayment.DueDate = (self.dataSource["ThirdDate"].valueCandidate as! Date).formattedWith("dd/MM/yyyy")
+                thirdPayment.Amount = (self.dataSource["ThirdAmount"].valueCandidate as AnyObject).description
                 
                 self.ScheduleList.append(thirdPayment)
             }
             
-            let instalmentSumaryViewController = segue.destinationViewController as! InstalmentSumaryViewController
+            let instalmentSumaryViewController = segue.destination as! InstalmentSumaryViewController
             
             instalmentSumaryViewController.ScheduleList = self.ScheduleList
         }

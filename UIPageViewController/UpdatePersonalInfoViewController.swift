@@ -35,7 +35,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UpdatePersonalInfoViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         alignmentMode = "Top"
@@ -69,8 +69,8 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     self.dataSource["StreetAddress"].editorClass = TKDataFormTextFieldEditor.self
                     self.dataSource["MailAddress"].editorClass = TKDataFormTextFieldEditor.self
                     
-                    self.dataSource.addGroupWithName("Address", propertyNames: ["StreetAddress", "MailAddress"])
-                    self.dataSource.addGroupWithName("Phone", propertyNames: ["HomePhone", "WorkPhone", "MobilePhone"])
+                    self.dataSource.addGroup(withName: "Address", propertyNames: ["StreetAddress", "MailAddress"])
+                    self.dataSource.addGroup(withName: "Phone", propertyNames: ["HomePhone", "WorkPhone", "MobilePhone"])
                     
                     self.dataSource["HomePhone"].editorClass = TKDataFormPhoneEditor.self
                     self.dataSource["HomePhone"].hintText = "XX XXXX XXXX"
@@ -86,11 +86,11 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     self.dataForm1.delegate = self
                     self.dataForm1.dataSource = self.dataSource
                     
-                    self.dataForm1.backgroundColor = UIColor.whiteColor()
-                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                    self.dataForm1.backgroundColor = UIColor.white
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                     
-                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                    self.dataForm1.validationMode = TKDataFormValidationMode.Manual
+                    self.dataForm1.commitMode = TKDataFormCommitMode.manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.manual
                     
                     self.subView.addSubview(self.dataForm1)
                     
@@ -98,7 +98,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                 else
                 {
                     LocalStore.Alert(self.view, title: "Error", message: temp1.Errors, indexPath: 0)
-                    self.bt_Continue.setTitle("Finish", forState: UIControlState.Normal)
+                    self.bt_Continue.setTitle("Finish", for: UIControlState())
                     self.isError = true
 
                 }
@@ -107,13 +107,13 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
             else
             {
                 // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error", message: "Server not found.", preferredStyle: UIAlertControllerStyle.alert)
                 
                 // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -130,7 +130,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
         
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         
         property.hintText = property.displayName
         if alignmentMode == "Top" {
@@ -139,7 +139,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     }
     
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         if (propery.name == "MobilePhone") {
             
             let value = propery.valueCandidate as! NSString
@@ -156,17 +156,17 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     }
     
     
-    func dataForm(dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, atIndex editorIndex: UInt) -> CGFloat {
+    func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
 
         return 65
     
     }
 
-    func dataForm(dataForm: TKDataForm, heightForHeaderInGroup groupIndex: UInt) -> CGFloat {
+    func dataForm(_ dataForm: TKDataForm, heightForHeaderInGroup groupIndex: UInt) -> CGFloat {
         return 40
     }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         
         if(!self.isError)
@@ -204,7 +204,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     {
                         WebApiService.sendActivityTracking("Update Personal Info")
 
-                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                        self.performSegue(withIdentifier: "GoToNotice", sender: nil)
                         
                     }
                     else
@@ -225,13 +225,13 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
         else
         {
             
-            navigationController?.popViewControllerAnimated(true)
+            navigationController?.popViewController(animated: true)
             
         }
         
     }
     
-    func performTopAlignmentSettingsForEditor(editor: TKDataFormEditor, property: TKEntityProperty) {
+    func performTopAlignmentSettingsForEditor(_ editor: TKDataFormEditor, property: TKEntityProperty) {
         
         editor.style.separatorColor = nil
 //        editor.textLabel.font = UIFont.systemFontOfSize(15)
@@ -239,40 +239,40 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
         
 
         let gridLayout = editor.gridLayout
-        let editorDef = gridLayout.definitionForView(editor.editor)
+        let editorDef = gridLayout.definition(for: editor.editor)
         editorDef?.row = 1
         editorDef?.column = 1
         
             
-        let feedbackLabelDef = gridLayout.definitionForView(editor.feedbackLabel)
-        feedbackLabelDef.row = 2
-        feedbackLabelDef.column = 1
-        feedbackLabelDef.columnSpan = 1
+        let feedbackLabelDef = gridLayout.definition(for: editor.feedbackLabel)
+        feedbackLabelDef?.row = 2
+        feedbackLabelDef?.column = 1
+        feedbackLabelDef?.columnSpan = 1
             
         self.setEditorStyle(editor)
 
     }
     
-    func setEditorStyle(editor: TKDataFormEditor) {
+    func setEditorStyle(_ editor: TKDataFormEditor) {
         
         var layer = editor.editor.layer
 
-        if editor.isKindOfClass(TKDataFormTextFieldEditor) {
+        if editor.isKind(of: TKDataFormTextFieldEditor.self) {
             layer = editor.editor.layer;
             (editor.editor as! TKTextField).textInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         }
         
 
         
-        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).CGColor
+        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 4
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
             
-            let controller = segue.destinationViewController as! FinishViewController
+            let controller = segue.destination as! FinishViewController
             controller.message = "Your personal information has been updated successfully"
             
         }

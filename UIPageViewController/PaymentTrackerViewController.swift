@@ -52,12 +52,12 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                     self.paymentTrackerRecord = self.InstalmentScheduleList
                     
                     if(self.paymentTrackerRecord.count == 0){
-                        self.tableView.hidden = true
+                        self.tableView.isHidden = true
                         self.lb_NoPayment.text = "No current arrangement for this account. Would you like to make a payment now ?"
                     }
                     else
                     {
-                        self.tableView.hidden = false
+                        self.tableView.isHidden = false
                     }
                     
                     self.tableView.reloadData()
@@ -86,7 +86,7 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         
     }
 
-    @IBAction func SegmentButton_Clicked(sender: AnyObject) {
+    @IBAction func SegmentButton_Clicked(_ sender: AnyObject) {
         
         switch segmentedControl.selectedSegmentIndex
         {
@@ -95,12 +95,12 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                 self.paymentTrackerRecord = self.InstalmentScheduleList
                 
                 if(self.InstalmentScheduleList.count == 0){
-                    self.tableView.hidden = true
+                    self.tableView.isHidden = true
                     self.lb_NoPayment.text = "No current arrangement for this account. Would you like to make a payment now ?"
                 }
                 else
                 {
-                    self.tableView.hidden = false
+                    self.tableView.isHidden = false
                 }
                 
                 self.tableView.reloadData()
@@ -109,13 +109,13 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
                 self.paymentTrackerRecord = self.HistoryInstalmentScheduleList
                 
                 if(self.HistoryInstalmentScheduleList.count == 0){
-                    self.tableView.hidden = true
+                    self.tableView.isHidden = true
                     self.lb_NoPayment.text = "You have not made any payments on this arrangement. Would you like to make a payment now ?"
 
                 }
                 else
                 {
-                    self.tableView.hidden = false
+                    self.tableView.isHidden = false
                 }
                 
                 self.tableView.reloadData()
@@ -131,23 +131,23 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
     }
     
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.paymentTrackerRecord.count
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell1 = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! PaymentTrackerViewCell
+        let cell1 = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as! PaymentTrackerViewCell
         
         
-        //Format number
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .CurrencyStyle
-        formatter.currencySymbol = "$"
+//        //Format number
+//        let formatter = NumberFormatter()
+//        formatter.numberStyle = .currency
+//        formatter.currencySymbol = "$"
 
-        cell1.lb_Amount.text = formatter.stringFromNumber(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue)
+        cell1.lb_Amount.text = Double(self.paymentTrackerRecord[indexPath.row].Amount.doubleValue).formatAsCurrency()
 
 
         
@@ -155,14 +155,14 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         cell1.lb_DueDate.text = tempDate
         
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         
-        let DueDate = dateFormatter.dateFromString(tempDate)
+        let DueDate = dateFormatter.date(from: tempDate)
 
         
-        let CurrentDate = NSDate()
+        let CurrentDate = Date()
         let Amount = self.paymentTrackerRecord[indexPath.row].Amount.doubleValue
         
         
@@ -212,15 +212,15 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         
     }
     
-    @IBAction func btPayment_Clicked(sender: AnyObject) {
+    @IBAction func btPayment_Clicked(_ sender: AnyObject) {
         
         SetPayment.SetPayment(4)
         
-        self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+        self.performSegue(withIdentifier: "GoToMakeCreditPayment", sender: nil)
 
         
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 

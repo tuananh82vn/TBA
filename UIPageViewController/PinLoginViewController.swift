@@ -39,7 +39,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         
         
         //hide back button
-        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false) //or animated: false
+        navigationController?.setNavigationBarHidden(navigationController?.isNavigationBarHidden == false, animated: false) //or animated: false
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
@@ -48,13 +48,13 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         InputFirstPin = true
 
         
-        let gesture = UITapGestureRecognizer(target: self, action: "view_OnTop_Clicked:")
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(PinLoginViewController.view_OnTop_Clicked(_:)))
         self.view_OnTop.addGestureRecognizer(gesture)
 
         
         tf_Pin0.delegate = self;
         
-        tf_Pin0.addTarget(self, action: "tf_Pin0DidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        tf_Pin0.addTarget(self, action: #selector(PinLoginViewController.tf_Pin0DidChange(_:)), for: UIControlEvents.editingChanged)
         tf_Pin0.becomeFirstResponder()
 
         
@@ -65,19 +65,19 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
 
     }
     
-    func view_OnTop_Clicked(sender:UITapGestureRecognizer){
+    func view_OnTop_Clicked(_ sender:UITapGestureRecognizer){
         
         self.resetText()
         
         tf_Pin0.becomeFirstResponder()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return navigationController?.navigationBarHidden == true
+    override var prefersStatusBarHidden : Bool {
+        return navigationController?.isNavigationBarHidden == true
     }
     
-    override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
-        return UIStatusBarAnimation.Fade
+    override var preferredStatusBarUpdateAnimation : UIStatusBarAnimation {
+        return UIStatusBarAnimation.fade
     }
     
 //    //Calls this function when the tap is recognized.
@@ -86,7 +86,7 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
 //        view.endEditing(true)
 //    }
     
-    @IBAction func btForgotten_Clicked(sender: AnyObject) {
+    @IBAction func btForgotten_Clicked(_ sender: AnyObject) {
         
         view.endEditing(true)
 
@@ -149,20 +149,20 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "InitialViewController") as! InitialViewController
         
-        self.presentViewController(vc, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
 
     }
     
-    func tf_Pin0DidChange(textField: UITextField) {
+    func tf_Pin0DidChange(_ textField: UITextField) {
         if(InputFirstPin && FinishFirstPin){
             
             self.FirstPin = tf_Pin0.text!
             
             if(self.FirstPin == LocalStore.accessPin()!){
 
-                self.performSegueWithIdentifier("GoToLogin", sender: nil)
+                self.performSegue(withIdentifier: "GoToLogin", sender: nil)
                 
             }
             else
@@ -207,9 +207,9 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         InputFirstPin  = true
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let  char = string.cStringUsingEncoding(NSUTF8StringEncoding)!
+        let  char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
         
         if (isBackSpace == -92) {
@@ -303,16 +303,16 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         // Dispose of any resources that can be recreated.
     }
     
-    func addDoneButtonOnKeyboard(view: UIView?)
+    func addDoneButtonOnKeyboard(_ view: UIView?)
     {
         
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
-        doneToolbar.barStyle = UIBarStyle.Default
-        doneToolbar.translucent = false
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        doneToolbar.isTranslucent = false
         doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
 
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: view, action: #selector(UIResponder.resignFirstResponder))
         
         var items = [AnyObject]()
         items.append(flexSpace)

@@ -50,23 +50,23 @@ class SummaryViewController: UIViewController {
             self.lb_RefNumber.text  = "Your payment will be processed according to the schedule in Payment Tracker section. Please be aware, payments will appear on your statement as payment to 'Recoveriescorp'"
             
             self.title = "Summary"
-            self.lbl_TitleReceipt.hidden = true
-            self.lb_TitleDate.hidden = true
-            self.lb_TitleTime.hidden = true
-            self.lb_TitleAmount.hidden = true
+            self.lbl_TitleReceipt.isHidden = true
+            self.lb_TitleDate.isHidden = true
+            self.lb_TitleTime.isHidden = true
+            self.lb_TitleAmount.isHidden = true
             
-            self.lb_Receipt.hidden = true
-            self.lb_Transaction.hidden = true
-            self.lb_text_receipt.hidden = true
-            self.lb_text_transaction.hidden = true
-            self.lb_Date.hidden = true
-            self.lb_Time.hidden = true
-            self.lb_Amount.hidden = true
+            self.lb_Receipt.isHidden = true
+            self.lb_Transaction.isHidden = true
+            self.lb_text_receipt.isHidden = true
+            self.lb_text_transaction.isHidden = true
+            self.lb_Date.isHidden = true
+            self.lb_Time.isHidden = true
+            self.lb_Amount.isHidden = true
 
-            self.bt_Save.hidden = true
-            self.bt_Email.hidden = true
+            self.bt_Save.isHidden = true
+            self.bt_Email.isHidden = true
             
-            self.lb_Notes.hidden = true
+            self.lb_Notes.isHidden = true
 
             
         }
@@ -85,10 +85,10 @@ class SummaryViewController: UIViewController {
                 self.title = "Receipt"
                 self.lbl_TitleReceipt.text = "Receipt Details"
                 
-                self.lb_Receipt.hidden = false
-                self.lb_Transaction.hidden = false
-                self.lb_text_receipt.hidden = false
-                self.lb_text_transaction.hidden = false
+                self.lb_Receipt.isHidden = false
+                self.lb_Transaction.isHidden = false
+                self.lb_text_receipt.isHidden = false
+                self.lb_text_transaction.isHidden = false
                 
             }
             else
@@ -96,10 +96,10 @@ class SummaryViewController: UIViewController {
                 self.title = "Payment Summary"
                 self.lbl_TitleReceipt.text = "Payment Summary"
                 
-                self.lb_Receipt.hidden = true
-                self.lb_Transaction.hidden = true
-                self.lb_text_receipt.hidden = true
-                self.lb_text_transaction.hidden = true
+                self.lb_Receipt.isHidden = true
+                self.lb_Transaction.isHidden = true
+                self.lb_text_receipt.isHidden = true
+                self.lb_text_transaction.isHidden = true
                 
             }
 
@@ -117,27 +117,27 @@ class SummaryViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
-        self.performSegueWithIdentifier("GoToHomepage", sender: nil)
+        self.performSegue(withIdentifier: "GoToHomepage", sender: nil)
 
     }
 
-    @IBAction func btEmail_Clicked(sender: AnyObject) {
+    @IBAction func btEmail_Clicked(_ sender: AnyObject) {
         
         var alertController:UIAlertController?
         alertController = UIAlertController(title: "Enter your email",
             message: nil,
-            preferredStyle: .Alert)
+            preferredStyle: .alert)
         
-        alertController!.addTextFieldWithConfigurationHandler(
-            {(textField: UITextField!) in
+        alertController!.addTextField(
+            configurationHandler: {(textField: UITextField!) in
                 textField.placeholder = "Email"
-                textField.keyboardType = UIKeyboardType.EmailAddress
+                textField.keyboardType = UIKeyboardType.emailAddress
         })
         
         let action = UIAlertAction(title: "Submit",
-            style: UIAlertActionStyle.Default,
+            style: UIAlertActionStyle.default,
             handler: {[weak self]
                 (paramAction:UIAlertAction!) in
                 if let textFields = alertController?.textFields{
@@ -236,12 +236,12 @@ class SummaryViewController: UIViewController {
             })
         
         alertController?.addAction(action)
-        self.presentViewController(alertController!,
+        self.present(alertController!,
             animated: true,
             completion: nil)
     }
 
-    @IBAction func savetoInbox_Clicked(sender: AnyObject) {
+    @IBAction func savetoInbox_Clicked(_ sender: AnyObject) {
         
             self.view.showLoading();
         
@@ -302,11 +302,11 @@ class SummaryViewController: UIViewController {
                         
                         let rootPath = NSTemporaryDirectory()
           
-                        let currentTime = Int32(NSDate().timeIntervalSince1970)
+                        let currentTime = Int32(Date().timeIntervalSince1970)
                         
                         let filename = currentTime.description + ".pdf"
                         
-                        let toFilePath = (rootPath as NSString).stringByAppendingPathComponent(filename)
+                        let toFilePath = (rootPath as NSString).appendingPathComponent(filename)
 
                         
                         //Download file into device with random name
@@ -318,11 +318,11 @@ class SummaryViewController: UIViewController {
                         inboxDetail.Content = toFilePath
                         inboxDetail.Date = self.lb_Date.text!
                         if(self.paymentMethod == 1){
-                            inboxDetail.Type = "R"
+                            inboxDetail.ItemType = "R"
                         }
                         else
                         {
-                            inboxDetail.Type = "P"
+                            inboxDetail.ItemType = "P"
                         }
                         
                         inboxDetail.MessageNo = currentTime

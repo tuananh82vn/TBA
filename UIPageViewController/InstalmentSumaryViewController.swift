@@ -31,23 +31,19 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
     }
     
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.ScheduleList.count
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell1 = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! PaymentTrackerViewCell
+        let cell1 = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as! PaymentTrackerViewCell
         
-        
-        //Format number
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .CurrencyStyle
-        formatter.currencySymbol = "$"
 
-        cell1.lb_Amount.text = formatter.stringFromNumber(self.ScheduleList[indexPath.row].Amount.doubleValue)
+
+        cell1.lb_Amount.text = self.ScheduleList[indexPath.row].Amount.doubleValue.formatAsCurrency()
         
         cell1.lb_DueDate.text = self.ScheduleList[indexPath.row].DueDate
         
@@ -56,39 +52,40 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
         
     }
     
-    @IBAction func btNext_Clicked(sender: AnyObject) {
+    @IBAction func btNext_Clicked(_ sender: AnyObject) {
         
         
         LocalStore.setFirstAmountOfInstalment(ScheduleList[0].Amount.doubleValue)
         
-        self.performSegueWithIdentifier("GoToPaymentOption", sender: nil)
+        self.performSegue(withIdentifier: "GoToPaymentOption", sender: nil)
 
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToPaymentOption" {
             
-            for(var i = 0 ; i < self.ScheduleList.count ; i++){
+            for i in 0  ..< self.ScheduleList.count
+            {
                 
                 let temp1 = DebtorPaymentInstallment()
                 
                 temp1.PaymentDate = self.ScheduleList[i].DueDate
                 
-                let formatter = NSDateFormatter()
+                let formatter = DateFormatter()
                 
-                formatter.dateFormat =  NSDateFormatter.dateFormatFromTemplate("MMddyyyy", options: 0, locale: NSLocale(localeIdentifier: "en-AU"))
+                formatter.dateFormat =  DateFormatter.dateFormat(fromTemplate: "MMddyyyy", options: 0, locale: Locale(identifier: "en-AU"))
                 
-                let date1 = formatter.dateFromString(temp1.PaymentDate)
+                let date1 = formatter.date(from: temp1.PaymentDate)
                 
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 
-                temp1.PaymentDate = dateFormatter.stringFromDate(date1!)
+                temp1.PaymentDate = dateFormatter.string(from: date1!)
                 
                 temp1.Amount = self.ScheduleList[i].Amount.doubleValue
 
@@ -96,7 +93,7 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
             }
             
             
-            let paymentMethodViewController = segue.destinationViewController as! PaymentMethodViewController
+            let paymentMethodViewController = segue.destination as! PaymentMethodViewController
             
             paymentMethodViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
         }

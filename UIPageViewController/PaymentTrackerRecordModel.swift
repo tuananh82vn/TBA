@@ -8,19 +8,11 @@
 
 import Foundation
 
-class PaymentTrackerRecordModel : Serializable {
+class PaymentTrackerRecordModel {
     
-    var DueDate : String
-    var Amount : String
-    var PayDate : String
-    var PayAmount : String
-    var Defer : String
-
-    override init() {
-        DueDate = ""
-        Amount = ""
-        PayDate = ""
-        PayAmount = ""
-        Defer = ""
-    }
+    var DueDate : String = ""
+    var Amount : String = ""
+    var PayDate : String = ""
+    var PayAmount : String = ""
+    var Defer : String = ""
 }

@@ -42,7 +42,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         super.viewDidLoad()
 
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MakeDebitPaymentViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         if(LocalStore.accessMakePaymentInFull()){
@@ -91,11 +91,11 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         dataForm1.delegate = self
         dataForm1.dataSource = dataSource
         
-        dataForm1.backgroundColor = UIColor.whiteColor()
-        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+        dataForm1.backgroundColor = UIColor.white
+        dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
         
-        dataForm1.commitMode = TKDataFormCommitMode.Manual
-        dataForm1.validationMode = TKDataFormValidationMode.Manual
+        dataForm1.commitMode = TKDataFormCommitMode.manual
+        dataForm1.validationMode = TKDataFormValidationMode.manual
         
         self.subView.addSubview(dataForm1)
 
@@ -113,32 +113,33 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         // Dispose of any resources that can be recreated.
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
     }
     
-    func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, didEdit property: TKEntityProperty) {
     }
     
-    func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
+    func dataForm(_ dataForm: TKDataForm, update groupView: TKEntityPropertyGroupView, forGroupAt groupIndex: UInt) {
     }
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
 
         if (propery.name == "Amount") {
             
-            let value = propery.valueCandidate.description
+            let value = (propery.valueCandidate as AnyObject).description
             
-            if (value.length <= 0)
+            if ((value?.length)! <= 0)
             {
                 dataSource["Amount"].errorMessage = "Please enter amount"
                 self.validate1 = false
                 return self.validate1
             }
             
-            let floatValue = value.floatValue
+            let floatValue = value?.floatValue
+            let minValue : Float = 0.00
             
-            if (floatValue <= 0)
+            if (floatValue! <=  minValue)
             {
                 dataSource["Amount"].errorMessage = "Amount must be greater than $0.00"
                 self.validate1 = false
@@ -162,22 +163,22 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                     return self.validate2
                 }
                 
-                let whitespace = NSCharacterSet.whitespaceCharacterSet()
+                let whitespace = CharacterSet.whitespaces
                 
-                let range = value.description.rangeOfCharacterFromSet(whitespace)
+                let range = value.description.rangeOfCharacter(from: whitespace)
                 
                 // range will be nil if no whitespace is found
                 if let test = range {
                     
                     let fullNameArr = value.description.characters.split{$0 == " "}.map(String.init)
                     
-                    for (var index = 0; index < fullNameArr.count; index++)
+                    for index in 0 ..< fullNameArr.count
                     {
                         var fistname = fullNameArr[index] // First
                         
-                        let decimalCharacters = NSCharacterSet.decimalDigitCharacterSet()
+                        let decimalCharacters = CharacterSet.decimalDigits
                         
-                        let decimalRange1 = fistname.rangeOfCharacterFromSet(decimalCharacters, options: NSStringCompareOptions(), range: nil)
+                        let decimalRange1 = fistname.rangeOfCharacter(from: decimalCharacters, options: NSString.CompareOptions(), range: nil)
                         
                         if decimalRange1 != nil {
                             
@@ -268,7 +269,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         return true
    }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         
         self.dataForm1.commit()
@@ -284,7 +285,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         let bankObject = BankInfo()
         
-        bankObject.Amount           = self.dataSource["Amount"].valueCandidate.doubleValue
+        bankObject.Amount           = (self.dataSource["Amount"].valueCandidate as AnyObject).doubleValue
         bankObject.AccountNumber    = self.dataSource["AccountNumber"].valueCandidate as! String
         bankObject.AccountName      = self.dataSource["AccountName"].valueCandidate as! String
         bankObject.BSB1             = self.dataSource["BSB1"].valueCandidate as! String
@@ -300,9 +301,9 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 ]
             }
             
-            let data = try?  NSJSONSerialization.dataWithJSONObject(jsonCompatibleArray, options: NSJSONWritingOptions(rawValue:0))
+            let data = try?  JSONSerialization.data(withJSONObject: jsonCompatibleArray, options: JSONSerialization.WritingOptions(rawValue:0))
             
-            if let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            if let jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             {
                 bankObject.DebtorPaymentInstallment = jsonString as String
             }
@@ -345,7 +346,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
 
                     self.paymentReturn = temp1
                     
-                    self.performSegueWithIdentifier("GoToSummary", sender: nil)
+                    self.performSegue(withIdentifier: "GoToSummary", sender: nil)
                 }
                 else
                 {
@@ -370,10 +371,10 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToSummary" {
             
-            let controller = segue.destinationViewController as! SummaryViewController
+            let controller = segue.destination as! SummaryViewController
             controller.paymentReturn = self.paymentReturn
             controller.paymentMethod = 2
         }

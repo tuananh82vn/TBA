@@ -34,12 +34,12 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UpdateCreditCardViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
         loadData()
@@ -78,13 +78,13 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                 self.dataForm1 = TKDataForm(frame: self.subView.bounds)
                 self.dataForm1.delegate = self
                 self.dataForm1.dataSource = self.dataSource
-                self.dataForm1.backgroundColor = UIColor.whiteColor()
-                self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                self.dataForm1.backgroundColor = UIColor.white
+                self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                 
                 
                 
-                self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                self.dataForm1.validationMode = TKDataFormValidationMode.Manual
+                self.dataForm1.commitMode = TKDataFormCommitMode.manual
+                self.dataForm1.validationMode = TKDataFormValidationMode.manual
                 
                 self.subView.addSubview(self.dataForm1)
             }
@@ -107,23 +107,23 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
 
     }
     
-    func dataForm(dataForm: TKDataForm, didEditProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, didEdit property: TKEntityProperty) {
     }
     
-    func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
+    func dataForm(_ dataForm: TKDataForm, update groupView: TKEntityPropertyGroupView, forGroupAt groupIndex: UInt) {
     }
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
 
                 if (propery.name == "CardNumber") {
                     
-                    let value = propery.valueCandidate.description
+                    let value = (propery.valueCandidate as AnyObject).description
                     
-                    if (value.length <= 0)
+                    if ((value?.length)! <= 0)
                     {
                         self.dataSource["CardNumber"].errorMessage = "Please enter card number"
 
@@ -136,7 +136,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                         
                         let v = CreditCardValidator()
                         
-                        if v.validateString(value) {
+                        if v.validate(string: value!) {
                             
                             self.validate1 = true
                             
@@ -159,21 +159,21 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
             let monthValue = propery.valueCandidate as! Int
             let yearValue = self.dataSource["ExpiryYear"].valueCandidate as! Int
             
-            let date = NSDate()
-            let calendar = NSCalendar.currentCalendar()
-            let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+            let date = Date()
+            let calendar = Calendar.current
+            let components = (calendar as NSCalendar).components([.day , .month , .year], from: date)
             
             let currentYear =  components.year
             let currentMonth = components.month
             
-            if(yearValue < currentYear){
+            if(yearValue < currentYear!){
                 dataSource["ExpiryYear"].errorMessage = "Expire year must be later than or equal this year"
                 self.validate2 = false
                 return self.validate2
             }
             else if(yearValue == currentYear)
             {
-                if(monthValue < currentMonth){
+                if(monthValue < currentMonth!){
                     dataSource["ExpiryMonth"].errorMessage = "Expire month must be later than or equal this month"
                     self.validate2 = false
                     return self.validate2
@@ -185,7 +185,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                     return self.validate2
                 }
             }
-            else if(yearValue > currentYear)
+            else if(yearValue > currentYear!)
             {
                 if(monthValue > 12)
                 {
@@ -202,13 +202,13 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                 
                 let yearValue = propery.valueCandidate as! Int
                 
-                let date = NSDate()
-                let calendar = NSCalendar.currentCalendar()
-                let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+                let date = Date()
+                let calendar = Calendar.current
+                let components = (calendar as NSCalendar).components([.day , .month , .year], from: date)
                 
                 let currentYear =  components.year
                 
-                if(yearValue < currentYear){
+                if(yearValue < currentYear!){
                     dataSource["ExpiryYear"].errorMessage = "Expire year must be later than or equal this year"
                     dataSource["ExpiryMonth"].errorMessage = ""
                     
@@ -225,7 +225,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
         return true
     }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         
             self.dataForm1.commit()
@@ -261,7 +261,7 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
                         
                         WebApiService.sendActivityTracking("Update Credit Card")
 
-                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                        self.performSegue(withIdentifier: "GoToNotice", sender: nil)
                     }
                     else
                     {
@@ -278,10 +278,10 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
             
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
             
-            let controller = segue.destinationViewController as! FinishViewController
+            let controller = segue.destination as! FinishViewController
             controller.message = "Your credit card has been updated successfully"
             
         }

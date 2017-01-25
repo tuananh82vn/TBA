@@ -37,7 +37,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(VerifyDetailCoDebtorViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         loadMoreData()
@@ -66,7 +66,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                     self.dataSource["FullName"].hintText = "Full Name"
                     
                     
-                    let DateFormatter = NSDateFormatter()
+                    let DateFormatter = Foundation.DateFormatter()
                     DateFormatter.dateFormat = "dd/MM/yyyy";
                     
                     self.dataSource["DateOfBirth"].editorClass = TKDataFormDatePickerEditor.self
@@ -86,11 +86,11 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                     self.dataForm1.delegate = self
                     self.dataForm1.dataSource = self.dataSource
                     
-                    self.dataForm1.backgroundColor = UIColor.whiteColor()
-                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                    self.dataForm1.backgroundColor = UIColor.white
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                     
-                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                    self.dataForm1.validationMode = TKDataFormValidationMode.Manual
+                    self.dataForm1.commitMode = TKDataFormCommitMode.manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.manual
                     
                     self.subView.addSubview(self.dataForm1)
 
@@ -131,13 +131,13 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
         // Dispose of any resources that can be recreated.
     }
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
         
         if (propery.name == "FullName") {
             
-            let value = propery.valueCandidate.description
-            if (value.length <= 0)
+            let value = (propery.valueCandidate as AnyObject).description
+            if ((value?.length)! <= 0)
             {
                 dataSource["FullName"].errorMessage = "Please enter your full name"
                 self.validate1 = false
@@ -149,12 +149,12 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
             else
                 if (propery.name == "PostCode") {
                     
-                    let value = propery.valueCandidate.description
+                    let value = (propery.valueCandidate as AnyObject).description
                     
                     
                     if(self.selectedDebtor.PostCode.length == 0){
                         
-                        if (value.length <= 0)
+                        if ((value?.length)! <= 0)
                         {
                             dataSource["PostCode"].errorMessage = "Please enter postcode"
 
@@ -171,7 +171,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                 else
                     if (propery.name == "DateOfBirth") {
                         
-                        let value = propery.valueCandidate.description
+                        let value = (propery.valueCandidate as AnyObject).description
                         
                         self.validate3 = true
                     }
@@ -179,7 +179,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
         return true
     }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         self.dataForm1.commit()
         
@@ -191,19 +191,19 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
         }
         
         
-        let fullName = dataSource["FullName"].valueCandidate.description
-        let dateOfBirth = dataSource["DateOfBirth"].valueCandidate  as! NSDate
-        let postCode = dataSource["PostCode"].valueCandidate.description
+        let fullName = (dataSource["FullName"].valueCandidate as AnyObject).description
+        let dateOfBirth = dataSource["DateOfBirth"].valueCandidate  as! Date
+        let postCode = (dataSource["PostCode"].valueCandidate as AnyObject).description
         
-        if(fullName.lowercaseString.trim() == self.selectedDebtor.FullName.lowercaseString.trim())
+        if(fullName?.lowercased().trim() == self.selectedDebtor.FullName.lowercased().trim())
         {
-            let order = NSCalendar.currentCalendar().compareDate(dateOfBirth, toDate: self.selectedDebtor.DateOfBirth,
-                toUnitGranularity: .Day)
+            let order = (Calendar.current as NSCalendar).compare(dateOfBirth, to: self.selectedDebtor.DateOfBirth as Date,
+                toUnitGranularity: .day)
             
-            if(order == NSComparisonResult.OrderedSame){
+            if(order == ComparisonResult.orderedSame){
                 
                 
-                if( postCode.trim() ==  self.selectedDebtor.PostCode.trim())
+                if( postCode?.trim() ==  self.selectedDebtor.PostCode.trim())
                 {
                     
                     
@@ -226,7 +226,7 @@ class VerifyDetailCoDebtorViewController: UIViewController , TKDataFormDelegate 
                     WebApiService.sendActivityTracking("Verify Detail")
 
                     
-                    self.performSegueWithIdentifier("GoToSetupPin", sender: nil)
+                    self.performSegue(withIdentifier: "GoToSetupPin", sender: nil)
 
                 }
                 else

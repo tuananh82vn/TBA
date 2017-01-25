@@ -23,15 +23,15 @@ extension UITextField {
         }
         set {
             maxLengthDictionary[self] = newValue
-            addTarget(self, action: "checkMaxLength:", forControlEvents: UIControlEvents.EditingChanged)
+            addTarget(self, action: #selector(UITextField.checkMaxLength(_:)), for: UIControlEvents.editingChanged)
         }
     }
     
-    func checkMaxLength(sender: UITextField) {
+    func checkMaxLength(_ sender: UITextField) {
         let newText = sender.text
-        if newText?.length > maxLength {
+        if (newText?.length)! > maxLength {
             let cursorPosition = selectedTextRange
-            text = (newText! as NSString).substringWithRange(NSRange(location: 0, length: maxLength))
+            text = (newText! as NSString).substring(with: NSRange(location: 0, length: maxLength))
             selectedTextRange = cursorPosition
         }
     }

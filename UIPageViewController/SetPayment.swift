@@ -10,7 +10,7 @@ import UIKit
 
 struct SetPayment {
 
-    static func SetPayment(paymentType: Int) {
+    static func SetPayment(_ paymentType: Int) {
         
         
         //        1: Pay In Full

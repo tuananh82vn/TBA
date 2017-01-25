@@ -12,7 +12,7 @@ import Foundation
 class DebtorDetail: NSObject {
     
     var FullName = ""
-    var DateOfBirth = NSDate()
+    var DateOfBirth = Date()
     var PostCode = ""
     
 }

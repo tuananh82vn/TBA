@@ -11,10 +11,10 @@ import Foundation
 class ThreePartPayment: NSObject {
     
     var FirstAmount = ""
-    var FirstDate = NSDate()
+    var FirstDate = Date()
     var SecondAmount = ""
-    var SecondDate = NSDate()
+    var SecondDate = Date()
     var ThirdAmount = ""
-    var ThirdDate = NSDate()
+    var ThirdDate = Date()
     
 }

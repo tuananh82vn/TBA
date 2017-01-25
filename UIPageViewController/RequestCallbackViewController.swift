@@ -43,9 +43,9 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(RequestCallbackViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         self.getCallbackSlot("",time: "", isInit: true);
@@ -54,7 +54,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
 
     }
     
-    func getCallbackSlot(date : String, time : String, isInit : Bool){
+    func getCallbackSlot(_ date : String, time : String, isInit : Bool){
         
         self.view.showLoading()
         var dateTmp = "";
@@ -62,14 +62,14 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         
         if(date.isEmpty)
         {
-            dateTmp  = NSDate().formattedWith("yyyy/MM/dd")
+            dateTmp  = Date().formattedWith("yyyy/MM/dd")
         }
         else{
             dateTmp = date
         }
         
         if(time.isEmpty){
-            timeTmp = NSDate().formattedWith("HH:mm:ss")
+            timeTmp = Date().formattedWith("HH:mm:ss")
         }
         else
         {
@@ -122,13 +122,13 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                     self.dataForm1.dataSource = self.dataSource
                     self.dataForm1.delegate = self
                     
-                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                    self.dataForm1.validationMode = TKDataFormValidationMode.Immediate
+                    self.dataForm1.commitMode = TKDataFormCommitMode.manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.immediate
                     
                     
                     self.dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
                     
-                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                     
                     self.subView.addSubview(self.dataForm1)
                         
@@ -164,7 +164,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         view.endEditing(true)
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
     }
@@ -178,12 +178,12 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         super.viewWillLayoutSubviews()
     }
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         if propery.name == "Name" {
             
-            let value = propery.valueCandidate.description
+            let value = (propery.valueCandidate as AnyObject).description
 
-            if(value.length <= 0)
+            if((value?.length)! <= 0)
             {
                 self.validate1 = false
                 return self.validate1
@@ -194,15 +194,15 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         
         if propery.name == "Phone"
         {
-            let value = propery.valueCandidate.description
+            let value = (propery.valueCandidate as AnyObject).description
 
-            if(value.length <= 0)
+            if((value?.length)! <= 0)
             {
                 self.validate2 = false
                 return self.validate2
             }
             
-            if(!value.isPhoneNumber()){
+            if(!(value?.isPhoneNumber())!){
                 
                 dataSource["Phone"].errorMessage = "Phone Number is not valid"
 
@@ -215,10 +215,10 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         
         if propery.name == "Date"
         {
-            let value = propery.valueCandidate as! NSDate
+            let value = propery.valueCandidate as! Date
             
 
-            let firstDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+            let firstDate = Calendar.current.startOfDay(for: Date())
             
             if(value.isLessThanDate(firstDate)){
                 dataSource["Date"].errorMessage = "Date must not be earlier than today"
@@ -237,10 +237,10 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
         
     }
     
-    func dataForm(dataForm: TKDataForm, updateEditor editor: TKDataFormEditor, forProperty property: TKEntityProperty) {
+    func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         if (property.name == "Notes") {
             let textEditor = editor as! TKDataFormMultilineTextEditor
-            textEditor.textView.font = UIFont.systemFontOfSize(20)
+            textEditor.textView.font = UIFont.systemFont(ofSize: 20)
         }
 //        else
 //            if (property.name == "Date") {
@@ -250,11 +250,11 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
 //        }
     }
     
-    func dataForm(dataForm: TKDataForm, updateGroupView groupView: TKEntityPropertyGroupView, forGroupAtIndex groupIndex: UInt) {
+    func dataForm(_ dataForm: TKDataForm, update groupView: TKEntityPropertyGroupView, forGroupAt groupIndex: UInt) {
 
     }
     
-    func dataForm(dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, atIndex editorIndex: UInt) -> CGFloat {
+    func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
         if gorupIndex == 0 && editorIndex == 5 {
             return 100
         }
@@ -263,7 +263,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     }
 
 
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         self.dataForm1.commit()
         
@@ -277,7 +277,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
             requestObject.Notes         = self.dataSource["Notes"].valueCandidate as! String
             requestObject.Phone         = self.dataSource["Phone"].valueCandidate as! String
             requestObject.Name          = self.dataSource["Name"].valueCandidate as! String
-            requestObject.Date          = self.dataSource["Date"].valueCandidate as! NSDate
+            requestObject.Date          = self.dataSource["Date"].valueCandidate as! Date
             requestObject.CallBackTimeSlot      = self.dataSource["CallBackTimeSlot"].valueCandidate as! Int
             requestObject.CallBackTimeSlotValue  = self.CallbackSlot[requestObject.CallBackTimeSlot]
             
@@ -291,7 +291,7 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                     
                     if(temp1.IsSuccess)
                     {
-                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                        self.performSegue(withIdentifier: "GoToNotice", sender: nil)
                     }
                     else
                     {
@@ -317,10 +317,10 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
 
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
             
-            let controller = segue.destinationViewController as! FinishViewController
+            let controller = segue.destination as! FinishViewController
             controller.message = "Callback request successfully submitted. One of our friendly operators will call you on the day and time you have requested"
         
         }

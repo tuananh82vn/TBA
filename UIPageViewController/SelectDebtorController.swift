@@ -26,7 +26,7 @@ class SelectDebtorController: UIViewController {
         
         super.viewDidLoad()
         
-        for var index = 0; index < debtorList.count; ++index {
+        for index in 0 ..< debtorList.count {
             debtorNameList.append(debtorList[index].FullName + " - " + debtorList[index].MarkMobile)
         }
         
@@ -38,44 +38,44 @@ class SelectDebtorController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func bt_DebtorSelected(sender: AnyObject) {
+    @IBAction func bt_DebtorSelected(_ sender: AnyObject) {
         
-        ActionSheetStringPicker.showPickerWithTitle("Select", rows: debtorNameList as [AnyObject] , initialSelection: self.selectDebtor, doneBlock: {
+        ActionSheetStringPicker.show(withTitle: "Select", rows: debtorNameList as [AnyObject] , initialSelection: self.selectDebtor, doneBlock: {
             picker, value, index in
             
             self.selectDebtor = value
             
-            self.bt_Debtor.setTitle((index as! String), forState: .Normal)
+            self.bt_Debtor.setTitle((index as! String), for: .normal)
             
             return
             
-            }, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
+        }, cancel: { ActionStringCancelBlock in return }, origin: sender)
         
     }
 
-    @IBAction func bt_ContinueClicked(sender: AnyObject) {
+    @IBAction func bt_ContinueClicked(_ sender: AnyObject) {
         
         if(self.debtorList[self.selectDebtor].Mobile == "No Number")
         {
-            self.performSegueWithIdentifier("GoToVerifyDetail", sender: nil)
+            self.performSegue(withIdentifier: "GoToVerifyDetail", sender: nil)
 
         }
         else
         {
-            self.performSegueWithIdentifier("GoToVerify", sender: nil)
+            self.performSegue(withIdentifier: "GoToVerify", sender: nil)
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToVerify" {
             
-            let controller = segue.destinationViewController as! VerifyCoDebtorViewController
+            let controller = segue.destination as! VerifyCoDebtorViewController
             controller.selectedDebtor = self.debtorList[self.selectDebtor]
         }
         else
             if segue.identifier == "GoToVerifyDetail" {
                 
-                let controller = segue.destinationViewController as! VerifyDetailCoDebtorViewController
+                let controller = segue.destination as! VerifyDetailCoDebtorViewController
                 controller.selectedDebtor = self.debtorList[self.selectDebtor]
         }
     }

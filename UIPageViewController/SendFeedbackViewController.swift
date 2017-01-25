@@ -21,7 +21,7 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         tf_Subject.delegate = self //set delegate to textfile
         tf_Content.delegate = self //set delegate to textfile
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SendFeedbackViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
         
@@ -51,9 +51,9 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
         view.endEditing(true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         
-        if (textField.returnKeyType == UIReturnKeyType.Next)
+        if (textField.returnKeyType == UIReturnKeyType.next)
         {
             tf_Content.becomeFirstResponder()
         }
@@ -105,7 +105,7 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
                     {
                         WebApiService.sendActivityTracking("Send Feedback")
 
-                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                        self.performSegue(withIdentifier: "GoToNotice", sender: nil)
                     }
                     else
                     {
@@ -130,7 +130,7 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
 
     }
 
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         self.DoSend()
         
@@ -141,25 +141,25 @@ class SendFeedbackViewController: UIViewController , UITextFieldDelegate, UIText
     }
     
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
             
-            let controller = segue.destinationViewController as! FinishViewController
+            let controller = segue.destination as! FinishViewController
             controller.message = "Your feedback has been sent successfully"
             
         }
     }
     
-    func addDoneButtonOnKeyboard(view: UIView?)
+    func addDoneButtonOnKeyboard(_ view: UIView?)
     {
         
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
-        doneToolbar.barStyle = UIBarStyle.Default
-        doneToolbar.translucent = false
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        doneToolbar.isTranslucent = false
         doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: view, action: #selector(UIResponder.resignFirstResponder))
         
         var items = [AnyObject]()
         items.append(flexSpace)

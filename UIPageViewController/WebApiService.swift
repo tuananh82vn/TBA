@@ -1,86 +1,84 @@
 
-import Alamofire
 import SystemConfiguration
+import Alamofire
+import SwiftyJSON
 
 struct WebApiService {
 
     
-    private enum ResourcePath: CustomStringConvertible {
-        case Verify
-        case GetNetCode
-        case GetNetCodeVerify
-        case VerifyNetCode
-        case GetDebtorInfo
-        case ValidateCreditCard
-        case MakeCreditCardPayment
-        case MakeDebitPayment
-        case EmailReceipt
-        case RequestCallback
-        case GetPaymentDetail
-        case GetPersonalInformationDetail
-        case SendFeedback
-        case ArrangeDetail
-        case DeferPayment
-        case GetDebtorAdditionalInfor
-        case GetDebtorPaymentHistory
-        case GetWelcomeMessage
-        case SendAppDetails
-        case GetInboxItems
-        case GetInboxItemMessage
-        case GetInboxItemDocument
-        case UpdateInboxItemMessage
-        case SaveInbox
-        case SendActivityTracking
-        case GetCallBackTime
+    fileprivate enum ResourcePath: CustomStringConvertible {
+        case verify
+        case getNetCode
+        case getNetCodeVerify
+        case verifyNetCode
+        case getDebtorInfo
+        case validateCreditCard
+        case makeCreditCardPayment
+        case makeDebitPayment
+        case emailReceipt
+        case requestCallback
+        case getPaymentDetail
+        case getPersonalInformationDetail
+        case sendFeedback
+        case arrangeDetail
+        case deferPayment
+        case getDebtorAdditionalInfor
+        case getDebtorPaymentHistory
+        case getWelcomeMessage
+        case sendAppDetails
+        case getInboxItems
+        case getInboxItemMessage
+        case getInboxItemDocument
+        case updateInboxItemMessage
+        case saveInbox
+        case sendActivityTracking
+        case getCallBackTime
         
         var description: String {
             switch self {
-                case .Verify: return "/Api/Verify"
-                case .GetNetCode: return "/Api/GetNetCode"
-                case .GetNetCodeVerify: return "/Api/GetNetCodeVerify"
-                case .VerifyNetCode: return "/Api/VerifyNetCode"
-                case .GetDebtorInfo: return "/Api/GetDebtorInfo"
-                case .GetDebtorAdditionalInfor: return "/Api/GetDebtorAdditionalInfor"
+                case .verify: return "/Api/Verify"
+                case .getNetCode: return "/Api/GetNetCode"
+                case .getNetCodeVerify: return "/Api/GetNetCodeVerify"
+                case .verifyNetCode: return "/Api/VerifyNetCode"
+                case .getDebtorInfo: return "/Api/GetDebtorInfo"
+                case .getDebtorAdditionalInfor: return "/Api/GetDebtorAdditionalInfor"
 
-                case .ValidateCreditCard: return "/Api/ValidateCreditCard"
-                case .MakeCreditCardPayment: return "/Api/MakeCreditCardPayment"
-                case .MakeDebitPayment: return "/Api/MakeDebitPayment"
-                case .EmailReceipt: return "/Api/EmailReceipt"
-                case .RequestCallback: return "/Api/RequestCallback"
-                case .GetPaymentDetail: return "/Api/GetPaymentDetail"
-                case .GetPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
-                case .SendFeedback: return "/Api/SendFeedback"
-                case .ArrangeDetail: return "/Api/GetArrangeDetails"
-                case .DeferPayment : return "/Api/DeferPayment"
-                case .GetDebtorPaymentHistory : return "/Api/GetDebtorPaymentHistory"
-                case .GetWelcomeMessage: return "/Api/GetWelcomeMessage"
-                case .SendAppDetails: return "/Api/SendAppDetails"
-                case .GetInboxItems: return "/Api/GetInboxItems"
-                case .GetInboxItemMessage: return "/Api/GetInboxItemMessage"
-                case .GetInboxItemDocument: return "/Api/GetInboxItemDocument"
-                case .UpdateInboxItemMessage: return "/Api/UpdateInboxItemMessage"
-                case .SaveInbox: return "/Api/SaveInbox"
-                case .SendActivityTracking: return "/Api/SendActivityTracking"
-                case .GetCallBackTime: return "/Api/GetCallBackTime"
+                case .validateCreditCard: return "/Api/ValidateCreditCard"
+                case .makeCreditCardPayment: return "/Api/MakeCreditCardPayment"
+                case .makeDebitPayment: return "/Api/MakeDebitPayment"
+                case .emailReceipt: return "/Api/EmailReceipt"
+                case .requestCallback: return "/Api/RequestCallback"
+                case .getPaymentDetail: return "/Api/GetPaymentDetail"
+                case .getPersonalInformationDetail: return "/Api/GetPersonalInformationDetail"
+                case .sendFeedback: return "/Api/SendFeedback"
+                case .arrangeDetail: return "/Api/GetArrangeDetails"
+                case .deferPayment : return "/Api/DeferPayment"
+                case .getDebtorPaymentHistory : return "/Api/GetDebtorPaymentHistory"
+                case .getWelcomeMessage: return "/Api/GetWelcomeMessage"
+                case .sendAppDetails: return "/Api/SendAppDetails"
+                case .getInboxItems: return "/Api/GetInboxItems"
+                case .getInboxItemMessage: return "/Api/GetInboxItemMessage"
+                case .getInboxItemDocument: return "/Api/GetInboxItemDocument"
+                case .updateInboxItemMessage: return "/Api/UpdateInboxItemMessage"
+                case .saveInbox: return "/Api/SaveInbox"
+                case .sendActivityTracking: return "/Api/SendActivityTracking"
+                case .getCallBackTime: return "/Api/GetCallBackTime"
 
             }
         }
     }
     
-    static func postVerify(domain: String,  response : (objectReturn : JsonReturnModel?) -> ()) {
-        
-        let urlString = domain + ResourcePath.Verify.description
-        
+      static func postVerify(domain: String, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
+        let urlString = domain + ResourcePath.verify.description
         
         let JsonReturn = JsonReturnModel()
         
-        Alamofire.request(.POST, urlString, parameters: nil, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
                 
                 let jsonObject = JSON(jsonReturn1)
-                
                 
                 if let IsSuccess = jsonObject["IsSuccess"].bool {
                     
@@ -90,52 +88,52 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
+                
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
 
-        
     }
 
 
-    static func checkInternet(completionHandler:(internet:Bool) -> Void){
-        
-        var internet = false
-        
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
-        }
-        var flags = SCNetworkReachabilityFlags()
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-            completionHandler(internet: internet)
-        }
-        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
-        
-        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+//    static func checkInternet(_ completionHandler:(_ internet:Bool) -> Void){
+//        
+//        var internet = false
+//        
+//        var zeroAddress = sockaddr_in()
+//        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+//        zeroAddress.sin_family = sa_family_t(AF_INET)
+//        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+//            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+//        }
+//        var flags = SCNetworkReachabilityFlags()
+//        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+//            completionHandler(internet)
+//        }
+//        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+//        
+//        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+//    
+//        internet =  (isReachable && !needsConnection)
+//
+//        completionHandler(internet)
+//    
+//    }
     
-        internet =  (isReachable && !needsConnection)
-
-        completionHandler(internet: internet)
-    
-    }
-    
-    static func getNetCode(ReferenceNumber: String,  response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func getNetCode(ReferenceNumber: String,  response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetNetCode.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getNetCode.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -146,7 +144,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -163,26 +161,26 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
 
     }
     
-    static func getNetCodeVerify(ReferenceNumber: String, MobileNumber: String,  response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func getNetCodeVerify(_ ReferenceNumber: String, MobileNumber: String,  response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetNetCodeVerify.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getNetCodeVerify.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -194,7 +192,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -210,61 +208,61 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
         
     }
     
-    static func getWelcomeMessage(response : (objectReturn : JsonReturnModel?) -> ()) {
-        
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetWelcomeMessage.description
-        
-        let JsonReturn = JsonReturnModel()
-        
+//    static func getWelcomeMessage(_ response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
+//        
+//        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getWelcomeMessage.description
+//        
+//        let JsonReturn = JsonReturnModel()
+//        
+//
+//        
+//        
+//        Alamofire.request(urlString, method: .post ,encoding: JSONEncoding.default).responseJSON {
+//            json in
+//            
+//            if let jsonReturn1 = json.result.value {
+//                
+//                let jsonObject = JSON(jsonReturn1)
+//                
+//
+//                if let Errors = jsonObject["Errors"].arrayObject {
+//                    
+//                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
+//                    
+//                    JsonReturn.Errors = ErrorsReturn
+//                    
+//                }
+//                
+//                response (JsonReturn)
+//            }
+//            else
+//            {
+//                response (nil)
+//            }
+//            
+//        }
+//    }
 
+    static func verifyNetCode(_ ReferenceNumber: String, Netcode: String, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        
-        Alamofire.request(.POST, urlString, parameters: nil, encoding: .JSON).responseJSON {
-            json in
-            
-            if let jsonReturn1 = json.result.value {
-                
-                let jsonObject = JSON(jsonReturn1)
-                
-
-                if let Errors = jsonObject["Errors"].arrayObject {
-                    
-                    let ErrorsReturn = JSONParser.parseError(Errors)
-                    
-                    JsonReturn.Errors = ErrorsReturn
-                    
-                }
-                
-                response (objectReturn : JsonReturn)
-            }
-            else
-            {
-                response (objectReturn : nil)
-            }
-            
-        }
-    }
-
-    static func verifyNetCode(ReferenceNumber: String, Netcode: String, response : (objectReturn : JsonReturnModel?) -> ()) {
-        
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.VerifyNetCode.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.verifyNetCode.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -276,7 +274,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -292,25 +290,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func validateCreditCard(CardNumber: String, CardType: Int, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func validateCreditCard(_ CardNumber: String, CardType: Int, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.ValidateCreditCard.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.validateCreditCard.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -322,7 +320,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -338,25 +336,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
 
-    static func emailReceipt(debtorInfo:  DebtorInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func emailReceipt(_ debtorInfo:  DebtorInfo, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.EmailReceipt.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.emailReceipt.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -372,7 +370,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -388,25 +386,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
 
-    static func saveInbox(debtorInfo:  DebtorInfo, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func saveInbox(_ debtorInfo:  DebtorInfo, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SaveInbox.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.saveInbox.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -422,7 +420,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -438,25 +436,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
 
-    static func updateInboxItemMessage(ReferenceNumber:  String, MessageNo : String , Action : String, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func updateInboxItemMessage(_ ReferenceNumber:  String, MessageNo : String , Action : String, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.UpdateInboxItemMessage.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.updateInboxItemMessage.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -467,7 +465,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -483,25 +481,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func getInboxItemDocument(ReferenceNumber:  String, DocumentPath : String, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func getInboxItemDocument(_ ReferenceNumber:  String, DocumentPath : String, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetInboxItemDocument.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getInboxItemDocument.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -511,7 +509,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -527,25 +525,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func GetDebtorInfo(ReferenceNumber: String, response : (objectReturn : DebtorInfo?) -> ()) {
+    static func GetDebtorInfo(_ ReferenceNumber: String, response : @escaping (_ objectReturn : DebtorInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorInfo.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getDebtorInfo.description
         
         let JsonReturn = DebtorInfo()
         
@@ -556,7 +554,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -581,7 +579,7 @@ struct WebApiService {
                 }
 
                 if let TotalOutstanding = jsonObject["TotalOutstanding"].double {
-                    JsonReturn.TotalOutstanding = TotalOutstanding.roundWith2Decimal()
+                    JsonReturn.TotalOutstanding = TotalOutstanding.roundTo(places: 2)
                 }
                 
                 if let MaxNoPay = jsonObject["MaxNoPay"].int {
@@ -601,19 +599,19 @@ struct WebApiService {
                 }
                 
                 if let NextPaymentInstallment = jsonObject["NextPaymentInstallment"].double {
-                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment.roundWith2Decimal()
+                    JsonReturn.NextPaymentInstallment = NextPaymentInstallment.roundTo(places: 2)
                 }
                 
                 if let MinimumMonthlyOustanding = jsonObject["MinimumMonthlyOustanding"].double {
-                    JsonReturn.MinimumMonthlyOustanding = MinimumMonthlyOustanding.roundWith2Decimal()
+                    JsonReturn.MinimumMonthlyOustanding = MinimumMonthlyOustanding.roundTo(places: 2)
                 }
                 
                 if let MinimumFortnightlyOutstanding = jsonObject["MinimumFortnightlyOutstanding"].double {
-                    JsonReturn.MinimumFortnightlyOutstanding = MinimumFortnightlyOutstanding.roundWith2Decimal()
+                    JsonReturn.MinimumFortnightlyOutstanding = MinimumFortnightlyOutstanding.roundTo(places: 2)
                 }
                 
                 if let MinimumWeeklyOutstanding = jsonObject["MinimumWeeklyOutstanding"].double {
-                    JsonReturn.MinimumWeeklyOutstanding = MinimumWeeklyOutstanding.roundWith2Decimal()
+                    JsonReturn.MinimumWeeklyOutstanding = MinimumWeeklyOutstanding.roundTo(places: 2)
                 }
                 
                 if let MerchantId = jsonObject["NTID"].string {
@@ -646,7 +644,7 @@ struct WebApiService {
                 
                 if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
                     
-                    let HistoryInstalmentScheduleList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                    let HistoryInstalmentScheduleList = JSONParser.parseHistoryPaymentTracker(tempHistoryList as NSArray)
                     
                     JsonReturn.HistoryInstalmentScheduleList = HistoryInstalmentScheduleList
                     
@@ -654,7 +652,7 @@ struct WebApiService {
 
                 if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
                     
-                    let InstalmentScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                    let InstalmentScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList as NSArray)
                     
                     JsonReturn.InstalmentScheduleList = InstalmentScheduleList
                     
@@ -662,7 +660,7 @@ struct WebApiService {
                 
                 if let coDebtorCode = jsonObject["CoDebtorCode"].arrayObject {
                     
-                    let coDebtorCodeList = JSONParser.parseCoDebtorCode(coDebtorCode)
+                    let coDebtorCodeList = JSONParser.parseCoDebtorCode(coDebtorCode as NSArray)
                     
                     JsonReturn.coDebtorCode = coDebtorCodeList
                     
@@ -670,7 +668,7 @@ struct WebApiService {
                 
                 if let coFirstName = jsonObject["CoFirstName"].arrayObject {
                     
-                    let coFirstNameList = JSONParser.parseCoDebtorCode(coFirstName)
+                    let coFirstNameList = JSONParser.parseCoDebtorCode(coFirstName as NSArray)
                     
                     JsonReturn.coFirstName = coFirstNameList
                     
@@ -678,7 +676,7 @@ struct WebApiService {
                 
                 if let coLastName = jsonObject["CoLastName"].arrayObject {
                     
-                    let coLastNameList = JSONParser.parseCoDebtorCode(coLastName)
+                    let coLastNameList = JSONParser.parseCoDebtorCode(coLastName as NSArray)
                     
                     JsonReturn.coLastName = coLastNameList
                     
@@ -686,7 +684,7 @@ struct WebApiService {
                 
                 if let coMobileNumbers = jsonObject["CoMobileNumbers"].arrayObject {
                     
-                    let coMobileNumbersList = JSONParser.parseCoDebtorCode(coMobileNumbers)
+                    let coMobileNumbersList = JSONParser.parseCoDebtorCode(coMobileNumbers as NSArray)
                     
                     JsonReturn.coMobileNumbers = coMobileNumbersList
                     
@@ -694,7 +692,7 @@ struct WebApiService {
                 
                 if let coDriverLicenseNumber = jsonObject["CoDriverLicenseNumber"].arrayObject {
                     
-                    let coDriverLicenseNumberList = JSONParser.parseCoDebtorCode(coDriverLicenseNumber)
+                    let coDriverLicenseNumberList = JSONParser.parseCoDebtorCode(coDriverLicenseNumber as NSArray)
                     
                     JsonReturn.coDriverLicenses = coDriverLicenseNumberList
                 }
@@ -702,7 +700,8 @@ struct WebApiService {
                 
                 if(JsonReturn.IsCoBorrowers){
                     
-                    for var index = 0; index < JsonReturn.coDebtorCode.count; ++index {
+                    for index in 0 ..< JsonReturn.coDebtorCode.count
+                    {
                         
                         let coDebtor = CoDebtor()
                         
@@ -717,11 +716,13 @@ struct WebApiService {
                         }
                         else{
                             
-                            let index2: String.Index = coDebtor.Mobile.startIndex.advancedBy(2)
-                            
-                            let index6: String.Index = coDebtor.Mobile.startIndex.advancedBy(6)
+//                            let index2: String.Index = coDebtor.Mobile.startIndex.advancedBy(2)
+//                            
+//                            let index6: String.Index = coDebtor.Mobile.startIndex.advancedBy(6)
     
-                            coDebtor.MarkMobile = coDebtor.Mobile.substringToIndex(index2) + "XXXXX" + coDebtor.Mobile.substringFromIndex(index6)
+//                            coDebtor.MarkMobile = coDebtor.Mobile.substring(to: 2) + "XXXXX" + coDebtor.Mobile.substring(from: 6)
+                            
+                              coDebtor.MarkMobile = coDebtor.Mobile
                         }
                         
                         JsonReturn.coDebtor.append(coDebtor)
@@ -742,25 +743,25 @@ struct WebApiService {
                 
                 if let Client = jsonObject["Client"].dictionaryObject {
                     
-                    let ClientReturn = JSONParser.parseClient(Client)
+                    let ClientReturn = JSONParser.parseClient(Client as NSDictionary)
                     
                     JsonReturn.client = ClientReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func GetInboxItems(ReferenceNumber: String, response : (objectReturn : InboxItemList?) -> ()) {
+    static func GetInboxItems(_ ReferenceNumber: String, response : @escaping (_ objectReturn : InboxItemList?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetInboxItems.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getInboxItems.description
         
         let JsonReturn = InboxItemList()
         
@@ -771,7 +772,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -785,7 +786,7 @@ struct WebApiService {
                 
                 if let tempHistoryList = jsonObject["InboxList"].arrayObject {
                     
-                    let HistoryList = JSONParser.parseInboxList(tempHistoryList)
+                    let HistoryList = JSONParser.parseInboxList(tempHistoryList as NSArray)
                     
                     JsonReturn.InboxList = HistoryList
                     
@@ -801,18 +802,18 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
-    static func GetDebtorPaymentHistory(ReferenceNumber: String, response : (objectReturn : DebtorInfo?) -> ()) {
+    static func GetDebtorPaymentHistory(_ ReferenceNumber: String, response : @escaping (_ objectReturn : DebtorInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorPaymentHistory.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getDebtorPaymentHistory.description
         
         let JsonReturn = DebtorInfo()
         
@@ -823,7 +824,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -837,7 +838,7 @@ struct WebApiService {
                 
                  if let tempHistoryList = jsonObject["HistoryInstalmentScheduleList"].arrayObject {
                 
-                       let HistoryInstalmentScheduleList = JSONParser.parseHistoryPaymentTracker(tempHistoryList)
+                       let HistoryInstalmentScheduleList = JSONParser.parseHistoryPaymentTracker(tempHistoryList as NSArray)
                 
                         JsonReturn.HistoryInstalmentScheduleList = HistoryInstalmentScheduleList
                 
@@ -845,7 +846,7 @@ struct WebApiService {
                 
                  if let tempScheduleList = jsonObject["InstalmentScheduleList"].arrayObject {
                 
-                       let InstalmentScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList)
+                       let InstalmentScheduleList = JSONParser.parseSchedulePaymentTracker(tempScheduleList as NSArray)
                 
                        JsonReturn.InstalmentScheduleList = InstalmentScheduleList
                 
@@ -861,20 +862,20 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
     
-    static func GetDebtorAdditonalInfo(ReferenceNumber: String, DebtorCode : String, response : (objectReturn : DebtorInfo?) -> ()) {
+    static func GetDebtorAdditonalInfo(_ ReferenceNumber: String, DebtorCode : String, response : @escaping (_ objectReturn : DebtorInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetDebtorAdditionalInfor.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getDebtorAdditionalInfor.description
         
         let JsonReturn = DebtorInfo()
         
@@ -886,7 +887,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -911,27 +912,27 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
 
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
 
     
-    static func GetArrangmentDetail(ReferenceNumber: String, response : (objectReturn : ArrangeDetails?) -> ()) {
+    static func GetArrangmentDetail(_ ReferenceNumber: String, response : @escaping (_ objectReturn : ArrangeDetails?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.ArrangeDetail.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.arrangeDetail.description
         
         let JsonReturn = ArrangeDetails()
         
@@ -942,7 +943,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -990,20 +991,20 @@ struct WebApiService {
                     JsonReturn.Error = Error
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
     
-    static func MakeCreditCardPayment(cardObject : CardInfo, PaymentType : Int ,response : (objectReturn : PaymentReturnModel?) -> ()) {
+    static func MakeCreditCardPayment(_ cardObject : CardInfo, PaymentType : Int ,response : @escaping (_ objectReturn : PaymentReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.MakeCreditCardPayment.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.makeCreditCardPayment.description
         
         let JsonReturn = PaymentReturnModel()
         
@@ -1030,7 +1031,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1044,7 +1045,7 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                 }
@@ -1095,19 +1096,19 @@ struct WebApiService {
                     JsonReturn.IsFuturePayment = IsFuturePayment
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func MakeDebitPayment(cardObject : BankInfo, PaymentType : Int ,response : (objectReturn : PaymentReturnModel?) -> ()) {
+    static func MakeDebitPayment(_ cardObject : BankInfo, PaymentType : Int ,response : @escaping (_ objectReturn : PaymentReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.MakeDebitPayment.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.makeDebitPayment.description
         
         let JsonReturn = PaymentReturnModel()
         
@@ -1129,7 +1130,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1143,7 +1144,7 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                 }
@@ -1188,19 +1189,19 @@ struct WebApiService {
                     JsonReturn.IsFuturePayment = IsFuturePayment
                 }
 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func RequestCallback(request:  RequestCallBack, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func RequestCallback(_ request:  RequestCallBack, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.RequestCallback.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.requestCallback.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -1216,7 +1217,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1232,25 +1233,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func GetPaymentInfo(response : (objectReturn : PaymentInfo?) -> ()) {
+    static func GetPaymentInfo(_ response : @escaping (_ objectReturn : PaymentInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPaymentDetail.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getPaymentDetail.description
         
         let JsonReturn = PaymentInfo()
         
@@ -1262,7 +1263,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1285,8 +1286,8 @@ struct WebApiService {
                         
                         if let ExpireDate = jsonObject["ExpiryDate"].string {
 
-                                let yyear : Int? = Int((ExpireDate as NSString).substringFromIndex(2))
-                                let mmonth : Int? = Int((ExpireDate as NSString).substringToIndex(2))
+                                let yyear : Int? = Int((ExpireDate as NSString).substring(from: 2))
+                                let mmonth : Int? = Int((ExpireDate as NSString).substring(to: 2))
 
                                 JsonReturn.card.ExpiryYear  =  yyear!
                                 JsonReturn.card.ExpiryMonth  = mmonth!
@@ -1304,15 +1305,14 @@ struct WebApiService {
                             if(BSB.length > 0)
                             {
                                 
-                                let needle: Character = "-"
-                                if let idx = JsonReturn.bank.BSB.characters.indexOf(needle) {
-                                    let pos = JsonReturn.bank.BSB.startIndex.distanceTo(idx)
-                                    JsonReturn.bank.BSB1 = (BSB as NSString).substringToIndex(pos)
-                                    JsonReturn.bank.BSB2 = (BSB as NSString).substringFromIndex(pos+1)
+                                let char: Character = "-"
+                                if let idx = JsonReturn.bank.BSB.indexDistance(of: char) {
+                                    JsonReturn.bank.BSB1 = (BSB as NSString).substring(to: idx)
+                                    JsonReturn.bank.BSB2 = (BSB as NSString).substring(from: idx+1)
                                 }
                                 else {
-                                    JsonReturn.bank.BSB1 = (BSB as NSString).substringToIndex(3)
-                                    JsonReturn.bank.BSB2 = (BSB as NSString).substringFromIndex(3)
+                                    JsonReturn.bank.BSB1 = (BSB as NSString).substring(to: 3)
+                                    JsonReturn.bank.BSB2 = (BSB as NSString).substring(from: 3)
                                 }
                                 
                                 
@@ -1347,19 +1347,19 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
 
-    static func SetPaymentInfo(paymentInfo: PaymentInfo, response : (objectReturn : PaymentInfo?) -> ()) {
+    static func SetPaymentInfo(_ paymentInfo: PaymentInfo, response : @escaping (_ objectReturn : PaymentInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPaymentDetail.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getPaymentDetail.description
         
         let JsonReturn = PaymentInfo()
         
@@ -1391,7 +1391,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1411,19 +1411,19 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func GetPersonalInfo(response : (objectReturn : PaymentInfo?) -> ()) {
+    static func GetPersonalInfo(_ response : @escaping (_ objectReturn : PaymentInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPersonalInformationDetail.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getPersonalInformationDetail.description
         
         let JsonReturn = PaymentInfo()
         
@@ -1436,7 +1436,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1480,19 +1480,19 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func SetPersonalInfo(personalInfo: PersonalInfo, response : (objectReturn : PaymentInfo?) -> ()) {
+    static func SetPersonalInfo(_ personalInfo: PersonalInfo, response : @escaping (_ objectReturn : PaymentInfo?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetPersonalInformationDetail.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getPersonalInformationDetail.description
         
         let JsonReturn = PaymentInfo()
         
@@ -1510,7 +1510,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1530,19 +1530,19 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func SendFeedback(object: Feedback, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func SendFeedback(_ object: Feedback, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SendFeedback.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.sendFeedback.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -1555,7 +1555,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1571,25 +1571,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func SendDeferPayment(object: DeferPayment, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func SendDeferPayment(_ object: DeferPayment, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.DeferPayment.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.deferPayment.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -1602,7 +1602,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1618,25 +1618,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func sendAppDetail(ReferenceNumber: String, PinNumber: String, DeviceToken: String, response : (objectReturn : JsonReturnModel?) -> ()) {
+    static func sendAppDetail(_ ReferenceNumber: String, PinNumber: String, DeviceToken: String, response : @escaping (_ objectReturn : JsonReturnModel?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SendAppDetails.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.sendAppDetails.description
         
         let JsonReturn = JsonReturnModel()
         
@@ -1650,7 +1650,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1666,25 +1666,25 @@ struct WebApiService {
                 
                 if let Errors = jsonObject["Errors"].arrayObject {
                     
-                    let ErrorsReturn = JSONParser.parseError(Errors)
+                    let ErrorsReturn = JSONParser.parseError(Errors as NSArray)
                     
                     JsonReturn.Errors = ErrorsReturn
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func getInboxItemMessage(ReferenceNumber: String, MessageNo: String, response : (objectReturn : String?) -> ()) {
+    static func getInboxItemMessage(_ ReferenceNumber: String, MessageNo: String, response : @escaping (_ objectReturn : String?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetInboxItemMessage.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getInboxItemMessage.description
         
         let JsonReturn = ""
         
@@ -1696,7 +1696,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1704,19 +1704,19 @@ struct WebApiService {
                 let jsonObject = JSON(jsonReturn1)
                 
                 
-                response (objectReturn : jsonObject.description)
+                response (jsonObject.description)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }
     }
     
-    static func sendActivityTracking(Activity: String) {
+    static func sendActivityTracking(_ Activity: String) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.SendActivityTracking.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.sendActivityTracking.description
         
         let parameters = [
                 "ReferenceNumber": LocalStore.accessRefNumber()!,
@@ -1724,12 +1724,12 @@ struct WebApiService {
                 "Activity" : Activity
         ]
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON)
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default)
     }
     
-    static func GetCallBackTime(ReferenceNumber: String, CallbackDate : String, CallbackTimeSlot : String, response : (objectReturn : CallBackItem?) -> ()) {
+    static func GetCallBackTime(_ ReferenceNumber: String, CallbackDate : String, CallbackTimeSlot : String, response : @escaping (_ objectReturn : CallBackItem?) -> ()) {
         
-        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.GetCallBackTime.description
+        let urlString = LocalStore.accessWeb_URL_API()! + ResourcePath.getCallBackTime.description
         
         let JsonReturn = CallBackItem()
         
@@ -1742,7 +1742,7 @@ struct WebApiService {
         ]
         
         
-        Alamofire.request(.POST, urlString, parameters: parameters, encoding: .JSON).responseJSON {
+        Alamofire.request(urlString, method: .post, parameters : parameters  ,encoding: JSONEncoding.default).responseJSON {
             json in
             
             if let jsonReturn1 = json.result.value {
@@ -1756,7 +1756,7 @@ struct WebApiService {
                 
                 if let temp = jsonObject["CallbackSlot"].arrayObject {
                     
-                    let tempList = JSONParser.parseCallbackList(temp)
+                    let tempList = JSONParser.parseCallbackList(temp as NSArray)
                     
                     JsonReturn.CallbackSlot = tempList
                     
@@ -1772,11 +1772,11 @@ struct WebApiService {
                     
                 }
                 
-                response (objectReturn : JsonReturn)
+                response (JsonReturn)
             }
             else
             {
-                response (objectReturn : nil)
+                response (nil)
             }
             
         }

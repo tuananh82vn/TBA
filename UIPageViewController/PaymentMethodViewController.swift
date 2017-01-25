@@ -32,30 +32,30 @@ class PaymentMethodViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func bt_MethodSelected(sender: AnyObject) {
+    @IBAction func bt_MethodSelected(_ sender: AnyObject) {
         
-        ActionSheetStringPicker.showPickerWithTitle("Select", rows: paymentList as [AnyObject] , initialSelection: 0, doneBlock: {
+        ActionSheetStringPicker.show(withTitle: "Select", rows: paymentList as [AnyObject] , initialSelection: 0, doneBlock: {
             picker, value, index in
             
             self.selectMethod = value
-            self.bt_Method.setTitle((index as! String), forState: .Normal)
+            self.bt_Method.setTitle((index as! String), for: .normal)
             
             return
             
-            }, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
+        }, cancel: { ActionStringCancelBlock in return }, origin: sender)
         
     }
     
-    @IBAction func bt_ContinueClicked(sender: AnyObject) {
+    @IBAction func bt_ContinueClicked(_ sender: AnyObject) {
         
         if(self.selectMethod != -1)
         {
             if(self.selectMethod == 0){
-                self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+                self.performSegue(withIdentifier: "GoToMakeCreditPayment", sender: nil)
             }
             else
             {
-                self.performSegueWithIdentifier("GoToMakeDebitPayment", sender: nil)
+                self.performSegue(withIdentifier: "GoToMakeDebitPayment", sender: nil)
             }
         }
         else
@@ -71,17 +71,17 @@ class PaymentMethodViewController: UIViewController {
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToMakeCreditPayment" {
 
-            let makeCreditPaymentViewController = segue.destinationViewController as! MakeCreditPaymentViewController
+            let makeCreditPaymentViewController = segue.destination as! MakeCreditPaymentViewController
             
             makeCreditPaymentViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
             
         }
         else
             if segue.identifier == "GoToMakeDebitPayment" {
-                let makeCreditPaymentViewController = segue.destinationViewController as! MakeDebitPaymentViewController
+                let makeCreditPaymentViewController = segue.destination as! MakeDebitPaymentViewController
                 
                 makeCreditPaymentViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
         }

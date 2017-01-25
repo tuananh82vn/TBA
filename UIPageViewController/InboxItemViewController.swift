@@ -28,12 +28,12 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         
         self.lb_Date.text = self.inboxDetail.Date
         
-        self.progressVIew1.hidden = true
+        self.progressVIew1.isHidden = true
 
         
-        if(self.inboxDetail.Type == "T"){
+        if(self.inboxDetail.ItemType == "T"){
             
-            self.webView.hidden = true
+            self.webView.isHidden = true
             
             self.tv_Content.text = self.inboxDetail.Content
 
@@ -66,11 +66,11 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
 
         }
         else
-            if(self.inboxDetail.Type == "D" || self.inboxDetail.Type == "R" || self.inboxDetail.Type == "P"){
+            if(self.inboxDetail.ItemType == "D" || self.inboxDetail.ItemType == "R" || self.inboxDetail.ItemType == "P"){
                 
                 self.view.showLoading()
                 
-                self.tv_Content.hidden = true
+                self.tv_Content.isHidden = true
                 
                 if(inboxDetail.IsLocal)
                 {
@@ -78,11 +78,11 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                     
                     let rootPath = NSTemporaryDirectory()
                     
-                    let filePathReturn = (rootPath as NSString).stringByAppendingPathComponent(fileName)
+                    let filePathReturn = (rootPath as NSString).appendingPathComponent(fileName)
                     
-                    let url =  NSURL(fileURLWithPath: filePathReturn)
+                    let url =  URL(fileURLWithPath: filePathReturn)
                     
-                    let request = NSURLRequest(URL: url)
+                    let request = URLRequest(url: url)
                     
                     webView.loadRequest(request)
                     
@@ -93,7 +93,7 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                 else
                 {
                     
-                    self.progressVIew1.hidden = false
+                    self.progressVIew1.isHidden = false
                     
                     WebApiService.getInboxItemDocument(LocalStore.accessRefNumber()!, DocumentPath: self.inboxDetail.Content) { objectReturn2 in
                         if let temp2 = objectReturn2
@@ -106,11 +106,11 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                                 
                                 let rootPath = NSTemporaryDirectory()
                                 
-                                let currentTime = Int32(NSDate().timeIntervalSince1970)
+                                let currentTime = Int32(Date().timeIntervalSince1970)
                                 
                                 let filename = currentTime.description + ".pdf"
                                 
-                                let toFilePath = (rootPath as NSString).stringByAppendingPathComponent(filename)
+                                let toFilePath = (rootPath as NSString).appendingPathComponent(filename)
                                 
                                 
                                 //Download file into device with random name
@@ -159,7 +159,7 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    func getFile(filePath : String , filePathReturn : String, fileName : String){
+    func getFile(_ filePath : String , filePathReturn : String, fileName : String){
         
         //println(filePathReturn)
         
@@ -167,43 +167,55 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         let urlString = filePath
         
         
-        let urlStr : NSString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let urlStr : NSString = urlString.addingPercentEscapes(using: String.Encoding.utf8)! as NSString
         
-        //var remoteUrl : NSURL? = NSURL(string: urlStr as String)
+        var remoteUrl : NSURL? = NSURL(string: urlStr as String)
         
-        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
-            (temporaryURL, response) in
+        let FileName = String((remoteUrl?.lastPathComponent)!) as NSString
+        let pathExtension = FileName.pathExtension
+
+
+//        let destination: (URL, HTTPURLResponse) -> (URL) = {
+//            (temporaryURL, response) in
+//            
+//            
+//            if let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as? URL {
+//                
+//                let localImageURL = URL(fileURLWithPath: filePathReturn)
+//
+//                return localImageURL
+//            }
+//            
+//            return temporaryURL
+//        }
+        
+        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             
-            
-            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-                
-                let localImageURL = NSURL(fileURLWithPath: filePathReturn)
-                
-                return localImageURL
-            }
-            
-            return temporaryURL
+            documentsURL.appendPathComponent((FileName as String) + "." + pathExtension)
+
+            return (documentsURL, [.removePreviousFile])
         }
         
-        Alamofire.download(.GET, urlStr.description, destination: destination)
-            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+        Alamofire.download(urlString, to: destination)
+            .downloadProgress(queue: DispatchQueue.global(qos: .utility))
+            {
+                progress in
+                print("Progress: \(progress.fractionCompleted)")
                 
-                print("bytesRead : ", bytesRead)
-                print("totalBytesRead : ", totalBytesRead)
-                print("totalBytesExpectedToRead : ", totalBytesExpectedToRead)
+//                print("bytesRead : ", bytesRead)
+//                print("totalBytesRead : ", totalBytesRead)
+//                print("totalBytesExpectedToRead : ", totalBytesExpectedToRead)
 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async( execute: {
 
-                    
-                    let progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
-                    
-                    self.progressVIew1.progress = progress
-                    
-                    if totalBytesRead == totalBytesExpectedToRead {
+                        self.progressVIew1.progress = Float(progress.fractionCompleted)
                         
-                        self.progressVIew1.hidden = true
-                    }
-                }
+                        if progress.completedUnitCount == progress.totalUnitCount {
+                            
+                            self.progressVIew1.isHidden = true
+                        }
+                })
 
             }
             .response { response in
@@ -219,9 +231,9 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                     
                     let url =  NSURL(fileURLWithPath: filePathReturn)
                     
-                    let request = NSURLRequest(URL: url)
+                    let request = NSURLRequest(url: url as URL)
                     
-                    self.webView.loadRequest(request)
+                    self.webView.loadRequest(request as URLRequest)
                     
                     self.webView.delegate = self
                     
@@ -256,14 +268,14 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                 if(temp2.IsSuccess)
                 {
                     
-                    if(self.inboxDetail.Type == "D")
+                    if(self.inboxDetail.ItemType == "D")
                     {
                         FolderManager.DeleteFile(self.inboxDetail.Content)
                     }
                     
                     print("Delete message successful")
 
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 else
                 {
@@ -275,15 +287,15 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
 
     }
     
-    @IBAction func deleteButton_Clicked(sender: AnyObject) {
-        let optionMenu = UIAlertController(title: nil, message: "Are you sure to delete this message?", preferredStyle: .ActionSheet)
+    @IBAction func deleteButton_Clicked(_ sender: AnyObject) {
+        let optionMenu = UIAlertController(title: nil, message: "Are you sure to delete this message?", preferredStyle: .actionSheet)
         
-        let deleteAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {
+        let deleteAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: {
             (alert: UIAlertAction!) -> Void in
             self.deleteMessage()
         })
         
-        let cancelAction = UIAlertAction(title: "No", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
         })
         
@@ -291,7 +303,7 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
         optionMenu.addAction(deleteAction)
         optionMenu.addAction(cancelAction)
         
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
     }
 
     /*

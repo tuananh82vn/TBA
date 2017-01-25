@@ -38,8 +38,8 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
         super.viewDidLoad()
         
-        self.view_NoArrangement.hidden = true
-        self.view_NoArrangement.userInteractionEnabled = false
+        self.view_NoArrangement.isHidden = true
+        self.view_NoArrangement.isUserInteractionEnabled = false
         
         loadData()
         
@@ -48,10 +48,10 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
     }
     
-    @IBAction func makePayment_Clicked(sender: AnyObject) {
+    @IBAction func makePayment_Clicked(_ sender: AnyObject) {
         SetPayment.SetPayment(4)
         
-        self.performSegueWithIdentifier("GoToMakeCreditPayment", sender: nil)
+        self.performSegue(withIdentifier: "GoToMakeCreditPayment", sender: nil)
     }
     func loadData(){
         
@@ -62,21 +62,19 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 if(temp1.IsSuccess)
                 {
                     
-                    
-                    //Format number
-                    let formatter = NSNumberFormatter()
-                    formatter.numberStyle = .CurrencyStyle
-                    formatter.currencySymbol = "$"
+                
 
-                    self.view_NoArrangement.hidden = true
-                    self.view_NoArrangement.userInteractionEnabled = false
+                    self.view_NoArrangement.isHidden = true
+                    self.view_NoArrangement.isUserInteractionEnabled = false
                     
-                    self.lbl_ArrangeAmount.text =  formatter.stringFromNumber(temp1.ArrangeAmount)
+                    self.lbl_ArrangeAmount.text =  Double(temp1.ArrangeAmount).formatAsCurrency()
+                    
                     self.lbl_Frequency.text = temp1.Frequency
                     self.lbl_NextPayDate.text = temp1.NextInstalmentDate
-                    self.lbl_Overdue.text = formatter.stringFromNumber(temp1.OverdueAmount)
-                    self.lbl_Paid.text = formatter.stringFromNumber(temp1.PaidAmount)
-                    self.lbl_Remaining.text = formatter.stringFromNumber(temp1.LeftToPay)
+                    self.lbl_Overdue.text = Double(temp1.OverdueAmount).formatAsCurrency()
+                    
+                    self.lbl_Paid.text = Double(temp1.PaidAmount).formatAsCurrency()
+                    self.lbl_Remaining.text = Double(temp1.LeftToPay).formatAsCurrency()
                     self.lbl_Status.text = temp1.Status
                     
                     LocalStore.setTotalPaid(temp1.PaidAmount.description)
@@ -86,28 +84,28 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
                 }
                 else
                 {
-                    self.view_NoArrangement.userInteractionEnabled = true
+                    self.view_NoArrangement.isUserInteractionEnabled = true
 
-                    self.view_NoArrangement.hidden = false
+                    self.view_NoArrangement.isHidden = false
 
                 }
             }
             else
             {
                 // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error", message: "Server not found", preferredStyle: UIAlertControllerStyle.alert)
                 
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewController(animated: true)
 
                 }
                 
                 alert.addAction(okAction)
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 
             }
         }
@@ -121,22 +119,22 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         
         let bounds = self.view_Chart.bounds
         
-        pieChart.frame = CGRectInset(CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - 20, bounds.size.height - 20), 10, 10)
+        pieChart.frame = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.size.width - 20, height: bounds.size.height - 20).insetBy(dx: 10, dy: 10)
         
         
         if(LocalStore.accessDeviceName() == "iPhone 4s"){
             
-            pieChart.frame = CGRectInset(CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - 20, bounds.size.height - 40), 10, 10)
+            pieChart.frame = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.size.width - 20, height: bounds.size.height - 40).insetBy(dx: 10, dy: 10)
 
         }
         
-        pieChart.autoresizingMask = UIViewAutoresizing(rawValue:~UIViewAutoresizing.None.rawValue)
+        pieChart.autoresizingMask = UIViewAutoresizing(rawValue:~UIViewAutoresizing().rawValue)
         
         pieChart.delegate = self
         
         pieChart.allowAnimations = true
-        pieChart.legend.hidden = false
-        pieChart.legend.style.position = TKChartLegendPosition.Right
+        pieChart.legend.isHidden = false
+        pieChart.legend.style.position = TKChartLegendPosition.right
         self.view_Chart.addSubview(pieChart)
         
         var array:[TKChartDataPoint] = [TKChartDataPoint]()
@@ -173,27 +171,14 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         }
         
         
-
-//        if let temp3 = LocalStore.accesssetTotalOverDue()
-//        {
-//            let point3 =  TKChartDataPoint(name: "Overdue", value: temp3.floatValue)
-//            array.append(point3);
-//        }
         
         let series = TKChartPieSeries(items:array)
-        series.selectionMode = TKChartSeriesSelectionMode.DataPoint
-        series.selectionAngle = -M_PI_2
+        series.selectionMode = TKChartSeriesSelectionMode.dataPoint
+//        series.selectionAngle = -M_PI_2
         
-//        if(array.count > 1) {
-//            series.expandRadius = 1.3
-//            series.adjustSizeToFit = true
-//        }
-//        else
-//        {
-            series.expandRadius = 1.3
-            series.adjustSizeToFit = true
-        //}
-        
+        series.expandRadius = 1.3
+        series.adjustSizeToFit = true
+
         series.displayPercentage = false;
         series.style.pointLabelStyle.textHidden = false;
         
@@ -218,11 +203,11 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
             series.style.pointLabelStyle.labelOffset = UIOffsetMake(5, 0)
         }
         
-        series.labelDisplayMode = TKChartPieSeriesLabelDisplayMode.Outside
+        series.labelDisplayMode = TKChartPieSeriesLabelDisplayMode.outside
         
-        let  numberFormatter = NSNumberFormatter()
+        let  numberFormatter = NumberFormatter()
         
-        numberFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        numberFormatter.numberStyle = NumberFormatter.Style.currency
         
         series.style.pointLabelStyle.formatter = numberFormatter
         
@@ -230,7 +215,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
 
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
         
@@ -244,82 +229,82 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func chart(chart: TKChart, paletteItemForSeries series: TKChartSeries, atIndex index: Int) -> TKChartPaletteItem? {
+    func chart(_ chart: TKChart, paletteItemFor series: TKChartSeries, at index: Int) -> TKChartPaletteItem? {
         
         
         if(self.IsGreen && self.IsBlue && self.IsRed)
         {
             if index == 0 {
-                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex: "#75c283")))
                 return green
             }
             else if index == 1 {
-                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#00757D")))
                 return blue
             }
             else if index == 2 {
-                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#f14844")))
                 return red
             }
         }
         else if(self.IsGreen && self.IsBlue)
         {
             if index == 0 {
-                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#75c283")))
                 return green
             }
             else if index == 1 {
-                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex: "#00757D")))
                 return blue
             }
         }
         else if(self.IsGreen && self.IsRed)
         {
             if index == 0 {
-                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#75c283")))
                 return green
             }
             else if index == 1 {
-                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#f14844")))
                 return red
             }
         }
         else if(self.IsBlue && self.IsRed)
         {
             if index == 0 {
-                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#00757D")))
                 return blue
             }
             else if index == 1 {
-                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#f14844")))
                 return red
             }
         }
         else if(self.IsGreen)
         {
             if index == 0 {
-                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#75c283")))
+                let green: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#75c283")))
                 return green
             }
         }
         else if(self.IsBlue)
         {
             if index == 0 {
-                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#00757D")))
+                let blue: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#00757D")))
                 return blue
             }
         }
         else if(self.IsRed)
         {
             if index == 0 {
-                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor(rgba: "#f14844")))
+                let red: TKChartPaletteItem = TKChartPaletteItem(fill: TKSolidFill(color: UIColor.init(hex:  "#f14844")))
                 return red
             }
         }
         return nil
     }
     
-    func chart(chart: TKChart, didSelectPoint point: TKChartData, inSeries series: TKChartSeries, atIndex index: Int) {
+    func chart(_ chart: TKChart, didSelectPoint point: TKChartData, in series: TKChartSeries, at index: Int) {
         print("didSelectPoint series at index: \(index)")
     }
     

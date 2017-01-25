@@ -12,14 +12,14 @@ public struct FolderManager {
 
 
     
-    static func DeleteFile(filePath: String) -> Bool {
+    static func DeleteFile(_ filePath: String) -> Bool {
         
         
-        let fileManager = NSFileManager()
+        let fileManager = FileManager()
         
         
         do {
-            try fileManager.removeItemAtPath(filePath)
+            try fileManager.removeItem(atPath: filePath)
             
             return true
         } catch _ {

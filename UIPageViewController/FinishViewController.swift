@@ -18,7 +18,7 @@ class FinishViewController: UIViewController {
         super.viewDidLoad()
         lbMessage.text = message
         
-        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false) //or animated: false
+        navigationController?.setNavigationBarHidden(navigationController?.isNavigationBarHidden == false, animated: false) //or animated: false
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
@@ -30,12 +30,12 @@ class FinishViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btFinish_Clicked(sender: AnyObject) {
+    @IBAction func btFinish_Clicked(_ sender: AnyObject) {
         
         self.navigationController?.viewControllers.removeAll()
         
         
-        self.performSegueWithIdentifier("GoToHomepage", sender: nil)
+        self.performSegue(withIdentifier: "GoToHomepage", sender: nil)
 
     }
 

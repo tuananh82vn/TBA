@@ -32,7 +32,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UpdateBankAccountViewController.dismissKeyboard))
         
         view.addGestureRecognizer(tap)
 
@@ -83,11 +83,11 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                     self.dataForm1.delegate = self
                     self.dataForm1.dataSource = self.dataSource
                     
-                    self.dataForm1.backgroundColor = UIColor.whiteColor()
-                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.FlexibleWidth.rawValue | UIViewAutoresizing.FlexibleHeight.rawValue)
+                    self.dataForm1.backgroundColor = UIColor.white
+                    self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                     
-                    self.dataForm1.commitMode = TKDataFormCommitMode.Manual
-                    self.dataForm1.validationMode = TKDataFormValidationMode.Manual
+                    self.dataForm1.commitMode = TKDataFormCommitMode.manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.manual
                     
                     self.subView.addSubview(self.dataForm1)
                     
@@ -115,7 +115,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
     
     
     
-    func dataForm(dataForm: TKDataForm, validateProperty propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+    func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
 
         if (propery.name == "AccountName") {
@@ -129,22 +129,22 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                 return self.validate2
             }
             
-            let whitespace = NSCharacterSet.whitespaceCharacterSet()
+            let whitespace = CharacterSet.whitespaces
             
-            let range = value.description.rangeOfCharacterFromSet(whitespace)
+            let range = value.description.rangeOfCharacter(from: whitespace)
             
             // range will be nil if no whitespace is found
             if let test = range {
                 
                 let fullNameArr = value.description.characters.split{$0 == " "}.map(String.init)
                 
-                for (var index = 0; index < fullNameArr.count; index++)
+                for index in 0 ..< fullNameArr.count
                 {
-                    var fistname = fullNameArr[index] // First
+                    let fistname = fullNameArr[index] // First
                     
-                    let decimalCharacters = NSCharacterSet.decimalDigitCharacterSet()
+                    let decimalCharacters = CharacterSet.decimalDigits
                     
-                    let decimalRange1 = fistname.rangeOfCharacterFromSet(decimalCharacters, options: NSStringCompareOptions(), range: nil)
+                    let decimalRange1 = fistname.rangeOfCharacter(from: decimalCharacters, options: NSString.CompareOptions(), range: nil)
                     
                     if decimalRange1 != nil {
                         
@@ -235,7 +235,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         return true
     }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
             
             self.dataForm1.commit()
@@ -252,9 +252,9 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
             
             let paymentInfo = PaymentInfo()
             
-            paymentInfo.bank.AccountName        = self.dataSource["AccountName"].valueCandidate.description
-            paymentInfo.bank.AccountNumber      = self.dataSource["AccountNumber"].valueCandidate.description
-            paymentInfo.bank.BSB                = self.dataSource["BSB1"].valueCandidate.description + self.dataSource["BSB2"].valueCandidate.description
+            paymentInfo.bank.AccountName        = (self.dataSource["AccountName"].valueCandidate as AnyObject).description
+            paymentInfo.bank.AccountNumber      = (self.dataSource["AccountNumber"].valueCandidate as AnyObject).description
+            paymentInfo.bank.BSB                = (self.dataSource["BSB1"].valueCandidate as AnyObject).description + (self.dataSource["BSB2"].valueCandidate as AnyObject).description
             
             paymentInfo.RecType = "DD"
             
@@ -270,7 +270,7 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
                         
                         WebApiService.sendActivityTracking("Update Bank Account")
 
-                        self.performSegueWithIdentifier("GoToNotice", sender: nil)
+                        self.performSegue(withIdentifier: "GoToNotice", sender: nil)
                         
                     }
                     else
@@ -289,10 +289,10 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
             
-            let controller = segue.destinationViewController as! FinishViewController
+            let controller = segue.destination as! FinishViewController
             controller.message = "Your bank account has been updated successfully"
             
         }

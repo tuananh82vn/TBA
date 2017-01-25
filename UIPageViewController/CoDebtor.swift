@@ -14,7 +14,7 @@ class CoDebtor: NSObject {
     var DebtorCode = ""
     var FullName = ""
     var PostCode = ""
-    var DateOfBirth = NSDate()
+    var DateOfBirth = Date()
     var Mobile = ""
     var MarkMobile = ""
     var DisplayValue = ""

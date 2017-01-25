@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E0F677C34110A19DE0606A6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E33AF7EC9D660BEF0C529EF /* Pods.framework */; };
 		669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669D24AB1BC793DA0087C306 /* BaseViewController.swift */; };
 		66D324241B9D21BB001BBD9B /* View1Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D324231B9D21BB001BBD9B /* View1Controller.swift */; };
 		66D324261B9D22B5001BBD9B /* View2Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D324251B9D22B5001BBD9B /* View2Controller.swift */; };
@@ -17,6 +16,12 @@
 		78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F481AC5FC48001A93F1 /* Images.xcassets */; };
 		78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */; };
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
+		AE886B531E381E0A000C7B6A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE886B521E381E0A000C7B6A /* Alamofire.framework */; };
+		AE886B551E381FA9000C7B6A /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE886B541E381FA9000C7B6A /* SwiftyJSON.framework */; };
+		AE886B581E3825C5000C7B6A /* CreditCardValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B561E3825C5000C7B6A /* CreditCardValidationType.swift */; };
+		AE886B591E3825C5000C7B6A /* CreditCardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B571E3825C5000C7B6A /* CreditCardValidator.swift */; };
+		AE886B5E1E386457000C7B6A /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B5D1E386457000C7B6A /* InitialViewController.swift */; };
+		C259682C58C1D286B8D28142 /* Pods_UIPageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */; };
 		C715F92F1CD30F8200B8198A /* DownloadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715F92E1CD30F8200B8198A /* DownloadFile.swift */; };
 		C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */; };
 		C718FB8A1C1FC6BE00DC14F8 /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */; };
@@ -26,7 +31,6 @@
 		C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */; };
 		C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3C1BEB2496007463FD /* EventKit.framework */; };
 		C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C0C3E1BEB249C007463FD /* EventKitUI.framework */; };
-		C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C451BEC220D007463FD /* UIColorExtension.swift */; };
 		C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C0C471BEC55AD007463FD /* RBResizer.swift */; };
 		C745F4851CD7206100EB7A35 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F4841CD7206100EB7A35 /* FolderManager.swift */; };
 		C74903251D6D269D007A30B8 /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74903241D6D269D007A30B8 /* TextFieldExtension.swift */; };
@@ -39,10 +43,8 @@
 		C77E1CF81C7ACF00004AAEFF /* DebtorDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E1CF71C7ACF00004AAEFF /* DebtorDetail.swift */; };
 		C7813B641BEC7FD300876860 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7813B631BEC7FD300876860 /* HomeViewController.swift */; };
 		C7813B681BEC950600876860 /* BlankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7813B671BEC950600876860 /* BlankViewController.swift */; };
-		C781D3831C1A898E00E8832E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C781D3821C1A898E00E8832E /* Alamofire.framework */; };
 		C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D05B1C0FFC9800AE7265 /* WebApiService.swift */; };
 		C783D05E1C1009E200AE7265 /* LocalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D05D1C1009E200AE7265 /* LocalStore.swift */; };
-		C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D05F1C100A1A00AE7265 /* SwiftyJSON.swift */; };
 		C783D0621C111A7C00AE7265 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0611C111A7C00AE7265 /* Error.swift */; };
 		C783D0641C111AB200AE7265 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783D0631C111AB200AE7265 /* JSONParser.swift */; };
 		C78703611BF0057A001453C6 /* InstalmentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */; };
@@ -58,8 +60,6 @@
 		C797D6351C72AB0F0083CD88 /* SetPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6341C72AB0F0083CD88 /* SetPayment.swift */; };
 		C797D6371C72CCA30083CD88 /* VerifyCoDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6361C72CCA30083CD88 /* VerifyCoDebtorViewController.swift */; };
 		C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6381C72D0DC0083CD88 /* CoDebtor.swift */; };
-		C797D63B1C7404A80083CD88 /* CreditCardValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */; };
-		C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */; };
 		C797D63F1C7533990083CD88 /* DeferPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D63E1C7533990083CD88 /* DeferPaymentViewController.swift */; };
 		C797D6411C75568D0083CD88 /* DeferPaymentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6401C75568D0083CD88 /* DeferPaymentViewCell.swift */; };
 		C797D6431C7589780083CD88 /* DeferPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797D6421C7589780083CD88 /* DeferPayment.swift */; };
@@ -121,11 +121,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08DFF4EEA92681AC9F285E84 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		1D0E3974D9AD1167389C65B1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		669D24AB1BC793DA0087C306 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		66D324231B9D21BB001BBD9B /* View1Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View1Controller.swift; sourceTree = "<group>"; };
 		66D324251B9D22B5001BBD9B /* View2Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View2Controller.swift; sourceTree = "<group>"; };
+		6B580A9AE6BD3D10A65BF390 /* Pods-UIPageViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIPageViewController.release.xcconfig"; path = "Pods/Target Support Files/Pods-UIPageViewController/Pods-UIPageViewController.release.xcconfig"; sourceTree = "<group>"; };
 		78E75F3C1AC5FC48001A93F1 /* Recoveries Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recoveries Connect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E75F401AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F411AC5FC48001A93F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +136,13 @@
 		78E75F561AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewControllerTests.swift; sourceTree = "<group>"; };
 		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE886B501E381DA0000C7B6A /* Pods */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pods; sourceTree = "<group>"; };
+		AE886B521E381E0A000C7B6A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../Library/Developer/Xcode/DerivedData/UIPageViewController-goftbodzmtzumjcamwbbkbslgbnz/Build/Products/Debug-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
+		AE886B541E381FA9000C7B6A /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/UIPageViewController-goftbodzmtzumjcamwbbkbslgbnz/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		AE886B561E3825C5000C7B6A /* CreditCardValidationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidationType.swift; sourceTree = "<group>"; };
+		AE886B571E3825C5000C7B6A /* CreditCardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidator.swift; sourceTree = "<group>"; };
+		AE886B5D1E386457000C7B6A /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIPageViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C715F92E1CD30F8200B8198A /* DownloadFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFile.swift; sourceTree = "<group>"; };
 		C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfo.swift; sourceTree = "<group>"; };
 		C718FB891C1FC6BE00DC14F8 /* PersonalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
@@ -147,7 +153,6 @@
 		C72C0C3C1BEB2496007463FD /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		C72C0C3E1BEB249C007463FD /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		C72C0C401BEB24C7007463FD /* UIPageViewController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIPageViewController-Bridging-Header.h"; sourceTree = "<group>"; };
-		C72C0C451BEC220D007463FD /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		C72C0C471BEC55AD007463FD /* RBResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBResizer.swift; sourceTree = "<group>"; };
 		C745F4841CD7206100EB7A35 /* FolderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		C74903241D6D269D007A30B8 /* TextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
@@ -164,7 +169,6 @@
 		C781D3821C1A898E00E8832E /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		C783D05B1C0FFC9800AE7265 /* WebApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebApiService.swift; sourceTree = "<group>"; };
 		C783D05D1C1009E200AE7265 /* LocalStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStore.swift; sourceTree = "<group>"; };
-		C783D05F1C100A1A00AE7265 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C783D0611C111A7C00AE7265 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		C783D0631C111AB200AE7265 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstalmentInfoViewController.swift; sourceTree = "<group>"; };
@@ -180,8 +184,6 @@
 		C797D6341C72AB0F0083CD88 /* SetPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPayment.swift; sourceTree = "<group>"; };
 		C797D6361C72CCA30083CD88 /* VerifyCoDebtorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyCoDebtorViewController.swift; sourceTree = "<group>"; };
 		C797D6381C72D0DC0083CD88 /* CoDebtor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoDebtor.swift; sourceTree = "<group>"; };
-		C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidationType.swift; sourceTree = "<group>"; };
-		C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidator.swift; sourceTree = "<group>"; };
 		C797D63E1C7533990083CD88 /* DeferPaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeferPaymentViewController.swift; sourceTree = "<group>"; };
 		C797D6401C75568D0083CD88 /* DeferPaymentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeferPaymentViewCell.swift; sourceTree = "<group>"; };
 		C797D6421C7589780083CD88 /* DeferPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeferPayment.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		C7F92A141C18FC9000AE9AAB /* PaymentMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewController.swift; sourceTree = "<group>"; };
 		C7F92A161C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeDebitPaymentViewController.swift; sourceTree = "<group>"; };
 		C7F92A181C1928FD00AE9AAB /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
+		DE9ADEAD79A57FE9F324C4EA /* Pods-UIPageViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIPageViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIPageViewController/Pods-UIPageViewController.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,15 +243,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE886B551E381FA9000C7B6A /* SwiftyJSON.framework in Frameworks */,
+				AE886B531E381E0A000C7B6A /* Alamofire.framework in Frameworks */,
 				C7BB33C61CD0797600BEFA31 /* libsqlite3.0.tbd in Frameworks */,
 				C77E1CEA1C7A8F91004AAEFF /* PhoneNumberKit.framework in Frameworks */,
 				C797D61B1C6951EB0083CD88 /* TelerikUI.framework in Frameworks */,
-				C781D3831C1A898E00E8832E /* Alamofire.framework in Frameworks */,
 				C72C0C3F1BEB249C007463FD /* EventKitUI.framework in Frameworks */,
 				C72C0C3D1BEB2496007463FD /* EventKit.framework in Frameworks */,
 				C72C0C371BEB1669007463FD /* ActionSheetPicker_3_0.framework in Frameworks */,
 				C72C0C351BEB1664007463FD /* Spring.framework in Frameworks */,
-				0E0F677C34110A19DE0606A6 /* Pods.framework in Frameworks */,
+				C259682C58C1D286B8D28142 /* Pods_UIPageViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +273,7 @@
 				78E75F541AC5FC48001A93F1 /* UIPageViewControllerTests */,
 				78E75F3D1AC5FC48001A93F1 /* Products */,
 				A2F449B641C43B271AAD8CE4 /* Frameworks */,
-				D395C2BF3BCC47731FD3F417 /* Pods */,
+				992423663366F6A3755520AF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -329,9 +333,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		992423663366F6A3755520AF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DE9ADEAD79A57FE9F324C4EA /* Pods-UIPageViewController.debug.xcconfig */,
+				6B580A9AE6BD3D10A65BF390 /* Pods-UIPageViewController.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A2F449B641C43B271AAD8CE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE886B541E381FA9000C7B6A /* SwiftyJSON.framework */,
+				AE886B521E381E0A000C7B6A /* Alamofire.framework */,
+				AE886B501E381DA0000C7B6A /* Pods */,
 				C7BB33C51CD0797600BEFA31 /* libsqlite3.0.tbd */,
 				C77E1CE91C7A8F91004AAEFF /* PhoneNumberKit.framework */,
 				C797D61A1C6951EA0083CD88 /* TelerikUI.framework */,
@@ -341,6 +357,7 @@
 				C72C0C361BEB1669007463FD /* ActionSheetPicker_3_0.framework */,
 				C72C0C341BEB1664007463FD /* Spring.framework */,
 				8E33AF7EC9D660BEF0C529EF /* Pods.framework */,
+				C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -406,6 +423,7 @@
 				C7BB33BF1CD0466500BEFA31 /* InboxViewController.swift */,
 				C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */,
 				C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */,
+				AE886B5D1E386457000C7B6A /* InitialViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -417,14 +435,12 @@
 				C798DD471CBF58B2002F3E7E /* MyPhoneEditor.swift */,
 				C77E1CEB1C7AADDF004AAEFF /* JLToast */,
 				C7B6B3751C76E389008D670C /* SCLAlertView.swift */,
-				C797D63C1C7404B10083CD88 /* CreditCardValidator.swift */,
-				C797D63A1C7404A80083CD88 /* CreditCardValidationType.swift */,
-				C783D05F1C100A1A00AE7265 /* SwiftyJSON.swift */,
 				C783D05D1C1009E200AE7265 /* LocalStore.swift */,
+				AE886B561E3825C5000C7B6A /* CreditCardValidationType.swift */,
+				AE886B571E3825C5000C7B6A /* CreditCardValidator.swift */,
 				C7E6B0211BF07A1C00D60EC1 /* LoremIpsumGenerator.swift */,
 				C7E6B01D1BF06A3F00D60EC1 /* Serializable.swift */,
 				C72C0C471BEC55AD007463FD /* RBResizer.swift */,
-				C72C0C451BEC220D007463FD /* UIColorExtension.swift */,
 				C7ABFCC41BEB0474009BCE1E /* UIViewExtensions.swift */,
 				C7ABFCC21BEB0462009BCE1E /* Timer.swift */,
 				C7E351BE1C155A2600315A47 /* DeviceDetect.swift */,
@@ -507,15 +523,6 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		D395C2BF3BCC47731FD3F417 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1D0E3974D9AD1167389C65B1 /* Pods.debug.xcconfig */,
-				08DFF4EEA92681AC9F285E84 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -523,12 +530,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 78E75F5B1AC5FC48001A93F1 /* Build configuration list for PBXNativeTarget "UIPageViewController" */;
 			buildPhases = (
-				7741864845CC37A779D4EBED /* Check Pods Manifest.lock */,
+				2ACD18A97F1AE4C733057BEA /* [CP] Check Pods Manifest.lock */,
 				78E75F381AC5FC48001A93F1 /* Sources */,
 				78E75F391AC5FC48001A93F1 /* Frameworks */,
 				78E75F3A1AC5FC48001A93F1 /* Resources */,
-				E8CEC98B18B05FA6A8F95BD0 /* Embed Pods Frameworks */,
-				0EBA95D169507492700472D0 /* Copy Pods Resources */,
+				74BE12D5E42F8B3FF816F837 /* [CP] Embed Pods Frameworks */,
+				E033337D566961F7E04A1EE3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -571,6 +578,7 @@
 					78E75F3B1AC5FC48001A93F1 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = DENR28CDY6;
+						LastSwiftMigration = 0820;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -582,6 +590,7 @@
 					};
 					78E75F501AC5FC48001A93F1 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 0820;
 						TestTargetID = 78E75F3B1AC5FC48001A93F1;
 					};
 				};
@@ -628,49 +637,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0EBA95D169507492700472D0 /* Copy Pods Resources */ = {
+		2ACD18A97F1AE4C733057BEA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		7741864845CC37A779D4EBED /* Check Pods Manifest.lock */ = {
+		74BE12D5E42F8B3FF816F837 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UIPageViewController/Pods-UIPageViewController-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E8CEC98B18B05FA6A8F95BD0 /* Embed Pods Frameworks */ = {
+		E033337D566961F7E04A1EE3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UIPageViewController/Pods-UIPageViewController-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -696,14 +705,12 @@
 				C7ABFCC51BEB0474009BCE1E /* UIViewExtensions.swift in Sources */,
 				C7E351C31C1660A500315A47 /* CardInfo.swift in Sources */,
 				C7A216081C1E90DE008A03A7 /* UpdateBankAccountViewController.swift in Sources */,
-				C797D63B1C7404A80083CD88 /* CreditCardValidationType.swift in Sources */,
 				C798DD481CBF58B2002F3E7E /* MyPhoneEditor.swift in Sources */,
 				C77E1CF41C7AAE03004AAEFF /* JLToastWindow.swift in Sources */,
 				C7BB33BE1CD0424F00BEFA31 /* InboxItem.swift in Sources */,
 				C797D6371C72CCA30083CD88 /* VerifyCoDebtorViewController.swift in Sources */,
 				C7ABFCC31BEB0462009BCE1E /* Timer.swift in Sources */,
 				C7B789391D6D385600B3E86B /* CallBackSlot.swift in Sources */,
-				C797D63D1C7404B10083CD88 /* CreditCardValidator.swift in Sources */,
 				C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */,
 				C797D62B1C6C5CC80083CD88 /* DateExtension.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
@@ -729,18 +736,17 @@
 				C797D6411C75568D0083CD88 /* DeferPaymentViewCell.swift in Sources */,
 				C7BB33C01CD0466500BEFA31 /* InboxViewController.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
-				C783D0601C100A1A00AE7265 /* SwiftyJSON.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
 				C77E1CF21C7AAE03004AAEFF /* JLToastCenter.swift in Sources */,
 				C7BB33D31CD07A6300BEFA31 /* FMDatabaseAdditions.m in Sources */,
 				C7BB33D51CD07A6300BEFA31 /* FMResultSet.m in Sources */,
 				C7A216001C1E74CE008A03A7 /* FinishViewController.swift in Sources */,
 				C7A215FA1C1AAAC1008A03A7 /* BankInfo.swift in Sources */,
+				AE886B591E3825C5000C7B6A /* CreditCardValidator.swift in Sources */,
 				C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */,
 				78E75F421AC5FC48001A93F1 /* AppDelegate.swift in Sources */,
 				C7F92A171C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift in Sources */,
 				C7F92A191C1928FD00AE9AAB /* SummaryViewController.swift in Sources */,
-				C72C0C461BEC220D007463FD /* UIColorExtension.swift in Sources */,
 				C797D60D1C6309950083CD88 /* ArrangeDetails.swift in Sources */,
 				C7E6B01A1BF068F400D60EC1 /* PaymentTrackerRecordModel.swift in Sources */,
 				C7B6B3761C76E389008D670C /* SCLAlertView.swift in Sources */,
@@ -758,6 +764,8 @@
 				C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */,
 				C7E6B0081BF0548E00D60EC1 /* PaymentTrackerViewController.swift in Sources */,
 				C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */,
+				AE886B5E1E386457000C7B6A /* InitialViewController.swift in Sources */,
+				AE886B581E3825C5000C7B6A /* CreditCardValidationType.swift in Sources */,
 				C7A216021C1E7E7C008A03A7 /* SetupPaymentViewController.swift in Sources */,
 				C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */,
 				C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */,
@@ -886,7 +894,7 @@
 		};
 		78E75F5C1AC5FC48001A93F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D0E3974D9AD1167389C65B1 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = DE9ADEAD79A57FE9F324C4EA /* Pods-UIPageViewController.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -898,7 +906,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = UIPageViewController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -913,12 +921,13 @@
 				PRODUCT_NAME = "Recoveries Connect";
 				SWIFT_OBJC_BRIDGING_HEADER = "UIPageViewController/UIPageViewController-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		78E75F5D1AC5FC48001A93F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08DFF4EEA92681AC9F285E84 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 6B580A9AE6BD3D10A65BF390 /* Pods-UIPageViewController.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -929,11 +938,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = UIPageViewController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.synotive.recoveriescorp;
 				PRODUCT_NAME = "Recoveries Connect";
 				SWIFT_OBJC_BRIDGING_HEADER = "UIPageViewController/UIPageViewController-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -952,7 +962,8 @@
 				INFOPLIST_FILE = UIPageViewControllerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIPageViewController.app/UIPageViewController";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Recoveries Connect.app/Recoveries Connect";
 			};
 			name = Debug;
 		};
@@ -967,7 +978,8 @@
 				INFOPLIST_FILE = UIPageViewControllerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIPageViewController.app/UIPageViewController";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Recoveries Connect.app/Recoveries Connect";
 			};
 			name = Release;
 		};

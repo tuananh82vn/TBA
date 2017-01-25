@@ -1,16 +1,14 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
+platform :ios, '10.0'
 
-pod 'ActionSheetPicker-3.0'
-pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
+target ‘UIPageViewController’ do
+	pod 'ActionSheetPicker-3.0'
+	pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
+	pod 'PhoneNumberKit', '~> 1.2'
+	pod 'Alamofire', '~> 4.3'
+	pod 'SwiftyJSON', :git =>'https://github.com/SwiftyJSON/SwiftyJSON.git'
+	pod 'UIColor_Hex_Swift', '~> 3.0.2'
 
+end
 
-
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, ‘9.0’
-use_frameworks!
-
-pod 'Alamofire', '~> 3.0'
-
-source 'https://github.com/CocoaPods/Specs.git'
-pod 'PhoneNumberKit', '~> 0.6'

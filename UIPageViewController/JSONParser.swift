@@ -10,13 +10,14 @@ import Foundation
 
 struct JSONParser {
     
-    static func parseError(story: NSArray) -> [Error] {
+    static func parseError(_ story: NSArray) -> [Error] {
         
         var ErrorArray = [Error]()
         
         if let Items = story as Array? {
             
-            for var index = 0; index < Items.count; ++index {
+            for index in 0 ..< Items.count
+            {
                 
                 if let Item = Items[index] as? NSDictionary {
                     
@@ -30,7 +31,7 @@ struct JSONParser {
         return ErrorArray
     }
     
-    static func parseObjectError(story: NSDictionary) -> Error {
+    static func parseObjectError(_ story: NSDictionary) -> Error {
         
         let Object =  Error()
         
@@ -39,13 +40,14 @@ struct JSONParser {
         return Object
     }
     
-    static func parseHistoryPaymentTracker(story: NSArray) -> [PaymentTrackerRecordModel] {
+    static func parseHistoryPaymentTracker(_ story: NSArray) -> [PaymentTrackerRecordModel] {
         
         var ErrorArray = [PaymentTrackerRecordModel]()
         
         if let Items = story as Array? {
             
-            for var index = 0; index < Items.count; ++index {
+            for index in 0 ..< Items.count
+            {
                 
                 if let Item = Items[index] as? NSDictionary {
                     
@@ -59,13 +61,14 @@ struct JSONParser {
         return ErrorArray
     }
     
-    static func parseInboxList(story: NSArray) -> [InboxItem] {
+    static func parseInboxList(_ story: NSArray) -> [InboxItem] {
         
         var ErrorArray = [InboxItem]()
         
         if let Items = story as Array? {
             
-            for var index = 0; index < Items.count; ++index {
+            for index in 0 ..< Items.count
+            {
                 
                 if let Item = Items[index] as? NSDictionary {
                     
@@ -79,13 +82,14 @@ struct JSONParser {
         return ErrorArray
     }
     
-    static func parseCallbackList(story: NSArray) -> [String] {
+    static func parseCallbackList(_ story: NSArray) -> [String] {
         
         var ErrorArray = [String]()
         
         if let Items = story as Array? {
             
-            for var index = 0; index < Items.count; ++index {
+            for index in 0 ..< Items.count
+            {
                 
                 if let Item = Items[index] as? String {
                     
@@ -98,13 +102,14 @@ struct JSONParser {
     }
 
     
-    static func parseSchedulePaymentTracker(story: NSArray) -> [PaymentTrackerRecordModel] {
+    static func parseSchedulePaymentTracker(_ story: NSArray) -> [PaymentTrackerRecordModel] {
         
         var ErrorArray = [PaymentTrackerRecordModel]()
         
         if let Items = story as Array? {
             
-            for var index = 0; index < Items.count; ++index {
+            for index in 0 ..< Items.count
+            {
                 
                 if let Item = Items[index] as? NSDictionary {
                     
@@ -118,13 +123,14 @@ struct JSONParser {
         return ErrorArray
     }
     
-    static func parseCoDebtorCode(story: NSArray) -> [String] {
+    static func parseCoDebtorCode(_ story: NSArray) -> [String] {
         
         var CoDebtorCodeArray = [String]()
         
         if let Items = story as Array? {
             
-            for var index = 0; index < Items.count; ++index {
+            for index in 0 ..< Items.count
+            {
                 
                 if let Item = Items[index] as? String {
                     
@@ -136,24 +142,24 @@ struct JSONParser {
         return CoDebtorCodeArray
     }
     
-    static func parseObjectInboxItem(story: NSDictionary) -> InboxItem {
+    static func parseObjectInboxItem(_ story: NSDictionary) -> InboxItem {
         
         let Object =  InboxItem()
         
         let tempDate = story["Date"] as? String ?? ""
         
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.dateFromString(tempDate)
+        let date = dateFormatter.date(from: tempDate)
         dateFormatter.dateFormat = "dd/MM/yyyy"
     
         
-        Object.Date = dateFormatter.stringFromDate(date!)
+        Object.Date = dateFormatter.string(from: date!)
         
         Object.MessageNo = Int32(story["MessageNo"] as? String ?? "0")!
         
-        Object.Type = story["Type"] as? String ?? ""
+        Object.ItemType = story["Type"] as? String ?? ""
         
         
         Object.Status = "Unread"
@@ -168,7 +174,7 @@ struct JSONParser {
     }
 
     
-    static func parseObjectHistoryPaymentTracker(story: NSDictionary) -> PaymentTrackerRecordModel {
+    static func parseObjectHistoryPaymentTracker(_ story: NSDictionary) -> PaymentTrackerRecordModel {
         
         let Object =  PaymentTrackerRecordModel()
         
@@ -186,7 +192,7 @@ struct JSONParser {
         return Object
     }
     
-    static func parseObjectSchedulePaymentTracker(story: NSDictionary) -> PaymentTrackerRecordModel {
+    static func parseObjectSchedulePaymentTracker(_ story: NSDictionary) -> PaymentTrackerRecordModel {
         
         let Object =  PaymentTrackerRecordModel()
         
@@ -197,7 +203,7 @@ struct JSONParser {
         return Object
     }
     
-    static func parseClient(story: NSDictionary) -> Client {
+    static func parseClient(_ story: NSDictionary) -> Client {
         
         let client =  Client()
         

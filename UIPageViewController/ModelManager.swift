@@ -23,36 +23,36 @@ class ModelManager: NSObject {
         return sharedInstance
     }
     
-    func insertInboxItem(studentInfo: InboxItem) -> Bool {
+    func insertInboxItem(_ studentInfo: InboxItem) -> Bool {
         
         sharedInstance.database!.open()
 
         var isInserted = false
             
-        isInserted = sharedInstance.database!.executeUpdate("INSERT INTO inbox (Date, Type , MessageNo , Status, Content , IsLocal , FileName1 ) VALUES (?, ?, ?, ?, ?, ?, ?)", withArgumentsInArray: [studentInfo.Date, studentInfo.Type, studentInfo.MessageNo.description, studentInfo.Status, studentInfo.Content, studentInfo.IsLocal, studentInfo.FileName])
+        isInserted = sharedInstance.database!.executeUpdate("INSERT INTO inbox (Date, Type , MessageNo , Status, Content , IsLocal , FileName1 ) VALUES (?, ?, ?, ?, ?, ?, ?)", withArgumentsIn: [studentInfo.Date, studentInfo.ItemType, studentInfo.MessageNo.description, studentInfo.Status, studentInfo.Content, studentInfo.IsLocal, studentInfo.FileName])
         
         sharedInstance.database!.close()
         
         return isInserted
     }
     
-    func updateInboxItem(studentInfo: InboxItem) -> Bool {
+    func updateInboxItem(_ studentInfo: InboxItem) -> Bool {
         sharedInstance.database!.open()
-        let isUpdated = sharedInstance.database!.executeUpdate("UPDATE inbox SET Content=?, Status=?, IsLocal=? , FileName1=? WHERE MessageNo=?", withArgumentsInArray: [studentInfo.Content,studentInfo.Status, studentInfo.IsLocal, studentInfo.FileName, studentInfo.MessageNo.description])
+        let isUpdated = sharedInstance.database!.executeUpdate("UPDATE inbox SET Content=?, Status=?, IsLocal=? , FileName1=? WHERE MessageNo=?", withArgumentsIn: [studentInfo.Content,studentInfo.Status, studentInfo.IsLocal, studentInfo.FileName, studentInfo.MessageNo.description])
         sharedInstance.database!.close()
         return isUpdated
     }
     
-    func deleteInboxItem(studentInfo: InboxItem) -> Bool {
+    func deleteInboxItem(_ studentInfo: InboxItem) -> Bool {
         sharedInstance.database!.open()
-        let isDeleted = sharedInstance.database!.executeUpdate("DELETE FROM inbox WHERE MessageNo=?", withArgumentsInArray: [studentInfo.MessageNo.description])
+        let isDeleted = sharedInstance.database!.executeUpdate("DELETE FROM inbox WHERE MessageNo=?", withArgumentsIn: [studentInfo.MessageNo.description])
         sharedInstance.database!.close()
         return isDeleted
     }
     
     func deleteAllInboxItem() -> Bool {
         sharedInstance.database!.open()
-        let isDeleted = sharedInstance.database!.executeUpdate("DELETE FROM inbox", withArgumentsInArray: nil)
+        let isDeleted = sharedInstance.database!.executeUpdate("DELETE FROM inbox", withArgumentsIn: nil)
         sharedInstance.database!.close()
         return isDeleted
     }
@@ -61,20 +61,20 @@ class ModelManager: NSObject {
         
         sharedInstance.database!.open()
         
-        let resultSet: FMResultSet! = sharedInstance.database!.executeQuery("SELECT * FROM inbox", withArgumentsInArray: nil)
+        let resultSet: FMResultSet! = sharedInstance.database!.executeQuery("SELECT * FROM inbox", withArgumentsIn: nil)
         
         var InboxList = [InboxItem]()
 
         if (resultSet != nil) {
             while resultSet.next() {
                 let studentInfo : InboxItem = InboxItem()
-                studentInfo.Date = resultSet.stringForColumn("Date")
-                studentInfo.Type = resultSet.stringForColumn("Type")
-                studentInfo.Status = resultSet.stringForColumn("Status")
-                studentInfo.MessageNo = Int32(resultSet.stringForColumn("MessageNo"))!
-                studentInfo.Content = resultSet.stringForColumn("Content")
-                studentInfo.IsLocal = resultSet.boolForColumn("IsLocal")
-                studentInfo.FileName = resultSet.stringForColumn("FileName1")
+                studentInfo.Date = resultSet.string(forColumn: "Date")
+                studentInfo.ItemType = resultSet.string(forColumn: "Type")
+                studentInfo.Status = resultSet.string(forColumn: "Status")
+                studentInfo.MessageNo = Int32(resultSet.string(forColumn: "MessageNo"))!
+                studentInfo.Content = resultSet.string(forColumn: "Content")
+                studentInfo.IsLocal = resultSet.bool(forColumn: "IsLocal")
+                studentInfo.FileName = resultSet.string(forColumn: "FileName1")
                 InboxList.append(studentInfo)
             }
         }

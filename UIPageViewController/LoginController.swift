@@ -8,7 +8,7 @@ class LoginController: UIViewController {
     
     var textDisplay : [String] = ["Thank you for waiting...", "We are logging you into the system...", "It will take a few seconds..."]
     
-    var timer2 = NSTimer()
+    var timer2 = Foundation.Timer()
     
     var index = 0
     
@@ -26,10 +26,10 @@ class LoginController: UIViewController {
 
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.logo.startRotating(completionDelegate: self)
+        self.logo.startRotating(duration: 2, clockwise: true)
 
     }
     
@@ -42,9 +42,9 @@ class LoginController: UIViewController {
             self.timer.stop()
             
             // create the alert
-            let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.alert)
             
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
                 UIAlertAction in
                 
                 self.loadData()
@@ -53,14 +53,14 @@ class LoginController: UIViewController {
             alert.addAction(okAction)
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         })
         
         self.timer.start()
         
         //Display text every 2 second
-        self.timer2 = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "displayAtIndex", userInfo: nil, repeats: true)
+        self.timer2 = Foundation.Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(LoginController.displayAtIndex), userInfo: nil, repeats: true)
 
         
         WebApiService.GetDebtorInfo(LocalStore.accessRefNumber()!) { objectReturn in
@@ -93,12 +93,8 @@ class LoginController: UIViewController {
                     
                     self.timer2.invalidate()
                     
-                    self.performSegueWithIdentifier("GoToBlank", sender: nil)
+                    self.performSegue(withIdentifier: "GoToBlank", sender: nil)
 
-                    
-                }
-                else
-                {
                     
                 }
             }
@@ -109,11 +105,11 @@ class LoginController: UIViewController {
                 self.timer.stop()
                 
                 // create the alert
-                let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error", message: "Server not found. Try again.", preferredStyle: UIAlertControllerStyle.alert)
                 
                 
                 
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     
                     self.loadData()
@@ -122,7 +118,7 @@ class LoginController: UIViewController {
                 alert.addAction(okAction)
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
 
             }
         }
@@ -133,21 +129,18 @@ class LoginController: UIViewController {
     func displayAtIndex()
     {
         self.lbl_Label.text = textDisplay[self.index]
-        self.index++
+        self.index += 1
         if (index == self.textDisplay.count)
         {
             self.index = 0
         }
     }
     
-//    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-//        self.logo.startRotating(completionDelegate: self)
-//    }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToDebtorSelect" {
             
-            let controller = segue.destinationViewController as! SelectDebtorController
+            let controller = segue.destination as! SelectDebtorController
             controller.debtorList = self.debtorList
         }
     }

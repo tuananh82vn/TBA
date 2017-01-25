@@ -18,19 +18,19 @@ class BlankViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let sideDrawerGettingStarted = storyboard.instantiateViewControllerWithIdentifier("HomeViewController")
+        let sideDrawerGettingStarted = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
         
         let navController = UINavigationController.init(rootViewController: sideDrawerGettingStarted)
         
         let sideDrawerController = TKSideDrawerController(content: navController)
         
-        self.view.window?.frame =  UIScreen.mainScreen().bounds
+        self.view.window?.frame =  UIScreen.main.bounds
         
         self.view.window?.rootViewController = sideDrawerController
         
@@ -47,7 +47,7 @@ class BlankViewController: UIViewController {
     
     
 
-    @IBAction func continueClicked(sender: AnyObject) {
+    @IBAction func continueClicked(_ sender: AnyObject) {
 
     }
 

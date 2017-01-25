@@ -30,7 +30,7 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         GetInboxItemFromLocal()
@@ -93,19 +93,19 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
                     self.SaveNewInboxIntoLocalDatabase()
 
                     //Display the lasest message first
-                    self.FinalList.sortInPlace({ $0.MessageNo > $1.MessageNo })
+                    self.FinalList.sort(by: { $0.MessageNo > $1.MessageNo })
                     
                     if(self.FinalList.count == 0){
-                        self.View_NoInbox.hidden = false
-                        self.tableView.hidden = true
-                        self.View_Title.hidden = true
+                        self.View_NoInbox.isHidden = false
+                        self.tableView.isHidden = true
+                        self.View_Title.isHidden = true
 
                     }
                     else
                     {
-                        self.View_NoInbox.hidden = true
-                        self.tableView.hidden = false
-                        self.View_Title.hidden = false
+                        self.View_NoInbox.isHidden = true
+                        self.tableView.isHidden = false
+                        self.View_Title.isHidden = false
 
                         self.tableView.reloadData()
                     }
@@ -137,21 +137,21 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.FinalList.count
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell1 = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! InboxItemViewCell
+        let cell1 = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as! InboxItemViewCell
         
        
         cell1.lb_Date.text = self.FinalList[indexPath.row].Date
         
         
-        let Type = self.FinalList[indexPath.row].Type
+        let Type = self.FinalList[indexPath.row].ItemType
         
         
         var TypeDescription = ""
@@ -185,18 +185,18 @@ class InboxViewController: UIViewController , UITableViewDelegate, UITableViewDa
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.selectedInbox = self.FinalList[indexPath.row]
         
-        self.performSegueWithIdentifier("GoToDetail", sender: nil)
+        self.performSegue(withIdentifier: "GoToDetail", sender: nil)
 
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToDetail" {
             
-            let controller = segue.destinationViewController as! InboxItemViewController
+            let controller = segue.destination as! InboxItemViewController
             controller.inboxDetail = self.selectedInbox
             
         }

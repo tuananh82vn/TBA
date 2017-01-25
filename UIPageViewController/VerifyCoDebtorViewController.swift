@@ -20,25 +20,25 @@ class VerifyCoDebtorViewController: UIViewController {
         super.viewDidLoad()
         
         // Show button get net code
-        UIView.animateWithDuration(2.0, animations: { () -> Void in
+        UIView.animate(withDuration: 2.0, animations: { () -> Void in
             self.btGetNetCode.alpha = 1
         })
         
         //Handle auto hide keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(VerifyCoDebtorViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         // Hide button cotinue.
         //UIView.animateWithDuration(2.0, animations: { () -> Void in
             self.bt_Continue.alpha = 0
-            self.bt_Continue.enabled = false
+            self.bt_Continue.isEnabled = false
         
         
             self.tf_NetCode.alpha = 0
-            self.tf_NetCode.enabled = false
+            self.tf_NetCode.isEnabled = false
         
             self.lb_netcode.alpha = 0
-            self.lb_netcode.enabled = false
+            self.lb_netcode.isEnabled = false
         //})
         
         self.addDoneButtonOnKeyboard(self.tf_NetCode)
@@ -58,13 +58,13 @@ class VerifyCoDebtorViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btNetCode_Clicked(sender: AnyObject) {
+    @IBAction func btNetCode_Clicked(_ sender: AnyObject) {
         
         doGetNetCode()
 
     }
     
-    @IBAction func btContinue_Clicked(sender: AnyObject) {
+    @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         self.view.showLoading();
         
         WebApiService.verifyNetCode(LocalStore.accessRefNumber()!, Netcode: self.tf_NetCode.text!) { objectReturn in
@@ -91,7 +91,7 @@ class VerifyCoDebtorViewController: UIViewController {
                     
                     LocalStore.setDRCode(self.selectedDebtor.DebtorCode)
 
-                    self.performSegueWithIdentifier("GoToSetupPin", sender: nil)
+                    self.performSegue(withIdentifier: "GoToSetupPin", sender: nil)
                 }
                 else
                 {
@@ -109,11 +109,11 @@ class VerifyCoDebtorViewController: UIViewController {
         
         self.view.showLoading();
         
-        WebApiService.checkInternet({(internet:Bool) -> Void in
-            
-            if (internet)
-            {
-                
+//        WebApiService.checkInternet({(internet:Bool) -> Void in
+//            
+//            if (internet)
+//            {
+        
                 WebApiService.getNetCodeVerify(LocalStore.accessRefNumber()!, MobileNumber : self.selectedDebtor.Mobile ){ objectReturn in
                     
                     self.view.hideLoading();
@@ -135,18 +135,18 @@ class VerifyCoDebtorViewController: UIViewController {
                             }
                             
 
-                            self.btGetNetCode.setTitle("Get your NetCode again?", forState: UIControlState.Normal)
+                            self.btGetNetCode.setTitle("Get your NetCode again?", for: UIControlState())
 
                             
                             //Enable button continue
-                            self.bt_Continue.enabled = true
+                            self.bt_Continue.isEnabled = true
                             self.bt_Continue.alpha = 1
                             
                             self.tf_NetCode.alpha = 1
-                            self.tf_NetCode.enabled = true
+                            self.tf_NetCode.isEnabled = true
                             
                             self.lb_netcode.alpha = 1
-                            self.lb_netcode.enabled = true
+                            self.lb_netcode.isEnabled = true
                             
                             self.tf_NetCode.becomeFirstResponder()
                             
@@ -172,26 +172,26 @@ class VerifyCoDebtorViewController: UIViewController {
 
                     }
                 }
-            }
-            else
-            {       
-                self.view.hideLoading();
-      
-                LocalStore.Alert(self.view, title: "Error", message: "No Internet connection.", indexPath: 0)
-            }
-        })
+              //}
+//            else
+//            {       
+//                self.view.hideLoading();
+//      
+//                LocalStore.Alert(self.view, title: "Error", message: "No Internet connection.", indexPath: 0)
+//            }
+//        })
     }
 
-    func addDoneButtonOnKeyboard(view: UIView?)
+    func addDoneButtonOnKeyboard(_ view: UIView?)
     {
         
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
-        doneToolbar.barStyle = UIBarStyle.Default
-        doneToolbar.translucent = false
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        doneToolbar.isTranslucent = false
         doneToolbar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: view, action: "resignFirstResponder")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: view, action: #selector(UIResponder.resignFirstResponder))
         
         var items = [AnyObject]()
         items.append(flexSpace)
