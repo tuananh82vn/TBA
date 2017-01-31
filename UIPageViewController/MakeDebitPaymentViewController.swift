@@ -8,9 +8,11 @@
 
 import UIKit
 
-class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
+class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UITextViewDelegate  {
 
+    @IBOutlet weak var sw_Agree: UISwitch!
     @IBOutlet weak var subView: UIView!
+    @IBOutlet weak var textView: UITextView!
     
     let dataSource = TKDataFormEntityDataSource()
     var paymentReturn = PaymentReturnModel()
@@ -36,10 +38,26 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     var validate6 : Bool = true
     
+    var isProcesing : Bool = false
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        textView.delegate = self
+        
+        let phoneUrl = NSURL(string: "tel:+0404221082")!
+        let attributes = [NSLinkAttributeName: phoneUrl]
+        let attributedString = NSAttributedString(string: "Direct Debit Terms & Conditions", attributes: attributes)
+        
+        
+        textView.attributedText = NSAttributedString(string: "I acknowledge RecoveriesCorp will use my Credit Card details for this payment arrangement. I have read and agree to the ") + attributedString
+        
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.layoutManager.allowsNonContiguousLayout = false;
+        textView.isScrollEnabled = false
 
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MakeDebitPaymentViewController.dismissKeyboard))
@@ -271,6 +289,9 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
+        if(self.isProcesing){
+            return
+        }
         
         self.dataForm1.commit()
         
@@ -278,6 +299,11 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
         
         if(!self.isFormValidate){
             
+            return
+        }
+        
+        if(!self.sw_Agree.isOn){
+            LocalStore.Alert(self.view, title: "Terms & Conditions", message: "Please agree to the Terms & Conditions to continue", indexPath: 0)
             return
         }
         
@@ -331,7 +357,8 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
             PaymentType = 4
         }
 
-        
+        self.isProcesing = true
+
         WebApiService.MakeDebitPayment(bankObject, PaymentType: PaymentType){ objectReturn in
             
             self.view.hideLoading();
@@ -350,6 +377,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
                 }
                 else
                 {
+                    self.isProcesing = false
 
                     if(temp1.Errors.count > 0){
                         LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
@@ -363,7 +391,8 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate  {
             }
             else
             {
-                
+                self.isProcesing = false
+
                 LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
 
             }

@@ -16,11 +16,16 @@
 		78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F481AC5FC48001A93F1 /* Images.xcassets */; };
 		78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */; };
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
+		AE4147A81E3EE51A00D9B83D /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4147A71E3EE51A00D9B83D /* ContactUsViewController.swift */; };
+		AE4147AA1E3FF81800D9B83D /* CreditCardTCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4147A91E3FF81800D9B83D /* CreditCardTCViewController.swift */; };
+		AE4147AC1E3FF82900D9B83D /* DirectDebitTCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4147AB1E3FF82900D9B83D /* DirectDebitTCViewController.swift */; };
 		AE886B531E381E0A000C7B6A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE886B521E381E0A000C7B6A /* Alamofire.framework */; };
 		AE886B551E381FA9000C7B6A /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE886B541E381FA9000C7B6A /* SwiftyJSON.framework */; };
 		AE886B581E3825C5000C7B6A /* CreditCardValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B561E3825C5000C7B6A /* CreditCardValidationType.swift */; };
 		AE886B591E3825C5000C7B6A /* CreditCardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B571E3825C5000C7B6A /* CreditCardValidator.swift */; };
 		AE886B5E1E386457000C7B6A /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B5D1E386457000C7B6A /* InitialViewController.swift */; };
+		AE99CDF41E3ED9D500A2732E /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE99CDF31E3ED9D500A2732E /* PrivacyPolicyViewController.swift */; };
+		AE99CDF61E3EE28900A2732E /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE99CDF51E3EE28800A2732E /* AboutViewController.swift */; };
 		C259682C58C1D286B8D28142 /* Pods_UIPageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */; };
 		C715F92F1CD30F8200B8198A /* DownloadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715F92E1CD30F8200B8198A /* DownloadFile.swift */; };
 		C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */; };
@@ -136,12 +141,17 @@
 		78E75F561AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewControllerTests.swift; sourceTree = "<group>"; };
 		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE4147A71E3EE51A00D9B83D /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
+		AE4147A91E3FF81800D9B83D /* CreditCardTCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardTCViewController.swift; sourceTree = "<group>"; };
+		AE4147AB1E3FF82900D9B83D /* DirectDebitTCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectDebitTCViewController.swift; sourceTree = "<group>"; };
 		AE886B501E381DA0000C7B6A /* Pods */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pods; sourceTree = "<group>"; };
 		AE886B521E381E0A000C7B6A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../Library/Developer/Xcode/DerivedData/UIPageViewController-goftbodzmtzumjcamwbbkbslgbnz/Build/Products/Debug-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
 		AE886B541E381FA9000C7B6A /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/UIPageViewController-goftbodzmtzumjcamwbbkbslgbnz/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		AE886B561E3825C5000C7B6A /* CreditCardValidationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidationType.swift; sourceTree = "<group>"; };
 		AE886B571E3825C5000C7B6A /* CreditCardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidator.swift; sourceTree = "<group>"; };
 		AE886B5D1E386457000C7B6A /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		AE99CDF31E3ED9D500A2732E /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		AE99CDF51E3EE28800A2732E /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIPageViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C715F92E1CD30F8200B8198A /* DownloadFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFile.swift; sourceTree = "<group>"; };
 		C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfo.swift; sourceTree = "<group>"; };
@@ -403,6 +413,7 @@
 				C7A681901C11538200348EB0 /* PinSetupViewController.swift */,
 				C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */,
 				C7ABFCBF1BEB03BB009BCE1E /* LoginController.swift */,
+				AE99CDF31E3ED9D500A2732E /* PrivacyPolicyViewController.swift */,
 				C7813B671BEC950600876860 /* BlankViewController.swift */,
 				C7813B631BEC7FD300876860 /* HomeViewController.swift */,
 				C7F92A141C18FC9000AE9AAB /* PaymentMethodViewController.swift */,
@@ -424,6 +435,10 @@
 				C7BB33DD1CD0973600BEFA31 /* InboxItemViewController.swift */,
 				C7A215FF1C1E74CE008A03A7 /* FinishViewController.swift */,
 				AE886B5D1E386457000C7B6A /* InitialViewController.swift */,
+				AE99CDF51E3EE28800A2732E /* AboutViewController.swift */,
+				AE4147A71E3EE51A00D9B83D /* ContactUsViewController.swift */,
+				AE4147A91E3FF81800D9B83D /* CreditCardTCViewController.swift */,
+				AE4147AB1E3FF82900D9B83D /* DirectDebitTCViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -732,11 +747,13 @@
 				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
 				C77E1CF31C7AAE03004AAEFF /* JLToastView.swift in Sources */,
 				C7A216041C1E80EB008A03A7 /* ThreePartPayment.swift in Sources */,
+				AE4147A81E3EE51A00D9B83D /* ContactUsViewController.swift in Sources */,
 				C7A216061C1E90CA008A03A7 /* UpdateCreditCardViewController.swift in Sources */,
 				C797D6411C75568D0083CD88 /* DeferPaymentViewCell.swift in Sources */,
 				C7BB33C01CD0466500BEFA31 /* InboxViewController.swift in Sources */,
 				C7E6B0221BF07A1C00D60EC1 /* LoremIpsumGenerator.swift in Sources */,
 				78E75F441AC5FC48001A93F1 /* ViewController.swift in Sources */,
+				AE4147AC1E3FF82900D9B83D /* DirectDebitTCViewController.swift in Sources */,
 				C77E1CF21C7AAE03004AAEFF /* JLToastCenter.swift in Sources */,
 				C7BB33D31CD07A6300BEFA31 /* FMDatabaseAdditions.m in Sources */,
 				C7BB33D51CD07A6300BEFA31 /* FMResultSet.m in Sources */,
@@ -756,6 +773,7 @@
 				C7A215FC1C1AAAF0008A03A7 /* PaymentReturnModel.swift in Sources */,
 				C797D6351C72AB0F0083CD88 /* SetPayment.swift in Sources */,
 				C7E6357D1BEC5E1D002D8438 /* MakeCreditPaymentViewController.swift in Sources */,
+				AE99CDF41E3ED9D500A2732E /* PrivacyPolicyViewController.swift in Sources */,
 				669D24AC1BC793DA0087C306 /* BaseViewController.swift in Sources */,
 				C7A6817A1C1139FC00348EB0 /* DebtorInfo.swift in Sources */,
 				C7A2160A1C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift in Sources */,
@@ -768,10 +786,12 @@
 				AE886B581E3825C5000C7B6A /* CreditCardValidationType.swift in Sources */,
 				C7A216021C1E7E7C008A03A7 /* SetupPaymentViewController.swift in Sources */,
 				C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */,
+				AE4147AA1E3FF81800D9B83D /* CreditCardTCViewController.swift in Sources */,
 				C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */,
 				C7E6B01E1BF06A3F00D60EC1 /* Serializable.swift in Sources */,
 				C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */,
 				C7F92A151C18FC9000AE9AAB /* PaymentMethodViewController.swift in Sources */,
+				AE99CDF61E3EE28900A2732E /* AboutViewController.swift in Sources */,
 				C7BB33D71CD07C5800BEFA31 /* LocalDatabase.swift in Sources */,
 				C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */,
 			);

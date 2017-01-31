@@ -69,6 +69,8 @@ struct LocalStore {
     
     fileprivate static let Frequency = "Frequency"
 
+    fileprivate static let IsAgreePrivacy = "IsAgreePrivacy"
+
     
     //----------------------------------------------------------------------------//
     static func setDeviceToken(_ token: String) {
@@ -607,6 +609,21 @@ struct LocalStore {
     
     static func accessFrequency() -> Int {
         return userDefaults.integer(forKey: Frequency)
+    }
+    //----------------------------------------------------------------------------//
+
+    static func setIsAgreePrivacy(_ token: Bool) {
+        userDefaults.set(token, forKey: IsAgreePrivacy)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteIsAgreePrivacy() {
+        userDefaults.removeObject(forKey: IsAgreePrivacy)
+        userDefaults.synchronize()
+    }
+    
+    static func accessIsAgreePrivacy() -> Bool {
+        return userDefaults.bool(forKey: IsAgreePrivacy)
     }
     
     //----------------------------------------------------------------------------//

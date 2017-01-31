@@ -97,7 +97,7 @@ class PinSetupViewController: BaseViewController, UITextFieldDelegate {
                 
                 WebApiService.sendActivityTracking("Setup Pin")
 
-                self.performSegue(withIdentifier: "GoToLogin", sender: nil)
+                self.performSegue(withIdentifier: "GoToPrivacy", sender: nil)
 
             }
             else

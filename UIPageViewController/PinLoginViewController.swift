@@ -145,7 +145,8 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
         LocalStore.setMakePaymentIn3Part(false)
         LocalStore.setMakePaymentInFull(false)
     
-        
+        LocalStore.setIsAgreePrivacy(false)
+
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -162,7 +163,13 @@ class PinLoginViewController: BaseViewController, UITextFieldDelegate , TKAlertD
             
             if(self.FirstPin == LocalStore.accessPin()!){
 
-                self.performSegue(withIdentifier: "GoToLogin", sender: nil)
+                if(LocalStore.accessIsAgreePrivacy()){
+                    self.performSegue(withIdentifier: "GoToLogin", sender: nil)
+                }
+                else
+                {
+                    self.performSegue(withIdentifier: "GoToPrivacy", sender: nil)
+                }
                 
             }
             else

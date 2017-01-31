@@ -312,6 +312,7 @@ class SummaryViewController: UIViewController {
                         //Download file into device with random name
                         DownloadFile.getFile(fromFilePath, filePathReturn: toFilePath)
                         
+
                         
                         //insert into local database
                         var inboxDetail = InboxItem()

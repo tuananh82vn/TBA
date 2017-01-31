@@ -15,6 +15,8 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     @IBOutlet weak var lbl_labelNextInstalment: UILabel!
     @IBOutlet weak var view_Chart: UIView!
     
+    @IBOutlet weak var lbl_ourClient: UILabel!
+    @IBOutlet weak var lbl_ClientAccountNumber: UILabel!
     
     let pieChart = TKChart()
     
@@ -33,17 +35,23 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         // create menu
         let sectionPrimary = self.sideDrawer.addSection(withTitle: "Main")
         
-        sectionPrimary?.addItem(withTitle: "Pay In Full", image: UIImage(named: "dollar")!)
+//        sectionPrimary?.addItem(withTitle: "Pay In Full", image: UIImage(named: "dollar")!)
+//        
+//        if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+//
+//        }
+//        else
+//        {
+//            sectionPrimary?.addItem(withTitle: "Setup Schedule Payment", image: UIImage(named: "instalment")!)
+//        }
+
+        sectionPrimary?.addItem(withTitle: "Provide Feedback",image: UIImage(named: "Quote")!)
         
-        if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+        sectionPrimary?.addItem(withTitle: "About",image: UIImage(named: "info")!)
 
-        }
-        else
-        {
-            sectionPrimary?.addItem(withTitle: "Setup Schedule Payment", image: UIImage(named: "instalment")!)
-        }
+        sectionPrimary?.addItem(withTitle: "Contact Us",image: UIImage(named: "ContactUs")!)
 
-        sectionPrimary?.addItem(withTitle: "Provide Feedback",image: UIImage(named: "info")!)
+        
         
         let sectionLabels = self.sideDrawer.addSection(withTitle: "Settings")
         
@@ -257,44 +265,62 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         {
            if(indexPath.row == 0 ){
             
-                SetPayment.SetPayment(1)
-
-                let paymentMethodController = self.storyboard!.instantiateViewController(withIdentifier: "PaymentMethodViewController") as! PaymentMethodViewController
+//                SetPayment.SetPayment(1)
+//
+//                let paymentMethodController = self.storyboard!.instantiateViewController(withIdentifier: "PaymentMethodViewController") as! PaymentMethodViewController
+//            
+//                self.navigationController!.pushViewController(paymentMethodController, animated: true)
             
-                self.navigationController!.pushViewController(paymentMethodController, animated: true)
+            
+                  let feedbackController = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
+            
+                  self.navigationController!.pushViewController(feedbackController, animated: true)
             
             }
             
             if(indexPath.row == 1 ){
                 
-                if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
-                    
-                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
-                    
-                    self.navigationController!.pushViewController(view, animated: true)
-                    
-                }
-                else
-                {
-                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SetupPaymentViewController") as! SetupPaymentViewController
-                    
-                    self.navigationController!.pushViewController(view, animated: true)
-                }
+//                if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+//                    
+//                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
+//                    
+//                    self.navigationController!.pushViewController(view, animated: true)
+//                    
+//                }
+//                else
+//                {
+//                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SetupPaymentViewController") as! SetupPaymentViewController
+//                    
+//                    self.navigationController!.pushViewController(view, animated: true)
+//                }
+                
+                let aboutViewController = self.storyboard!.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
+                
+                self.navigationController!.pushViewController(aboutViewController, animated: true)
+                
             }
             
-            if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+            if(indexPath.row == 2 ){
                 
+                let contactUsViewController = self.storyboard!.instantiateViewController(withIdentifier: "ContactUsViewController") as! ContactUsViewController
+                
+                self.navigationController!.pushViewController(contactUsViewController, animated: true)
                 
             }
-            else
-            {
-                if(indexPath.row == 2 ){
-                    
-                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
-                    
-                    self.navigationController!.pushViewController(view, animated: true)
-                }
-            }
+            
+//            if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
+//                
+//                
+//            }
+//            else
+//            {
+//                if(indexPath.row == 2 ){
+//                    
+//                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
+//                    
+//                    self.navigationController!.pushViewController(view, animated: true)
+//                }
+//            }
             
 
         }
@@ -378,11 +404,44 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     @IBAction func btPayment_Clicked(_ sender: AnyObject) {
         
-        SetPayment.SetPayment(4)
         
-        let makeCreditPaymentViewController = self.storyboard!.instantiateViewController(withIdentifier: "MakeCreditPaymentViewController") as! MakeCreditPaymentViewController
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        self.navigationController!.pushViewController(makeCreditPaymentViewController, animated: true)
+        let creditAction = UIAlertAction(title: "Credit Card", style: UIAlertActionStyle.destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            SetPayment.SetPayment(4)
+            
+            let makeCreditPaymentViewController = self.storyboard!.instantiateViewController(withIdentifier: "MakeCreditPaymentViewController") as! MakeCreditPaymentViewController
+            
+            self.navigationController!.pushViewController(makeCreditPaymentViewController, animated: true)
+            
+        })
+        
+        let debitAction = UIAlertAction(title: "Direct Debit", style: UIAlertActionStyle.destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            
+            SetPayment.SetPayment(4)
+            
+            let makeCreditPaymentViewController = self.storyboard!.instantiateViewController(withIdentifier: "MakeDebitPaymentViewController") as! MakeDebitPaymentViewController
+            
+            self.navigationController!.pushViewController(makeCreditPaymentViewController, animated: true)
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+        
+        optionMenu.addAction(creditAction)
+        optionMenu.addAction(debitAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.present(optionMenu, animated: true, completion: nil)
+
         
     }
     @IBAction func btLogout_Clicked(_ sender: AnyObject) {

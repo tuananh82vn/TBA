@@ -76,15 +76,13 @@ class InboxItemViewController: UIViewController, UIWebViewDelegate {
                 {
                     let fileName = self.inboxDetail.FileName
                     
-                    let rootPath = NSTemporaryDirectory()
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
+                    let archiveURL = documentsDirectory.appendingPathComponent(fileName)
+
                     
-                    let filePathReturn = (rootPath as NSString).appendingPathComponent(fileName)
+                    webView.loadRequest(URLRequest(url: archiveURL))
                     
-                    let url =  URL(fileURLWithPath: filePathReturn)
-                    
-                    let request = URLRequest(url: url)
-                    
-                    webView.loadRequest(request)
                     
                     self.webView.delegate = self
                     

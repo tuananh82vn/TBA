@@ -220,8 +220,18 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
 
             let firstDate = Calendar.current.startOfDay(for: Date())
             
+            var timeInterval = DateComponents()
+            timeInterval.day = 7
+            let futureDate = Calendar.current.date(byAdding: timeInterval, to: Date())!
+            
+            
             if(value.isLessThanDate(firstDate)){
                 dataSource["Date"].errorMessage = "Date must not be earlier than today"
+                self.validate3 = false
+                return self.validate3
+            }
+            else if(value.isGreaterThanDate(futureDate)){
+                dataSource["Date"].errorMessage = "Date must not be later than 7 days from today"
                 self.validate3 = false
                 return self.validate3
             }

@@ -31,10 +31,19 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString
+{
+    let result = NSMutableAttributedString()
+    result.append(left)
+    result.append(right)
+    return result
+}
 
-class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
+class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , UITextViewDelegate {
 
     @IBOutlet weak var subView: UIView!
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var sw_Agree: UISwitch!
     
     let dataSource = TKDataFormEntityDataSource()
     let cardInfo = CardInfo()
@@ -59,9 +68,26 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
     
     var validate6 : Bool = true
     
-    
+    var isProcesing : Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        textView.delegate = self
+        
+        let phoneUrl = NSURL(string: "tel:+0404221082")!
+        let attributes = [NSLinkAttributeName: phoneUrl]
+        let attributedString = NSAttributedString(string: "Credit Card Terms & Conditions", attributes: attributes)
+
+        
+        textView.attributedText = NSAttributedString(string: "I acknowledge RecoveriesCorp will use my Credit Card details for this payment arrangement. I have read and agree to the ") + attributedString
+        
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.layoutManager.allowsNonContiguousLayout = false;
+        
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MakeCreditPaymentViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -122,6 +148,16 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
 
         // Do any additional setup after loading the view.
     }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool
+    {
+        /* perform your own custom actions here */
+        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "CreditCardTCViewController") as! CreditCardTCViewController
+        
+        self.navigationController!.pushViewController(viewController, animated: true)
+        
+        return false // return true if you still want UIAlertController to pop up
+    }
 
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -132,6 +168,12 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textView.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
     
     func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         if property.name == "Cvv" {
@@ -360,6 +402,9 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
 
     @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
+        if(self.isProcesing){
+            return
+        }
         
         self.dataForm1.commit()
 
@@ -369,6 +414,12 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             
             return
         }
+        
+        if(!self.sw_Agree.isOn){
+            LocalStore.Alert(self.view, title: "Terms & Conditions", message: "Please agree to the Terms & Conditions to continue", indexPath: 0)
+            return
+        }
+        
         
         view.showLoading()
         
@@ -423,7 +474,9 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             PaymentType = 4
         }
         
- 
+        
+        self.isProcesing = true
+        
         WebApiService.MakeCreditCardPayment(cardObject, PaymentType: PaymentType){ objectReturn in
         
             self.view.hideLoading();
@@ -441,7 +494,8 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
                 }
                 else
                 {
-                    
+                    self.isProcesing = false
+
                     if(temp1.Errors.count > 0){
                         LocalStore.Alert(self.view, title: "Error", message: temp1.Errors[0].ErrorMessage, indexPath: 0)
                     }
@@ -454,7 +508,8 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate  {
             }
             else
             {
-                
+                self.isProcesing = false
+
                 LocalStore.Alert(self.view, title: "Error", message: "Server not found.", indexPath: 0)
 
             }
