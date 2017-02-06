@@ -80,6 +80,8 @@ class LoginController: UIViewController {
                     LocalStore.setMonthlyAmount(temp1.MinimumMonthlyOustanding)
                     LocalStore.setFortnightAmount(temp1.MinimumFortnightlyOutstanding)
                     LocalStore.setDRCode(temp1.DRCode)
+                    LocalStore.setClientName(temp1.ClientName)
+                    LocalStore.setClientAcc(temp1.ClientAcc)
 
                     if(temp1.MaxNoPay > 3 ){
                         temp1.MaxNoPay = 3

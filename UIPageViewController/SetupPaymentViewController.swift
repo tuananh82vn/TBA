@@ -406,7 +406,6 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
                 WebApiService.sendActivityTracking("Setup 2 part")
 
-                
                 SetPayment.SetPayment(2)
                 
                 LocalStore.setFrequency(0)

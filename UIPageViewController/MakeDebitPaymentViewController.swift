@@ -40,6 +40,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UI
     
     var isProcesing : Bool = false
 
+    var isClicked : Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +52,11 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UI
         let attributedString = NSAttributedString(string: "Direct Debit Terms & Conditions", attributes: attributes)
         
         
-        textView.attributedText = NSAttributedString(string: "I acknowledge RecoveriesCorp will use my Credit Card details for this payment arrangement. I have read and agree to the ") + attributedString
+        textView.attributedText = NSAttributedString(string: "I acknowledge RecoveriesCorp will use my Direct Debit details for this payment arrangement. I have read and agree to the ") + attributedString
         
+        textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
         textView.isEditable = false
-        textView.isSelectable = true
-        textView.layoutManager.allowsNonContiguousLayout = false;
-        textView.isScrollEnabled = false
 
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MakeDebitPaymentViewController.dismissKeyboard))
@@ -121,6 +120,43 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UI
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        textView.setContentOffset(CGPoint.zero, animated: false)
+        
+        self.isClicked = false
+        
+        super.viewWillAppear(animated) // No need for semicolon
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textView.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool
+    {
+        
+        /* perform your own custom actions here */
+
+        if(!isClicked){
+            
+            self.isClicked = true
+        
+            let viewController = self.storyboard!.instantiateViewController(withIdentifier: "DirectDebitTCViewController") as! DirectDebitTCViewController
+        
+            self.navigationController!.pushViewController(viewController, animated: true)
+        }
+        
+        return false // return true if you still want UIAlertController to pop up
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        textView.setContentOffset(CGPoint.zero, animated: false)
+        
+        return false
+    }
+    
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
@@ -143,33 +179,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UI
     func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         
 
-        if (propery.name == "Amount") {
-            
-            let value = (propery.valueCandidate as AnyObject).description
-            
-            if ((value?.length)! <= 0)
-            {
-                dataSource["Amount"].errorMessage = "Please enter amount"
-                self.validate1 = false
-                return self.validate1
-            }
-            
-            let floatValue = value?.floatValue
-            let minValue : Float = 0.00
-            
-            if (floatValue! <=  minValue)
-            {
-                dataSource["Amount"].errorMessage = "Amount must be greater than $0.00"
-                self.validate1 = false
-                return self.validate1
-            }
-            
-
-            
-            self.validate1 = true
-            
-        }
-        else
+        
             if (propery.name == "AccountName") {
                 
                 let value = propery.valueCandidate as! NSString
@@ -373,7 +383,7 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UI
 
                     self.paymentReturn = temp1
                     
-                    self.performSegue(withIdentifier: "GoToSummary", sender: nil)
+                    self.performSegue(withIdentifier: "GoToUpdateDetail", sender: nil)
                 }
                 else
                 {
@@ -400,12 +410,14 @@ class MakeDebitPaymentViewController: UIViewController , TKDataFormDelegate , UI
         
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "GoToSummary" {
+        if segue.identifier == "GoToUpdateDetail" {
             
-            let controller = segue.destination as! SummaryViewController
+            let controller = segue.destination as! UpdatePersonalInfoViewController
             controller.paymentReturn = self.paymentReturn
             controller.paymentMethod = 2
+            controller.screenComeForm = "DDPayment"
         }
     }
     

@@ -195,7 +195,7 @@ class SummaryViewController: UIViewController {
                             if(temp1.IsSuccess)
                             {
 
-                                if(self!.paymentMethod == 0){
+                                if(self!.paymentMethod == 1){
                                     LocalStore.Alert(self!.view, title: "Notice", message: "Receipt has been sent to " + enteredText, indexPath: 3)
                                 }
                                 else

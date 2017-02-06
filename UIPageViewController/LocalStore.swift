@@ -71,6 +71,11 @@ struct LocalStore {
 
     fileprivate static let IsAgreePrivacy = "IsAgreePrivacy"
 
+    fileprivate static let ClientName = "ClientName"
+
+    
+    fileprivate static let ClientAcc = "ClientAcc"
+
     
     //----------------------------------------------------------------------------//
     static func setDeviceToken(_ token: String) {
@@ -626,6 +631,36 @@ struct LocalStore {
         return userDefaults.bool(forKey: IsAgreePrivacy)
     }
     
+    //----------------------------------------------------------------------------//
+    
+    static func setClientName(_ token: String) {
+        userDefaults.set(token, forKey: ClientName)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteClientName() {
+        userDefaults.removeObject(forKey: ClientName)
+        userDefaults.synchronize()
+    }
+    
+    static func accessClientName() -> String? {
+        return userDefaults.string(forKey: ClientName)
+    }
+    //----------------------------------------------------------------------------//
+    
+    static func setClientAcc(_ token: String) {
+        userDefaults.set(token, forKey: ClientAcc)
+        userDefaults.synchronize()
+    }
+    
+    static func deleteClientAcc() {
+        userDefaults.removeObject(forKey: ClientAcc)
+        userDefaults.synchronize()
+    }
+    
+    static func accessClientAcc() -> String? {
+        return userDefaults.string(forKey: ClientAcc)
+    }
     //----------------------------------------------------------------------------//
 
     static func Alert(_ view : UIView, title : String , message : String , indexPath : Int) {

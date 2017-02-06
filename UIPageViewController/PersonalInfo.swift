@@ -13,8 +13,11 @@ class PersonalInfo: NSObject {
     var StreetAddress = ""
     var MailAddress  = ""
     var HomePhone  = ""
+    var HomePhonePreferred = false
     var WorkPhone  = ""
+    var WorkPhonePreferred = false
     var MobilePhone  = ""
-
+    var MobilePhonePreferred = false
+    var EmailAddress = ""
     
 }

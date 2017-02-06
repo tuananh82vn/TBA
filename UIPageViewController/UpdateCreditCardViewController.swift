@@ -41,8 +41,8 @@ class UpdateCreditCardViewController: UIViewController , TKDataFormDelegate {
     
     override func viewDidAppear(_ animated: Bool)
     {
-        super.viewDidAppear(animated)
         loadData()
+        super.viewDidAppear(animated)
     }
     
     func loadData(){

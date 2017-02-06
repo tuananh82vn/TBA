@@ -11,7 +11,6 @@ import UIKit
 
 class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     
-    @IBOutlet weak var lbQuestion: UILabel!
     @IBOutlet weak var subView: UIView!
     
     let dataSource = TKDataFormEntityDataSource()
@@ -34,9 +33,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.btNext.isHidden = true
-        
+
         self.view.backgroundColor = UIColor.white
         
         //Format number
@@ -44,18 +41,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         formatter.numberStyle = .currency
         formatter.currencySymbol = "$"
 
-        
-        if(LocalStore.accessIsAllowMonthlyInstallment()!){
-        
-                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly or monthly payment schedule to meet your obligation in paying the amount of " + LocalStore.accessTotalOutstanding().formatAsCurrency() + " ?"
-        }
-        else
-        {
-                lbQuestion.text = "Would you like to check if you qualify for a weekly/fortnightly payment schedule to meet your obligation in paying the amount of " + LocalStore.accessTotalOutstanding().formatAsCurrency() + " ?"
-        }
-        
-        self.subView.isHidden = true
-        
+
         dataForm1 = TKDataForm(frame: self.subView.bounds)
         dataForm1.delegate = self
         
@@ -67,7 +53,6 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         
         self.subView.addSubview(dataForm1)
 
-        // Do any additional setup after loading the view.
     }
     
     func InitData(){
@@ -87,11 +72,20 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         InstalmentAmount?.editorClass = TKDataFormDecimalEditor.self
         
         self.dataSource.addGroup(withName: "", propertyNames: ["Frequency", "InstalmentAmount","FirstInstalmentDate"])
-
         
+        dataSource["LastInstalmentDate"].readOnly = true
+        
+        let NumberOfInstalment = dataSource["NumberOfInstalment"]
+        NumberOfInstalment?.hintText = "Number of Instalments"
+        NumberOfInstalment?.editorClass = TKDataFormDecimalEditor.self
+        
+        dataSource["NumberOfInstalment"].readOnly = true
+
+
         dataForm1.dataSource = dataSource
         dataForm1.commitMode = TKDataFormCommitMode.manual
-        dataForm1.validationMode = TKDataFormValidationMode.manual
+        dataForm1.validationMode = TKDataFormValidationMode.immediate
+        
 
     }
     
@@ -99,17 +93,10 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func btNo_Clicked(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func btYes_Clicked(_ sender: AnyObject) {
-        self.subView.isHidden = false
-        self.btNext.isHidden = false
-    }
-    
+        
     @IBAction func btNext_Clicked(_ sender: AnyObject) {
         
+        self.dataForm1.commit()
         self.dataForm1.commit()
 
         self.isFormValidate = self.validate1 && self.validate2 && self.validate3
@@ -123,8 +110,6 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
 
     }
     
-    @IBAction func btClear_Clicked(_ sender: AnyObject) {
-    }
     
     func dataForm(_ dataForm: TKDataForm, heightForHeaderInGroup groupIndex: UInt) -> CGFloat {
         return 40
@@ -140,7 +125,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         
         self.performTopAlignmentSettingsForEditor(editor, property: property)
         
-        if (property.name == "FirstInstalmentDate") {
+        if (property.name == "FirstInstalmentDate" || property.name == "LastInstalmentDate") {
                 let textEditor = editor as! TKDataFormDatePickerEditor
                 textEditor.datePicker.setValue(UIColor.black, forKey: "textColor")
                 textEditor.datePicker.datePickerMode = .date
@@ -166,9 +151,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     }
     
     func dataForm(_ dataForm: TKDataForm, didDeselect editor: TKDataFormEditor, for property: TKEntityProperty) {
-        
 
-        
         if editor.isKind(of: TKDataFormDatePickerEditor.self) {
             let dateEditor = editor as! TKDataFormDatePickerEditor
             dateEditor.editorValueLabel.layer.borderColor = UIColor(red:0.784, green:0.780, blue:0.800, alpha:1.00).cgColor
@@ -178,6 +161,12 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     }
     
     func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
+        if (propery.name == "Frequency") {
+            let amount = (self.dataSource["InstalmentAmount"].valueCandidate as AnyObject).description.doubleValue.roundTo(places: 2)
+            if(amount > 0 ){
+                Calculation()
+            }
+        }
         
         if (propery.name == "InstalmentAmount") {
             
@@ -202,6 +191,11 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                     self.validate1 = false
                     return self.validate1
                 }
+                else
+                {
+                    //Calculation
+                    Calculation()
+                }
             }
             else
                 if(frequency == 1 ){
@@ -210,6 +204,10 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                         dataSource["InstalmentAmount"].errorMessage = "Payment does not meet your negotiated limit"
                         self.validate1 = false
                         return self.validate1
+                    }
+                    else
+                    {
+                        Calculation()
                     }
             }
             else
@@ -220,10 +218,11 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                             self.validate1 = false
                             return self.validate1
                         }
+                        else{
+                            Calculation()
+                        }
             }
-            
-           
-            
+
             self.validate1 = true
             
         }
@@ -232,7 +231,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                 
                 let value = propery.valueCandidate as! Date
                 
-                let Maxdate = Date().addDays(30)
+                let Maxdate = Date() + 30.days
                 
                 let firstDate = Calendar.current.startOfDay(for: Date())
 
@@ -243,6 +242,10 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                     return self.validate2
                     
                 }
+                else
+                {
+                    Calculation()
+                }
                 
                 self.validate2 = true
         }
@@ -250,6 +253,86 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         return true
     }
     
+    func Calculation(){
+        
+        self.ScheduleList.removeAll()
+        
+        var installmentDate = self.dataSource["FirstInstalmentDate"].valueCandidate as! Date
+        
+        var paidAmount : Double = 0
+        let amount = (self.dataSource["InstalmentAmount"].valueCandidate as AnyObject).description.doubleValue.roundTo(places: 2)
+        
+        let totalAmount = LocalStore.accessTotalOutstanding()
+        var installmentAmount =  amount < totalAmount ? amount : totalAmount
+        
+        let Frequency = self.dataSource["Frequency"].valueCandidate as! Int
+        
+        LocalStore.setFrequency(Frequency+1)
+        
+        
+        var timeInterval = DateComponents()
+        
+        
+        while ( totalAmount > paidAmount && installmentAmount > 0)
+        {
+            let firstPayment = PaymentTrackerRecordModel()
+            
+            firstPayment.DueDate = installmentDate.formattedWith("dd/MM/yyyy")
+            
+            firstPayment.Amount = installmentAmount.description
+            
+            self.ScheduleList.append(firstPayment)
+            
+            paidAmount = paidAmount + installmentAmount
+            
+            if( paidAmount + amount <= totalAmount)
+            {
+                installmentAmount = amount
+            }
+            else
+            {
+                installmentAmount = (totalAmount - paidAmount).roundTo(places: 2)
+            }
+            switch(Frequency){
+                case 0:
+                        installmentDate = installmentDate + 7.days
+                        break
+                break
+                    
+                case 1:
+                        installmentDate = installmentDate + 14.days
+                        break
+                    
+                case 2:
+                        installmentDate = installmentDate + 1.month
+                        break
+                    
+                default: break
+            }
+        }
+        
+        if(self.ScheduleList.count > 0){
+            
+            
+            var lastInstallment = self.ScheduleList[self.ScheduleList.count - 1].Amount.doubleValue
+            
+            if( lastInstallment < 10){
+                self.ScheduleList.remove(at: self.ScheduleList.count-1)
+                self.ScheduleList[self.ScheduleList.count-1].Amount = (self.ScheduleList[self.ScheduleList.count-1].Amount.doubleValue + lastInstallment).description
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy" //Your date format
+            let date = dateFormatter.date(from: (ScheduleList.last?.DueDate)!) //according to date format your date string
+
+            self.dataSource["LastInstalmentDate"].valueCandidate = date
+            self.dataSource["NumberOfInstalment"].valueCandidate = self.ScheduleList.count
+            self.dataForm1.reloadData()
+            
+        }
+        
+        
+    }
     
     
     func performTopAlignmentSettingsForEditor(_ editor: TKDataFormEditor, property: TKEntityProperty) {
@@ -264,7 +347,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         editorDef?.row = 1
         editorDef?.column = 1
         
-        if property.name == "FirstInstalmentDate" {
+        if property.name == "FirstInstalmentDate" || property.name == "LastInstalmentDate" {
             let dateEditor = editor as! TKDataFormDatePickerEditor
             let labelDef = gridLayout.definition(for: dateEditor.editorValueLabel)
             labelDef?.row = 1
@@ -311,69 +394,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         if segue.identifier == "GoToInstalmentSumary" {
             
             
-            self.ScheduleList.removeAll()
-            
-            var installmentDate = self.dataSource["FirstInstalmentDate"].valueCandidate as! Date
-            
-            var paidAmount : Double = 0
-            var amount = (self.dataSource["InstalmentAmount"].valueCandidate as AnyObject).description.doubleValue.roundTo(places: 2)
-            
-            var totalAmount = LocalStore.accessTotalOutstanding()
-            var installmentAmount =  amount < totalAmount ? amount : totalAmount
-            
-            let Frequency = self.dataSource["Frequency"].valueCandidate as! Int
-            
-            LocalStore.setFrequency(Frequency+1)
-
-            while ( totalAmount > paidAmount && installmentAmount > 0)
-            {
-                let firstPayment = PaymentTrackerRecordModel()
-                
-                firstPayment.DueDate = installmentDate.formattedWith("dd/MM/yyyy")
-                
-                firstPayment.Amount = installmentAmount.description
-                
-                self.ScheduleList.append(firstPayment)
-                
-                paidAmount = paidAmount + installmentAmount
-                
-                if( paidAmount + amount <= totalAmount)
-                {
-                    installmentAmount = amount
-                }
-                else
-                {
-                    installmentAmount = (totalAmount - paidAmount).roundTo(places: 2)
-                }
-                
-                switch(Frequency){
-                    case 0:
-                    installmentDate = installmentDate.addDays(7)
-                    break
-                    
-                    case 1:
-                    installmentDate = installmentDate.addDays(14)
-                    break
-                
-                    case 2:
-                    installmentDate = installmentDate.addMonths(1)
-                    break
-                    
-                    default: break
-                }
-            }
-            
-            if(self.ScheduleList.count > 0){
-                
-                
-                var lastInstallment = self.ScheduleList[self.ScheduleList.count - 1].Amount.doubleValue
-                
-                if( lastInstallment < 10){
-                    self.ScheduleList.remove(at: self.ScheduleList.count-1)
-                    self.ScheduleList[self.ScheduleList.count-1].Amount = (self.ScheduleList[self.ScheduleList.count-1].Amount.doubleValue + lastInstallment).description
-                }
-            }
-
+            Calculation();
             
             let instalmentSumaryViewController = segue.destination as! InstalmentSumaryViewController
             
@@ -381,7 +402,59 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         }
     }
 
-
-
-    
 }
+
+// Overloading + and - so that we can add and subtract DateComponents
+// ------------------------------------------------------------------
+
+func +(_ lhs: DateComponents, _ rhs: DateComponents) -> DateComponents {
+    return combineComponents(lhs, rhs)
+}
+
+func -(_ lhs: DateComponents, _ rhs: DateComponents) -> DateComponents {
+    return combineComponents(lhs, rhs, multiplier: -1)
+}
+
+func combineComponents(_ lhs: DateComponents,
+                       _ rhs: DateComponents,
+                       multiplier: Int = 1)
+    -> DateComponents {
+        var result = DateComponents()
+        result.second     = (lhs.second     ?? 0) + (rhs.second     ?? 0) * multiplier
+        result.minute     = (lhs.minute     ?? 0) + (rhs.minute     ?? 0) * multiplier
+        result.hour       = (lhs.hour       ?? 0) + (rhs.hour       ?? 0) * multiplier
+        result.day        = (lhs.day        ?? 0) + (rhs.day        ?? 0) * multiplier
+        result.weekOfYear = (lhs.weekOfYear ?? 0) + (rhs.weekOfYear ?? 0) * multiplier
+        result.month      = (lhs.month      ?? 0) + (rhs.month      ?? 0) * multiplier
+        result.year       = (lhs.year       ?? 0) + (rhs.year       ?? 0) * multiplier
+        return result
+}
+
+
+
+// We'll need to overload unary - so we can negate components
+prefix func -(components: DateComponents) -> DateComponents {
+    var result = DateComponents()
+    if components.second     != nil { result.second     = -components.second! }
+    if components.minute     != nil { result.minute     = -components.minute! }
+    if components.hour       != nil { result.hour       = -components.hour! }
+    if components.day        != nil { result.day        = -components.day! }
+    if components.weekOfYear != nil { result.weekOfYear = -components.weekOfYear! }
+    if components.month      != nil { result.month      = -components.month! }
+    if components.year       != nil { result.year       = -components.year! }
+    return result
+}
+
+
+// Date + DateComponents
+func +(_ lhs: Date, _ rhs: DateComponents) -> Date
+{
+    return Calendar.current.date(byAdding: rhs, to: lhs)!
+}
+
+// DateComponents + Dates
+func +(_ lhs: DateComponents, _ rhs: Date) -> Date
+{
+    return rhs + lhs
+}
+

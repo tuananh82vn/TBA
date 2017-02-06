@@ -622,6 +622,14 @@ struct WebApiService {
                     JsonReturn.ArrangementDebtor = ArrangementDebtor
                 }
                 
+                if let ClientName = jsonObject["ClientName"].string {
+                    JsonReturn.ClientName = ClientName
+                }
+                
+                if let ClientAcc = jsonObject["ClientAccNo"].string {
+                    JsonReturn.ClientAcc = ClientAcc
+                }
+                
                 if let IsExistingArrangement = jsonObject["IsExistingArrangement"].bool {
                     JsonReturn.IsExistingArrangement = IsExistingArrangement
                 }
@@ -1467,12 +1475,36 @@ struct WebApiService {
                     
                     JsonReturn.personalInfo.MobilePhone = MobileNumbers
                 }
-
+                
+                if let EmailAddress = jsonObject["EmailAddress"].string {
+                    
+                    JsonReturn.personalInfo.EmailAddress = EmailAddress
+                }
+                
+                if let HomePhonePreferred = jsonObject["HomePhonePreferred"].bool {
+                    
+                    JsonReturn.personalInfo.HomePhonePreferred = HomePhonePreferred
+                    
+                }
+                
+                if let WorkPhonePreferred = jsonObject["WorkPhonePreferred"].bool {
+                    
+                    JsonReturn.personalInfo.WorkPhonePreferred = WorkPhonePreferred
+                    
+                }
+                
+                if let MobilePhonePreferred = jsonObject["MobilePhonePreferred"].bool {
+                    
+                    JsonReturn.personalInfo.MobilePhonePreferred = MobilePhonePreferred
+                    
+                }
+                
                 if let IsSuccess = jsonObject["IsSuccess"].bool {
                     
                     JsonReturn.IsSuccess = IsSuccess
                     
                 }
+
                 
                 if let Error = jsonObject["Error"].string {
                     
@@ -1503,9 +1535,14 @@ struct WebApiService {
                 "Action": "U",
                 "Address1s" : personalInfo.StreetAddress,
                 "Address2s" : personalInfo.MailAddress,
+                "EmailAddress"     : personalInfo.EmailAddress,
                 "HomeNumber" : personalInfo.HomePhone,
+                "HomePhonePreferred" : personalInfo.HomePhonePreferred,
                 "WorkNumber" : personalInfo.WorkPhone,
-                "MobileNumbers" : personalInfo.MobilePhone
+                "WorkPhonePreferred" : personalInfo.WorkPhonePreferred,
+                "MobileNumbers" : personalInfo.MobilePhone,
+                "MobilePhonePreferred" : personalInfo.MobilePhonePreferred
+
             ]
         ]
         

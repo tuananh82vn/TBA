@@ -40,6 +40,15 @@ class UpdateBankAccountViewController: UIViewController , TKDataFormDelegate {
         
     }
     
+    override func viewDidAppear(_ animated: Bool)
+    {
+        initData()
+        
+        self.dataForm1.reloadData()
+        
+        super.viewDidAppear(animated)
+    }
+    
     func initData(){
         
         self.view.showLoading()

@@ -14,5 +14,7 @@ class PayInInstalment: NSObject {
     var Frequency = 0
     var InstalmentAmount = 0
     var FirstInstalmentDate = Date()
-    
+    var LastInstalmentDate = Date()
+    var NumberOfInstalment = 0
+
 }

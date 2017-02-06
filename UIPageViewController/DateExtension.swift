@@ -94,3 +94,128 @@ extension Date {
         return dateWithHoursAdded
     }
 }
+
+
+
+extension Date {
+    
+    init(year: Int,
+         month: Int,
+         day: Int,
+         hour: Int = 0,
+         minute: Int = 0,
+         second: Int = 0,
+         timeZone: TimeZone = TimeZone(abbreviation: "UTC")!) {
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = day
+        components.hour = hour
+        components.minute = minute
+        components.second = second
+        components.timeZone = timeZone
+        self = Calendar.current.date(from: components)!
+    }
+    
+    init(dateString: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss zz"
+        self = formatter.date(from: dateString)!
+    }
+    
+}
+
+
+
+
+extension Int {
+    
+    var second: DateComponents {
+        var components = DateComponents()
+        components.second = self;
+        return components
+    }
+    
+    var seconds: DateComponents {
+        return self.second
+    }
+    
+    var minute: DateComponents {
+        var components = DateComponents()
+        components.minute = self;
+        return components
+    }
+    
+    var minutes: DateComponents {
+        return self.minute
+    }
+    
+    var hour: DateComponents {
+        var components = DateComponents()
+        components.hour = self;
+        return components
+    }
+    
+    var hours: DateComponents {
+        return self.hour
+    }
+    
+    var day: DateComponents {
+        var components = DateComponents()
+        components.day = self;
+        return components
+    }
+    
+    var days: DateComponents {
+        return self.day
+    }
+    
+    var week: DateComponents {
+        var components = DateComponents()
+        components.weekOfYear = self;
+        return components
+    }
+    
+    var weeks: DateComponents {
+        return self.week
+    }
+    
+    var month: DateComponents {
+        var components = DateComponents()
+        components.month = self;
+        return components
+    }
+    
+    var months: DateComponents {
+        return self.month
+    }
+    
+    var year: DateComponents {
+        var components = DateComponents()
+        components.year = self;
+        return components
+    }
+    
+    var years: DateComponents {
+        return self.year
+    }
+    
+}
+
+
+
+extension DateComponents {
+    
+    var fromNow: Date {
+        return Calendar.current.date(byAdding: self,
+                                     to: Date())!
+    }
+    
+    var ago: Date {
+        return Calendar.current.date(byAdding: -self,
+                                     to: Date())!
+    }
+    
+}
+
+

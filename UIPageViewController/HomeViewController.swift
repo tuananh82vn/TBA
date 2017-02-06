@@ -35,15 +35,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         // create menu
         let sectionPrimary = self.sideDrawer.addSection(withTitle: "Main")
         
-//        sectionPrimary?.addItem(withTitle: "Pay In Full", image: UIImage(named: "dollar")!)
-//        
-//        if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
-//
-//        }
-//        else
-//        {
-//            sectionPrimary?.addItem(withTitle: "Setup Schedule Payment", image: UIImage(named: "instalment")!)
-//        }
 
         sectionPrimary?.addItem(withTitle: "Provide Feedback",image: UIImage(named: "Quote")!)
         
@@ -80,9 +71,9 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         setupButton(LocalStore.accessDeviceName())
         
         self.lbl_refnumber.text = LocalStore.accessRefNumber()
-        
-
         self.lbl_outstanding.text = LocalStore.accessTotalOutstanding().formatAsCurrency()
+        self.lbl_ourClient.text = LocalStore.accessClientName()
+        self.lbl_ClientAccountNumber.text = LocalStore.accessClientAcc()
         
         if(LocalStore.accessNextPaymentInstallment() > 0 ){
             self.lbl_labelNextInstalment.isHidden = false
@@ -121,10 +112,17 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         }
     }
     
-//    override func viewDidAppear(animated: Bool)
-//    {
-//        super.viewDidAppear(animated)
-//    }
+    override func viewDidAppear(_ animated: Bool)
+    {
+        
+        LocalStore.setMakePaymentInFull(false)
+        LocalStore.setMakePaymentOtherAmount(false)
+        LocalStore.setMakePaymentIn3Part(false)
+        LocalStore.setMakePaymentInstallment(false)
+        
+        super.viewDidAppear(animated) 
+        
+    }
     
     
     func setupButton(_ iphone : String){
@@ -280,19 +278,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             
             if(indexPath.row == 1 ){
                 
-//                if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
-//                    
-//                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
-//                    
-//                    self.navigationController!.pushViewController(view, animated: true)
-//                    
-//                }
-//                else
-//                {
-//                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SetupPaymentViewController") as! SetupPaymentViewController
-//                    
-//                    self.navigationController!.pushViewController(view, animated: true)
-//                }
                 
                 let aboutViewController = self.storyboard!.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
                 
@@ -308,19 +293,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
                 
             }
             
-//            if(LocalStore.accessIsExistingArrangement()! || LocalStore.accessIsExistingArrangementCC()! || LocalStore.accessIsExistingArrangementDD()!){
-//                
-//                
-//            }
-//            else
-//            {
-//                if(indexPath.row == 2 ){
-//                    
-//                    let view = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
-//                    
-//                    self.navigationController!.pushViewController(view, animated: true)
-//                }
-//            }
             
 
         }
@@ -358,7 +330,6 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     }
     
     @IBAction func btInbox_Clicked(_ sender: AnyObject) {
-//        JLToast.makeText("Coming up ...", duration: JLToastDelay.ShortDelay).show()
         
         let requestCallBackController = self.storyboard!.instantiateViewController(withIdentifier: "InboxViewController") as! InboxViewController
         
@@ -404,44 +375,9 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     @IBAction func btPayment_Clicked(_ sender: AnyObject) {
         
+        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "MakePaymentViewController") as! MakePaymentViewController
         
-        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let creditAction = UIAlertAction(title: "Credit Card", style: UIAlertActionStyle.destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            
-            SetPayment.SetPayment(4)
-            
-            let makeCreditPaymentViewController = self.storyboard!.instantiateViewController(withIdentifier: "MakeCreditPaymentViewController") as! MakeCreditPaymentViewController
-            
-            self.navigationController!.pushViewController(makeCreditPaymentViewController, animated: true)
-            
-        })
-        
-        let debitAction = UIAlertAction(title: "Direct Debit", style: UIAlertActionStyle.destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            
-            
-            SetPayment.SetPayment(4)
-            
-            let makeCreditPaymentViewController = self.storyboard!.instantiateViewController(withIdentifier: "MakeDebitPaymentViewController") as! MakeDebitPaymentViewController
-            
-            self.navigationController!.pushViewController(makeCreditPaymentViewController, animated: true)
-            
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-        })
-        
-        
-        optionMenu.addAction(creditAction)
-        optionMenu.addAction(debitAction)
-        optionMenu.addAction(cancelAction)
-        
-        // 5
-        self.present(optionMenu, animated: true, completion: nil)
-
+        self.navigationController!.pushViewController(viewController, animated: true)
         
     }
     @IBAction func btLogout_Clicked(_ sender: AnyObject) {

@@ -16,15 +16,20 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     
     var validate1 : Bool = true
     
-    var validate2 : Bool = true
-    
-    var validate3 : Bool = true
-    
-    var validate4 : Bool = true
-    
-    var validate5 : Bool = true
+//    var validate2 : Bool = true
+//    
+//    var validate3 : Bool = true
+//    
+//    var validate4 : Bool = true
+//    
+//    var validate5 : Bool = true
     
     var isError : Bool = false
+
+    
+    var paymentReturn = PaymentReturnModel()
+    var screenComeForm: String = ""
+    var paymentMethod = 0
 
     
     @IBOutlet weak var bt_Continue: UIButton!
@@ -40,13 +45,22 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
         
         alignmentMode = "Top"
         
-        // Do any additional setup after loading the view.
+        if(self.screenComeForm == "CCPayment" || self.screenComeForm == "DDPayment"){
+
+            self.navigationItem.setHidesBackButton(true, animated:true)
+
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
         loadData()
         
         self.dataForm1.reloadData()
         
+        super.viewDidAppear(animated)
     }
-    
     
     func loadData(){
         
@@ -69,17 +83,33 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     self.dataSource["StreetAddress"].editorClass = TKDataFormTextFieldEditor.self
                     self.dataSource["MailAddress"].editorClass = TKDataFormTextFieldEditor.self
                     
-                    self.dataSource.addGroup(withName: "Address", propertyNames: ["StreetAddress", "MailAddress"])
-                    self.dataSource.addGroup(withName: "Phone", propertyNames: ["HomePhone", "WorkPhone", "MobilePhone"])
+                    self.dataSource["EmailAddress"].editorClass = TKDataFormEmailEditor.self
+                    self.dataSource["EmailAddress"].hintText = "Email"
+
+
+                    self.dataSource.addGroup(withName: "Address", propertyNames: ["StreetAddress", "MailAddress", "EmailAddress"])
+                    
+                    self.dataSource.addGroup(withName: "Phone", propertyNames: ["HomePhone", "HomePhonePreferred", "WorkPhone", "WorkPhonePreferred","MobilePhone", "MobilePhonePreferred"])
                     
                     self.dataSource["HomePhone"].editorClass = TKDataFormPhoneEditor.self
                     self.dataSource["HomePhone"].hintText = "XX XXXX XXXX"
                     
-                    self.dataSource["WorkPhone"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["HomePhonePreferred"].editorClass = TKDataFormSwitchEditor.self
+                    self.dataSource["HomePhonePreferred"].displayName = "Preferred"
+
                     
+                    self.dataSource["WorkPhone"].editorClass = TKDataFormPhoneEditor.self
+                    self.dataSource["WorkPhonePreferred"].editorClass = TKDataFormSwitchEditor.self
+                    self.dataSource["WorkPhonePreferred"].displayName = "Preferred"
+
                     
                     self.dataSource["MobilePhone"].editorClass = MyPhoneEditor.self
                     self.dataSource["MobilePhone"].hintText = "04XX XXX XXX"
+                    self.dataSource["MobilePhone"].displayName = "Mobile Phone (*)"
+
+                    self.dataSource["MobilePhonePreferred"].editorClass = TKDataFormSwitchEditor.self
+                    self.dataSource["MobilePhonePreferred"].displayName = "Preferred"
+
                     
                     self.dataForm1 = TKDataForm(frame: self.subView.bounds)
                     
@@ -90,7 +120,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                     
                     self.dataForm1.commitMode = TKDataFormCommitMode.manual
-                    self.dataForm1.validationMode = TKDataFormValidationMode.manual
+                    self.dataForm1.validationMode = TKDataFormValidationMode.immediate
                     
                     self.subView.addSubview(self.dataForm1)
                     
@@ -133,11 +163,53 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         
         property.hintText = property.displayName
-        if alignmentMode == "Top" {
+        
+        if alignmentMode == "Top" && property.name != "HomePhonePreferred"  && property.name != "WorkPhonePreferred"   && property.name != "MobilePhonePreferred"{
             self.performTopAlignmentSettingsForEditor(editor, property: property)
         }
+        if(property.name == "HomePhonePreferred"  || property.name == "WorkPhonePreferred"   || property.name == "MobilePhonePreferred")
+        {
+            editor.style.separatorColor = nil
+            editor.style.insets = UIEdgeInsetsMake(6, editor.style.insets.left, 6, editor.style.insets.right)
+        }
+        
     }
     
+    func performTopAlignmentSettingsForEditor(_ editor: TKDataFormEditor, property: TKEntityProperty) {
+        
+        editor.style.separatorColor = nil
+        //editor.textLabel.font = UIFont.systemFontOfSize(15)
+        editor.style.insets = UIEdgeInsetsMake(1, editor.style.insets.left, 5, editor.style.insets.right)
+        
+        
+        let gridLayout = editor.gridLayout
+        let editorDef = gridLayout.definition(for: editor.editor)
+        editorDef?.row = 1
+        editorDef?.column = 1
+        
+        
+        let feedbackLabelDef = editor.gridLayout.definition(for: editor.feedbackLabel)
+        feedbackLabelDef?.row = 2
+        feedbackLabelDef?.column = 1
+        feedbackLabelDef?.columnSpan = 1
+        
+        self.setEditorStyle(editor)
+        
+    }
+    
+    func setEditorStyle(_ editor: TKDataFormEditor) {
+        
+        var layer = editor.editor.layer
+        
+        if editor.isKind(of: TKDataFormTextFieldEditor.self) {
+            layer = editor.editor.layer;
+            (editor.editor as! TKTextField).textInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        }
+        
+        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 4
+    }
     
     func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         if (propery.name == "MobilePhone") {
@@ -150,7 +222,43 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                 self.validate1 = false
                 return self.validate1
             }
+            
+            self.validate1 = true
 
+
+        }
+        
+        if (propery.name == "HomePhonePreferred") {
+            
+            let value = propery.valueCandidate as! Bool
+            
+            if (value)
+            {
+                self.dataSource["WorkPhonePreferred"].valueCandidate = false;
+                self.dataSource["MobilePhonePreferred"].valueCandidate = false;
+            }
+        }
+        
+        if (propery.name == "WorkPhonePreferred") {
+            
+            let value = propery.valueCandidate as! Bool
+            
+            if (value)
+            {
+                self.dataSource["HomePhonePreferred"].valueCandidate = false;
+                self.dataSource["MobilePhonePreferred"].valueCandidate = false;
+            }
+        }
+        
+        if (propery.name == "MobilePhonePreferred") {
+            
+            let value = propery.valueCandidate as! Bool
+            
+            if (value)
+            {
+                self.dataSource["HomePhonePreferred"].valueCandidate = false;
+                self.dataSource["WorkPhonePreferred"].valueCandidate = false;
+            }
         }
         return true
     }
@@ -158,8 +266,13 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     
     func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
 
+        if gorupIndex == 1 && (editorIndex == 1 || editorIndex == 3 || editorIndex == 5)
+        {
+            return 45
+        }
+            
         return 65
-    
+
     }
 
     func dataForm(_ dataForm: TKDataForm, heightForHeaderInGroup groupIndex: UInt) -> CGFloat {
@@ -174,7 +287,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
             self.dataForm1.commit()
             
             
-            self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5
+            self.isFormValidate = self.validate1 //&& self.validate2 && self.validate3 && self.validate4 && self.validate5
             
             if(!self.isFormValidate){
                 
@@ -189,8 +302,13 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
             personalInfo.StreetAddress          = self.dataSource["StreetAddress"].valueCandidate as! String
             personalInfo.MailAddress            = self.dataSource["MailAddress"].valueCandidate as! String
             personalInfo.HomePhone              = self.dataSource["HomePhone"].valueCandidate as! String
+            personalInfo.HomePhonePreferred     = self.dataSource["HomePhonePreferred"].valueCandidate as! Bool
             personalInfo.MobilePhone            = self.dataSource["MobilePhone"].valueCandidate as! String
+            personalInfo.MobilePhonePreferred   = self.dataSource["MobilePhonePreferred"].valueCandidate as! Bool
             personalInfo.WorkPhone              = self.dataSource["WorkPhone"].valueCandidate as! String
+            personalInfo.WorkPhonePreferred     = self.dataSource["WorkPhonePreferred"].valueCandidate as! Bool
+            personalInfo.EmailAddress           = self.dataSource["EmailAddress"].valueCandidate as! String
+
             
             
             WebApiService.SetPersonalInfo(personalInfo){ objectReturn in
@@ -203,9 +321,13 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     if(temp1.IsSuccess)
                     {
                         WebApiService.sendActivityTracking("Update Personal Info")
-
-                        self.performSegue(withIdentifier: "GoToNotice", sender: nil)
-                        
+                        if(self.screenComeForm == "CCPayment" || self.screenComeForm == "DDPayment"){
+                            self.performSegue(withIdentifier: "GoToSummary", sender: nil)
+                        }
+                        else
+                        {
+                            self.performSegue(withIdentifier: "GoToNotice", sender: nil)
+                        }
                     }
                     else
                     {
@@ -231,43 +353,7 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
         
     }
     
-    func performTopAlignmentSettingsForEditor(_ editor: TKDataFormEditor, property: TKEntityProperty) {
-        
-        editor.style.separatorColor = nil
-//        editor.textLabel.font = UIFont.systemFontOfSize(15)
-        editor.style.insets = UIEdgeInsetsMake(1, editor.style.insets.left, 5, editor.style.insets.right)
-        
 
-        let gridLayout = editor.gridLayout
-        let editorDef = gridLayout.definition(for: editor.editor)
-        editorDef?.row = 1
-        editorDef?.column = 1
-        
-            
-        let feedbackLabelDef = gridLayout.definition(for: editor.feedbackLabel)
-        feedbackLabelDef?.row = 2
-        feedbackLabelDef?.column = 1
-        feedbackLabelDef?.columnSpan = 1
-            
-        self.setEditorStyle(editor)
-
-    }
-    
-    func setEditorStyle(_ editor: TKDataFormEditor) {
-        
-        var layer = editor.editor.layer
-
-        if editor.isKind(of: TKDataFormTextFieldEditor.self) {
-            layer = editor.editor.layer;
-            (editor.editor as! TKTextField).textInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        }
-        
-
-        
-        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
-        layer.borderWidth = 1.0
-        layer.cornerRadius = 4
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToNotice" {
@@ -276,6 +362,14 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
             controller.message = "Your personal information has been updated successfully"
             
         }
+        
+        if segue.identifier == "GoToSummary" {
+            
+            let controller = segue.destination as! SummaryViewController
+            controller.paymentReturn = self.paymentReturn
+            controller.paymentMethod = self.paymentMethod
+        }
     }
+
     
 }

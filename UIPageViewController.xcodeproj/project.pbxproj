@@ -16,6 +16,9 @@
 		78E75F491AC5FC48001A93F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F481AC5FC48001A93F1 /* Images.xcassets */; };
 		78E75F4C1AC5FC48001A93F1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78E75F4A1AC5FC48001A93F1 /* LaunchScreen.xib */; };
 		78E75F581AC5FC48001A93F1 /* UIPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */; };
+		AE3896481E42BB05006E5987 /* MakePayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3896471E42BB05006E5987 /* MakePayment.swift */; };
+		AE38964A1E42BCA3006E5987 /* DateMonthEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3896491E42BCA3006E5987 /* DateMonthEditor.swift */; };
+		AE38964C1E42BCF9006E5987 /* MethodExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38964B1E42BCF9006E5987 /* MethodExtension.swift */; };
 		AE4147A81E3EE51A00D9B83D /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4147A71E3EE51A00D9B83D /* ContactUsViewController.swift */; };
 		AE4147AA1E3FF81800D9B83D /* CreditCardTCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4147A91E3FF81800D9B83D /* CreditCardTCViewController.swift */; };
 		AE4147AC1E3FF82900D9B83D /* DirectDebitTCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4147AB1E3FF82900D9B83D /* DirectDebitTCViewController.swift */; };
@@ -26,6 +29,7 @@
 		AE886B5E1E386457000C7B6A /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE886B5D1E386457000C7B6A /* InitialViewController.swift */; };
 		AE99CDF41E3ED9D500A2732E /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE99CDF31E3ED9D500A2732E /* PrivacyPolicyViewController.swift */; };
 		AE99CDF61E3EE28900A2732E /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE99CDF51E3EE28800A2732E /* AboutViewController.swift */; };
+		AEA734301E42EEC7001A6F1E /* CreateInstalmentPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA7342F1E42EEC7001A6F1E /* CreateInstalmentPlanViewController.swift */; };
 		C259682C58C1D286B8D28142 /* Pods_UIPageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */; };
 		C715F92F1CD30F8200B8198A /* DownloadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715F92E1CD30F8200B8198A /* DownloadFile.swift */; };
 		C718FB881C1FC6AB00DC14F8 /* PaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */; };
@@ -110,8 +114,7 @@
 		C7E6B0241BF15AAA00D60EC1 /* CustomTelrikViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0231BF15AA900D60EC1 /* CustomTelrikViewCell.swift */; };
 		C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6B0251BF1933A00D60EC1 /* RequestCallbackViewController.swift */; };
 		C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */; };
-		C7F92A151C18FC9000AE9AAB /* PaymentMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F92A141C18FC9000AE9AAB /* PaymentMethodViewController.swift */; };
-		C7F92A171C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F92A161C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift */; };
+		C7F92A151C18FC9000AE9AAB /* MakePaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F92A141C18FC9000AE9AAB /* MakePaymentViewController.swift */; };
 		C7F92A191C1928FD00AE9AAB /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F92A181C1928FD00AE9AAB /* SummaryViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +144,9 @@
 		78E75F561AC5FC48001A93F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E75F571AC5FC48001A93F1 /* UIPageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewControllerTests.swift; sourceTree = "<group>"; };
 		8E33AF7EC9D660BEF0C529EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE3896471E42BB05006E5987 /* MakePayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakePayment.swift; sourceTree = "<group>"; };
+		AE3896491E42BCA3006E5987 /* DateMonthEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateMonthEditor.swift; sourceTree = "<group>"; };
+		AE38964B1E42BCF9006E5987 /* MethodExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodExtension.swift; sourceTree = "<group>"; };
 		AE4147A71E3EE51A00D9B83D /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		AE4147A91E3FF81800D9B83D /* CreditCardTCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardTCViewController.swift; sourceTree = "<group>"; };
 		AE4147AB1E3FF82900D9B83D /* DirectDebitTCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectDebitTCViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 		AE886B5D1E386457000C7B6A /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		AE99CDF31E3ED9D500A2732E /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		AE99CDF51E3EE28800A2732E /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		AEA7342F1E42EEC7001A6F1E /* CreateInstalmentPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateInstalmentPlanViewController.swift; sourceTree = "<group>"; };
 		C62A048DF21B05FF53A58C3B /* Pods_UIPageViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIPageViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C715F92E1CD30F8200B8198A /* DownloadFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFile.swift; sourceTree = "<group>"; };
 		C718FB871C1FC6AB00DC14F8 /* PaymentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfo.swift; sourceTree = "<group>"; };
@@ -242,8 +249,7 @@
 		C7E6B0231BF15AA900D60EC1 /* CustomTelrikViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTelrikViewCell.swift; sourceTree = "<group>"; };
 		C7E6B0251BF1933A00D60EC1 /* RequestCallbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCallbackViewController.swift; sourceTree = "<group>"; };
 		C7E9097E1C17D45900BB65E3 /* PinLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinLoginViewController.swift; sourceTree = "<group>"; };
-		C7F92A141C18FC9000AE9AAB /* PaymentMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewController.swift; sourceTree = "<group>"; };
-		C7F92A161C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeDebitPaymentViewController.swift; sourceTree = "<group>"; };
+		C7F92A141C18FC9000AE9AAB /* MakePaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakePaymentViewController.swift; sourceTree = "<group>"; };
 		C7F92A181C1928FD00AE9AAB /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		DE9ADEAD79A57FE9F324C4EA /* Pods-UIPageViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIPageViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIPageViewController/Pods-UIPageViewController.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -396,6 +402,7 @@
 		C783D0651C111B8000AE7265 /* UIControl */ = {
 			isa = PBXGroup;
 			children = (
+				AE3896491E42BCA3006E5987 /* DateMonthEditor.swift */,
 			);
 			name = UIControl;
 			sourceTree = "<group>";
@@ -416,17 +423,17 @@
 				AE99CDF31E3ED9D500A2732E /* PrivacyPolicyViewController.swift */,
 				C7813B671BEC950600876860 /* BlankViewController.swift */,
 				C7813B631BEC7FD300876860 /* HomeViewController.swift */,
-				C7F92A141C18FC9000AE9AAB /* PaymentMethodViewController.swift */,
+				C7F92A141C18FC9000AE9AAB /* MakePaymentViewController.swift */,
+				AEA7342F1E42EEC7001A6F1E /* CreateInstalmentPlanViewController.swift */,
+				C797D6301C717F5D0083CD88 /* PayInInstalmentViewController.swift */,
+				C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */,
 				C7E6357C1BEC5E1D002D8438 /* MakeCreditPaymentViewController.swift */,
-				C7F92A161C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift */,
 				C78703601BF0057A001453C6 /* InstalmentInfoViewController.swift */,
 				C7E6B0071BF0548E00D60EC1 /* PaymentTrackerViewController.swift */,
 				C797D63E1C7533990083CD88 /* DeferPaymentViewController.swift */,
 				C7E6B0251BF1933A00D60EC1 /* RequestCallbackViewController.swift */,
 				C7F92A181C1928FD00AE9AAB /* SummaryViewController.swift */,
 				C7A216011C1E7E7C008A03A7 /* SetupPaymentViewController.swift */,
-				C797D6301C717F5D0083CD88 /* PayInInstalmentViewController.swift */,
-				C797D6201C6C405C0083CD88 /* InstalmentSumaryViewController.swift */,
 				C7A216051C1E90CA008A03A7 /* UpdateCreditCardViewController.swift */,
 				C7A216071C1E90DE008A03A7 /* UpdateBankAccountViewController.swift */,
 				C7A216091C1E90F3008A03A7 /* UpdatePersonalInfoViewController.swift */,
@@ -465,6 +472,7 @@
 				C797D6341C72AB0F0083CD88 /* SetPayment.swift */,
 				C715F92E1CD30F8200B8198A /* DownloadFile.swift */,
 				C74903241D6D269D007A30B8 /* TextFieldExtension.swift */,
+				AE38964B1E42BCF9006E5987 /* MethodExtension.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -534,6 +542,7 @@
 				C77E1CF71C7ACF00004AAEFF /* DebtorDetail.swift */,
 				C7BB33BD1CD0424F00BEFA31 /* InboxItem.swift */,
 				C7B789381D6D385600B3E86B /* CallBackSlot.swift */,
+				AE3896471E42BB05006E5987 /* MakePayment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -728,6 +737,7 @@
 				C7B789391D6D385600B3E86B /* CallBackSlot.swift in Sources */,
 				C718FB8C1C1FDA5900DC14F8 /* Feedback.swift in Sources */,
 				C797D62B1C6C5CC80083CD88 /* DateExtension.swift in Sources */,
+				AE38964C1E42BCF9006E5987 /* MethodExtension.swift in Sources */,
 				C783D0621C111A7C00AE7265 /* Error.swift in Sources */,
 				C783D05C1C0FFC9800AE7265 /* WebApiService.swift in Sources */,
 				C797D63F1C7533990083CD88 /* DeferPaymentViewController.swift in Sources */,
@@ -745,6 +755,7 @@
 				C7BB33DE1CD0973600BEFA31 /* InboxItemViewController.swift in Sources */,
 				C7E351C51C167A6400315A47 /* String.swift in Sources */,
 				C7A681911C11538200348EB0 /* PinSetupViewController.swift in Sources */,
+				AEA734301E42EEC7001A6F1E /* CreateInstalmentPlanViewController.swift in Sources */,
 				C77E1CF31C7AAE03004AAEFF /* JLToastView.swift in Sources */,
 				C7A216041C1E80EB008A03A7 /* ThreePartPayment.swift in Sources */,
 				AE4147A81E3EE51A00D9B83D /* ContactUsViewController.swift in Sources */,
@@ -762,7 +773,6 @@
 				AE886B591E3825C5000C7B6A /* CreditCardValidator.swift in Sources */,
 				C718FB8E1C1FDBC200DC14F8 /* SendFeedbackViewController.swift in Sources */,
 				78E75F421AC5FC48001A93F1 /* AppDelegate.swift in Sources */,
-				C7F92A171C191D5F00AE9AAB /* MakeDebitPaymentViewController.swift in Sources */,
 				C7F92A191C1928FD00AE9AAB /* SummaryViewController.swift in Sources */,
 				C797D60D1C6309950083CD88 /* ArrangeDetails.swift in Sources */,
 				C7E6B01A1BF068F400D60EC1 /* PaymentTrackerRecordModel.swift in Sources */,
@@ -781,16 +791,18 @@
 				C783D05E1C1009E200AE7265 /* LocalStore.swift in Sources */,
 				C72C0C481BEC55AD007463FD /* RBResizer.swift in Sources */,
 				C7E6B0081BF0548E00D60EC1 /* PaymentTrackerViewController.swift in Sources */,
+				AE3896481E42BB05006E5987 /* MakePayment.swift in Sources */,
 				C7E351BF1C155A2600315A47 /* DeviceDetect.swift in Sources */,
 				AE886B5E1E386457000C7B6A /* InitialViewController.swift in Sources */,
 				AE886B581E3825C5000C7B6A /* CreditCardValidationType.swift in Sources */,
 				C7A216021C1E7E7C008A03A7 /* SetupPaymentViewController.swift in Sources */,
 				C797D6391C72D0DC0083CD88 /* CoDebtor.swift in Sources */,
+				AE38964A1E42BCA3006E5987 /* DateMonthEditor.swift in Sources */,
 				AE4147AA1E3FF81800D9B83D /* CreditCardTCViewController.swift in Sources */,
 				C7E6B0261BF1933A00D60EC1 /* RequestCallbackViewController.swift in Sources */,
 				C7E6B01E1BF06A3F00D60EC1 /* Serializable.swift in Sources */,
 				C7E9097F1C17D45900BB65E3 /* PinLoginViewController.swift in Sources */,
-				C7F92A151C18FC9000AE9AAB /* PaymentMethodViewController.swift in Sources */,
+				C7F92A151C18FC9000AE9AAB /* MakePaymentViewController.swift in Sources */,
 				AE99CDF61E3EE28900A2732E /* AboutViewController.swift in Sources */,
 				C7BB33D71CD07C5800BEFA31 /* LocalDatabase.swift in Sources */,
 				C7B931C21BEB0E2A00A63F55 /* SelectDebtorController.swift in Sources */,

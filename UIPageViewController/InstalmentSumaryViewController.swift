@@ -41,8 +41,6 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
         
         let cell1 = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as! PaymentTrackerViewCell
         
-
-
         cell1.lb_Amount.text = self.ScheduleList[indexPath.row].Amount.doubleValue.formatAsCurrency()
         
         cell1.lb_DueDate.text = self.ScheduleList[indexPath.row].DueDate
@@ -53,11 +51,10 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
     }
     
     @IBAction func btNext_Clicked(_ sender: AnyObject) {
-        
-        
+
         LocalStore.setFirstAmountOfInstalment(ScheduleList[0].Amount.doubleValue)
         
-        self.performSegue(withIdentifier: "GoToPaymentOption", sender: nil)
+        self.performSegue(withIdentifier: "GoToMakePayment", sender: nil)
 
     }
     
@@ -66,7 +63,7 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "GoToPaymentOption" {
+        if segue.identifier == "GoToMakePayment" {
             
             for i in 0  ..< self.ScheduleList.count
             {
@@ -93,7 +90,7 @@ class InstalmentSumaryViewController: UIViewController , UITableViewDelegate, UI
             }
             
             
-            let paymentMethodViewController = segue.destination as! PaymentMethodViewController
+            let paymentMethodViewController = segue.destination as! MakeCreditPaymentViewController
             
             paymentMethodViewController.DebtorPaymentInstallmentList = self.DebtorPaymentInstallmentList
         }
