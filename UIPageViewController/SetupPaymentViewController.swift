@@ -10,11 +10,8 @@ import UIKit
 
 class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
-    @IBOutlet weak var lbl_Question: UILabel!
     @IBOutlet weak var btNext: UIButton!
-    @IBOutlet weak var mySwitch: UISwitch!
     @IBOutlet weak var subView: UIView!
-    
     @IBOutlet weak var btClear: UIButton!
     
     let dataSource = TKDataFormEntityDataSource()
@@ -46,11 +43,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         self.btClear.isHidden = true
 
         self.view.backgroundColor = UIColor.white
-        
-        lbl_Question.text = "Can you pay the total amount in " + LocalStore.accessMaxNoPay().description + " payments within " + LocalStore.accessThreePartDateDurationDays().description + " days?"
-        
-        self.subView.isHidden = true
-        
+                
         dataForm1 = TKDataForm(frame: self.subView.bounds)
         dataForm1.delegate = self
 
@@ -171,7 +164,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
                 let value = propery.valueCandidate as! Date
                 
-                let Maxdate = Date().addDays(7)
+                let Maxdate = Date() + 7.days
                 
                 if(value.isGreaterThanDate(Maxdate)){
                     dataSource["FirstDate"].errorMessage = "1st payment date must be valid within next 7 days"
@@ -223,7 +216,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 
                 let firstDate = self.dataSource["FirstDate"].valueCandidate as! Date
                 
-                let Maxdate = firstDate.addDays(14)
+                let Maxdate = firstDate + 14.days
 
                 if(value.isLessThanDate(firstDate)){
                     dataSource["SecondDate"].errorMessage = "2nd payment date must be later than 1st instalment date"
@@ -282,7 +275,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                     
                     let secondDate = self.dataSource["SecondDate"].valueCandidate as! Date
                     
-                    let Maxdate = secondDate.addDays(14)
+                    let Maxdate = secondDate + 14.days
                     
                     if(value.isLessThanDate(secondDate)){
                         dataSource["ThirdDate"].errorMessage = "3rd payment date must be after the 2nd instalment date"
@@ -311,31 +304,6 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         return true
     }
     
-    @IBAction func switch_Changed(_ sender: AnyObject) {
-        
-        if mySwitch.isOn {
-            self.subView.isHidden = false
-            mySwitch.setOn(true, animated:true)
-            self.btNext.setTitle("Next", for: UIControlState())
-            
-            UIView.animate(withDuration: 1.0, animations: { () -> Void in
-                self.btClear.isHidden = false
-            
-            })
-
-            
-        } else {
-            
-            UIView.animate(withDuration: 1.0, animations: { () -> Void in
-                self.btClear.isHidden = true
-            })
-            
-            self.subView.isHidden = true
-            mySwitch.setOn(false, animated:true)
-            self.btNext.setTitle("4 or More Payments", for: UIControlState())
-        }
-        
-    }
     
     func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         
@@ -357,8 +325,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     @IBAction func btNext_Clicked(_ sender: AnyObject) {
         
         
-        if(mySwitch.isOn) {
-            
+        
             self.dataForm1.commit()
             
             var totalAmount : Double =  0
@@ -412,18 +379,6 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
 
                 self.performSegue(withIdentifier: "GoToInstalmentSumary", sender: nil)
             }
-            
-        }
-        else
-        {
-            
-            WebApiService.sendActivityTracking("Setup 3 part")
-
-            SetPayment.SetPayment(3)
-            
-            self.performSegue(withIdentifier: "GoTo4Payment", sender: nil)
-
-        }
 
     }
     
@@ -432,6 +387,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         self.InitData()
 
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToInstalmentSumary" {
 

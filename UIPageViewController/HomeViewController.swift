@@ -8,19 +8,15 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     @IBOutlet weak var instalmentButton: UIButton!
     @IBOutlet weak var paymentButton: UIButton!
     @IBOutlet weak var trackerButton: UIButton!
+    
     @IBOutlet weak var lbl_refnumber: UILabel!
     @IBOutlet weak var lbl_outstanding: UILabel!
     @IBOutlet weak var lbl_nextinstalment: UILabel!
-    
     @IBOutlet weak var lbl_labelNextInstalment: UILabel!
-    @IBOutlet weak var view_Chart: UIView!
-    
     @IBOutlet weak var lbl_ourClient: UILabel!
     @IBOutlet weak var lbl_ClientAccountNumber: UILabel!
     
-    let pieChart = TKChart()
-    
-    
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -85,8 +81,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             self.lbl_nextinstalment.text = ""
         }
         
-        
-        
+
         SetPayment.SetPayment(0)
         
         LocalStore.setFrequency(0)
@@ -262,14 +257,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         if(indexPath.section == 0 )
         {
            if(indexPath.row == 0 ){
-            
-//                SetPayment.SetPayment(1)
-//
-//                let paymentMethodController = self.storyboard!.instantiateViewController(withIdentifier: "PaymentMethodViewController") as! PaymentMethodViewController
-//            
-//                self.navigationController!.pushViewController(paymentMethodController, animated: true)
-            
-            
+
                   let feedbackController = self.storyboard!.instantiateViewController(withIdentifier: "SendFeedbackViewController") as! SendFeedbackViewController
             
                   self.navigationController!.pushViewController(feedbackController, animated: true)

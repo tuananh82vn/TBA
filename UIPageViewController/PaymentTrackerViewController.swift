@@ -216,7 +216,7 @@ class PaymentTrackerViewController: UIViewController , UITableViewDelegate, UITa
         
         SetPayment.SetPayment(4)
         
-        self.performSegue(withIdentifier: "GoToMakeCreditPayment", sender: nil)
+        self.performSegue(withIdentifier: "GoToMakePayment", sender: nil)
 
         
     }
