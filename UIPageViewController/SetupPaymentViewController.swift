@@ -118,7 +118,7 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
         
         dataForm1.dataSource = dataSource
         dataForm1.commitMode = TKDataFormCommitMode.manual
-        dataForm1.validationMode = TKDataFormValidationMode.manual
+        dataForm1.validationMode = TKDataFormValidationMode.immediate
 
 
     }
@@ -323,11 +323,8 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
     }
     
     @IBAction func btNext_Clicked(_ sender: AnyObject) {
+    
         
-        
-        
-            self.dataForm1.commit()
-            
             var totalAmount : Double =  0
             
             if(LocalStore.accessMaxNoPay()==2)
@@ -366,7 +363,11 @@ class SetupPaymentViewController: UIViewController , TKDataFormDelegate {
                 return
                 
             }
-            
+        
+            self.dataForm1.commit()
+        
+            self.dataForm1.commit()
+        
             self.isFormValidate = self.validate1 && self.validate2 && self.validate3 && self.validate4 && self.validate5 && self.validate6
             
             if(self.isFormValidate){

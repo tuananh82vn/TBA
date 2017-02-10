@@ -51,7 +51,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     @IBAction func makePayment_Clicked(_ sender: AnyObject) {
         SetPayment.SetPayment(4)
         
-        self.performSegue(withIdentifier: "GoToMakeCreditPayment", sender: nil)
+        self.performSegue(withIdentifier: "GoToMakePayment", sender: nil)
     }
     func loadData(){
         
@@ -182,11 +182,11 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
         series.displayPercentage = false;
         series.style.pointLabelStyle.textHidden = false;
         
-        if(LocalStore.accessDeviceName() == "iPhone 6s Plus" || LocalStore.accessDeviceName() == "iPhone 6 Plus" ){
+        if(LocalStore.accessDeviceName() == "iPhone 6s Plus" || LocalStore.accessDeviceName() == "iPhone 6 Plus" || LocalStore.accessDeviceName() == "iPhone 7 Plus"){
 
             series.style.pointLabelStyle.labelOffset = UIOffsetMake(10, 0)
         }
-        else if(LocalStore.accessDeviceName() == "iPhone 6s" || LocalStore.accessDeviceName() == "iPhone 6" ){
+        else if(LocalStore.accessDeviceName() == "iPhone 6s" || LocalStore.accessDeviceName() == "iPhone 6" || LocalStore.accessDeviceName() == "iPhone 7"){
             
             series.style.pointLabelStyle.labelOffset = UIOffsetMake(10, 0)
         }
@@ -305,7 +305,7 @@ class InstalmentInfoViewController: UIViewController , TKChartDelegate {
     }
     
     func chart(_ chart: TKChart, didSelectPoint point: TKChartData, in series: TKChartSeries, at index: Int) {
-        print("didSelectPoint series at index: \(index)")
+        //print("didSelectPoint series at index: \(index)")
     }
     
 //    func chart(chart: TKChart, didDeselectSeries series: TKChartSeries) {

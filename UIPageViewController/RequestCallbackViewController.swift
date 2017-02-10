@@ -81,7 +81,6 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
             
             if let temp1 = objectReturn
             {
-                
                 self.view.hideLoading()
                 
                 if(temp1.IsSuccess){
@@ -124,9 +123,10 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
                     
                     self.dataForm1.commitMode = TKDataFormCommitMode.manual
                     self.dataForm1.validationMode = TKDataFormValidationMode.immediate
+                    self.dataForm1.allowScroll = false
+                        
                     
-                    
-                    self.dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
+                    self.dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height)
                     
                     self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
                     
@@ -252,12 +252,6 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
             let textEditor = editor as! TKDataFormMultilineTextEditor
             textEditor.textView.font = UIFont.systemFont(ofSize: 20)
         }
-//        else
-//            if (property.name == "Date") {
-//                let textEditor = editor as! TKDataFormDatePickerEditor
-//                textEditor.datePicker.setValue(UIColor.blueColor(), forKey: "textColor")
-//                textEditor.datePicker.datePickerMode = .Date
-//        }
     }
     
     func dataForm(_ dataForm: TKDataForm, update groupView: TKEntityPropertyGroupView, forGroupAt groupIndex: UInt) {
@@ -265,18 +259,19 @@ class RequestCallbackViewController: UIViewController , TKDataFormDelegate  {
     }
     
     func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
-        if gorupIndex == 0 && editorIndex == 5 {
+        if gorupIndex == 0 && editorIndex == 4 {
             return 100
         }
         
-        return 30
+        return 45
     }
 
 
     @IBAction func btContinue_Clicked(_ sender: AnyObject) {
         
         self.dataForm1.commit()
-        
+        self.dataForm1.commit()
+
         self.isFormValidate = self.validate1 && self.validate2 && self.validate3
         
         if(self.isFormValidate){

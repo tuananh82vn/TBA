@@ -30,6 +30,8 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
     var ScheduleList = [PaymentTrackerRecordModel]()
 
     @IBOutlet weak var btNext: UIButton!
+    @IBOutlet weak var lb_LastInstalmentDate: UILabel!
+    @IBOutlet weak var lb_NumberOfInstalment: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +46,6 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
 
         dataForm1 = TKDataForm(frame: self.subView.bounds)
         dataForm1.delegate = self
-        
         InitData()
 
         dataForm1.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
@@ -73,14 +74,6 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         
         self.dataSource.addGroup(withName: "", propertyNames: ["Frequency", "InstalmentAmount","FirstInstalmentDate"])
         
-        dataSource["LastInstalmentDate"].readOnly = true
-        
-        let NumberOfInstalment = dataSource["NumberOfInstalment"]
-        NumberOfInstalment?.hintText = "Number of Instalments"
-        NumberOfInstalment?.editorClass = TKDataFormDecimalEditor.self
-        
-        dataSource["NumberOfInstalment"].readOnly = true
-
 
         dataForm1.dataSource = dataSource
         dataForm1.commitMode = TKDataFormCommitMode.manual
@@ -125,11 +118,11 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         
         self.performTopAlignmentSettingsForEditor(editor, property: property)
         
-        if (property.name == "FirstInstalmentDate" || property.name == "LastInstalmentDate") {
-                let textEditor = editor as! TKDataFormDatePickerEditor
-                textEditor.datePicker.setValue(UIColor.black, forKey: "textColor")
-                textEditor.datePicker.datePickerMode = .date
-        }
+//        if (property.name == "FirstInstalmentDate" || property.name == "LastInstalmentDate") {
+//                let textEditor = editor as! TKDataFormDatePickerEditor
+//                textEditor.datePicker.setValue(UIColor.black, forKey: "textColor")
+//                textEditor.datePicker.datePickerMode = .date
+//        }
     }
 
     func dataForm(_ dataForm: TKDataForm, didSelect editor: TKDataFormEditor, for property: TKEntityProperty) {
@@ -270,9 +263,6 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         LocalStore.setFrequency(Frequency+1)
         
         
-        var timeInterval = DateComponents()
-        
-        
         while ( totalAmount > paidAmount && installmentAmount > 0)
         {
             let firstPayment = PaymentTrackerRecordModel()
@@ -297,8 +287,7 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
                 case 0:
                         installmentDate = installmentDate + 7.days
                         break
-                break
-                    
+                
                 case 1:
                         installmentDate = installmentDate + 14.days
                         break
@@ -314,20 +303,17 @@ class PayInInstalmentViewController : UIViewController , TKDataFormDelegate {
         if(self.ScheduleList.count > 0){
             
             
-            var lastInstallment = self.ScheduleList[self.ScheduleList.count - 1].Amount.doubleValue
+            let lastInstallment = self.ScheduleList[self.ScheduleList.count - 1].Amount.doubleValue
             
             if( lastInstallment < 10){
                 self.ScheduleList.remove(at: self.ScheduleList.count-1)
                 self.ScheduleList[self.ScheduleList.count-1].Amount = (self.ScheduleList[self.ScheduleList.count-1].Amount.doubleValue + lastInstallment).description
             }
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy" //Your date format
-            let date = dateFormatter.date(from: (ScheduleList.last?.DueDate)!) //according to date format your date string
 
-            self.dataSource["LastInstalmentDate"].valueCandidate = date
-            self.dataSource["NumberOfInstalment"].valueCandidate = self.ScheduleList.count
-            self.dataForm1.reloadData()
+            self.lb_LastInstalmentDate.text = ScheduleList.last?.DueDate
+            self.lb_NumberOfInstalment.text = self.ScheduleList.count.description
+
             
         }
         

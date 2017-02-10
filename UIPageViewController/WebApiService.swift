@@ -1481,23 +1481,23 @@ struct WebApiService {
                     JsonReturn.personalInfo.EmailAddress = EmailAddress
                 }
                 
-                if let HomePhonePreferred = jsonObject["HomePhonePreferred"].bool {
+                if let Preferred = jsonObject["Preferred"].int {
                     
-                    JsonReturn.personalInfo.HomePhonePreferred = HomePhonePreferred
-                    
-                }
-                
-                if let WorkPhonePreferred = jsonObject["WorkPhonePreferred"].bool {
-                    
-                    JsonReturn.personalInfo.WorkPhonePreferred = WorkPhonePreferred
+                    JsonReturn.personalInfo.Preferred = Preferred
                     
                 }
-                
-                if let MobilePhonePreferred = jsonObject["MobilePhonePreferred"].bool {
-                    
-                    JsonReturn.personalInfo.MobilePhonePreferred = MobilePhonePreferred
-                    
-                }
+//
+//                if let WorkPhonePreferred = jsonObject["WorkPhonePreferred"].bool {
+//                    
+//                    JsonReturn.personalInfo.WorkPhonePreferred = WorkPhonePreferred
+//                    
+//                }
+//                
+//                if let MobilePhonePreferred = jsonObject["MobilePhonePreferred"].bool {
+//                    
+//                    JsonReturn.personalInfo.MobilePhonePreferred = MobilePhonePreferred
+//                    
+//                }
                 
                 if let IsSuccess = jsonObject["IsSuccess"].bool {
                     
@@ -1537,11 +1537,11 @@ struct WebApiService {
                 "Address2s" : personalInfo.MailAddress,
                 "EmailAddress"     : personalInfo.EmailAddress,
                 "HomeNumber" : personalInfo.HomePhone,
-                "HomePhonePreferred" : personalInfo.HomePhonePreferred,
+//              "HomePhonePreferred" : personalInfo.HomePhonePreferred,
                 "WorkNumber" : personalInfo.WorkPhone,
-                "WorkPhonePreferred" : personalInfo.WorkPhonePreferred,
+//                "WorkPhonePreferred" : personalInfo.WorkPhonePreferred,
                 "MobileNumbers" : personalInfo.MobilePhone,
-                "MobilePhonePreferred" : personalInfo.MobilePhonePreferred
+                "Preferred" : personalInfo.Preferred
 
             ]
         ]

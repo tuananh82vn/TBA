@@ -22,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LocalDatabase.copyFile("inbox.sqlite")
         
         
-        let domain = "http://172.28.1.70:9999"
+        //let domain = "http://172.28.1.70:9999"
         
-        //let domain = "http://180.94.113.19:3333"
+        let domain = "http://180.94.113.19:3333"
         
         LocalStore.setWeb_URL_API(domain)
         

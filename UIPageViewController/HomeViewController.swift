@@ -122,7 +122,7 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
     
     func setupButton(_ iphone : String){
         
-        if(iphone == "iPhone 6s Plus" || iphone == "iPhone 6 Plus" ){
+        if(iphone == "iPhone 6s Plus" || iphone == "iPhone 6 Plus" || iphone == "iPhone 7 Plus"){
             
             self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 55, 0, 0)
             self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 55, 0, 0)
@@ -144,24 +144,24 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
             self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 30 , 0, 0)
       
         }
-        else if(iphone == "iPhone 6s" || iphone == "iPhone 6" ){
+        else if(iphone == "iPhone 6s" || iphone == "iPhone 6" || iphone == "iPhone 7"){
                 
-                self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
-                self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
-                self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 50, 0, 0)
-                
-                
-                self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
-                self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 50, 0, 0)
-                self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
-                
-                self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
-                self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
-                self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
-                
-                self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 0 , 0, 0)
-                self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -10 , 0, 0)
-                self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 20 , 0, 0)
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 50, 0, 0)
+            
+            
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+            
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, 0, 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
+            
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 0 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 22 , 0, 0)
 
                 
         }
@@ -209,22 +209,22 @@ class HomeViewController: UIViewController, TKSideDrawerDelegate  {
         
         else if(iphone == "Simulator")
         {
-            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.paymentButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.trackerButton.imageEdgeInsets =    UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.instalmentButton.imageEdgeInsets = UIEdgeInsetsMake(-20, 50, 0, 0)
             
             
-            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 45, 0, 0)
-            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 40, 0, 0)
+            self.deferButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.callbackButton.imageEdgeInsets =   UIEdgeInsetsMake(-20, 50, 0, 0)
+            self.inboxButton.imageEdgeInsets =      UIEdgeInsetsMake(-20, 50, 0, 0)
             
-            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -15 , 0, 0)
-            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -10 , 0, 0)
-            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.paymentButton.titleEdgeInsets =    UIEdgeInsetsMake(40, 0, 0, 0)
+            self.trackerButton.titleEdgeInsets =    UIEdgeInsetsMake(40, -5 , 0, 0)
+            self.instalmentButton.titleEdgeInsets = UIEdgeInsetsMake(40, 0 , 0, 0)
             
-            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, -5 , 0, 0)
-            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -15, 0, 0)
-            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 15 , 0, 0)
+            self.deferButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 0 , 0, 0)
+            self.callbackButton.titleEdgeInsets =   UIEdgeInsetsMake(40, -10 , 0, 0)
+            self.inboxButton.titleEdgeInsets =      UIEdgeInsetsMake(40, 22 , 0, 0)
             
         }
 

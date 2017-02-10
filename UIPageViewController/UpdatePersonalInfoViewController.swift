@@ -16,20 +16,14 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
     
     var validate1 : Bool = true
     
-//    var validate2 : Bool = true
-//    
-//    var validate3 : Bool = true
-//    
-//    var validate4 : Bool = true
-//    
-//    var validate5 : Bool = true
-    
     var isError : Bool = false
 
     
     var paymentReturn = PaymentReturnModel()
     var screenComeForm: String = ""
     var paymentMethod = 0
+    
+    var CallbackSlot: [String] = ["", "Home Phone", "Work Phone" , "Mobile Phone"]
 
     
     @IBOutlet weak var bt_Continue: UIButton!
@@ -81,40 +75,40 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
                     self.dataSource.sourceObject = self.paymentInfo.personalInfo
                     
                     self.dataSource["StreetAddress"].editorClass = TKDataFormTextFieldEditor.self
+                    
                     self.dataSource["MailAddress"].editorClass = TKDataFormTextFieldEditor.self
-                    
-                    self.dataSource["EmailAddress"].editorClass = TKDataFormEmailEditor.self
-                    self.dataSource["EmailAddress"].hintText = "Email"
-
-
-                    self.dataSource.addGroup(withName: "Address", propertyNames: ["StreetAddress", "MailAddress", "EmailAddress"])
-                    
-                    self.dataSource.addGroup(withName: "Phone", propertyNames: ["HomePhone", "HomePhonePreferred", "WorkPhone", "WorkPhonePreferred","MobilePhone", "MobilePhonePreferred"])
                     
                     self.dataSource["HomePhone"].editorClass = TKDataFormPhoneEditor.self
                     self.dataSource["HomePhone"].hintText = "XX XXXX XXXX"
                     
-                    self.dataSource["HomePhonePreferred"].editorClass = TKDataFormSwitchEditor.self
-                    self.dataSource["HomePhonePreferred"].displayName = "Preferred"
+//                    self.dataSource["HomePhonePreferred"].editorClass = TKDataFormSwitchEditor.self
+//                    self.dataSource["HomePhonePreferred"].displayName = "Preferred"
 
-                    
                     self.dataSource["WorkPhone"].editorClass = TKDataFormPhoneEditor.self
-                    self.dataSource["WorkPhonePreferred"].editorClass = TKDataFormSwitchEditor.self
-                    self.dataSource["WorkPhonePreferred"].displayName = "Preferred"
-
                     
+//                    self.dataSource["WorkPhonePreferred"].editorClass = TKDataFormSwitchEditor.self
+//                    self.dataSource["WorkPhonePreferred"].displayName = "Preferred"
+
                     self.dataSource["MobilePhone"].editorClass = MyPhoneEditor.self
                     self.dataSource["MobilePhone"].hintText = "04XX XXX XXX"
-                    self.dataSource["MobilePhone"].displayName = "Mobile Phone (*)"
+                    
+                    self.dataSource["Preferred"].valuesProvider = self.CallbackSlot
+                    self.dataSource["Preferred"].editorClass = TKDataFormPickerViewEditor.self
 
-                    self.dataSource["MobilePhonePreferred"].editorClass = TKDataFormSwitchEditor.self
-                    self.dataSource["MobilePhonePreferred"].displayName = "Preferred"
+
+//                    self.dataSource["MobilePhonePreferred"].editorClass = TKDataFormSwitchEditor.self
+//                    self.dataSource["MobilePhonePreferred"].displayName = "Preferred"
+                    
+                    self.dataSource["EmailAddress"].editorClass = TKDataFormEmailEditor.self
+                    self.dataSource["EmailAddress"].hintText = "Email"
+                    self.dataSource["EmailAddress"].displayName = "Email"
 
                     
                     self.dataForm1 = TKDataForm(frame: self.subView.bounds)
                     
                     self.dataForm1.delegate = self
                     self.dataForm1.dataSource = self.dataSource
+                    self.dataForm1.allowScroll = false
                     
                     self.dataForm1.backgroundColor = UIColor.white
                     self.dataForm1.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
@@ -164,10 +158,11 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
         
         property.hintText = property.displayName
         
-        if alignmentMode == "Top" && property.name != "HomePhonePreferred"  && property.name != "WorkPhonePreferred"   && property.name != "MobilePhonePreferred"{
+        if alignmentMode == "Top" {
             self.performTopAlignmentSettingsForEditor(editor, property: property)
         }
-        if(property.name == "HomePhonePreferred"  || property.name == "WorkPhonePreferred"   || property.name == "MobilePhonePreferred")
+        
+        if(property.name == "Preferred")
         {
             editor.style.separatorColor = nil
             editor.style.insets = UIEdgeInsetsMake(6, editor.style.insets.left, 6, editor.style.insets.right)
@@ -206,9 +201,16 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
             (editor.editor as! TKTextField).textInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         }
         
-        layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
-        layer.borderWidth = 1.0
-        layer.cornerRadius = 4
+        
+        if editor.isKind(of: TKDataFormPickerViewEditor.self){
+        
+        }
+        else
+        {
+            layer.borderColor = UIColor(red:0.880, green:0.880, blue:0.880, alpha:1.00).cgColor
+            layer.borderWidth = 1.0
+            layer.cornerRadius = 4
+        }
     }
     
     func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
@@ -228,49 +230,54 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
 
         }
         
-        if (propery.name == "HomePhonePreferred") {
-            
-            let value = propery.valueCandidate as! Bool
-            
-            if (value)
-            {
-                self.dataSource["WorkPhonePreferred"].valueCandidate = false;
-                self.dataSource["MobilePhonePreferred"].valueCandidate = false;
-            }
-        }
-        
-        if (propery.name == "WorkPhonePreferred") {
-            
-            let value = propery.valueCandidate as! Bool
-            
-            if (value)
-            {
-                self.dataSource["HomePhonePreferred"].valueCandidate = false;
-                self.dataSource["MobilePhonePreferred"].valueCandidate = false;
-            }
-        }
-        
-        if (propery.name == "MobilePhonePreferred") {
-            
-            let value = propery.valueCandidate as! Bool
-            
-            if (value)
-            {
-                self.dataSource["HomePhonePreferred"].valueCandidate = false;
-                self.dataSource["WorkPhonePreferred"].valueCandidate = false;
-            }
-        }
+//        if (propery.name == "HomePhonePreferred") {
+//            
+//            let value = propery.valueCandidate as! Bool
+//            
+//            if (value)
+//            {
+//                self.dataSource["WorkPhonePreferred"].valueCandidate = false;
+//                self.dataSource["MobilePhonePreferred"].valueCandidate = false;
+//            }
+//        }
+//        
+//        if (propery.name == "WorkPhonePreferred") {
+//            
+//            let value = propery.valueCandidate as! Bool
+//            
+//            if (value)
+//            {
+//                self.dataSource["HomePhonePreferred"].valueCandidate = false;
+//                self.dataSource["MobilePhonePreferred"].valueCandidate = false;
+//            }
+//        }
+//        
+//        if (propery.name == "MobilePhonePreferred") {
+//            
+//            let value = propery.valueCandidate as! Bool
+//            
+//            if (value)
+//            {
+//                self.dataSource["HomePhonePreferred"].valueCandidate = false;
+//                self.dataSource["WorkPhonePreferred"].valueCandidate = false;
+//            }
+//        }
         return true
     }
     
     
     func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
 
-        if gorupIndex == 1 && (editorIndex == 1 || editorIndex == 3 || editorIndex == 5)
-        {
-            return 45
-        }
-            
+//        if (editorIndex == 2)
+//        {
+//            return 90
+//        }
+//        
+//        if (editorIndex == 3 || editorIndex == 5 || editorIndex == 7)
+//        {
+//            return 35
+//        }
+        
         return 65
 
     }
@@ -302,11 +309,12 @@ class UpdatePersonalInfoViewController: UIViewController , TKDataFormDelegate {
             personalInfo.StreetAddress          = self.dataSource["StreetAddress"].valueCandidate as! String
             personalInfo.MailAddress            = self.dataSource["MailAddress"].valueCandidate as! String
             personalInfo.HomePhone              = self.dataSource["HomePhone"].valueCandidate as! String
-            personalInfo.HomePhonePreferred     = self.dataSource["HomePhonePreferred"].valueCandidate as! Bool
+//            personalInfo.HomePhonePreferred     = self.dataSource["HomePhonePreferred"].valueCandidate as! Bool
             personalInfo.MobilePhone            = self.dataSource["MobilePhone"].valueCandidate as! String
-            personalInfo.MobilePhonePreferred   = self.dataSource["MobilePhonePreferred"].valueCandidate as! Bool
+//            personalInfo.MobilePhonePreferred   = self.dataSource["MobilePhonePreferred"].valueCandidate as! Bool
             personalInfo.WorkPhone              = self.dataSource["WorkPhone"].valueCandidate as! String
-            personalInfo.WorkPhonePreferred     = self.dataSource["WorkPhonePreferred"].valueCandidate as! Bool
+            personalInfo.Preferred              = self.dataSource["Preferred"].valueCandidate as! Int
+
             personalInfo.EmailAddress           = self.dataSource["EmailAddress"].valueCandidate as! String
 
             

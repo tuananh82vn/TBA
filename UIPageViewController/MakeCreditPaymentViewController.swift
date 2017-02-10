@@ -10,21 +10,19 @@ import UIKit
 
 class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , UITextViewDelegate {
 
-    @IBOutlet weak var topSubView: UIView!
     @IBOutlet weak var subView: UIView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var sw_Agree: UISwitch!
     
-    
 
-    
     let dataSource2 = TKDataFormEntityDataSource()
+    
     let cardInfo = CardInfo()
+    
     var dataForm2 = TKDataForm()
 
     var paymentReturn = PaymentReturnModel()
     
-
     
     var DebtorPaymentInstallmentList = Array<DebtorPaymentInstallment>()
     
@@ -65,15 +63,6 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
         textView.isUserInteractionEnabled = true
         textView.isEditable = false
         textView.setContentOffset(CGPoint.zero, animated: false)
-
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MakeCreditPaymentViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        
-        InitCreditCardPayment()
-    }
-    
-    
-    func InitCreditCardPayment(){
         
         let phoneUrl = NSURL(string: "tel:+0404221082")!
         let attributes = [NSLinkAttributeName: phoneUrl]
@@ -81,6 +70,31 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
         
         
         textView.attributedText = NSAttributedString(string: "I acknowledge RecoveriesCorp will use my Credit Card details for this payment arrangement. I have read and agree to the ") + attributedString
+        
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MakeCreditPaymentViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        initData()
+    }
+    
+    func initData(){
+        
+        self.view.showLoading()
+        
+        WebApiService.GetPaymentInfo(){ objectReturn in
+            
+            self.view.hideLoading();
+            
+            if let temp1 = objectReturn
+            {
+                self.InitCreditCardPayment()
+            }
+        }
+    }
+    
+    func InitCreditCardPayment(){
+        
 
         if(LocalStore.accessMakePaymentIn3Part() || LocalStore.accessMakePaymentInstallment()){
             cardInfo.Amount = LocalStore.accessFirstAmountOfInstalment()
@@ -162,18 +176,39 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
         ////////////////////
         
         dataForm2 = TKDataForm(frame: self.subView.bounds)
-        dataForm2.delegate = self
         dataForm2.dataSource = dataSource2
-        
-        dataForm2.backgroundColor = UIColor.white
-        dataForm2.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
+        dataForm2.delegate = self
         
         dataForm2.commitMode = TKDataFormCommitMode.manual
         dataForm2.validationMode = TKDataFormValidationMode.immediate
+        dataForm2.allowScroll = false
+
+        
+        dataForm2.backgroundColor = UIColor.white
+        dataForm2.frame = CGRect(x: 0, y: 0, width: self.subView.bounds.size.width, height: self.subView.bounds.size.height - 66)
+        dataForm2.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.flexibleWidth.rawValue | UIViewAutoresizing.flexibleHeight.rawValue)
+        
+        
+
         
         self.subView.addSubview(dataForm2)
+        
+        self.dataForm2.reloadData()
+
     }
     
+    //Handle Term & Condition text
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textView.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        textView.setContentOffset(CGPoint.zero, animated: false)
+        
+        return false
+    }
     override func viewWillAppear(_ animated: Bool) {
         textView.setContentOffset(CGPoint.zero, animated: false)
         
@@ -210,16 +245,8 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
             return false // return true if you still want UIAlertController to pop up
     }
 
-    func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
-        return 45
-    }
+
     
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        textView.setContentOffset(CGPoint.zero, animated: false)
-
-        return false
-    }
-
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
@@ -230,11 +257,13 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        textView.setContentOffset(CGPoint.zero, animated: false)
+    func dataForm(_ dataForm: TKDataForm, update groupView: TKEntityPropertyGroupView, forGroupAt groupIndex: UInt) {
+        
     }
     
+    func dataForm(_ dataForm: TKDataForm, heightForEditorInGroup gorupIndex: UInt, at editorIndex: UInt) -> CGFloat {
+        return 30
+    }
     
     func dataForm(_ dataForm: TKDataForm, update editor: TKDataFormEditor, for property: TKEntityProperty) {
         if property.name == "Cvv" {
@@ -242,13 +271,6 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
         }
     }
     
-    func dataForm(_ dataForm: TKDataForm, didEdit property: TKEntityProperty) {
-        
-    }
-    
-    func dataForm(_ dataForm: TKDataForm, update groupView: TKEntityPropertyGroupView, forGroupAt groupIndex: UInt) {
-        
-    }
     
     func dataForm(_ dataForm: TKDataForm, validate propery: TKEntityProperty, editor: TKDataFormEditor) -> Bool {
         if (propery.name == "PaymentMethod") {
@@ -362,13 +384,13 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
             let range = value.description.rangeOfCharacter(from: whitespace)
             
             // range will be nil if no whitespace is found
-            if let test = range {
+            if range != nil {
                 
                 let fullNameArr = value.description.characters.split{$0 == " "}.map(String.init)
                 
                 for index in 0 ..< fullNameArr.count
                 {
-                    var fistname = fullNameArr[index] // First
+                    let fistname = fullNameArr[index] // First
                     
                     let decimalCharacters = CharacterSet.decimalDigits
                     
@@ -536,13 +558,13 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
                         let range = value.description.rangeOfCharacter(from: whitespace)
                         
                         // range will be nil if no whitespace is found
-                        if let test = range {
+                        if range != nil {
                             
                             let fullNameArr = value.description.characters.split{$0 == " "}.map(String.init)
                             
                             for index in 0 ..< fullNameArr.count
                             {
-                                var fistname = fullNameArr[index] // First
+                                let fistname = fullNameArr[index] // First
                                 
                                 let decimalCharacters = CharacterSet.decimalDigits
                                 
@@ -652,7 +674,6 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
             
         }
         
-        //self.dataForm2.validationMode = TKDataFormValidationMode.manual
         self.dataForm2.commit()
         self.dataForm2.commit()
 
@@ -710,6 +731,7 @@ class MakeCreditPaymentViewController: UIViewController , TKDataFormDelegate , U
             if let jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             {
                 cardObject.DebtorPaymentInstallment = jsonString as String
+                bankObject.DebtorPaymentInstallment = jsonString as String
             }
 
         }

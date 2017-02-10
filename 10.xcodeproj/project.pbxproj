@@ -619,7 +619,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 78E75F371AC5FC48001A93F1 /* Build configuration list for PBXProject "UIPageViewController" */;
+			buildConfigurationList = 78E75F371AC5FC48001A93F1 /* Build configuration list for PBXProject "10" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1018,7 +1018,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		78E75F371AC5FC48001A93F1 /* Build configuration list for PBXProject "UIPageViewController" */ = {
+		78E75F371AC5FC48001A93F1 /* Build configuration list for PBXProject "10" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				78E75F591AC5FC48001A93F1 /* Debug */,

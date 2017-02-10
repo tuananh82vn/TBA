@@ -10,8 +10,10 @@ import UIKit
 
 class PrivacyPolicyViewController: UIViewController {
 
+    @IBOutlet weak var txtView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtView.scrollRangeToVisible(NSRange(location : 0, length : 0))
 
         // Do any additional setup after loading the view.
     }
